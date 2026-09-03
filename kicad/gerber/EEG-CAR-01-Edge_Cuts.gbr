@@ -1,0 +1,24 @@
+%TF.GenerationSoftware,TI One Voice,package_v2.4/tools/gerber.py,1.0*%
+%TF.CreationDate,2026-09-02T00:00:00+01:00*%
+%TF.ProjectId,EEG-CAR-01,862e7331a2a69f3411479984413f8b7b,B*%
+%TF.FileFunction,Profile,NP*%
+%TF.FilePolarity,Positive*%
+%TF.SameCoordinates,Original*%
+%FSLAX46Y46*%
+%MOMM*%
+G04 Board outline (profile is the centre line)*
+G04 EEG-CAR-01 Rev B -- TI One Voice research programme*
+G04 Licence CC BY-SA 4.0*
+G01*
+G75*
+%LPD*%
+%TA.AperFunction,Profile*%
+%ADD10C,0.100000*%
+%TD*%
+D10*
+X0Y130000000D02*
+X150000000Y130000000D01*
+X150000000Y0D01*
+X0Y0D01*
+X0Y130000000D01*
+M02*

@@ -1,0 +1,103 @@
+FIX-01 Rev A -- board constraints, zoning and area budget
+TI One Voice research programme -- CC BY-SA 4.0 -- generated 2026-09-02 by package_v2.4/tools/fixture_gen.py
+
+1.  WHAT THIS DIRECTORY IS
+
+  It is the part of the fixture board that does not need a layout engineer: outline,
+  mounting holes, zoning and keep-out artwork, panel legend, the non-plated drill
+  programme, and the complete netlist. It is NOT a fabrication set. There is no copper,
+  no via, no plated drill, no paste and no assembly drawing, and none of those can be
+  derived from JIG-EEG-009.
+
+  The reason is stated rather than left to be discovered: laying out 83 relays and 77
+  precision resistors on two layers with a driven guard pour under the low-level tracks
+  is a person's job, and the one dimension the placement turns on -- the land pattern of
+  the Omron G6K-2F-Y -- is a datasheet this package does not carry. Section 4 below
+  computes what that land pattern has to be for the outline to be feasible at all.
+
+2.  STACK-UP AND RULES
+
+  Outline           160.0 x 100.0 mm     (JIG-EEG-009 section 1.9)
+  Layers            2 (this is the FIXTURE's board and has nothing to do
+                    with the carrier's four-layer stack-up -- section 1.9)
+  Base material     FR-4 Tg >= 150 C, 1.60 mm, 1 oz copper
+  Finish            ENIG, green mask, white both sides
+  Class             IPC-6012 class 2, IPC-A-600 class 2
+  Minimum track     0.20 mm
+  Minimum clearance 0.20 mm
+  Mounting          4 x M3, 3.2 mm non-plated, 6.0 mm keep-out, at (5, 5), (155, 5), (5, 95), (155, 95)
+  Origin            bottom-left, Y up, matching tools/gerber.py
+
+3.  ZONES
+
+  x    0.0 ..   40.0   y   0.0 .. 100.0   GUARDED COMPARTMENT
+                                U3, K101-K103, A1, U1, A2, U2, inside the soldered can
+  x   40.0 ..  150.0   y   0.0 .. 100.0   RELAY MATRIX + REFERENCE FIELD
+                                5 columns of 16 relays and the RA/RB/RC/RS resistor field
+  x  150.0 ..  160.0   y   0.0 .. 100.0   LOGIC
+                                TPIC6B595 chain, M1, U20, 5 V input, FIX-01/E I2C header
+
+  Screening can     40.0 x 60.0 mm tinplate, soldered on four sides, over
+                    x 1.0..41.0, y 20.0..80.0. JIG-EEG-009 section 1.8 gives the can as
+                    60 x 40 x 15 mm; the 60 mm side is placed along Y here so that it
+                    fits the 40 mm-wide x band section 1.9 allots it.
+
+4.  AREA BUDGET
+
+  Computed, not asserted. The question it answers is whether the outline can hold the
+  bill of materials at all, because a board that cannot is a board nobody should be
+  asked to lay out.
+
+  board area                          16000 mm2  (160.0 x 100.0)
+   83 relays at  70.0 mm2 each       5810 mm2  ASSUMED envelope, not a datasheet figure
+   77 resistors, 0603                  462 mm2
+   16 integrated circuits             1664 mm2  SOIC-20W nominal
+    1 controller module               1071 mm2  Raspberry Pi Pico outline
+   35 connector ways                  533 mm2
+      total occupied                   9540 mm2  60 % of the board
+      free                             6460 mm2
+      of which inside the can          2400 mm2  shared with the relay and resistor counts above
+
+  VERDICT: feasible at the assumed envelope. The outline carries the bill of materials
+  at 60 % occupancy against a 60 % working limit for a two-layer board of this density.
+  The largest relay land-pattern envelope the outline can carry is 70.7 mm2, so the
+  fitted relay's land pattern must be at or under that -- roughly 10.1 x 7.0 mm at the
+  aspect ratio assumed here. That is the number to check against the Omron G6K-2F-Y
+  datasheet before any layout is commissioned, and it is the only datasheet figure the
+  outline depends on. THE MARGIN IS 1.0 %. A board that closes only if the relay is at
+  or under the size assumed for it is a board that does not close if the assumption is 2
+  mm out on one axis, so this outline is provisional until the datasheet is opened --
+  and FIX-01's enclosure, the Hammond 1590D at 188 x 119 mm, has room for a larger board
+  if it needs one.
+
+5.  RULES THE LAYOUT MUST MEET
+
+  a. No switch contact in either leg of either ratio network (section 1.3). A relay
+  contact of 100 mOhm in the 20.0 Ohm bottom leg is a 0.5 % ratio error; the same
+  contact in a channel network sits against 1.59 MOhm and is invisible.
+
+  b. The SRC bus and the sixteen channel tracks are top-layer only, each inside a 0.5 mm
+  gap from the GUARD pour, with the bottom layer beneath them being GUARD and not
+  FIX_COM (section 1.9).
+
+  c. GUARD stops 2 mm short of every shroud, so the guard never leaves the box on a
+  cable (section 1.9).
+
+  d. FIX_COM reaches the DUT at exactly one point, J106 way 2 (section 1.11). It is not
+  bonded to the enclosure anywhere on the board; the single box bond is an M3 stud at
+  the cable-entry corner.
+
+  e. RP1, the readback pull-up of section 8.4, is a 10.0 kOhm 0.1 % part from M1.GP11 to
+  the CD74HC4067 common. It is inside the logic zone and its track must not run beside a
+  channel track: it is switched, and a capacitive path from it into a channel node
+  injects the switching edge into a protected input.
+
+6.  WHAT A LAYOUT CONTRACTOR IS BEING ASKED FOR
+
+  Schematic capture from the netlist in this directory, land patterns from the
+  manufacturers' datasheets, placement inside the zones of section 3, two-layer routing
+  to the rules of section 5, and a fabrication set in the house style of kicad/gerber/
+  -- Gerber X2, 4.6 metric, bottom-left origin, plus an Excellon drill programme and an
+  IPC-D-356A netlist for bare-board test. JIG-EEG-009 section 6.1 carries the labour
+  line and section 6.3 the days.
+

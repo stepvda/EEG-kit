@@ -1,0 +1,10 @@
+nets connected        141/145
+unclosed nets         4  ['AVSS', 'AVSS2', 'SPARE1', 'SPARE2']
+DRC violations        4  unclosed connection 4
+segments / vias       4249 / 705   copper 10552 mm
+relaxed connections   118 raw = 59 unique pad-to-pad (+59 re-listings of re-routed connections)
+  unique by class     ANALOG 8, ELECTRODE 2, POWER_A 8, POWER_D 41
+  unique narrowed     57   unique reduced-gap-only 2
+  POWER_D nets hit    {'V5V': 5, 'DVDD3V3': 14, 'DGND': 22}
+  unique at 0.20 mm   21
+measured minima       F.Cu 0.2, In1.Cu 0.294, In2.Cu 0.294, B.Cu 0.202, narrowest track 0.2

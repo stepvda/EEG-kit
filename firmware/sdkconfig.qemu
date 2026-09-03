@@ -1,0 +1,13 @@
+# FW-EEG-001 -- overlay for running the firmware under QEMU.
+#
+# NOT a build configuration for any real unit.  It exists so the firmware can be exercised
+# without hardware, and it differs from the shipped build in exactly one way that matters.
+#
+# QEMU's esp32s3 machine does not emulate octal PSRAM.  The shipped configuration aborts
+# when PSRAM is absent -- "Failed to init external RAM!" -- and the unit then reboots in a
+# loop.  That is defensible on real hardware, because the 6 MiB ring buffer of F-06 lives
+# in PSRAM and a unit without it cannot do its job; it is also, on a field device, a
+# failure mode that says nothing to anyone. A unit that boot-loops in a participant's home
+# cannot be told apart from a dead battery or a bad cable, and the browser tool cannot ask
+# it what is wrong because it never gets far enough to enumerate. See KNOWN_ISSUES.
+CONFIG_SPIRAM_IGNORE_NOTFOUND=y

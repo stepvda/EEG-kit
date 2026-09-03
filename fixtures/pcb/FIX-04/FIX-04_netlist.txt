@@ -1,0 +1,266 @@
+FIX-04 Rev A -- netlist
+TI One Voice research programme -- CC BY-SA 4.0 -- generated 2026-09-02 by package_v2.4/tools/fixture_gen.py
+
+Pins are named by FUNCTION and not by number. No pinout in this package is a released
+fact: JIG-EEG-009 section 1.8 names every semiconductor by manufacturer part number and
+by nothing else, so a netlist carrying pin numbers would be inventing eleven datasheets.
+Schematic capture assigns the numbers against the datasheets; the connectivity below is
+what JIG-EEG-009 specifies and it is complete.
+
+61 nets, 208 pins, 35 reference designators.
+
+NET                    PINS
+----------------------------------------------------------------------------------------
+COIL_K1                K1.A2
+                       U30.DRAIN0
+COIL_K10               K10.A2
+                       U31.DRAIN1
+COIL_K11               K11.A2
+                       U31.DRAIN2
+COIL_K12               K12.A2
+                       U31.DRAIN3
+COIL_K13               K13.A2
+                       U31.DRAIN4
+COIL_K14               K14.A2
+                       U31.DRAIN5
+COIL_K15               K15.A2
+                       U31.DRAIN6
+COIL_K16               K16.A2
+                       U31.DRAIN7
+COIL_K17               K17.A2
+                       U32.DRAIN0
+COIL_K18               K18.A2
+                       U32.DRAIN1
+COIL_K19               K19.A2
+                       U32.DRAIN2
+COIL_K2                K2.A2
+                       U30.DRAIN1
+COIL_K20               K20.A2
+                       U32.DRAIN3
+COIL_K21               K21.A2
+                       U32.DRAIN4
+COIL_K22               K22.A2
+                       U32.DRAIN5
+COIL_K23               K23.A2
+                       U32.DRAIN6
+COIL_K24               K24.A2
+                       U32.DRAIN7
+COIL_K3                K3.A2
+                       U30.DRAIN2
+COIL_K4                K4.A2
+                       U30.DRAIN3
+COIL_K5                K5.A2
+                       U30.DRAIN4
+COIL_K6                K6.A2
+                       U30.DRAIN5
+COIL_K7                K7.A2
+                       U30.DRAIN6
+COIL_K8                K8.A2
+                       U30.DRAIN7
+COIL_K9                K9.A2
+                       U31.DRAIN0
+COMMON_BUS             J404.2
+                       K1.NC1
+                       K10.NC1
+                       K11.NC1
+                       K12.NC1
+                       K13.NC1
+                       K14.NC1
+                       K15.NC1
+                       K16.NC1
+                       K17.NC1
+                       K18.NC1
+                       K19.NC1
+                       K2.NC1
+                       K20.NC1
+                       K21.NC1
+                       K22.NC1
+                       K23.NC1
+                       K24.NC1
+                       K3.NC1
+                       K4.NC1
+                       K5.NC1
+                       K6.NC1
+                       K7.NC1
+                       K8.NC1
+                       K9.NC1
+COND10_E10             J401.10
+                       K10.C1
+COND11_E11             J401.11
+                       K11.C1
+COND12_E12             J401.12
+                       K12.C1
+COND13_L1              J402.1
+                       K13.C1
+COND14_L2              J402.2
+                       K14.C1
+COND15_L3              J402.3
+                       K15.C1
+COND16_L4              J402.4
+                       K16.C1
+COND17_L5              J402.5
+                       K17.C1
+COND18_L6              J402.6
+                       K18.C1
+COND19_L7              J402.7
+                       K19.C1
+COND1_E1               J401.1
+                       J403.1
+                       K1.C1
+COND20_L8              J402.8
+                       K20.C1
+COND21_L9              J402.9
+                       K21.C1
+COND22_L10             J402.10
+                       K22.C1
+COND23_SPARE           J407.1
+                       K23.C1
+COND24_SPARE           J407.2
+                       K24.C1
+COND2_E2               J401.2
+                       J403.2
+                       K2.C1
+COND3_E3               J401.3
+                       J403.3
+                       K3.C1
+COND4_E4               J401.4
+                       K4.C1
+COND5_E5               J401.5
+                       K5.C1
+COND6_E6               J401.6
+                       K6.C1
+COND7_E7               J401.7
+                       K7.C1
+COND8_E8               J401.8
+                       K8.C1
+COND9_E9               J401.9
+                       K9.C1
+DGND                   J405.2
+                       J406.2
+                       M3.GND
+                       U30.GND
+                       U31.GND
+                       U32.GND
+EARTH_LEAD             J404.3
+INSTR_BUS              J404.1
+                       K1.NO1
+                       K10.NO1
+                       K11.NO1
+                       K12.NO1
+                       K13.NO1
+                       K14.NO1
+                       K15.NO1
+                       K16.NO1
+                       K17.NO1
+                       K18.NO1
+                       K19.NO1
+                       K2.NO1
+                       K20.NO1
+                       K21.NO1
+                       K22.NO1
+                       K23.NO1
+                       K24.NO1
+                       K3.NO1
+                       K4.NO1
+                       K5.NO1
+                       K6.NO1
+                       K7.NO1
+                       K8.NO1
+                       K9.NO1
+LID_SW                 J405.1
+                       M3.GP20
+SR_CLR                 U30.SRCLR
+                       U31.SRCLR
+                       U32.SRCLR
+SR_G                   M3.GP5
+                       U30.G
+                       U31.G
+                       U32.G
+SR_LINK_U30_U31        U30.SEROUT
+                       U31.SERIN
+SR_LINK_U31_U32        U31.SEROUT
+                       U32.SERIN
+SR_RCK                 M3.GP4
+                       U30.RCK
+                       U31.RCK
+                       U32.RCK
+SR_SER                 M3.GP3
+                       U30.SERIN
+SR_SRCK                M3.GP2
+                       U30.SRCK
+                       U31.SRCK
+                       U32.SRCK
+V5                     J406.1
+                       K1.A1
+                       K10.A1
+                       K11.A1
+                       K12.A1
+                       K13.A1
+                       K14.A1
+                       K15.A1
+                       K16.A1
+                       K17.A1
+                       K18.A1
+                       K19.A1
+                       K2.A1
+                       K20.A1
+                       K21.A1
+                       K22.A1
+                       K23.A1
+                       K24.A1
+                       K3.A1
+                       K4.A1
+                       K5.A1
+                       K6.A1
+                       K7.A1
+                       K8.A1
+                       K9.A1
+                       M3.VSYS
+                       U30.VCC
+                       U31.VCC
+                       U32.VCC
+
+NETS WITH ONE PIN, AND WHY
+----------------------------------------------------------------------------------------
+  EARTH_LEAD
+    FIX-04/C's protective-earth lead. It leaves on J404 way 3 and reaches nothing else
+    on the board, which is the point: the earth is the measurement's other terminal, not
+    a fixture rail.
+
+REFERENCE DESIGNATORS
+----------------------------------------------------------------------------------------
+  J401        12 pins used
+  J402        10 pins used
+  J403         3 pins used
+  J404         3 pins used
+  J405         2 pins used
+  J406         2 pins used
+  J407         2 pins used
+  K1           5 pins used
+  K2           5 pins used
+  K3           5 pins used
+  K4           5 pins used
+  K5           5 pins used
+  K6           5 pins used
+  K7           5 pins used
+  K8           5 pins used
+  K9           5 pins used
+  K10          5 pins used
+  K11          5 pins used
+  K12          5 pins used
+  K13          5 pins used
+  K14          5 pins used
+  K15          5 pins used
+  K16          5 pins used
+  K17          5 pins used
+  K18          5 pins used
+  K19          5 pins used
+  K20          5 pins used
+  K21          5 pins used
+  K22          5 pins used
+  K23          5 pins used
+  K24          5 pins used
+  M3           7 pins used
+  U30         16 pins used
+  U31         16 pins used
+  U32         15 pins used

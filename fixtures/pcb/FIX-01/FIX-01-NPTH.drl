@@ -1,0 +1,20 @@
+M48
+; FIX-01 Rev A -- non-plated holes
+; TI One Voice research programme, CC BY-SA 4.0
+; generated 2026-09-02 from package_v2.4/tools/fixture_gen.py
+; sizes are FINISHED hole diameters
+; NON-PLATED ONLY.  There is no plated drill programme for this board because
+; there is no copper layer -- see the README in this directory.
+FMAT,2
+METRIC,TZ
+; #@! TF.FileFunction,NonPlated,1,2,NPTH
+T01C3.200
+%
+G90
+G05
+T01
+X5.000Y5.000
+X155.000Y5.000
+X5.000Y95.000
+X155.000Y95.000
+M30

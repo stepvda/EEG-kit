@@ -1,0 +1,145 @@
+EEG-CAR-01 Rev B -- design rule check report
+Generated 2026-09-01 by package_v2.4/tools/drc.py from design.py.
+==============================================================================
+
+RULES APPLIED
+  copper-to-copper, different nets .......... 0.20 mm
+  electrode nets to anything else .......... 0.35 mm
+  minimum track width ...................... 0.20 mm
+  copper to board edge ..................... 0.25 mm
+  copper to a non-plated hole .............. 2.00 mm
+  annular ring ............................. 0.15 mm
+  smallest plated hole ..................... 0.30 mm
+
+MEASURED
+  min clearance F.Cu                   0.2
+  min clearance In1.Cu                 0.294
+  min clearance In2.Cu                 0.294
+  min clearance B.Cu                   0.202
+  narrowest track                      0.2
+  tracks below 0.25 mm                 178
+  duplicate segments                   0
+  duplicate via positions              0
+  unique segments                      4249
+  unique vias                          705
+  non-plated holes                     10
+  smallest plated hole                 0.3
+  largest plated hole                  1.7
+  zone crossings                       0
+  AGND_REF / DGND bridges              1
+  HARN_SHIELD / DGND bridges           1
+  nets                                 145
+  nets fully connected                 141
+  unclosed nets                        4
+  unclosed nets with NO copper at all  0
+
+  segments 4249   vias 705   pour islands 4
+
+VIOLATIONS: 7
+
+  isolation keep-out  (3)
+    track DGND #3896 (DGND) is inside the strip
+    track DGND #3897 (DGND) is inside the strip
+    track DGND #3898 (DGND) is inside the strip
+
+  unclosed connection  (4)
+    net AVSS: pad U7.2, pad J23.6 is not joined to the rest of the net
+    net AVSS2: pad J29.2 is not joined to the rest of the net
+    net SPARE1: pad J4.7 is not joined to the rest of the net
+    net SPARE2: pad R16.2 is not joined to the rest of the net
+
+CONNECTIONS THE ROUTER HAD TO RELAX: 118
+  43 took a conductor narrower than the 0.25 mm preferred width;
+  75 kept full width and took a reduced gap instead.
+  All are at or above the 0.20 mm minimum conductor and the 0.20 mm
+  minimum gap (0.35 mm on electrode nets).  This list counts
+  CONNECTIONS -- pad to pad.  The 'tracks below 0.25 mm' figure under
+  MEASURED counts SEGMENTS, and one connection is many segments, which
+  is why the two numbers differ.  Listed so the layout reviewer can
+  see exactly where the router had to squeeze.
+
+  narrower than 0.25 mm  (43)
+    ENV1_HW        D20.1     -> R21.1     0.20 mm track / 0.20 mm gap
+    ENV1_SUM       R22.2     -> R23.2     0.20 mm track / 0.20 mm gap
+    ENV1_ABS       R25.1     -> U1.7      0.20 mm track / 0.20 mm gap
+    ENV3_HW        D60.1     -> R61.1     0.20 mm track / 0.20 mm gap
+    CMP_RAW        R82.1     -> U7.1      0.20 mm track / 0.20 mm gap
+    V5V            C73.1     -> J25.3     0.20 mm track / 0.20 mm gap
+    AVSS           C101.1    -> J23.2     0.20 mm track / 0.20 mm gap
+    BIASOUT        J2.10     -> R11.1     0.20 mm track / 0.35 mm gap
+    AVSS           U1.11     -> U7.2      0.20 mm track / 0.20 mm gap
+    AVSS           U7.2      -> U2.11     0.20 mm track / 0.20 mm gap
+    AVSS           U1.11     -> U7.2      0.20 mm track / 0.20 mm gap
+    AVSS           U7.2      -> U2.11     0.20 mm track / 0.20 mm gap
+    AVSS           D14.1     -> D13.1     0.20 mm track / 0.20 mm gap
+    BIASOUT        J2.10     -> R11.1     0.20 mm track / 0.35 mm gap
+    BIASOUT        J2.10     -> R11.1     0.20 mm track / 0.35 mm gap
+    BIASOUT        J2.10     -> R11.1     0.20 mm track / 0.35 mm gap
+    AVSS           C101.1    -> J23.2     0.20 mm track / 0.20 mm gap
+    AVSS           J23.2     -> D1.1      0.20 mm track / 0.20 mm gap
+    CMP_RAW        R82.1     -> U7.1      0.20 mm track / 0.20 mm gap
+    DVDD3V3        J1.1      -> C80.1     0.20 mm track / 0.20 mm gap
+    AVSS           C101.1    -> J23.2     0.20 mm track / 0.20 mm gap
+    AVSS           U1.11     -> U7.2      0.20 mm track / 0.20 mm gap
+    AVSS           U7.2      -> U2.11     0.20 mm track / 0.20 mm gap
+    AVDD           J23.5     -> C102.1    0.20 mm track / 0.20 mm gap
+    BIASOUT        J2.10     -> R11.1     0.20 mm track / 0.35 mm gap
+    AVSS           C101.1    -> J23.2     0.20 mm track / 0.20 mm gap
+    AVSS           C101.1    -> J23.2     0.20 mm track / 0.20 mm gap
+    AVSS           C101.1    -> J23.2     0.20 mm track / 0.20 mm gap
+    SPARE2         R16.2     -> C16.1     0.20 mm track / 0.35 mm gap
+    AVSS           C101.1    -> J23.2     0.20 mm track / 0.20 mm gap
+    ENV_STIM       TP7.1     -> U7.3      0.20 mm track / 0.20 mm gap
+    CMP_RAW        R82.1     -> U7.1      0.20 mm track / 0.20 mm gap
+    AVDD           J23.5     -> C102.1    0.20 mm track / 0.20 mm gap
+    AVDD           J23.5     -> C102.1    0.20 mm track / 0.20 mm gap
+    AVSS           C101.1    -> J23.2     0.20 mm track / 0.20 mm gap
+    AVSS           U1.11     -> U7.2      0.20 mm track / 0.20 mm gap
+    AVSS           U7.2      -> U2.11     0.20 mm track / 0.20 mm gap
+    AVDD           J23.5     -> C102.1    0.20 mm track / 0.20 mm gap
+    DGND           J18.4     -> J28.2     0.20 mm track / 0.20 mm gap
+    DGND           J28.2     -> C52.2     0.20 mm track / 0.20 mm gap
+    ... and 3 more
+
+  full width, reduced gap  (75)
+    V5V            J3.11     -> J6.21     0.56 mm track / 0.25 mm gap
+    V5V            J6.21     -> J1.11     0.56 mm track / 0.25 mm gap
+    DVDD3V3        C74.1     -> J20.1     0.56 mm track / 0.25 mm gap
+    DVDD3V3        J21.1     -> R50.2     0.56 mm track / 0.25 mm gap
+    DVDD3V3        R50.2     -> R51.2     0.56 mm track / 0.25 mm gap
+    DVDD3V3        R52.2     -> J28.1     0.56 mm track / 0.25 mm gap
+    DVDD3V3        J6.2      -> R94.2     0.56 mm track / 0.25 mm gap
+    DVDD3V3        C83.1     -> J11.1     0.56 mm track / 0.25 mm gap
+    AVDD           C63.1     -> U3.4      0.28 mm track / 0.25 mm gap
+    AVDD           C63.1     -> U3.4      0.28 mm track / 0.25 mm gap
+    AVDD           C63.1     -> U3.4      0.28 mm track / 0.25 mm gap
+    AVDD           C63.1     -> U3.4      0.28 mm track / 0.25 mm gap
+    AVDD           C63.1     -> U3.4      0.28 mm track / 0.25 mm gap
+    AVDD           C63.1     -> U3.4      0.28 mm track / 0.25 mm gap
+    AVDD           C63.1     -> U3.4      0.28 mm track / 0.25 mm gap
+    AVDD           U3.4      -> D11.2     0.28 mm track / 0.25 mm gap
+    AVDD           C63.1     -> U3.4      0.28 mm track / 0.25 mm gap
+    AVDD           C63.1     -> U3.4      0.28 mm track / 0.25 mm gap
+    AVDD           C63.1     -> U3.4      0.28 mm track / 0.25 mm gap
+    AVDD           C63.1     -> U3.4      0.28 mm track / 0.25 mm gap
+    AVDD           C63.1     -> U3.4      0.28 mm track / 0.25 mm gap
+    AVDD           C63.1     -> U3.4      0.28 mm track / 0.25 mm gap
+    AVDD           C63.1     -> U3.4      0.28 mm track / 0.25 mm gap
+    AVDD           C63.1     -> U3.4      0.28 mm track / 0.25 mm gap
+    DVDD3V3        C74.1     -> J20.1     0.56 mm track / 0.25 mm gap
+    DVDD3V3        J21.1     -> R50.2     0.56 mm track / 0.25 mm gap
+    DVDD3V3        R50.2     -> R51.2     0.56 mm track / 0.25 mm gap
+    DVDD3V3        R52.2     -> J28.1     0.56 mm track / 0.25 mm gap
+    DVDD3V3        J6.2      -> R94.2     0.56 mm track / 0.25 mm gap
+    DVDD3V3        C83.1     -> J11.1     0.56 mm track / 0.25 mm gap
+    V5V            J1.11     -> C72.1     0.56 mm track / 0.25 mm gap
+    V5V            J6.21     -> J25.3     0.56 mm track / 0.25 mm gap
+    DVDD3V3        D23.2     -> R50.2     0.56 mm track / 0.25 mm gap
+    DVDD3V3        TP12.1    -> R50.2     0.56 mm track / 0.25 mm gap
+    DVDD3V3        C86.1     -> R50.2     0.56 mm track / 0.25 mm gap
+    DVDD3V3        C90.1     -> R50.2     0.56 mm track / 0.25 mm gap
+    DVDD3V3        J28.1     -> R50.2     0.56 mm track / 0.25 mm gap
+    DVDD3V3        R52.2     -> R50.2     0.56 mm track / 0.25 mm gap
+    DVDD3V3        R89.1     -> R50.2     0.56 mm track / 0.25 mm gap
+    AVDD           C63.1     -> U3.4      0.28 mm track / 0.25 mm gap
+    ... and 35 more

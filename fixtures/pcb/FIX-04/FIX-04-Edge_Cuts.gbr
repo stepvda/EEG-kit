@@ -1,0 +1,25 @@
+%TF.GenerationSoftware,TI One Voice,package_v2.4/tools/fixture_gen.py,1.0*%
+%TF.CreationDate,2026-09-02T00:00:00+01:00*%
+%TF.ProjectId,FIX-04,e8c44fd9fd0fbab170c7c103ecde3ca7,A*%
+%TF.FileFunction,Profile,NP*%
+%TF.FilePolarity,Positive*%
+%TF.SameCoordinates,Original*%
+%FSLAX46Y46*%
+%MOMM*%
+G04 Board outline (profile is the centre line)*
+G04 FIX-04 Rev A -- TI One Voice research programme*
+G04 NOT A FABRICATION SET -- no copper layer exists for this board*
+G04 Licence CC BY-SA 4.0*
+G01*
+G75*
+%LPD*%
+%TA.AperFunction,Profile*%
+%ADD10C,0.100000*%
+%TD*%
+D10*
+X0Y0D02*
+X120000000Y0D01*
+X120000000Y80000000D01*
+X0Y80000000D01*
+X0Y0D01*
+M02*

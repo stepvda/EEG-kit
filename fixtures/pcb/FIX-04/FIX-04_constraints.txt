@@ -1,0 +1,88 @@
+FIX-04 Rev A -- board constraints, zoning and area budget
+TI One Voice research programme -- CC BY-SA 4.0 -- generated 2026-09-02 by package_v2.4/tools/fixture_gen.py
+
+1.  WHAT THIS DIRECTORY IS
+
+  It is the part of the fixture board that does not need a layout engineer: outline,
+  mounting holes, zoning and keep-out artwork, panel legend, the non-plated drill
+  programme, and the complete netlist. It is NOT a fabrication set. There is no copper,
+  no via, no plated drill, no paste and no assembly drawing, and none of those can be
+  derived from JIG-EEG-009.
+
+  The reason is stated rather than left to be discovered: laying out 24 relays and 0
+  precision resistors on two layers with a driven guard pour under the low-level tracks
+  is a person's job, and the one dimension the placement turns on -- the land pattern of
+  the Omron G6K-2F-Y -- is a datasheet this package does not carry. Section 4 below
+  computes what that land pattern has to be for the outline to be feasible at all.
+
+2.  STACK-UP AND RULES
+
+  Outline           120.0 x 80.0 mm     (this file; JIG-EEG-009 section 4.1 gives the card no outline)
+  Layers            2 (this is the FIXTURE's board and has nothing to do
+                    with the carrier's four-layer stack-up -- section 1.9)
+  Base material     FR-4 Tg >= 150 C, 1.60 mm, 1 oz copper
+  Finish            ENIG, green mask, white both sides
+  Class             IPC-6012 class 2, IPC-A-600 class 2
+  Minimum track     0.20 mm
+  Minimum clearance 0.20 mm
+  Mounting          4 x M3, 3.2 mm non-plated, 6.0 mm keep-out, at (5, 5), (115, 5), (5, 75), (115, 75)
+  Origin            bottom-left, Y up, matching tools/gerber.py
+
+3.  ZONES
+
+  x    0.0 ..   85.0   y   0.0 ..  80.0   SCANNER MATRIX
+                                24 DPDT relays, four rows of six, instrument bus and common bus
+  x   85.0 ..  120.0   y   0.0 ..  80.0   LOGIC AND ENTRY
+                                U30-U32, M3, 5 V input, lid interlock, instrument leads
+
+4.  AREA BUDGET
+
+  Computed, not asserted. The question it answers is whether the outline can hold the
+  bill of materials at all, because a board that cannot is a board nobody should be
+  asked to lay out.
+
+  board area                           9600 mm2  (120.0 x 80.0)
+   24 relays at  70.0 mm2 each       1680 mm2  ASSUMED envelope, not a datasheet figure
+    0 resistors, 0603                    0 mm2
+    3 integrated circuits              312 mm2  SOIC-20W nominal
+    1 controller module               1071 mm2  Raspberry Pi Pico outline
+   34 connector ways                  518 mm2
+      total occupied                   3581 mm2  37 % of the board
+      free                             6019 mm2
+
+  VERDICT: feasible at the assumed envelope. The outline carries the bill of materials
+  at 37 % occupancy against a 60 % working limit for a two-layer board of this density.
+  The largest relay land-pattern envelope the outline can carry is 160.8 mm2, so the
+  fitted relay's land pattern must be at or under that -- roughly 15.2 x 10.6 mm at the
+  aspect ratio assumed here. That is the number to check against the Omron G6K-2F-Y
+  datasheet before any layout is commissioned, and it is the only datasheet figure the
+  outline depends on.
+
+5.  RULES THE LAYOUT MUST MEET
+
+  a. 500 V DC creepage. Every conductor that can carry the insulation tester's output --
+  the instrument bus, the twenty-four relay common and normally-open contacts and J404
+  way 1 -- keeps at least 3.0 mm of creepage and clearance to every other conductor and
+  to the mounting holes. That is this file's rule, taken as the pollution-degree-2
+  figure for 500 V DC on FR-4, and it must be checked against the clearance table of the
+  standard the programme's safety review adopts. WH-EEG-008 H4 and H10 are what put 500
+  V on this card.
+
+  b. The common bus is a bus and not a plane: every relay's normally-closed contact
+  reaches it, and it leaves the board on J404 way 2 only. It is not bonded to DGND
+  anywhere on the board, because the insulation measurement is between two floating
+  groups and a bond to the controller's ground would put the controller inside the
+  measurement.
+
+  c. The lid interlock switch reaches M3 directly and does not pass through the relay
+  matrix. An interlock routed through the thing it protects is not an interlock.
+
+6.  WHAT A LAYOUT CONTRACTOR IS BEING ASKED FOR
+
+  Schematic capture from the netlist in this directory, land patterns from the
+  manufacturers' datasheets, placement inside the zones of section 3, two-layer routing
+  to the rules of section 5, and a fabrication set in the house style of kicad/gerber/
+  -- Gerber X2, 4.6 metric, bottom-left origin, plus an Excellon drill programme and an
+  IPC-D-356A netlist for bare-board test. JIG-EEG-009 section 6.1 carries the labour
+  line and section 6.3 the days.
+

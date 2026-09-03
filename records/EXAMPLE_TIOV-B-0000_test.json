@@ -1,0 +1,1208 @@
+{
+  "schema": "https://one.witysk.org/eeg-kit/schema/TST-EEG-004_RevC_unit_test_record.schema.json",
+  "record_type": "example",
+  "identity": {
+    "unit_serial": "TIOV-B-0000",
+    "hw_rev": "EEG-CAR-01-B",
+    "gerber_revision": "EXAMPLE-PLACEHOLDER",
+    "carrier_board_serial_or_panel_position": "EXAMPLE-PLACEHOLDER",
+    "firmware_version": "EXAMPLE-PLACEHOLDER",
+    "firmware_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "provisioning_script_version": "EXAMPLE-PLACEHOLDER",
+    "tool_eeg_022_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "stream_decoder": null,
+    "atecc_factory_serial": "000000000000000000",
+    "pubkey_pem": "-----BEGIN PUBLIC KEY-----\nEXAMPLE-PLACEHOLDER\n-----END PUBLIC KEY-----\n",
+    "key_fingerprint": "0000000000000000",
+    "vid": "0x0000",
+    "pid": "0x0000",
+    "modules": {
+      "ads1299_a": {
+        "serial_or_lot": "EXAMPLE-PLACEHOLDER",
+        "supplier": "EXAMPLE-PLACEHOLDER"
+      },
+      "ads1299_b": {
+        "serial_or_lot": "EXAMPLE-PLACEHOLDER",
+        "supplier": "EXAMPLE-PLACEHOLDER"
+      },
+      "devkitc1": {
+        "serial_or_lot": "EXAMPLE-PLACEHOLDER",
+        "supplier": "EXAMPLE-PLACEHOLDER"
+      },
+      "adum4160": {
+        "serial_or_lot": "EXAMPLE-PLACEHOLDER",
+        "supplier": "EXAMPLE-PLACEHOLDER"
+      },
+      "es8388": {
+        "serial_or_lot": "EXAMPLE-PLACEHOLDER",
+        "supplier": "EXAMPLE-PLACEHOLDER"
+      },
+      "charger": {
+        "serial_or_lot": "EXAMPLE-PLACEHOLDER",
+        "supplier": "EXAMPLE-PLACEHOLDER"
+      },
+      "gauge": {
+        "serial_or_lot": "EXAMPLE-PLACEHOLDER",
+        "supplier": "EXAMPLE-PLACEHOLDER"
+      },
+      "shift_register": {
+        "serial_or_lot": "EXAMPLE-PLACEHOLDER",
+        "supplier": "EXAMPLE-PLACEHOLDER"
+      },
+      "microsd_breakout": {
+        "serial_or_lot": "EXAMPLE-PLACEHOLDER",
+        "supplier": "EXAMPLE-PLACEHOLDER"
+      },
+      "preamp": {
+        "serial_or_lot": "EXAMPLE-PLACEHOLDER",
+        "supplier": "EXAMPLE-PLACEHOLDER"
+      },
+      "cell": {
+        "serial_or_lot": "EXAMPLE-PLACEHOLDER",
+        "supplier": "EXAMPLE-PLACEHOLDER"
+      },
+      "card": {
+        "serial_or_lot": "EXAMPLE-PLACEHOLDER",
+        "supplier": "EXAMPLE-PLACEHOLDER"
+      }
+    },
+    "build_lot": "EXAMPLE-PLACEHOLDER",
+    "manufacturer": "EXAMPLE-PLACEHOLDER",
+    "operator_id": "EXAMPLE-PLACEHOLDER",
+    "qa_id": "EXAMPLE-PLACEHOLDER",
+    "date_time": "1970-01-01T00:00:00Z",
+    "fixture_serial": "EXAMPLE-PLACEHOLDER",
+    "ambient_temperature_c": -9999.0,
+    "relative_humidity_percent": -9999.0,
+    "instruments": [
+      {
+        "asset_number": "EXAMPLE-PLACEHOLDER",
+        "description": "EXAMPLE-PLACEHOLDER",
+        "calibration_due": "1970-01-01"
+      }
+    ]
+  },
+  "results": {
+    "T00": {
+      "step": "T00",
+      "unit": "attribute; V for OCV",
+      "limit": "Every check pass; DevKit variant exactly N16R8; cell OCV in band; documents present",
+      "uncertainty": "Attribute checks. OCV +/- 0.5 mV; AVDD/AVSS +/- 1 mV",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "modules": [
+          {
+            "module_type": "EXAMPLE-PLACEHOLDER",
+            "quantity": 9999,
+            "lot": "EXAMPLE-PLACEHOLDER",
+            "verdict": "DEFERRED"
+          }
+        ],
+        "ads1299_marking_photograph_ref": "EXAMPLE-PLACEHOLDER",
+        "devkit_flash_mb": 16,
+        "devkit_psram_mb": 8,
+        "atecc_factory_serials": [
+          "EXAMPLE-PLACEHOLDER"
+        ],
+        "cell_ocv_v": [
+          -9999.0
+        ],
+        "isolator_host_connector": "USB-B",
+        "c1_to_c16_part_number": "Murata GCM1885C1H103JA16D",
+        "certificate_references": [
+          "EXAMPLE-PLACEHOLDER"
+        ]
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T0": {
+      "step": "T0",
+      "unit": "Ohm, MOhm, attribute",
+      "limit": "Continuity <= 10 Ohm, and <= 5 Ohm on VBAT, VSYS, V5V, DVDD3V3, DGND, AGND_REF; isolation >= 10 MOhm at 100 V, and >= 100 MOhm at 250 V for AGND_REF to DGND; no copper in the keep-out on any layer; NPTH holes unplated",
+      "uncertainty": "Tester repeatability, typically +/- 2 % of reading",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "et_certificate_ref": "EXAMPLE-PLACEHOLDER",
+        "board_serial_or_panel_position": "EXAMPLE-PLACEHOLDER",
+        "checks": {
+          "a_agnd_ref_to_dgnd_isolation_Mohm": -9999.0,
+          "b_harn_shield_isolation_Mohm": [
+            -9999.0,
+            -9999.0
+          ],
+          "c_keepout_clear_all_four_layers": false,
+          "d_npth_holes_unplated": false
+        },
+        "stackup_as_built_mm": -9999.0,
+        "netlist_file_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T1": {
+      "step": "T1",
+      "unit": "attribute",
+      "limit": "No class 2 defect; every explicit check pass",
+      "uncertainty": "Attribute inspection; two-person check on the first five boards of a lot",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "defect_codes": [],
+        "rework_image_refs": [],
+        "two_person_check": false,
+        "explicit_checks_pass": false
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T2": {
+      "step": "T2",
+      "unit": "Ohm",
+      "limit": "All present and continuous, < 1 Ohm per checked pin; every jumper keyed at both ends",
+      "uncertainty": "Attribute",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "module_assemblies_present": 9999,
+        "checked_pin_resistances_ohm": [
+          -9999.0
+        ],
+        "keying_shroud_fitted": false,
+        "insertion_cycles": {}
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T3": {
+      "step": "T3",
+      "unit": "mA, V, degC",
+      "limit": "Idle < 90 mA; recording at 1000 Hz < 150 mA; rails within 3 %; regulator case temperature < 85 degC",
+      "uncertainty": "Combined 0.28 %, U(k=2) = 0.56 %, i.e. +/- 0.8 mA at 150 mA. Temperature +/- 2 degC",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "current_idle_ma": -9999.0,
+        "current_recording_1000hz_ma": -9999.0,
+        "rail_voltages_v": [
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "regulator_case_temperature_c": -9999.0,
+        "supply_voltage_measured_v": -9999.0,
+        "ambient_temperature_c": -9999.0
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T4": {
+      "step": "T4",
+      "unit": "mA",
+      "limit": "Charge current < 1 mA while the session is active",
+      "uncertainty": "Shunt 0.1 %, DMM 10 uV, combined U(k=2) < 30 uA. TUR against 1 mA is 33:1",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "charge_current_session_active_ma": -9999.0,
+        "negative_control_charge_current_ma": -9999.0
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T5": {
+      "step": "T5",
+      "unit": "attribute",
+      "limit": "Both interfaces visible on all three hosts with no driver installation; VID and PID equal to the values programmed in T6; iSerial equal to the unit serial",
+      "uncertainty": "Attribute",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "hosts": [
+          {
+            "os_build": "EXAMPLE-PLACEHOLDER",
+            "cdc_acm_visible": false,
+            "winusb_vendor_interface_visible": false,
+            "verdict": "DEFERRED"
+          },
+          {
+            "os_build": "EXAMPLE-PLACEHOLDER",
+            "cdc_acm_visible": false,
+            "winusb_vendor_interface_visible": false,
+            "verdict": "DEFERRED"
+          },
+          {
+            "os_build": "EXAMPLE-PLACEHOLDER",
+            "cdc_acm_visible": false,
+            "winusb_vendor_interface_visible": false,
+            "verdict": "DEFERRED"
+          }
+        ],
+        "vid": "0x0000",
+        "pid": "0x0000",
+        "iserial_t5b": "TIOV-B-0000",
+        "descriptor_dump_ref": "EXAMPLE-PLACEHOLDER",
+        "wh09_pigtail_in_path": false
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T6": {
+      "step": "T6",
+      "unit": "attribute",
+      "limit": "Key generated, public key exported, lock confirmed by readback, constants read back byte-identical to those written",
+      "uncertainty": "Attribute",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "atecc_factory_serial": "000000000000000000",
+        "key_fingerprint": "0000000000000000",
+        "config_zone_locked": false,
+        "constants_readback_identical": false
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T7": {
+      "step": "T7",
+      "unit": "ppm of nominal",
+      "limit": "Matching between the eight EEG channels within 0.5 % after calibration, at the 100 uV and 1 mV points only. The 10 uV point is a linearity check with a +/- 5 % limit",
+      "uncertainty": "U(k=2) = 0.134 % at 100 uV and 1 mV; U(k=2) = 0.22 % at 10 uV (JIG-EEG-009 section 1.4)",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "a_eeg_gains_ppm": [
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "a_gain_constants_ppm": [
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "b_emg_gains_ppm": [
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "c_spare_gains_ppm": [
+          -9999.0,
+          -9999.0
+        ],
+        "divider_input_v": [
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "generator_frequency_hz": -9999.0,
+        "record_lengths_s": [
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ]
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T8": {
+      "step": "T8",
+      "unit": "uV RMS",
+      "limit": "<= 1.0 uV RMS on each EEG channel; pass on the median epoch. Calculated expectation 0.27 uV RMS with the 47 kOhm fitted",
+      "uncertainty": "Combined 2.2 %, U(k=2) = 4.3 %, i.e. +/- 0.04 uV. TUR against 1.0 uV is 23:1",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "whole_record_rms_uv": [
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "epoch_median_rms_uv": [
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "excluded_bins_hz": [
+          -9999.0,
+          -9999.0
+        ],
+        "ambient_temperature_c": -9999.0,
+        "fitted_series_resistor_kohm": -9999.0
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T9": {
+      "step": "T9",
+      "unit": "dB",
+      "limit": "Crosstalk < -80 dB, measured on the carrier; CMRR >= 100 dB -- a provisional limit that TST-EEG-004 sets and no requirement carries (section 16 item 15)",
+      "uncertainty": "Crosstalk U(k=2) = 0.4 dB at -80 dB with a 600 s record; CMRR U(k=2) = 0.5 dB",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "a_crosstalk_db": [
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "a_detection_floor_db": [
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "a_aggressor_off_ambient_db": [
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "a_aggressor_amplitude_mv_measured": -9999.0,
+        "b_cmrr_db": [
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "c_type_test_reference": null
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T10": {
+      "step": "T10",
+      "unit": "Ohm",
+      "limit": "R_off within the fitted series-resistor value +/- 5 %, and after correction each of the three reference points reported within 15 %",
+      "uncertainty": "See TST-EEG-004 T10",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "raw_impedances": [
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "constants": [
+          {
+            "r_off_ohm": -9999.0,
+            "k": -9999.0
+          },
+          {
+            "r_off_ohm": -9999.0,
+            "k": -9999.0
+          },
+          {
+            "r_off_ohm": -9999.0,
+            "k": -9999.0
+          },
+          {
+            "r_off_ohm": -9999.0,
+            "k": -9999.0
+          },
+          {
+            "r_off_ohm": -9999.0,
+            "k": -9999.0
+          },
+          {
+            "r_off_ohm": -9999.0,
+            "k": -9999.0
+          },
+          {
+            "r_off_ohm": -9999.0,
+            "k": -9999.0
+          },
+          {
+            "r_off_ohm": -9999.0,
+            "k": -9999.0
+          }
+        ]
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T11": {
+      "step": "T11",
+      "unit": "ratio, cd/m2, Hz",
+      "limit": "Mapping correct site for site, LED1 to LED8 against helmet sites 1 to 8; green state ratio R/G <= 0.30; red state R/G >= 3.0; amber state 0.6 <= R/G <= 1.7; both dark states below 2 % of the green-state luminance",
+      "uncertainty": "See TST-EEG-004 T11",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "colour_ratios": [
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "dark_state_luminances": [
+          -9999.0,
+          -9999.0
+        ],
+        "light_phase_hz": -9999.0,
+        "mapping_correct": false
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T12": {
+      "step": "T12",
+      "unit": "uV per full scale, samples, mV, Hz",
+      "limit": "Scaling within +/- 5 % of 100 mV at the converter input. Group-delay spread <= 2 samples. Comparator trips between 45 and 60 mV. T12d AC corner <= 2 Hz. T12e f0 between 42 and 58 Hz",
+      "uncertainty": "See TST-EEG-004 T12",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "a_scalings": [
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "b_group_delay_median_samples": [
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "b_group_delay_iqr_samples": [
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "c_comparator_threshold_mv": -9999.0,
+        "d_ac_coupling_corner_hz": -9999.0,
+        "e_lowpass_f0_hz": -9999.0
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T13": {
+      "step": "T13",
+      "unit": "samples",
+      "limit": "Median <= 1 sample, 95th percentile <= 2 samples",
+      "uncertainty": "See TST-EEG-004 T13",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "median_samples": -9999.0,
+        "p95_samples": -9999.0,
+        "residuals": [
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "group_delay_constant_used_samples": -9999.0
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T14": {
+      "step": "T14",
+      "unit": "frames, ms",
+      "limit": "Zero missing sequence numbers, and the card copy identical to the host copy",
+      "uncertainty": "See TST-EEG-004 T14",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "frames_written": 9999,
+        "frames_expected": 9999,
+        "frames_missing": 9999,
+        "card_versus_host_mismatches": 9999,
+        "mean_write_latency_ms": -9999.0,
+        "worst_write_latency_ms": -9999.0,
+        "card_part_number": "EXAMPLE-PLACEHOLDER",
+        "card_serial": "EXAMPLE-PLACEHOLDER"
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T15": {
+      "step": "T15",
+      "unit": "frames, kB/s, s",
+      "limit": "Complete recovery of the 60 s, no reset of the sample counter, GAP frames only beyond the declared ring depth, a declared ring depth of at least 90 s, and a backfill rate of at least three times the live rate (F-12)",
+      "uncertainty": "See TST-EEG-004 T15",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "frames_recovered": 9999,
+        "gap_frame_index_ranges": [],
+        "backfill_rate_kb_s": -9999.0,
+        "declared_ring_depth_s": -9999.0,
+        "card_recovery_300s": "DEFERRED"
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T16": {
+      "step": "T16",
+      "unit": "blocks",
+      "limit": "Every block verifies; the chain is unbroken from the session identifier to the last block",
+      "uncertainty": "See TST-EEG-004 T16",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "blocks_verified": 9999,
+        "blocks_total": 9999,
+        "session_identifier": "EXAMPLE-PLACEHOLDER",
+        "key_fingerprint_used": "0000000000000000"
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T17": {
+      "step": "T17",
+      "unit": "events, dB, dBu, %",
+      "limit": "30 of 30 presses produce exactly one event; mute attenuation >= 60 dB; headphone level within 1 dB of target with THD <= 0.1 %; clamp register value equal to the T28 lot value",
+      "uncertainty": "See TST-EEG-004 T17",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "button_event_counts": [
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "mute_attenuation_db": -9999.0,
+        "headphone_level_dbu": -9999.0,
+        "thd_percent": -9999.0,
+        "level_register_value": 9999,
+        "clamp_register_value": 9999
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T18": {
+      "step": "T18",
+      "unit": "attribute, N.m, mm",
+      "limit": "Complete; label content matches the record and the iSerial read in T5b, character for character",
+      "uncertainty": "Attribute",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "torque_values_nm": [
+          -9999.0
+        ],
+        "measured_stack_height_mm": -9999.0,
+        "label_photograph_ref": "EXAMPLE-PLACEHOLDER",
+        "label_matches_record_and_iserial": false,
+        "packing_list_signed": false,
+        "case_part_number": "EXAMPLE-PLACEHOLDER",
+        "foam_part_numbers": [
+          "EXAMPLE-PLACEHOLDER"
+        ]
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T19": {
+      "step": "T19",
+      "unit": "mOhm, MOhm",
+      "limit": "Fitted: <= 50 mOhm across R90 and across R91. Lifted, modules disconnected: >= 10 MOhm",
+      "uncertainty": "See TST-EEG-004 T19",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "r90_mohm": -9999.0,
+        "r91_mohm": -9999.0,
+        "lifted_Mohm": null,
+        "lifted_reason": null
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T20": {
+      "step": "T20",
+      "unit": "GOhm, V, %",
+      "limit": ">= 1 GOhm. Where the module carries a cross-barrier Y-capacitor the limit is the value recorded for that module type at T00",
+      "uncertainty": "See TST-EEG-004 T20",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "applied_voltage_v": -9999.0,
+        "measured_resistance_Gohm": -9999.0,
+        "dwell_s": -9999.0,
+        "relative_humidity_percent": -9999.0,
+        "module_type": "EXAMPLE-PLACEHOLDER",
+        "module_lot": "EXAMPLE-PLACEHOLDER"
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T21": {
+      "step": "T21",
+      "unit": "V, mA, attribute",
+      "limit": "Junction voltage 2.85 to 3.15 V; session start refused with the defined ACK code; CHG_CE asserted throughout; state clears within one STATUS frame",
+      "uncertainty": "See TST-EEG-004 T21",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "junction_voltage_v": -9999.0,
+        "ack_code": "EXAMPLE-PLACEHOLDER",
+        "chg_ce_asserted_throughout": false,
+        "charge_current_ma": -9999.0,
+        "cleardown_latency_frames": 9999
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T22": {
+      "step": "T22",
+      "unit": "dB",
+      "limit": "E-10 has two states and the record must say which one was applied: +/- 0.5 dB with the 47 kOhm fitted, widening to +/- 1.0 dB only if ECO-EEG-024 raises R1 to R16 to 68 kOhm",
+      "uncertainty": "See TST-EEG-004 T22",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "eeg_response_db": [
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "emg_response_db": [
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "fitted_series_resistor_kohm": -9999.0,
+        "band_applied": "+/- 0.5 dB at 47 kOhm",
+        "deviation_at_100hz_db": -9999.0
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T23": {
+      "step": "T23",
+      "unit": "uA",
+      "limit": "Normal condition <= 10 uA DC and <= 100 uA AC; single fault <= 50 uA DC",
+      "uncertainty": "1 nA reads as 100 uV across the measuring resistor: four decades below the limit",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "dc_normal_host_connected_ua": [
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "ac_normal_host_connected_ua": [
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "dc_normal_host_disconnected_ua": [
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "ac_normal_host_disconnected_ua": [
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "dc_single_fault_ua": [
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ]
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T24": {
+      "step": "T24",
+      "unit": "dBm, attribute",
+      "limit": "No carrier above the receiver noise floor; no SSID; no advertisement",
+      "uncertainty": "See TST-EEG-004 T24",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "radio_silent": false,
+        "receiver_noise_floor_dbm": -9999.0,
+        "firmware_image_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T25": {
+      "step": "T25",
+      "unit": "attribute",
+      "limit": "Secure boot enabled, flash encryption enabled, device rejects an unsigned image, rollback completes without operator action",
+      "uncertainty": "Attribute",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "efuse_readback": "EXAMPLE-PLACEHOLDER",
+        "rollback_result": "DEFERRED",
+        "image_sha256_partition_a": "0000000000000000000000000000000000000000000000000000000000000000",
+        "image_sha256_partition_b": "0000000000000000000000000000000000000000000000000000000000000000",
+        "phase1_not_applicable_reason": null
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T26": {
+      "step": "T26",
+      "unit": "ms",
+      "limit": "Re-enumeration within 2 s each time; the sample counter and the ring buffer are not reset",
+      "uncertainty": "See TST-EEG-004 T26",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "latencies_ms": [
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "sample_counter_continuous": false
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T27": {
+      "step": "T27",
+      "unit": "Hz, ms",
+      "limit": "Clock 2.048 MHz +/- 100 ppm from one source; SCLK >= 4 MHz; DRDY period 4.000, 2.000 and 1.000 ms within 100 ppm; status words advance together over 60 s with zero divergence; daisy order as documented in the firmware",
+      "uncertainty": "See TST-EEG-004 T27",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "clock_hz": -9999.0,
+        "sclk_hz": -9999.0,
+        "drdy_periods_ms": [
+          -9999.0,
+          -9999.0,
+          -9999.0
+        ],
+        "header_rate_fields": [
+          "EXAMPLE-PLACEHOLDER"
+        ],
+        "divergence_count": 9999,
+        "daisy_order_as_found": "EXAMPLE-PLACEHOLDER"
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T28": {
+      "step": "T28",
+      "unit": "dB SPL",
+      "limit": "<= 100 dB SPL at any commanded level. Calculated full-scale output is about 110 dB SPL, which is why the requirement and the clamp exist",
+      "uncertainty": "See TST-EEG-004 T28",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "lot_record_reference": "EXAMPLE-PLACEHOLDER",
+        "spl_db": [
+          -9999.0,
+          -9999.0
+        ],
+        "headphone_model": "EXAMPLE-PLACEHOLDER",
+        "headphone_impedance_ohm": -9999.0,
+        "clamp_register_value": 9999,
+        "coupler_asset_number": "EXAMPLE-PLACEHOLDER",
+        "slm_asset_number": "EXAMPLE-PLACEHOLDER"
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T29": {
+      "step": "T29",
+      "unit": "attribute",
+      "limit": "All present and matching. Applying the mark is not optional even where a single-kit parcel would fall under the small-consignment exemption",
+      "uncertainty": "Attribute",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "cell_lot": "EXAMPLE-PLACEHOLDER",
+        "un383_report_reference": "EXAMPLE-PLACEHOLDER",
+        "msds_reference": "EXAMPLE-PLACEHOLDER",
+        "mark_applied": false,
+        "mark_photograph_ref": "EXAMPLE-PLACEHOLDER",
+        "document_set_reference": "EXAMPLE-PLACEHOLDER"
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    },
+    "T30": {
+      "step": "T30",
+      "unit": "ms, counts, attribute",
+      "limit": "Every S-check and every D-check passes at T30b, with D3's warning allowed at T30a only. Every frame-integrity counter reads zero. Median round-trip latency <= 50 ms",
+      "uncertainty": "Not a measurement. TOOL-EEG-022 section 1.3: a pass says the link works and says nothing about signal quality, electrode contact or noise",
+      "verdict": "DEFERRED",
+      "attempt": 1,
+      "data": {
+        "a_self_checks": [
+          "DEFERRED",
+          "DEFERRED",
+          "DEFERRED",
+          "DEFERRED",
+          "DEFERRED"
+        ],
+        "a_device_checks": [
+          "DEFERRED",
+          "DEFERRED",
+          "DEFERRED",
+          "DEFERRED",
+          "DEFERRED",
+          "DEFERRED",
+          "DEFERRED",
+          "DEFERRED"
+        ],
+        "b_self_checks": [
+          "DEFERRED",
+          "DEFERRED",
+          "DEFERRED",
+          "DEFERRED",
+          "DEFERRED"
+        ],
+        "b_device_checks": [
+          "DEFERRED",
+          "DEFERRED",
+          "DEFERRED",
+          "DEFERRED",
+          "DEFERRED",
+          "DEFERRED",
+          "DEFERRED",
+          "DEFERRED"
+        ],
+        "identity": {
+          "protocol_version": "EXAMPLE-PLACEHOLDER",
+          "firmware_major": 9999,
+          "firmware_minor": 9999,
+          "board_revision_letter": "B",
+          "ring_bytes": 9999,
+          "capability_flags": "EXAMPLE-PLACEHOLDER",
+          "rate_code": 9999
+        },
+        "bytes_in": 9999,
+        "frames_decoded": 9999,
+        "frame_integrity_counters": {
+          "crc_errors": 9999,
+          "version_errors": 9999,
+          "short_frames": 9999,
+          "resyncs": 9999,
+          "oversize_discards": 9999,
+          "sequence_gaps": 9999,
+          "frames_missing": 9999
+        },
+        "latency_median_ms": -9999.0,
+        "latency_p95_ms": -9999.0,
+        "report_reference_a": "EXAMPLE-PLACEHOLDER",
+        "report_reference_b": "EXAMPLE-PLACEHOLDER",
+        "browser_name_and_version": "EXAMPLE-PLACEHOLDER"
+      },
+      "deferral_reason": "EXAMPLE-PLACEHOLDER. This is an example record, not a test result; no step was performed."
+    }
+  },
+  "constants": {
+    "channel_gain_ppm": [
+      9999,
+      9999,
+      9999,
+      9999,
+      9999,
+      9999,
+      9999,
+      9999,
+      9999,
+      9999,
+      9999,
+      9999,
+      9999,
+      9999,
+      9999,
+      9999
+    ],
+    "envelope_scaling_uv_per_full_scale": [
+      9999,
+      9999,
+      9999
+    ],
+    "envelope_group_delay_samples": [
+      -9999.0,
+      -9999.0,
+      -9999.0
+    ],
+    "lead_off_offset_ohm": [
+      -9999.0,
+      -9999.0,
+      -9999.0,
+      -9999.0,
+      -9999.0,
+      -9999.0,
+      -9999.0,
+      -9999.0
+    ],
+    "lead_off_slope": [
+      -9999.0,
+      -9999.0,
+      -9999.0,
+      -9999.0,
+      -9999.0,
+      -9999.0,
+      -9999.0,
+      -9999.0
+    ],
+    "headphone_level_tenths_db": 9999,
+    "acoustic_clamp_register_value": 9999,
+    "config_zone_lock_confirmed": false
+  },
+  "disposition": {
+    "failure_codes": [],
+    "rework": [],
+    "module_replacements": [],
+    "ncr_references": [],
+    "mrb_decision": null
+  },
+  "signatures": {
+    "operator": "EXAMPLE-PLACEHOLDER",
+    "manufacturer_qa": "EXAMPLE-PLACEHOLDER",
+    "record_sha256": "4255b6444aee27a7521aaba12fa78efa588508d45e97473440190c4801b5e6ed"
+  },
+  "refurbishment": []
+}

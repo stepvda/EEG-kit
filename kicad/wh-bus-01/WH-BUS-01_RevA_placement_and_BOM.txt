@@ -1,0 +1,79 @@
+WH-BUS-01 Rev A -- placement and BOM note
+generated 2026-09-01 from package_v2.4/tools/wh_bus.py
+
+BOM
+
+  Nothing is fitted to this board.  It carries no resistor, no capacitor, no diode, no
+  connector and no fiducial, and there is no CPL file, no paste layer and no stencil,
+  because there is no part to place.  The kit BOM line for WH-BUS-01 is the bare board:
+
+    part        qty/kit  description
+    ----------- -------- ------------------------------------------------------------
+    WH-BUS-01      1     Bare PCB, 14.0 x 10.0 x 0.80 mm, 2 layers, FR-4, ENIG,
+                         green mask, white legend both sides, per this data set
+
+  The eight LED series resistors are R70 to R77 on the CARRIER, 1 kOhm each, and the two
+  0 ohm links in the common are R78 and R79, also on the carrier (WH-EEG-008 section 3.2).
+  Putting a resistor here would add a second limit to the same loop and change the 1.3 mA
+  per site that WH-EEG-008, ICD-EEG-006 and TST-EEG-004 all quote.  Do not fit one.
+
+PAD MAP  (fabrication coordinates: origin bottom-left, Y up, millimetres)
+
+  pad  net          x      y   pad  sh hole   what lands on it
+  ---- -------- ------ ------ ----- --- ----  --------------------------------------------
+   1   LED_V      4.50   7.40  1.60 rd  0.80   tail WH-02T-1 to the Fz LED, lead B
+   2   LED_V      7.20   7.40  1.60 rd  0.80   tail WH-02T-2 to the Cz LED, lead B
+   3   LED_V      9.90   7.40  1.60 rd  0.80   tail WH-02T-3 to the Pz LED, lead B
+   4   LED_V     12.60   7.40  1.60 rd  0.80   tail WH-02T-4 to the C3 LED, lead B
+   5   LED_V      4.50   2.60  1.60 rd  0.80   tail WH-02T-5 to the C4 LED, lead B
+   6   LED_V      7.20   2.60  1.60 rd  0.80   tail WH-02T-6 to the T7 LED, lead B
+   7   LED_V      9.90   2.60  1.60 rd  0.80   tail WH-02T-7 to the T8 LED, lead B
+   8   LED_V     12.60   2.60  1.60 rd  0.80   tail WH-02T-8 to the F7 LED, lead B
+   9   LED_V      1.80   7.40  1.60 sq  0.80   WH-02 conductor 9, GY/BK, LED_V from J30.9
+  10   LED_GND    1.80   2.60  1.60 rd  0.80   WH-02 conductor 10, BK, LED_GND, J30.10
+
+  Pad 9 is square.  That is the only orientation feature on the board: square pad and the
+  "9" legend mark the WH-02 input end, which faces occipital entry OE-2.  Fitted the other
+  way round the eight tails still reach their LEDs, but the input pair arrives across the
+  whole board and the cover strip will not close over the crossing conductors.
+
+  Pad 10 is an island.  It is 1.10 mm from the nearest LED_V copper on both layers and is
+  connected to nothing, on either layer, by design: LED_GND is a 0 V guard conductor laid
+  in the centre of the WH-02 bundle and it must not become a return path (WH-EEG-008
+  section 3.2 and open item 9).  If an ECO ever ties LED_GND to something, the tie is a
+  wire link from pad 10, not a new board.
+
+  The eight tails are numbered in WH-02 conductor order, so pad n feeds the second lead of
+  the LED whose first lead is WH-02 conductor n.  All eight leave through the same N1 cover
+  strip, so the pad order does not constrain the route inside the frame; it exists so that
+  a mis-landed tail is visible against the wire list rather than only at the light.
+
+HOW IT IS FITTED
+
+  Hand-soldered, temperature-controlled iron at 320 C, no-clean flux, per WH-EEG-008
+  section 8 step 12.  Strip 4.0 mm, tin, feed through from the legend side, solder on both
+  sides.  The board is retained by the N1 cover strip and by its own ten solder joints.
+
+  No mounting hole is specified and none is drilled.  There is also no pocket for this
+  board in the HM-01 geometry, so where exactly it beds at N1 is not yet defined by any
+  drawing -- that is an open item against the mechanical package, not something this data
+  set can settle.
+
+PANEL AND DELIVERY
+
+  Supplied as a 5 x 4 V-scored array, 20 up, step 14.0 x 10.0 mm, with 5 mm rails on all
+  four sides: panel 80.0 x 50.0 mm. One panel is the whole Phase 1 and Phase 2 buy, 2
+  units plus 10 kits, with eight spares. See the README for the alternative if the
+  fabricator will not V-score 0.80 mm material.
+
+MEASURED FROM THIS GEOMETRY
+
+  minimum copper to board edge      0.60 mm
+  minimum LED_V to LED_GND          1.10 mm
+  annular ring                      0.40 mm
+  minimum legend to mask opening    0.17 mm
+
+  These four are computed by wh_bus.py --check from the same numbers that produced the
+  Gerbers.  Nothing on this board has been fabricated, soldered or measured.
+
+Licence: CC BY-SA 4.0.

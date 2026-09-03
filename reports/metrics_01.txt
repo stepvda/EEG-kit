@@ -1,0 +1,35 @@
+unrouted nets: 8  (AGND_REF, AVSS2, DVDD3V3, EMG3, ENV2_HW, ENV3_HW, IN6, SPARE2)
+DRC violations: 13  by type: [('clearance F.Cu', '5'), ('unclosed connection', '8')]
+vias: 737   segments: 4374   total trace length: 10372 mm
+SPI group lengths (rule: match within 10 mm): SCLK=134.8, MOSI=129.9, MISO=154.1, DRDY=117.0, CS=48.2
+  worst SPI spread: 105.9 mm
+USB pair: DP=53.6 DN=59.9  mismatch 6.30 mm
+
+NET CLASSES in effect (design.py NETCLASS: width/clearance mm):
+  ELECTRODE  0.30 / 0.40
+  ANALOG     0.25 / 0.30
+  POWER_A    0.40 / 0.30
+  POWER_D    0.80 / 0.30
+  USB        0.30 / 0.35
+  DEFAULT    0.25 / 0.25
+pours: AGND_REF/DGND on In1+In2, split x=62.0; electrode extra rule 0.35 to anything
+
+CAVEAT: "SPI group length" above is total copper per net (nets are multi-drop:
+SCLK feeds J1, J3, J6.18 and TP1), not pad-to-pad matched-pair length.  No
+length-match rule is currently ENFORCED by tools/drc.py; router.py's docstring
+claims SPI matching but nothing measures it.  At 2.048 MHz SPI and 8 MHz max
+SCLK this is electrically irrelevant on a 150 mm board; recorded as a
+documentation defect, not a routing defect.
+
+STEP 0 SUMMARY (state = commit 3d4dce03, tools/drc_report.txt of build 1):
+1. 137/145 nets fully connected; 8 unclosed (AGND_REF, AVSS2, DVDD3V3, EMG3,
+   ENV2_HW, ENV3_HW, IN6, SPARE2), none with zero copper.
+2. 13 DRC violations: 5 clearance (all one class: non-electrode vias 0.328 mm
+   from electrode copper, rule 0.35) + the 8 unclosed.
+3. 4374 segments / 737 vias / 10372 mm of copper; 63 connections relaxed to
+   min geometry (listed in the report); planes are one island per net.
+4. Root causes already measured: two router phantom-success modes (lateral
+   plane travel; via legalisation sliding off the path end) and the electrode
+   0.35 rule absent from routing costs; plus 3 local placement pockets.
+5. Fixes for all of the above are in the working tree; a full rebuild carrying
+   them is in flight and is treated as iteration 2 (prediction on file).

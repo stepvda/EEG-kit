@@ -1,0 +1,26 @@
+M48
+; EEG-CAR-01 Rev B -- non-plated holes
+; TI One Voice research programme, CC BY-SA 4.0
+; generated 2026-09-02 from package_v2.4/tools/design.py
+; sizes below are FINISHED hole diameters; add plating allowance for the tool
+FMAT,2
+METRIC,TZ
+; #@! TF.FileFunction,NonPlated,1,2,NPTH
+T01C1.500
+T02C3.200
+%
+G90
+G05
+T01
+X4.500Y54.000
+X4.500Y42.000
+X4.500Y30.000
+X11.500Y54.000
+X11.500Y42.000
+X11.500Y30.000
+T02
+X5.000Y125.000
+X5.000Y5.000
+X145.000Y125.000
+X145.000Y5.000
+M30

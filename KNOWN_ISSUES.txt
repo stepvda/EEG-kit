@@ -1,0 +1,537 @@
+KNOWN ISSUES IN THE RELEASED DATA -- EEG FIELD KIT, PACKAGE v2.4
+TI One Voice research programme, one.witysk.org, Brussels, Belgium
+2 September 2026.  Board revision B.
+
+This file exists so that a manufacturer, a reviewer or a bidder finds the problems here
+rather than at CAM time.  Everything below is also stated in the controlled documents; this
+is the short list, in one place, of what is wrong with the data as shipped.
+
+REWRITTEN ON 2 SEPTEMBER 2026, NOT PATCHED.  The text this file carried until that evening
+was written against package v2.2 and was overtaken by the fixes of the same day faster than
+it was edited: it still called the bias topology unfixable, still called S-02 open, still
+listed as fileless a dozen parts that ship in mech/, and still quoted a segment census two
+routing passes old.  A short list that contradicts itself is worse than no short list, so
+every statement below was rebuilt from the files and from the tools' own output on the date
+in this header.  Section 14 records what the file used to say and when each claim stopped
+being true; the package convention is to correct a claim with its date, not to delete it.
+
+NOTHING IN THIS PACKAGE HAS BEEN MANUFACTURED OR MEASURED.  No unit exists.  No board has
+been fabricated, no part has been printed, no firmware has been flashed to silicon, and no
+electrode has touched a person.  Every performance figure below is calculated or modelled,
+and each one is labelled as calculated where it appears in the controlled documents.
+
+
+--------------------------------------------------------------------------------------
+0. THE FIGURES A REVIEWER SHOULD CHECK FIRST
+--------------------------------------------------------------------------------------
+All of these are the tools' own output on 2 September 2026 and can be re-run from tools/.
+
+  BOARD, from tools/drc.py -> tools/drc_report.txt
+    VIOLATIONS: 0 -- "none.  The board passes every rule listed above."
+    145 of 145 routable nets are one connected copper island; 0 unclosed nets
+    3 745 track segments, 552 through vias, 0 duplicate segments, 0 duplicate via positions
+    min clearance   F.Cu 0.260   B.Cu 0.275   In1/In2 0.285   against a 0.200 mm rule
+    narrowest track 0.200   smallest plated hole 0.300   copper to NPTH 2.00 mm
+    zone crossings 0; exactly one AGND_REF-DGND bridge and one HARN_SHIELD-DGND bridge
+    169 connections were routed at relaxed geometry (36 on a narrower conductor,
+    133 at full width and a reduced gap).  Read section 2 before you order copper.
+
+  FIRMWARE, from firmware/release/manifest.json
+    ESP-IDF v5.2.5, target esp32s3, Phase 1 configuration (secure boot OFF, anti-rollback
+    OFF).  Four images with their SHA-256: bootloader.bin 23,168 B; partition-table.bin
+    3,072 B; ota_data_initial.bin 8,192 B; eeg_field_kit.bin 405,360 B.  The production
+    simulation re-hashes all four on every run and prints the linked image as 405,245 bytes.
+
+  TOOLS
+    python3 tools/simulate_production.py    193 passed, 0 failed, 6 open
+    sh webtest/tests/interop/run.sh         57 of 57 checks green
+    python3 tools/check_consistency.py      0 banned figures in this file.  See below.
+
+  check_consistency.py passed clean over the whole package when this rewrite began.  It does
+  not now, and not because of anything here: the 2 September changes are still being written
+  into the controlled documents, so the checker is currently reporting a stale simulation
+  figure and a set of .docx/.pdf renditions older than their .md sources.  Re-run it.  If it
+  names a line in THIS file, this file is wrong; today it names none.
+
+THE SIX OPEN ITEMS the production simulation raises, and where each is treated below:
+    static IRAM reports full, one byte free ................. section 3
+    the v1 HM-01 mesh is two disconnected bodies ............ section 8
+    no human layout engineer has reviewed the routing ....... section 2
+    E-27 has never been seen to light ...................... section 5
+    the two board-current figures cannot both be right ...... section 6
+    SR-01 is closed in the design and not signed off ........ section 5
+
+
+--------------------------------------------------------------------------------------
+1. THE DRC GATE IS MET.  THE BOARD IS NOT YET RELEASED FOR FABRICATION.
+--------------------------------------------------------------------------------------
+ECO-EEG-016 section 3 sets the gate for releasing fabrication data as zero DRC violations,
+every net one connected copper island, and both inner planes continuous under the analogue
+zone.  ALL THREE ARE MET, on the census in section 0.
+
+THE DATA IS RELEASED FOR REVIEW UNDER RFQ-EEG-002A.  FABRICATION RELEASE AWAITS THAT REVIEW.
+
+That is a deliberate choice and not a formality.  Zero violations means the layout satisfies
+the rules the programme wrote down.  It does not mean the layout is good.
+
+
+--------------------------------------------------------------------------------------
+2. THE ROUTING HAS NOT BEEN REVIEWED BY A HUMAN LAYOUT ENGINEER
+--------------------------------------------------------------------------------------
+It was produced by the programme's own constraint-aware autorouter.  Every clearance has
+been measured on the finished polygons rather than on a routing grid, and the DRC report
+lists every relaxed connection by name, so a reviewer can go straight to the places where
+the router had to squeeze.  That is not the same as somebody having looked at it.
+
+169 connections were relaxed -- 36 on a narrower conductor and 133 at full width with a
+reduced gap -- against the 19 the earlier DRC report listed (ECO-EEG-016 C-12; the count
+moves with the route).  Every one is at or above the 0.20 mm minimum conductor and the
+0.20 mm minimum gap (0.35 mm on electrode nets), so nothing is illegal and no rule is bent.
+But a board that closes at minimum geometry in many places is not the same board as one that
+closes at preferred geometry: thin conductors run hotter and etch less reliably, and minimum
+gaps are where a fabricator's yield problems appear first.  This is the first thing
+RFQ-EEG-002A should look at.
+
+WHAT THE PACKAGE'S OWN CHECKS CANNOT SEE.  tools/drc.py checks copper and has no silkscreen
+rule.  A pin-1 legend tick on the wrong end of a package -- which is what the SOIC-14
+footprint carried until 2 September, and which would have destroyed three op-amps at first
+power-up -- was invisible to it.  The specific defect is fixed in tools/fplib.py and
+tools/simulate_production.py now proves every pin-1 mark is nearest pad 1, but the general
+point stands: silkscreen correctness rests on one targeted check, not on a rule set.
+
+
+--------------------------------------------------------------------------------------
+3. THE FIRMWARE IS BUILT AND HAS RUN IN AN EMULATOR.  NEVER ON HARDWARE.
+--------------------------------------------------------------------------------------
+Built against a real ESP-IDF v5.2.5 on 2 September 2026 (target esp32s3, Phase 1
+configuration).  The four images the flash step needs are in firmware/release/ with a
+manifest.json carrying their SHA-256, which the production simulation verifies on every run.
+
+IT HAS RUN, UNDER QEMU.  firmware/release/qemu_boot.log is one full boot cycle captured
+from qemu-system-xtensa 9.0.0 (-M esp32s3, -m 4M).  What ran: the second-stage bootloader
+read THIS partition table -- all nine entries, including the calib and prov partitions --
+and loaded the app from the factory slot at 0x20000; app_main() reached its banner; the
+microSD mount failed and the firmware continued with the warning it was written to give; the
+ES8388 codec failed and degraded the same way; and the 6 MiB ring buffer would not allocate,
+where FW-D13's NULL guard caught it and named the cause.  Three bring-up paths exercised,
+three behaved as designed.
+
+WHAT THIS IS NOT.  An emulator is not a unit.  QEMU's esp32s3 has no octal PSRAM, no
+microSD, no ES8388 and no ADS1299, so every peripheral this firmware talks to is absent.
+Nothing has been flashed to hardware, nothing has enumerated over real USB, and no register
+value, daisy-chain order or SPI timing has met silicon.  The run proves the image boots and
+that the code paths which do not need peripherals behave as written.  It proves nothing
+about whether the instrument works.  (sdkconfig.qemu sets CONFIG_SPIRAM_IGNORE_NOTFOUND to
+get past the missing PSRAM.  That overlay is for emulation only and is not a build
+configuration for any unit.)
+
+AND THE RUN FOUND A FAILURE MODE WORTH FIXING, WHICH IS STILL OPEN.  Two subsystems degrade
+and one aborts: a missing card and a missing codec are warnings, but missing PSRAM calls
+abort(), and the unit then reboots into the same abort, forever.  On the bench that is
+correct.  In a participant's home it is the worst available behaviour -- a boot loop is
+indistinguishable from a flat battery or a broken cable, it never enumerates, and the browser
+tool that exists precisely to answer "what is wrong with this unit" can never reach it.  A
+unit that cannot record should still be able to SAY it cannot record.  Raised against F-06
+and TOOL-EEG-022; the fix is to hold the fault, enumerate anyway, and report it through
+CMD_IDENTIFY.  It is not made.
+
+STATIC IRAM IS FULL, WITH ONE BYTE FREE.  firmware/release/size.json reports 16,383 bytes
+used of 16,384 on the linked image.  If that is the real limit, the next function marked
+IRAM_ATTR fails the link with an error naming a section and not a cause -- and this design
+has more interrupt work coming (E-13's tone scheduler, E-12's onset detector).  Turning off
+the SPI-slave and gptimer ISRs, neither of which this firmware uses, did not move the figure
+by a single byte, so it is not those.  Either the pool is genuinely full, or esp_idf_size is
+reporting against a fixed 16 kB window that is not the limit on an ESP32-S3 with octal
+SPIRAM and XIP.  Reading the linker map against hardware settles it; guessing from here does
+not.  It is open item 1 of the production simulation and FW-EEG-001 does not mention it.
+
+
+--------------------------------------------------------------------------------------
+4. THE CONNECTIVITY TEST PROGRAM HAS NEVER SEEN REAL HARDWARE
+--------------------------------------------------------------------------------------
+webtest/EEG-Connectivity-Test.html (TOOL-EEG-022) is written and its logic is tested.  The
+protocol layer passes a unit test suite; the whole exchange passes against a simulated
+device; and since 2 September the firmware and the tool are tested AGAINST EACH OTHER by
+compiling the real main.c against ESP-IDF stubs and driving it with the real webtest
+protocol module (sh webtest/tests/interop/run.sh, 57 checks, all green).  That harness
+exists because the JavaScript-only tests passed throughout a period when the two sides
+disagreed about the opcode byte, the acknowledgement layout and the capability bits: the JS
+host and the JS simulated device were written by the same hand from the same specification
+and shared one misunderstanding of it.  A cross-language check is what caught that.
+
+None of it has run against a real unit, because no unit exists.
+
+ONE THING IS STILL MISSING AROUND IT.  TST-EEG-004 section 12 requires the operator to
+record the SHA-256 of the TOOL-EEG-022 file used at T30, and no reference hash is published
+anywhere -- not in TOOL-EEG-022 section 2.1, not in T30's Record row.  The operator records
+a hash with nothing to compare it against.  The built bundle itself is current: it is
+rebuilt from source and is no longer the stale pre-2026-09-02 file that an earlier audit
+found, which would have failed a good unit.
+
+
+--------------------------------------------------------------------------------------
+5. MET IN THE DESIGN.  NOT SIGNED OFF, NOT MEASURED.
+--------------------------------------------------------------------------------------
+Four things closed on 2 September 2026.  Each is closed in the design and none is approved
+or measured, and those are different states that this package does not merge.
+
+  S-02, SINGLE-FAULT PATIENT CURRENT, IS MET AT 36.8 uA against a 50 uA limit.
+  ECO-EEG-024 is applied: R1-R16 are 68 kOhm, not 47 kOhm (tools/design.py:70-88).  It was
+  53.2 uA, a 6.4 % overshoot on a SAFETY limit carried as not-met through three revisions.
+  What it costs is written into the requirement it costs: E-10 states both branches and
+  permits +/-1.0 dB for exactly this case, and the simulation confirms the 100 Hz response
+  is inside it.  Same 0603 footprint, so the board did not move.  Normal-condition
+  auxiliary current is 0.106 uA against a 10 uA limit.  NOT SIGNED OFF.  SR-01 is the
+  electrical safety reviewer's finding, that reviewer owns its disposition, and the review
+  has not started.  This is open item 6 of the simulation.
+
+  THE BIAS-LEAD TOPOLOGY IS FIXED.  design.py's channel-11 exception is deleted: D11 and
+  C11 now sit on BIASOUT, behind the series resistor, like the other fifteen channels
+  (design.py:544-553).  Until that change the BAV99 clamp and the 10 nF filter on the
+  driven bias lead to the Fpz forehead electrode sat on the PATIENT side, so a shorted D11
+  half put a rail on the forehead electrode with no series resistor in the path at all --
+  183.6 uA on this pack's bound B, unbounded on bound A -- and a shorted C11 bonded that
+  electrode galvanically to AGND_REF.  RISK-EEG-011's SF-1a and SF-6a collapse into the
+  ordinary SF-1 and SF-6.  Note that ECO-EEG-024 alone would NOT have fixed this: D11 had
+  no resistor in its fault path, so a bigger resistor elsewhere changed nothing.  Getting
+  it into the routed board cost a discarded full rebuild (63 of 145 nets) and three
+  corrections to the surgical repair; tools/repair_nets.py re-runs the full DRC and
+  refuses to write unless the board comes out at least as good as it went in.  It refused
+  twice.
+
+  E-27 IS MET IN THE FIRMWARE, AFTER A SECOND CORRECTION THE SAME DAY.  The bicolour phase
+  driver is written.  It was first written to read both halves of the converter's lead-off
+  word, LOFF_STATP and LOFF_STATN, with red as P AND N.  THAT COULD NEVER HAVE LIT RED.
+  ads_init() enabled LOFF_SENSP only, so LOFF_STATN was zero on every channel for ever, the
+  red term was always zero, and every site that had lost contact showed AMBER.  Enabling
+  LOFF_SENSN was not the fix either: this board's montage is SINGLE-ENDED -- J2 carries IN1
+  to IN8, one shared SRB1 and BIASOUT -- so there is no per-site negative electrode, and
+  with SRB1 closed all eight N bits would have reported the one shared reference.
+
+  FW-D17 replaced it with what the hardware does support: the positive-side comparator is
+  read at TWO thresholds, COMP_TH swept between a sensitive and an insensitive setting.  Per
+  site: trips neither = GREEN, trips the sensitive one only = AMBER, trips both = RED; green
+  lit in phase A, red in phase B, amber in both.  The insensitive set is a subset of the
+  sensitive one, so the three states are exhaustive and cannot overlap.  The alternation
+  quantises to the FreeRTOS tick -- 2 ms half-phases on a 1 kHz tick, so about 250 Hz rather
+  than exactly 240 -- which meets the "above 100 Hz" the requirement is written against, and
+  is stated rather than rounded away.
+
+  How it was missed and what now catches it: every check in the package asked whether the
+  driver EXISTED, and it did.  simulate_production.py now resolves the colour expressions
+  through their local aliases and fails if any colour depends on state ads_init() never
+  enables; that check fails against the pre-FW-D17 source and passes against this one.  The
+  first version of the check did NOT resolve aliases, found no g_loff_* names in `p & n`
+  and passed the very defect it was written for -- which is the same lesson twice in one
+  file.
+
+  NEVER SEEN TO LIGHT.  No unit exists, so no light has been driven, and T11 -- which reads
+  the R/G ratio with a colorimeter -- has not been run.  AND THE COLOUR BOUNDARIES ARE NOT
+  SET: the two COMP_TH values are the ADS1299's documented endpoints, not measured trip
+  points, so the impedance at which a site turns amber, and the one at which it turns red,
+  are unknown until a unit is characterised.  T11's reference resistances are provisional
+  until then.  Simulation open item 4.
+
+  CMD_LIGHTS ANSWERS HONESTLY NOW (FW-D18).  The handler took c[1] as a plain enable and
+  answered 0x00 OK to every value, so a host asking for mode 3 (force red) was told the
+  request had succeeded while the firmware carried on showing automatic colour.  Modes 2, 3
+  and 4 are implemented -- force green, force red, force amber, with an optional site mask
+  in c[2] -- a mode the firmware does not have is refused with 0x0B UNIMPLEMENTED, and a
+  payload with no mode byte is refused with 0x02 BAD_LENGTH.  Eight interop checks cover it;
+  the harness compiles the real main.c, so they are checks and not restatements.
+
+  E-11 IS MET, IN BOTH HALVES.  The Sallen-Key moves from X7R to C0G.  X7R is +/-15 % over
+  temperature and f0 goes as 1/sqrt(C1.C2), so the corner ranged over 42.4 to 57.4 Hz
+  against a 45 to 55 band: no build could hold it.  The obstacle was that 100 nF C0G is
+  not a stocked 0603 part, so the network stopped asking for 100 nF -- capacitors down by
+  ten, resistors up by ten: 10 nF and 22 nF C0G with 215 kOhm, f0 = 49.9 Hz, Q unchanged
+  at 0.742, corner 47.5 to 52.5 Hz at C0G's +/-5 %.  The 10 nF is the same part the board
+  already buys sixteen of as the electrode filter C1-C16, so it adds no purchasing line,
+  and the footprints and nets are unchanged, so the board did not move.  NOT MEASURED:
+  T12e reads it on a built unit.
+
+TWO MECHANICAL FITS ARE IN THE SAME STATE -- measured on the solids, never printed.
+
+  THE HM-04 / HM-05B SERVICE BAYONET ASSEMBLES AND TURNS.  Until 2 September the released
+  meshes could not: the carrier's lug outer radius was 5.40 mm into a 5.30 mm slot,
+  tangential clearance was zero in a material printed to +/-0.15 mm, and HM-04 had two
+  straight axial slots and no circumferential run to turn into.  It is invisible from the
+  key side, which is why nobody caught it -- HM-09's service key lugs are narrower and did
+  fit, so the key worked on a joint the carrier could not use.  The re-cut is in
+  tools/mech_gen.py: HM-05B's lug is 1.40 mm wide, 0.65 mm proud at r 4.55, outer radius
+  5.20 mm, raised to z 1.20..3.30; HM-04 has 1.70 mm entry slots at outer radius 5.55, a
+  100 degree circumferential run at z 1.10..3.80, and 1.10 mm of solid material below it
+  as the retaining lip. tools/simulate_production.py intersects the two solids at four
+  rotations and three axial positions on every run: no interference through the quarter
+  turn, none through the carrier's 0.40 mm of spring travel, and measurable lip engagement
+  when a seated carrier is pulled down -- the number that says an inverted helmet keeps
+  its electrodes.  Reinstating the original lug centre makes that check fail, so it does
+  not pass by accident.  NOT CLOSED BY THIS.  An intersection volume of zero says two
+  solids do not overlap, not that PA12 at +/-0.15 mm turns by hand; the FIT-01 coupon
+  remains the acceptance and none has been printed.  The cup pocket is still sized by what
+  is left rather than by a cup, because HM-05A is a bought-in sintered cup "modified for
+  the service bayonet" and the modification has never been drawn.  The cup contact crown
+  and leaf are ASM-EEG-023's cannot-decide-here.
+
+  THE FRAME NOW CARRIES ITS OWN HARNESS, IN THREE PARTS.  WH-EEG-008 section 7 gives every
+  frame run two channels -- A on the outer wall for the electrode cable, B on the
+  skull-facing wall for the light cable, 3.80 mm bore at 6.00 mm centres inside 1.20 mm
+  walls, which needs a 12.20 mm section.  The carried-over HM-01 mesh has ONE bore per run
+  in a 10.91 mm band: one channel where two are specified, and too narrow to hold the pair
+  even if a second were cut.  That matters because the 6.00 mm of separation IS the
+  ECO-EEG-014 rule keeping the light group away from the electrode group, and E-30 is
+  written against it; a frame with one channel means both cables in one bore, the single
+  arrangement the harness document forbids.  HM-01P-A, -B and -C now draw the halo,
+  sagittal and coronal runs parametrically with the section the harness needs, and the
+  simulation probes across the band for material on every run: 1.20 mm wall, 3.80 mm
+  channel A, 2.20 mm centre web, 3.80 mm channel B, 1.20 mm wall, with channel centres 6.0
+  mm apart.  THREE PARTS, NOT ONE, and honestly so: unioned into a single frame they came
+  out as two disconnected bodies, because the three centrelines were each fitted
+  independently to the v1 mesh and nothing ever required them to meet.  Joining them needs
+  the head surface between them, which is exactly what the Stage 0 fit measurement holds
+  -- and that measurement has not been taken, so the head-shape surfaces, the pad seats
+  and the electrode site normals still come from the v1 study and will move when it is.
+  This is a channel correction, not an ergonomic re-design.
+
+AND ONE LIMIT EXISTS WITH NO MEASUREMENT BEHIND IT.  WH-EEG-008 justified leaving the
+contact-light cable unscreened by asserting the lights are dark during recording blocks.
+E-27 contradicts that: the lights are driven FROM the converter's own lead-off measurement,
+so a lit light means a live measurement on the same electrode by definition.  The concurrent
+case is electrode preparation -- the participant gelling a site and watching its light --
+which is the state the lights exist for, and where the two conductors are closest.  The
+design's controls are real and unchanged (two occipital entries, channels A and B at 6 mm
+centres, an LED_GND guard conductor down the middle of the bundle, J30 in the digital zone,
+source impedance below 1.1 kOhm).  What was missing was a limit and a measurement.
+RFQ-EEG-001 E-30 now states the limit -- added noise below 0.5 uV RMS in 0.5-70 Hz, half what
+E-03 allows the channel in the same band -- and TST-EEG-004 T9c measures it through the fitted
+harness in an assembled helmet.  NEITHER HAS BEEN RUN.  Until T9c runs on a built unit, the
+decision to leave WH-02 unscreened rests on an argument.
+The same coupling problem exists at the site, and got the same answer: hm04() used to cut the
+contact-light window as one box straight through the body, so the "inboard" and "outboard"
+openings were two ends of a single cavity and any scheme putting the electrode conductor in
+one end and the switched LED in the other had them sharing open volume about 3 mm apart at all
+eight sites -- which is RISK-EEG-011 SF-9 exactly.  It is now two pockets with 1.60 mm of
+printed PA12 between them.  Separated by material, not by distance, and also not yet measured.
+
+
+--------------------------------------------------------------------------------------
+6. REQUIREMENTS THAT ARE NOT MET
+--------------------------------------------------------------------------------------
+  * E-23's 45 C charge inhibit, and S-04's thermistor-monitored charging.  There is no NTC
+    net in design.py and no thermistor way on J12 or J13, so nothing in this design measures
+    cell temperature.  No module choice closes this.  E-23's other half -- thermal regulation
+    in the charger IC -- is met on the module.  The two hardware holes are the same hole, no
+    closure is proposed, and neither half can be tested.
+
+  * The two board-current figures do not reconcile.  TST-EEG-004 T3 limits J13 to 150 mA
+    while ICD-EEG-006 section 2.7 tallies about 440 mA.  E-22 is met either way -- 20.0 h of
+    recording against 6.8 h -- but the charger, the thermal budget and T3's own limits rest
+    on the number.  It is measured, not calculated, at T3.  Simulation open item 5.
+
+
+--------------------------------------------------------------------------------------
+7. PARTS THAT ARE NOT SETTLED
+--------------------------------------------------------------------------------------
+  * The boom-microphone preamplifier at J21.  RFQ E-14 forbids automatic gain control, so
+    package v1's MAX9814 is NOT approved -- it is an AGC part and disabling its AGC is a
+    module-dependent modification.  The socket is specified by its interface in ICD-EEG-006.
+  * The room-microphone module with hardware mute (E-15) has no qualified part.  No catalogue
+    module is yet known to meet it; the fallback is a programme-designed sub-assembly.
+  * J15-J17, the touch-proof DIN 42802 sockets, name a class and not a part.  AVL-EEG-017
+    calls this the highest-risk line in the file: no qualified vendor at all, on a Class A
+    patient-contact part, with an assumed 12-week first-article lead time.
+  * USB VID/PID are placeholders; the pid.codes application is not made.
+  * Supplier parts are still unnamed for HM-03C, HM-05A, HM-06C, HM-07B, HM-07C, POD-P1-03
+    and CASE-01 (PARTS-EEG-019 OA-7).
+
+
+--------------------------------------------------------------------------------------
+8. GEOMETRY: WHAT NOW EXISTS, AND WHAT STILL DOES NOT
+--------------------------------------------------------------------------------------
+Twelve printed parts that had no files now have STL, STEP, a MECH-EEG-020 sheet and a row in
+mech/MANIFEST.json, and AVL-EEG-017 K24 names them so a print bureau can quote them:
+HM-02B, HM-02C, HM-03A, HM-05B, HM-10, HM-11A/B/C, POD-P1-04 and WH-ADP-02/-03/-04, together
+with all three WH-KEY-01 shroud forms.  HM-12 and the three HM-01P channel runs ship too, and
+WH-BUS-01 has a full fabrication data set in kicad/wh-bus-01/.  mech/MECH_RELEASE_STATUS.md
+is the generated list of what tools/mech_gen.py actually writes.  NOTHING HAS BEEN PRINTED.
+
+WHAT IS STILL ABSENT, and deliberately so -- a part that is the wrong shape is worse than a
+part that is honestly absent:
+  * HM-03B, the ratchet dial housing, because HM-03C has no vendor, outline, spindle or
+    fixing pattern.
+  * HM-06A and HM-06B, the chin cup and its liner: the package fixes the 20 mm webbing and
+    the 200 N anchor pull and nothing at all about the shell.
+  * HM-07A, the boom temple mount, for a gooseneck with no vendor and no diameter.
+  * The Phase 2 occipital shell (M-01).  The Rev B carrier is 150 x 130 mm, no split design
+    has been drawn, and nothing in the Phase 2 enclosure line can be quoted or built today.
+
+HM-01 EXISTS AS AN STL AND HAS NO STEP.  It is a carried-over form study with no parametric
+source (PARTS-EEG-019 OA-1), and the production simulation measures a second problem in it:
+the mesh is watertight, which MANIFEST.json records, and it is TWO DISCONNECTED BODIES, which
+nothing recorded.  A frame that is two shells is one more reason the OA-1 redraw has to
+happen.  Simulation open item 2.
+
+
+--------------------------------------------------------------------------------------
+9. ECO-EEG-023 IS SPECIFIED AND IS NOT IN THE DATA
+--------------------------------------------------------------------------------------
+The comparator U7 is powered from AVDD and AVSS in the released netlist (design.py:596-597),
+and its 52 mV threshold is derived from AVDD.  ECO-EEG-023 would re-power it from
+DVDD3V3/DGND and re-reference its inputs, which changes that threshold.
+
+It is deliberately NOT cut in, and ECO-EEG-016 carries it as "OPEN, not implemented".  The
+safety and layout reviewer must see it before it is applied; implementing it silently would
+defeat the review.
+
+
+--------------------------------------------------------------------------------------
+10. THE .kicad_pcb ZONES SHIP UNFILLED, ON PURPOSE
+--------------------------------------------------------------------------------------
+kicad/EEG-CAR-01_RevB_routed.kicad_pcb carries the zone OUTLINES and the mounting-hole
+keep-outs, but no filled_polygon cache.  A KiCad fill cache is one simple ring per island and
+cannot express a hole; each inner-plane Gerber carries 698 clear-polarity void regions, so a
+cache would have to be a solid rectangle -- which is what an earlier revision of the writer
+shipped.  The DRC counts 4 pour islands in all, one continuous island per net per plane.
+
+Press "Fill all zones" when you open the board.  The AUTHORITY for copper is kicad/gerber/,
+which uses LPD/LPC polarity and carries every void.
+
+
+--------------------------------------------------------------------------------------
+11. WHAT A MANUFACTURER STILL CANNOT DO FROM THIS PACKAGE
+--------------------------------------------------------------------------------------
+On 2 September 2026 the package was audited stage by stage against one question: could a
+competent contract manufacturer, given ONLY these files and no access to the authors, execute
+the stage and hand on a correct result?  The answer was no, at every one of the six stages,
+and the audit found thirty-two specific things that could not be done.
+
+TWENTY-EIGHT OF THE THIRTY-TWO WERE CLOSED by writing the missing files -- ASM-EEG-023 Rev A
+is the record.  What was written: the stencil aperture table, the IPC-D-356A netlist, the lot
+coupon and lot documents, the ATECC608B configuration template and the provisioning
+safeguards, a working provision.py --dry-run, the calibration schema and its worked example,
+the per-unit record schema with an example record and a lot-summary template (records/), the
+fixture PCB artwork and printed geometry and RP2040 firmware with passing host tests
+(fixtures/), the FIX-02/D attenuator derived to E96 values, the label and packaging artwork
+set (graphics/labels/), the HM-12 umbilical entry plate, the harness bus board, and the
+mechanical release register.  The webtest deliverable was rebuilt from source, and the
+TST-EEG-004 renditions now carry T30.
+
+THE REMAINDER ARE NOT MISSING FILES.  They are missing DECISIONS, and section 12 is where
+they live.  Two of them are not engineering questions at all and no amount of work in this
+package closes them:
+
+  * THE PROGRAMME'S OWN POSTAL ADDRESS AND TELEPHONE NUMBER appear in no file here.
+    ART-LBL-03, ART-LBL-05, ART-LBL-06 and ART-RET-01 are drawn, dimensioned and complete
+    apart from <<PLACEHOLDER>> fields for them, and the generator will not invent them.  Four
+    of the eleven artwork files therefore cannot be printed.  A dead telephone number on a
+    regulated mark, or an unaddressed return label on a case base, is a kit that does not
+    come back.
+  * THE REGULATED LITHIUM-BATTERY PICTOGRAM of ART-LBL-06.  The battery-group-and-flame mark
+    belongs to the edition of ADR / IATA DGR in force, this package does not hold it, and
+    REG-EEG-012 section 3.7 makes the DG-trained shipper the person who completes and
+    approves that mark.  A programme may not draw it for itself.
+
+THE PACKAGE IS NOT YET A COMPLETE MANUFACTURING RELEASE, and RFQ-EEG-001 should not be read
+as though it were.  A bidder pricing "the whole thing" from these files is pricing an
+unknown, and section 1.1a of that document asks bidders to say so.
+
+
+--------------------------------------------------------------------------------------
+12. TWENTY-TWO ASSUMPTIONS, DECIDED AND WRITTEN DOWN.  NONE APPROVED.
+--------------------------------------------------------------------------------------
+Twenty-two questions were decisions rather than files: a threshold voltage nobody had fixed,
+a fastener nobody had chosen, a termination method nobody had drawn.  They are in
+docs/ASM-EEG-023 Rev A, one entry each -- 8 derived, 11 judgement, 3 that cannot be decided
+from what exists.  TEN BLOCK A BUILD.
+
+Each was decided, then attacked by an independent reviewer, then re-decided against the
+attack.  NOT ONE OF THE TWENTY-TWO SURVIVED THE ATTACK UNCHANGED, which is the most useful
+thing to know about them.  Attacks were themselves checked before being conceded to, and
+several were partly refuted on the files; those are recorded as kept.
+
+ALL TWENTY-TWO REQUIRE A HUMAN SIGN-OFF and none is approved by that document.  A decision
+with its reasoning attached is worth having because a reviewer reads a proposal faster than a
+blank page, and because it makes an assumption visible instead of leaving it to be found by a
+manufacturer at the point where it costs money.  It is not an approval, and this programme
+does not confuse the two.
+
+
+--------------------------------------------------------------------------------------
+13. NOTHING GOES ON A PARTICIPANT'S HEAD
+--------------------------------------------------------------------------------------
+The electrical safety review has not been done.  It gates Phase 2 and it gates any use on a
+person.  It does not gate manufacture.  S-02 being met in the design (section 5) does not
+change this by one line: SR-01 is the reviewer's finding and is open for their disposition.
+
+
+--------------------------------------------------------------------------------------
+14. WHAT THIS FILE SAID BEFORE, AND WHEN IT STOPPED BEING TRUE
+--------------------------------------------------------------------------------------
+Corrected here on 2 September 2026 rather than deleted, so that a reader holding an earlier
+copy can see which claim moved and why.
+
+  "PACKAGE v2.2" in the header.  Wrong since this package became v2.4.  Corrected.
+
+  "The bias electrode is the one patient conductor whose clamp is not behind a resistor...
+  NO LAYOUT CHANGE ALTERS THIS."  True until 2 September 2026, when design.py's channel-11
+  exception was deleted and the routed board was repaired to match.  D11 and C11 are on
+  BIASOUT.  SF-1a's 183.6 uA and its unbounded bound-A case are withdrawn.  See section 5.
+
+  "S-02, single-fault patient current: 53.2 uA against a 50 uA limit, with the 47 kOhm
+  series resistors fitted... That is a Phase 1 decision and it is open."  Superseded 2
+  September 2026: ECO-EEG-024 is applied, R1-R16 are 68 kOhm, and the figure is 36.8 uA.
+  S-02 is met in the design and unmeasured and unsigned.  See section 5.
+
+  "The 240 Hz alternation it is written against does not yet happen -- the same firmware
+  gap that stops T11 passing."  Superseded 2 September 2026: the phase driver is written,
+  T11 can pass, and the alternation is about 250 Hz because it quantises to the FreeRTOS
+  tick.  The rest of that paragraph -- that E-30 and T9c have never been run -- is still
+  true and is carried in section 5.
+
+  "Segment count 3 560 -> 3 744; via count unchanged."  That census predates the bias
+  repair.  The final board is 3 745 segments and 552 vias.  See section 0.
+
+  "The harness runs 38 checks green."  Withdrawn twice: the harness ran 49 when that
+  correction was written, and runs 57 since the eight CMD_LIGHTS checks of FW-D18.
+  See section 4.  check_consistency.py now holds every document to one figure for it.
+
+  "TWENTY-FOUR OF THE THIRTY-TWO ARE NOW CLOSED", followed by a thirty-item remainder
+  list.  Both were wrong together: the count was one pass behind and the list was the
+  original audit output, so it named items the same section called closed.  ASM-EEG-023
+  Rev A records twenty-eight of thirty-two closed, and section 11 above states what is
+  left without re-printing a list that another document owns.
+
+  "Several sub-assemblies named in the packing list have no files at all: HM-03A/B/C,
+  HM-06A/B/C, HM-10, HM-05B, HM-11A/B/C, POD-P1-03/04/05, WH-KEY-01, WH-BUS-01, WH-ADP-01
+  to -04."  Superseded 2 September 2026 for twelve of those parts, which ship in mech/ and
+  are named in AVL-EEG-017 K24.  Section 8 lists what is genuinely still absent.  This
+  file's section 8 is named in mech/MECH_RELEASE_STATUS.md as one of the documents that
+  had to be corrected against the directory; it now is.
+
+  "webtest/EEG-Connectivity-Test.html is a stale build... The shipped file FAILS a good
+  unit."  True of the pre-2026-09-02 bundle.  The deliverable has been rebuilt from
+  source.  What remains open is narrower and is stated in section 4: no reference SHA-256
+  is published for the operator to check theirs against.
+
+
+--------------------------------------------------------------------------------------
+HOW THIS LIST IS KEPT HONEST
+--------------------------------------------------------------------------------------
+  python3 tools/check_consistency.py     refuses superseded figures and names, and checks
+                                         that the figures which must agree across the
+                                         package do agree.  It exits non-zero on a finding.
+                                         Findings are open against other documents today;
+                                         none against this file.  See section 0.
+  python3 tools/simulate_production.py   walks a unit through all fifteen stations and
+                                         checks the package supports each step.
+                                         193 passed, 0 failed, 6 open.  The six are
+                                         listed in section 0.
+  sh webtest/tests/interop/run.sh        compiles the real firmware main.c against stubs
+                                         and drives it with the real browser-tool
+                                         protocol code.  57 checks, 0 failed.
+  The DRC's own uniqueness check         catches duplicate copper, which is how twenty-
+                                         eight duplicate segments and four doubly-drilled
+                                         via positions reached the Rev B data before v2.1.
+
+A tool that agrees with the documents is not evidence.  Everything in this file that says
+"met" means met in a calculation or in a model, and every one of those still needs a bench.

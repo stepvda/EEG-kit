@@ -1,0 +1,26 @@
+M48
+; WH-BUS-01 Rev A -- plated holes
+; TI One Voice research programme, CC BY-SA 4.0
+; generated 2026-09-01 from package_v2.4/tools/wh_bus.py
+; sizes below are FINISHED hole diameters; add plating allowance for the tool
+; one tool, ten hits: the ten harness solder pads.  There are no vias and no
+; non-plated holes on this board, so there is no NPTH file.
+FMAT,2
+METRIC,TZ
+; #@! TF.FileFunction,Plated,1,2,PTH
+T01C0.800
+%
+G90
+G05
+T01
+X4.500Y7.400
+X7.200Y7.400
+X9.900Y7.400
+X12.600Y7.400
+X4.500Y2.600
+X7.200Y2.600
+X9.900Y2.600
+X12.600Y2.600
+X1.800Y7.400
+X1.800Y2.600
+M30

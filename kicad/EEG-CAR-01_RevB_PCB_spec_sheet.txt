@@ -1,0 +1,115 @@
+EEG-CAR-01 carrier board -- PCB fabrication and assembly specification
+Revision B, 2026-09-02.  Governing document: DSN-EEG-003 Rev C section 3.
+For bidders who do not open a board file.  Everything here is generated from
+package_v2.4/tools/design.py; where this sheet and design.py differ, design.py governs.
+
+BOARD
+  Size ...................... 150.0 x 130.0 mm, rectangular, no cut-outs, no slots
+  Layers .................... 4: L1 signal, L2 reference plane, L3 reference plane,
+                              L4 signal.  Package v1 specified two; laying the board
+                              out showed that two will not do -- see DSN-EEG-003
+                              Rev C section 3.
+  Material .................. FR-4, Tg >= 150 C
+  Finished thickness ........ 1.60 mm +/- 10 %
+  Stack-up .................. mask / 35 um L1 / prepreg 0.200 / 17 um L2 /
+                              core 1.065 / 17 um L3 / prepreg 0.200 / 35 um L4 / mask
+  Copper .................... 1 oz (35 um) outer, 0.5 oz (17 um) inner
+  Surface finish ............ ENIG, Au 0.05-0.10 um over Ni 3.0-6.0 um
+  Solder mask ............... green LPI, both sides
+  Silkscreen ................ white, both sides
+  Min track / clearance ..... 0.20 mm / 0.20 mm.  Electrode nets keep 0.35 mm
+  Vias ...................... 0.60 mm pad / 0.30 mm finished hole, THROUGH ONLY,
+                              tented both sides.  No blind, buried, back-drilled,
+                              filled or plugged vias
+  Plated holes .............. 0.90 mm x4, 1.00 mm x217, 1.20 mm x12, 1.70 mm x3
+  Non-plated holes .......... 4 x 3.20 mm (M3 mounting, 6 mm copper keep-out),
+                              6 x 1.50 mm (DIN 42802 retention posts).  Separate file
+  Controlled impedance ...... not required.  USB_DP/USB_DN are a 0.30 mm pair on
+                              0.35 mm spacing over the L2 plane: about 90 ohm
+                              differential.  No impedance coupon or report;
+                              a microsection LOT COUPON is required, and the
+                              five lot documents of fabrication drawing note 14
+  Panelisation .............. fabricator's choice, v-score or tab-route, 5 mm rails
+  Class ..................... IPC-6012 class 2, IPC-A-600 class 2
+  Electrical test ........... 100 % to the supplied IPC-D-356A netlist
+  Marking ................... fabricator's date code and UL mark on the bottom
+                              silkscreen, inside the outline, clear of all pads
+
+ASSEMBLY
+  Reference designators ..... 211
+  Pads ...................... 636 (390 SMD, 236 plated through-hole, 10 non-plated)
+  Nets ...................... 156
+  Sides ..................... SMT on the top side only; all through-hole parts on
+                              the top side.  The bottom side carries copper and
+                              legend only
+  Footprints ................
+       54 x C_0603_1608Metric
+        3 x DIN42802_1p5mm_Socket
+        3 x Fiducial_1mm_Mask3mm
+        2 x JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical
+        1 x L_0603_1608Metric
+        4 x MountingHole_3.2mm_M3
+        1 x PinSocket_1x03_P2.54mm_Vertical
+        7 x PinSocket_1x04_P2.54mm_Vertical
+        5 x PinSocket_1x06_P2.54mm_Vertical
+        2 x PinSocket_1x08_P2.54mm_Vertical
+        3 x PinSocket_1x10_P2.54mm_Vertical
+        3 x PinSocket_1x12_P2.54mm_Vertical
+        1 x PinSocket_1x14_P2.54mm_Vertical
+        1 x PinSocket_1x16_P2.54mm_Vertical
+        2 x PinSocket_1x22_P2.54mm_Vertical
+       72 x R_0603_1608Metric
+        1 x R_1206_3216Metric
+        3 x SOIC-14_3.9x8.7mm_P1.27mm
+       21 x SOT-23
+        1 x SOT-23-5
+        3 x SW_PUSH_6mm_H5mm
+       18 x TestPoint_Pad_D1.5mm
+  Do not populate ........... R89
+  Class ..................... IPC-A-610 class 2
+  Test ...................... TST-EEG-004 Rev C, 31 steps (T00, T0, T1 to T29)
+  Quantities ................ 2 / 10 / 25 / 50, plus 25 % spare bare boards at 25
+                              and 50
+
+MODULES ARE NOT PLUGGED INTO THIS BOARD
+  Except for the ESP32-S3-DevKitC-1, which is inserted directly into J6 and J7 on
+  22.86 mm row spacing, every purchased module mounts on the printed plate MP-01
+  above the carrier and connects with a keyed 2.54 mm ribbon jumper.  No public
+  standard fixes those modules' header geometry, so a socket at a chosen coordinate
+  would be a guess.  ICD-EEG-006 Rev B gives the jumper schedule.
+
+STATUS
+  Routed on four layers: 3745 track segments, 552 through vias.
+  145 of 145 nets are one connected copper island.
+  The DRC reports ZERO VIOLATIONS: every clearance, width, annular-ring,
+  hole-size, edge, non-plated-hole, isolation and zoning rule passes on the
+  finished polygons, and both inner planes are one continuous island per net.
+
+  ECO-EEG-016 section 3 sets the gate for releasing fabrication data as zero
+  DRC violations, every net one connected copper island, and both inner planes
+  continuous under the analogue zone.  ALL THREE ARE NOW MET.
+
+  Two things that gate does not cover, and a buyer should know both.  The
+  routing was produced by the programme's own tools and HAS NOT BEEN REVIEWED
+  BY A HUMAN LAYOUT ENGINEER; that review is RFQ-EEG-002A, and it is now a
+  review of a clean board rather than a rescue of a broken one.  And the DRC
+  report's CONNECTIONS THE ROUTER HAD TO RELAX figure should be read before
+  copper is ordered: a board that closes at minimum geometry is not the same
+  board as one that closes at preferred geometry, even when every rule passes.
+
+  Nothing here has been manufactured or measured.
+
+FILES IN THIS FOLDER
+  gerber/                                 Gerber X2, Excellon, IPC-D-356A, checksums
+  EEG-CAR-01_RevB_routed.kicad_pcb        the routed board
+  EEG-CAR-01_RevB_BOM.csv                 grouped BOM with manufacturer part numbers
+  EEG-CAR-01_RevB_CPL_SMT_top.csv         pick-and-place, bottom-left origin, Y up
+  EEG-CAR-01_RevB_CPL_THT_top.csv         through-hole positions
+  EEG-CAR-01_RevB_fabrication_drawing.pdf dimensions, drill schedule, stack-up, notes
+  EEG-CAR-01_RevB_assembly_drawing.pdf    designators, pin 1, DNP, process
+  EEG-CAR-01_RevB_copper_layers.pdf       all four layers at 1:1
+  EEG-CAR-01_RevB_DRC_report.txt          every rule, every measurement, every item
+  EEG-CAR-01_RevB_netreport.json          nets, classes and rules, machine-readable
+
+Licence: CC BY-SA 4.0.  TI One Voice research programme, one.witysk.org.
+Nothing in this package has been manufactured or measured.

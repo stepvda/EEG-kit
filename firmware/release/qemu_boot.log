@@ -1,0 +1,115 @@
+Adding SPI flash device
+qemu-system-xtensa: warning: global timer.esp32s3.timg.wdt_disable has invalid class name
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x1 (POWERON),boot:0x4 (SPI_FLASH_BOOT)
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce3820,len:0x19fc
+load:0x403c9700,len:0x4
+load:0x403c9704,len:0xe8c
+load:0x403cc700,len:0x3194
+entry 0x403c9940
+I (23) boot: ESP-IDF v5.2.5 2nd stage bootloader
+I (24) boot: compile time Sep  2 2026 20:27:31
+I (24) boot: Multicore bootloader
+I (26) boot: chip revision: v0.3
+I (27) boot: efuse block revision: v0.0
+I (28) qio_mode: Enabling QIO for flash chip ISSI
+I (29) boot.esp32s3: Boot SPI Speed : 80MHz
+I (29) boot.esp32s3: SPI Mode       : QIO
+I (29) boot.esp32s3: SPI Flash Size : 16MB
+I (31) boot: Enabling RNG early entropy source...
+I (33) boot: Partition Table:
+I (33) boot: ## Label            Usage          Type ST Offset   Length
+I (33) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (34) boot:  1 otadata          OTA data         01 00 0000f000 00002000
+I (34) boot:  2 phy_init         RF data          01 01 00011000 00001000
+I (34) boot:  3 factory          factory app      00 00 00020000 00300000
+I (34) boot:  4 ota_0            OTA app          00 10 00320000 00300000
+I (35) boot:  5 ota_1            OTA app          00 11 00620000 00300000
+I (35) boot:  6 calib            WiFi data        01 02 00920000 00008000
+I (36) boot:  7 prov             WiFi data        01 02 00928000 00008000
+I (36) boot:  8 storage          Unknown data     01 81 00930000 006d0000
+I (36) boot: End of partition table
+I (37) boot: Defaulting to factory image
+I (37) esp_image: segment 0: paddr=00020020 vaddr=3c040020 size=1282ch ( 75820) map
+I (47) esp_image: segment 1: paddr=00032854 vaddr=3fc97600 size=03388h ( 13192) load
+I (49) esp_image: segment 2: paddr=00035be4 vaddr=40374000 size=0a434h ( 42036) load
+I (53) esp_image: segment 3: paddr=00040020 vaddr=42000020 size=39f74h (237428) map
+I (77) esp_image: segment 4: paddr=00079f9c vaddr=4037e434 size=09144h ( 37188) load
+I (81) boot: Loaded app from partition at offset 0x20000
+I (82) boot: Disabling RNG early entropy source...
+I (83) cpu_start: Multicore app
+W (187) rtcinit: o_code calibration fail
+
+E (98) octal_psram: PSRAM ID read error: 0x00000000, PSRAM chip not found or not supported, or wrong PSRAM line mode
+E (98) esp_psram: PSRAM enabled but initialization failed. Bailing out.
+I (99) cpu_start: Failed to init external RAM; continuing without it.
+I (110) cpu_start: Pro cpu start user code
+I (110) cpu_start: cpu freq: 160000000 Hz
+I (110) cpu_start: Application information:
+I (110) cpu_start: Project name:     eeg_field_kit
+I (111) cpu_start: App version:      f308f470-dirty
+I (111) cpu_start: Compile time:     Sep  2 2026 20:30:44
+I (111) cpu_start: ELF file SHA256:  391b56d4d...
+I (111) cpu_start: ESP-IDF:          v5.2.5
+I (111) cpu_start: Min chip rev:     v0.0
+I (111) cpu_start: Max chip rev:     v0.99
+I (111) cpu_start: Chip rev:         v0.3
+I (111) heap_init: Initializing. RAM available for dynamic allocation:
+I (112) heap_init: At 3FC9DB60 len 0004BBB0 (302 KiB): RAM
+I (112) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM
+I (112) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM
+I (112) heap_init: At 600FE010 len 00001FD8 (7 KiB): RTCRAM
+I (115) spi_flash: detected chip: issi
+I (115) spi_flash: flash io: qio
+W (116) i2c: This driver is an old driver, please migrate your application code to adapt `driver/i2c_master.h`
+I (116) sleep: Configure to isolate all GPIO pins in sleep state
+I (116) sleep: Enable automatic switching of GPIO sleep configuration
+I (119) main_task: Started on CPU0
+I (124) main_task: Calling app_main()
+I (126) eegkit: EEG field kit firmware — USB only; radio not initialised
+E (5138) sdmmc_periph: sdmmc_host_init: sdmmc_host_reset returned 0x107
+E (5138) vfs_fat_sdmmc: host init failed (0x107).
+E (5138) drv: microSD mount failed: ESP_ERR_TIMEOUT
+W (5138) drv: continuing without microSD; E-20's authoritative copy is not being written
+E (5188) drv: ES8388 register 0x00: ESP_ERR_TIMEOUT
+W (5189) drv: continuing without the codec; no stimulus audio
+E (5193) eeg: ring buffer of 6291456 bytes would not allocate in PSRAM; check CONFIG_SPIRAM_MODE_OCT and the -N16R8 part
+
+abort() was called at PC 0x4200a9ab on core 0
+
+
+Backtrace: 0x40375d7e:0x3fca16d0 0x4037de25:0x3fca16f0 0x40385465:0x3fca1710 0x4200a9ab:0x3fca1780 0x42038fcf:0x3fca17d0 0x4037e8cd:0x3fca1800
+
+
+
+
+ELF file SHA256: 391b56d4d
+
+Rebooting...
+
+--------------------------------------------------------------------------------------
+Captured 2 September 2026 from qemu-system-xtensa 9.0.0 (esp-develop), -M esp32s3 -m 4M,
+against the sdkconfig.defaults + sdkconfig.phase1 + sdkconfig.qemu build.
+
+THIS IS AN EMULATOR, NOT A UNIT.  QEMU's esp32s3 machine has no octal PSRAM, no microSD,
+no ES8388 and no ADS1299, so every peripheral this firmware talks to is absent.  What the
+run proves is the part that does not need them: the image boots, the bootloader reads THIS
+partition table, the app is loaded from the factory slot, app_main() runs, and the three
+driver bring-up paths behave as they were written to.  What it proves nothing about is any
+register value, daisy-chain order or SPI timing, because there is no silicon to disagree.
+--------------------------------------------------------------------------------------
+
+Re-captured 2 September 2026 after FW-D17 and FW-D18, to show that reworking the contact
+light driver did not disturb the boot path.  The run reaches the same place as before and
+stops the same way: the 6 MiB sample ring will not allocate, because CONFIG_SPIRAM_MODE_OCT
+asks for octal PSRAM and QEMU has none, so app_main() calls abort() and the chip reboots
+into the loop this file's own header calls out.  That is the open PSRAM failure mode, not a
+new fault.
+
+Nothing here exercises the lights.  lights_task() alternates two lead-off comparator
+thresholds over SPI and drives a 74HC595; QEMU has neither an ADS1299 to answer nor an LED
+to light, and the task never starts because app_main() aborts before it is created.  E-27
+remains what it was: met in the source, never seen.

@@ -1,0 +1,36 @@
+{
+  "document": "FW-EEG-001 Rev C, section 9",
+  "build": "Phase 1 -- secure boot OFF, anti-rollback OFF (sdkconfig.phase1)",
+  "target": "esp32s3",
+  "idf_version": "v5.2.5",
+  "project": "eeg_field_kit",
+  "built": "2026-09-02",
+  "flash_command": "esptool.py --chip esp32s3 --port <port> --baud 921600 write_flash 0x0 bootloader.bin 0x8000 partition-table.bin 0xF000 ota_data_initial.bin 0x20000 eeg_field_kit.bin",
+  "images": [
+    {
+      "file": "bootloader.bin",
+      "offset": "0x0",
+      "bytes": 23168,
+      "sha256": "9be95853f29fb407a8a3ce13bb7fecf0f901ec03a49242e60a98799e5f3f5859"
+    },
+    {
+      "file": "partition-table.bin",
+      "offset": "0x8000",
+      "bytes": 3072,
+      "sha256": "fdd6a7170583bbaf76487cbd74654c1f5b14267aad775a09f0d3ffad0a2d8609"
+    },
+    {
+      "file": "ota_data_initial.bin",
+      "offset": "0xF000",
+      "bytes": 8192,
+      "sha256": "7d2c7ac4888bfd75cd5f56e8d61f69595121183afc81556c876732fd3782c62f"
+    },
+    {
+      "file": "eeg_field_kit.bin",
+      "offset": "0x20000",
+      "bytes": 405648,
+      "sha256": "64c66eacc7c866ef2dfa80521cd8da66bb1a0668aa755186508364a5602c7d51"
+    }
+  ],
+  "note": "Built against a real ESP-IDF for the first time on 2026-09-02.  Getting here took five corrections to the project, each recorded in the file it was made in: a component that does not exist at this IDF version, a duplicated anti-rollback key that contradicted the Phase 1 intent and made the build refuse a table with a factory partition, a TinyUSB option name that does not exist so the vendor interface was silently absent, and three descriptor callbacks defined here AND in esp_tinyusb.  NOT RUN ON HARDWARE: no board exists.  This is a build, not a bring-up.  Re-issued 2026-09-02 after FW-D17 and FW-D18: the contact-light driver now derives its three colours from two lead-off comparator thresholds rather than from LOFF_STATP and LOFF_STATN, because this board's montage is single-ended and the N half carried no per-site information, which had made the red state unreachable; and CMD_LIGHTS modes 2, 3 and 4 are implemented rather than silently answered OK."
+}

@@ -1,0 +1,82 @@
+# FW-EEG-001 -- build configuration for EEG-CAR-01 Rev B.
+# Every line here is a requirement, not a preference.  Changing one changes the instrument.
+
+CONFIG_IDF_TARGET="esp32s3"
+
+# ---- flash and PSRAM ------------------------------------------------------------
+# The -N16R8 module has 16 MB quad flash and 8 MB OCTAL PSRAM.  The octal PSRAM uses
+# GPIO35, 36 and 37, which is why those three pins are not connected on the carrier
+# (ECO-EEG-009).
+CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y
+CONFIG_ESPTOOLPY_FLASHMODE_QIO=y
+CONFIG_ESPTOOLPY_FLASHFREQ_80M=y
+CONFIG_SPIRAM=y
+CONFIG_SPIRAM_MODE_OCT=y
+CONFIG_SPIRAM_TYPE_AUTO=y
+CONFIG_SPIRAM_SPEED_80M=y
+CONFIG_SPIRAM_USE_MALLOC=y
+CONFIG_SPIRAM_MALLOC_ALWAYSINTERNAL=4096
+
+# ---- partitions ------------------------------------------------------------------
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
+CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE=y
+CONFIG_BOOTLOADER_APP_ANTI_ROLLBACK=y
+
+# ---- USB ---------------------------------------------------------------------------
+# GPIO19 and GPIO20 are the USB PHY.  Using TinyUSB in device mode takes the PHY away
+# from the USB-Serial-JTAG console, so UART0 on GPIO43/44 is the only console -- which
+# is why J26 exists.
+CONFIG_TINYUSB_CDC_ENABLED=y
+CONFIG_TINYUSB_CDC_COUNT=1
+CONFIG_TINYUSB_DESC_USE_ESPRESSIF_VID=n
+CONFIG_ESP_CONSOLE_UART_DEFAULT=y
+CONFIG_ESP_CONSOLE_UART_NUM=0
+
+# ---- radio: never initialised (RFQ E-18) --------------------------------------------
+CONFIG_ESP_WIFI_ENABLED=n
+CONFIG_BT_ENABLED=n
+
+# ---- security (RFQ F-19) -------------------------------------------------------------
+# Enabled for PHASE 2 ONWARD production builds only.  The Phase 1 prototypes are built
+# with the sdkconfig.phase1 overlay and burn no eFuses.  The signing key never leaves the
+# programme; the manufacturer flashes a pre-signed image.  See FW-EEG-001 section 7.5.
+CONFIG_SECURE_BOOT=y
+CONFIG_SECURE_BOOT_V2_ENABLED=y
+CONFIG_SECURE_SIGNED_APPS_RSA_SCHEME=y
+CONFIG_SECURE_BOOT_BUILD_SIGNED_BINARIES=n
+CONFIG_SECURE_FLASH_ENC_ENABLED=y
+CONFIG_SECURE_FLASH_ENCRYPTION_MODE_RELEASE=y
+
+# ---- timing -----------------------------------------------------------------------
+# The DRDY interrupt is the only place the sample counter moves (RFQ E-19), so it must
+# be in IRAM and must not be delayed by a flash cache miss.
+CONFIG_FREERTOS_HZ=1000
+CONFIG_ESP_INT_WDT_TIMEOUT_MS=300
+CONFIG_ESP_TASK_WDT_TIMEOUT_S=10
+CONFIG_SPI_MASTER_ISR_IN_IRAM=y
+CONFIG_GPIO_CTRL_FUNC_IN_IRAM=y
+
+# ---- storage ------------------------------------------------------------------------
+CONFIG_FATFS_LFN_HEAP=y
+CONFIG_FATFS_MAX_LFN=255
+
+# ---------------------------------------------------------------- added to close FW-D11
+# FW-EEG-001 section 2.4 headed these "not yet in the file and must be added before the
+# first build", and they were still absent.  Without the first three the vendor interface
+# and the custom descriptor set do not exist, so WebUSB does not enumerate and the
+# _Static_assert on the MS OS 2.0 descriptor length never gets a chance to fire.
+# CONFIG_TINYUSB_VENDOR_COUNT, not CONFIG_TINYUSB_VENDOR_ENABLED.
+#
+# esp_tinyusb 1.4.x has no option called TINYUSB_VENDOR_ENABLED, and ESP-IDF does not fail
+# on a key it does not recognise -- it warns and carries on.  So the setting looked present,
+# CFG_TUD_VENDOR stayed 0, tusb.h declared none of the tud_vendor_* functions, and the
+# WebUSB interface this device is built around would simply not have existed.  It surfaced
+# as "implicit declaration of function 'tud_vendor_mounted'" the first time the firmware was
+# put in front of a real compiler.
+CONFIG_TINYUSB_VENDOR_COUNT=1
+CONFIG_TINYUSB_DESC_CUSTOM=y
+CONFIG_TINYUSB_TASK_PRIORITY=18
+CONFIG_BOOTLOADER_APP_SECURE_VERSION=1
+CONFIG_BOOTLOADER_APP_ANTI_ROLLBACK=y
+CONFIG_ESP_TASK_WDT_EN=y

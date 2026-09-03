@@ -1,0 +1,72 @@
+# FW-EEG-001 section 2.4 -- Phase 1 overlay for the two prototypes.
+#
+# Use:  idf.py -DSDKCONFIG_DEFAULTS="sdkconfig.defaults;sdkconfig.phase1" build
+#
+# Phase 1 prototypes run UNSIGNED images and BURN NO eFUSES (RUL-EEG-021 section B), so the
+# firmware volunteer can re-flash them over UART indefinitely.  Do not put these lines in
+# sdkconfig.defaults and do not build a Phase 2 unit with this overlay: a secure-boot-v2
+# bootloader burns its eFuses on first boot, and with
+# CONFIG_SECURE_FLASH_ENCRYPTION_MODE_RELEASE=y that unit can never be re-flashed over UART
+# again.  Phase 2 onward builds from sdkconfig.defaults alone; see section 7.5.
+
+CONFIG_SECURE_BOOT=n
+CONFIG_SECURE_BOOT_V2_ENABLED=n
+CONFIG_SECURE_SIGNED_APPS_RSA_SCHEME=n
+CONFIG_SECURE_BOOT_BUILD_SIGNED_BINARIES=n
+CONFIG_SECURE_FLASH_ENC_ENABLED=n
+CONFIG_SECURE_FLASH_ENCRYPTION_MODE_RELEASE=n
+
+# Anti-rollback is an eFuse mechanism.  With no eFuses burnt there is no anti-rollback and
+# a downgrade is possible on a Phase 1 prototype; that is accepted and stated in section 7.5.
+CONFIG_BOOTLOADER_APP_ANTI_ROLLBACK=n
+
+# ---------------------------------------------------------------- added to close FW-D11
+# FW-EEG-001 section 2.4 headed these "not yet in the file and must be added before the
+# first build", and they were still absent.  Without the first three the vendor interface
+# and the custom descriptor set do not exist, so WebUSB does not enumerate and the
+# _Static_assert on the MS OS 2.0 descriptor length never gets a chance to fire.
+# CONFIG_TINYUSB_VENDOR_COUNT, not CONFIG_TINYUSB_VENDOR_ENABLED.
+#
+# esp_tinyusb 1.4.x has no option called TINYUSB_VENDOR_ENABLED, and ESP-IDF does not fail
+# on a key it does not recognise -- it warns and carries on.  So the setting looked present,
+# CFG_TUD_VENDOR stayed 0, tusb.h declared none of the tud_vendor_* functions, and the
+# WebUSB interface this device is built around would simply not have existed.  It surfaced
+# as "implicit declaration of function 'tud_vendor_mounted'" the first time the firmware was
+# put in front of a real compiler.
+CONFIG_TINYUSB_VENDOR_COUNT=1
+CONFIG_TINYUSB_DESC_CUSTOM=y
+CONFIG_TINYUSB_TASK_PRIORITY=18
+CONFIG_BOOTLOADER_APP_SECURE_VERSION=1
+# NOT CONFIG_BOOTLOADER_APP_ANTI_ROLLBACK=y here.  It was appended in this block and it
+# contradicted the deliberate `=n` twenty lines above, which explains why a Phase 1
+# prototype has no anti-rollback: it is an eFuse mechanism and no eFuses are burnt.  A
+# later duplicate of the same key silently wins, so the Phase 1 intent was being undone by
+# a line that looked like an addition.  It also makes the build fail outright -- ESP-IDF
+# refuses anti-rollback on a table that has a `factory` partition, and partitions.csv has
+# one -- which is how it was found: the first real ESP-IDF build stopped here.
+CONFIG_ESP_TASK_WDT_EN=y
+
+# ---------------------------------------------------------------- IRAM headroom
+# The first real build came back with static IRAM at 100.0 % -- 16,383 of 16,384 bytes,
+# ONE byte free.  That is a cliff, not a pass: the next function anyone marks IRAM_ATTR
+# fails the link with an error naming a section rather than a cause, and this design has
+# more interrupt work coming (the E-13 tone scheduler, the E-12 onset detector).
+#
+# Two ISRs are kept in IRAM by default and neither is used by this firmware.  There is no
+# SPI slave anywhere in the design -- the ESP32-S3 is the master and both ADS1299 modules
+# are slaves -- and nothing uses gptimer; `grep spi_slave` and `grep gptimer` over main/
+# return nothing.  Reclaiming them costs this design nothing.
+#
+# SPI MASTER stays in IRAM deliberately: sample_task() reads the converters on every DRDY
+# and that path must survive a flash-cache stall.
+CONFIG_SPI_SLAVE_ISR_IN_IRAM=n
+CONFIG_GPTIMER_ISR_HANDLER_IN_IRAM=n
+#
+# MEASURED AFTERWARDS, AND IT DID NOT HELP.  The figure is still 16,383 of 16,384 with one
+# byte free, byte for byte, so whatever fills that pool it is not these two ISRs.  The
+# change is kept because carrying interrupt handlers for a bus and a timer this firmware
+# does not use is wrong either way, but it is NOT the fix and must not be mistaken for one.
+# Either the pool is genuinely full and a bring-up engineer has to choose what leaves IRAM,
+# or esp_idf_size is reporting against a fixed 16 KB window that is not the real limit on
+# an ESP32-S3 with octal SPIRAM and XIP.  Deciding which needs the linker map read against
+# hardware, so it is carried as an open item rather than guessed at from here.

@@ -1,0 +1,15 @@
+unrouted nets: 4  (AVSS, AVSS2, SPARE1, SPARE2)
+DRC violations: 5  by type: [('unclosed connection', '4')]
+vias: 705   segments: 4247   total trace length: 10552 mm
+SPI group lengths (rule: match within 10 mm): SCLK=134.8, MOSI=129.9, MISO=154.1, DRDY=117.0, CS=48.2
+  worst SPI spread: 105.9 mm
+USB pair: DP=53.6 DN=59.9  mismatch 6.30 mm
+
+NET CLASSES in effect (design.py NETCLASS: width/clearance mm):
+  ELECTRODE  0.30 / 0.40
+  ANALOG     0.25 / 0.30
+  POWER_A    0.40 / 0.30
+  POWER_D    0.80 / 0.30
+  USB        0.30 / 0.35
+  DEFAULT    0.25 / 0.25
+pours: AGND_REF/DGND on In1+In2, split x=62.0; electrode extra rule 0.35 to anything

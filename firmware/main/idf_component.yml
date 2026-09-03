@@ -1,0 +1,5 @@
+## FW-EEG-001 component manifest.  Pin the versions: the descriptor macro names moved
+## between TinyUSB releases and an unpinned build is a silent difference between units.
+dependencies:
+  idf: ">=5.2,<5.4"
+  espressif/esp_tinyusb: "~1.4.2"

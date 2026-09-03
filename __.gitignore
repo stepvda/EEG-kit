@@ -1,0 +1,6 @@
+# Build and cache output.  Everything here is regenerable from the tools in tools/,
+# firmware/ and fixtures/; nothing here is a release artefact.
+__pycache__/
+*.pyc
+webtest/tests/interop/build/
+fixtures/firmware/test/build/

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EEG field kit — connectivity test (TOOL-EEG-022)</title>
+<style>
+  :root {
+    --ink: #12212e; --muted: #6b7c8c; --line: #d7e0e8; --bg: #f7f9fb;
+    --pass: #1e7a4b; --fail: #b3261e; --warn: #9a6b00; --skip: #8a97a3;
+    --head: #1f3864;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.5 -apple-system, "Segoe UI", Roboto, sans-serif;
+         color: var(--ink); background: var(--bg); }
+  header { background: var(--head); color: #fff; padding: 18px 24px; }
+  header h1 { margin: 0; font-size: 19px; }
+  header p { margin: 4px 0 0; opacity: .85; font-size: 13px; }
+  main { max-width: 980px; margin: 0 auto; padding: 20px 24px 60px; }
+  section { background: #fff; border: 1px solid var(--line); border-radius: 6px;
+            padding: 16px 18px; margin-bottom: 16px; }
+  h2 { font-size: 15px; margin: 0 0 10px; color: var(--head); }
+  .muted { color: var(--muted); }
+  button { font: inherit; padding: 8px 14px; border-radius: 5px; border: 1px solid var(--head);
+           background: var(--head); color: #fff; cursor: pointer; margin-right: 8px; }
+  button:disabled { background: #c3cbd4; border-color: #c3cbd4; cursor: not-allowed; }
+  button.secondary { background: #fff; color: var(--head); }
+  button.secondary:disabled { color: #aab4be; border-color: #d7e0e8; }
+  .verdict { font-weight: 600; padding: 10px 14px; border-radius: 5px; margin: 12px 0 0;
+             background: #eef2f6; }
+  .verdict.pass { background: #e6f4ec; color: var(--pass); }
+  .verdict.fail { background: #fbeae9; color: var(--fail); }
+  .verdict.warn { background: #fdf4e3; color: var(--warn); }
+  .step { display: grid; grid-template-columns: 22px 34px 1fr auto; gap: 6px 8px;
+          padding: 7px 0; border-top: 1px solid #eef2f6; align-items: baseline; }
+  .step:first-child { border-top: 0; }
+  .step .icon { font-weight: 700; }
+  .step.pass .icon { color: var(--pass); } .step.fail .icon { color: var(--fail); }
+  .step.warn .icon { color: var(--warn); } .step.skip .icon { color: var(--skip); }
+  .step .id { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .step .ms { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+  .step .detail { grid-column: 3 / span 2; color: var(--muted); font-size: 13px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th { text-align: left; font-weight: 600; color: var(--muted); padding: 4px 10px 4px 0;
+       white-space: nowrap; width: 1%; }
+  td { padding: 4px 0; }
+  td.bad { color: var(--fail); font-weight: 600; }
+  .cap { display: inline-block; padding: 1px 7px; border-radius: 10px; font-size: 12px;
+         border: 1px solid var(--line); }
+  .cap.on { background: #e6f4ec; color: var(--pass); border-color: #bfe0cd; }
+  .cap.off { color: var(--skip); }
+  pre#log { background: #12212e; color: #cfe0ee; padding: 12px; border-radius: 5px;
+            font: 12px/1.45 ui-monospace, Menlo, Consolas, monospace; height: 150px;
+            overflow: auto; margin: 0; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 760px) { .grid2 { grid-template-columns: 1fr; } }
+  .note { font-size: 13px; background: #f2f6fa; border-left: 3px solid var(--head);
+          padding: 8px 12px; margin: 10px 0 0; }
+</style>
+</head>
+<body>
+<header>
+  <h1>EEG field kit — connectivity test</h1>
+  <p>TOOL-EEG-022 · tests the link between this computer and the instrument · takes no
+     measurement and contacts no server</p>
+</header>
+
+<main>
+  <section>
+    <h2>1. Before you start</h2>
+    <p class="muted">
+      Plug the instrument into this computer with the supplied USB cable, then press
+      <strong>Choose the device</strong> and pick it from the list your browser shows.
+      Nothing here starts a recording, touches an electrode or sends anything over a network.
+      A unit on a bench with nothing else connected to it should pass every step.
+    </p>
+    <div class="note">
+      You are using <strong id="browserName">?</strong>. This tool needs a Chromium browser —
+      Chrome, Edge, Brave, Opera or ChromeOS — on Windows, macOS or Linux. Safari and Firefox
+      do not implement Web Serial and cannot talk to the instrument.
+    </div>
+    <p style="margin-top:14px">
+      <button id="connectBtn" disabled>Choose the device</button>
+      <button id="disconnectBtn" class="secondary" disabled>Disconnect</button>
+      <button id="runBtn" disabled>Run the connectivity test</button>
+      <button id="saveBtn" class="secondary" disabled>Save the report</button>
+      <span class="muted" style="margin-left:8px">port: <span id="portState">closed</span></span>
+    </p>
+    <div id="verdict" class="verdict skip">not run</div>
+  </section>
+
+  <div class="grid2">
+    <section>
+      <h2>2. The tool checks itself</h2>
+      <p class="muted" style="font-size:13px;margin-top:0">
+        These need no instrument. If any of them fails, fix the tool or the browser before
+        drawing conclusions about a unit.
+      </p>
+      <div id="selfSteps"></div>
+    </section>
+
+    <section>
+      <h2>3. The device</h2>
+      <div id="identity"></div>
+    </section>
+  </div>
+
+  <section>
+    <h2>4. The link</h2>
+    <div id="deviceSteps"><p class="muted">Not run yet.</p></div>
+  </section>
+
+  <section>
+    <h2>5. Frame integrity</h2>
+    <p class="muted" style="font-size:13px;margin-top:0">
+      Counted over everything received since the port was opened. On a healthy link every
+      error row is zero.
+    </p>
+    <div id="integrity"><p class="muted">Nothing received yet.</p></div>
+  </section>
+
+  <section>
+    <h2>6. Log</h2>
+    <pre id="log"></pre>
+  </section>
+
+  <p class="muted" style="font-size:12px">
+    TOOL-EEG-022 · TI One Voice research programme · firmware and host tools MIT,
+    documents CC BY-SA 4.0. This tool tests connectivity only: it is not a measurement
+    instrument and its output says nothing about signal quality, electrode contact or
+    patient safety.
+  </p>
+</main>
+
+<script type="module">
+  import { boot } from './js/ui.js';
+  boot();
+</script>
+</body>
+</html>
