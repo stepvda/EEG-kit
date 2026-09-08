@@ -142,6 +142,7 @@ release whose own register said that what is not listed is not part of it.
 | MECH-EEG-020 | Printed part drawings | A | generated | dimensioned drawings of every printed part |
 | RUL-EEG-021 | Rulings register | A | **released** | one answer to each cross-document disagreement, cited by section letter |
 | TOOL-EEG-022 | Connectivity test program: specification, technical description and user manual | A | **released** | the browser tool that tests the USB link, and the browser client the study reuses |
+| LAY-EEG-034 | Carrier layout rule sheet | A | released, **generated**, issued 8 September 2026 | the rule set the external layout contractor works under, and part of the order specification. Written by `tools/emit_rule_sheet.py` from `tools/rules.py`, so it and `kicad/EEG-CAR-01_RevC.kicad_dru` cannot disagree |
 | ASM-EEG-023 | Register of programme assumptions | A | released, issued 2 September 2026 | every open question the completeness audit left that was a DECISION rather than a missing file, each decided, attacked by an independent reviewer and re-decided against that attack. Twenty-two entries, ten of which block a build, three of which cannot be decided from what exists. **Nothing in it is a sign-off** |
 
 Four entries need reading carefully rather than counting.
@@ -380,7 +381,7 @@ a cross-reference does give a letter, that letter must be the one in section 1.1
 | FW-EEG-001 | Rev C |
 | DSN-EEG-002 | Rev E |
 | ICD-EEG-006, SCH-EEG-005, PARTS-EEG-019, ASM-EEG-007, WH-EEG-008, JIG-EEG-009, QP-EEG-010, RISK-EEG-011, REG-EEG-012, SVC-EEG-013, IFU-EEG-014, PKG-EEG-015, ECO-EEG-016, AVL-EEG-017 | Rev B |
-| SIM-EEG-018, MECH-EEG-020, RUL-EEG-021, TOOL-EEG-022, ASM-EEG-023 | Rev A |
+| SIM-EEG-018, MECH-EEG-020, RUL-EEG-021, TOOL-EEG-022, ASM-EEG-023, LAY-EEG-034 | Rev A |
 
 An older letter in a cross-reference is a defect to be corrected, not a synonym. **Rev A of
 this document said that an older letter "means the same document as corrected in this
@@ -1576,6 +1577,31 @@ plate, a second tier of standoffs, an ADS1299 breakout that is not a Pi HAT (AVL
 section 2 M1 permits the breakout to change under the section 6 qualification even though the
 DEVICE may not), or moving the modules whose jumpers cannot reach onto the carrier as fitted
 parts. None is decided and none is costed. They are for the programme.
+
+**4. The rule sheet (input 6).** **LAY-EEG-034 Rev A**, registered in section 1.1 and issued
+8 September 2026. Eight sections: scope and precedence, board and stack-up, zoning and star
+points, the isolation keep-out, the net-class table, the seven geometry rules, placement, and
+the deliverables expected back.
+
+It is a controlled document **and** it is generated, which is not a contradiction: the tables
+are transcribed from `tools/rules.py` by `tools/emit_rule_sheet.py`, so the sheet the
+contractor signs against and the `.kicad_dru` the contractor's DRC loads come from one source
+and cannot drift. The prose around them is written.
+
+Two things in it are said plainly rather than left to be assumed. **Section 6 says which of
+the seven rules KiCad can check and which it cannot** -- the angle rule and the pad-entry rule
+have no KiCad constraint, and the sheet says against each of them that this programme checks
+it on the returned geometry with `tools/drc.py`, naming the tool and pointing at the 1 311
+occurrences it found in Rev B. And **section 7 carries the open item from part 3** -- that the
+modules do not fit MP-01 and that the plate's DevKit opening is 2 mm short -- because a
+placement reviewer will meet it, while saying that neither is a carrier layout question and
+neither blocks the order.
+
+**The brief for this work asked for one page. It is three.** The net-class table is eight rows
+with a derivation for each, and the geometry table is seven rows with a checked-by column;
+compressing either into a page would mean dropping the derivations, and a rule a contractor
+cannot see the reason for is a rule that gets relaxed at the first difficulty. The sheet is
+still one document and is read in one sitting.
 
 *Verified.* The board is parsed back after writing and checked against `design.py`: **211
 footprints, 636 pads, 156 nets, 0 segments, 0 vias, 37 locked**, netlist identical, every rule
