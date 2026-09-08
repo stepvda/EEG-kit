@@ -1,0 +1,94 @@
+EEG-CAR-01 Rev C -- 3D collision check
+Generated 2026-09-08 by tools/collision_check.py.
+==============================================================================
+
+WHAT THIS IS
+  Finding 6 of ECO-EEG-030: no module outlines exist, so no placement could
+  be shown to be free of interference.  These are bounding-box tests over the
+  bodies of tools/mech_bodies.py.  Coordinates are design.py's -- top-left
+  origin, Y down -- with Z measured upward from the carrier's top copper.
+
+  **The twelve module envelopes are DECLARED MAXIMA and not measurements.**
+  No vendor drawing was consulted for any of them.  They are the boxes a
+  bought module must fit inside, registered in ASM-EEG-023 under
+  MECH-D6-MODULE-ENVELOPES.  Two are better founded than the rest: the
+  PiEEG-8 is a Raspberry Pi shield, so 65.0 x 56.5 mm is the HAT mechanical
+  standard, and the Pololu S13V15F5 is a catalogue 0.5 x 0.8 inch board.
+
+  The module placement on MP-01 is also a proposal.  ICD-EEG-006 section 4
+  deliberately does not drill the plate to a pattern and takes a per-unit
+  fitting decision instead, so there is no placement to transcribe.
+
+FINDINGS: 15
+
+A  CARRIER PARTS AGAINST THE PLATE UNDERSIDE
+   plate underside at 18.0 mm on M3 x 18 nylon standoffs
+   tallest carrier part: J15 at 10.00 mm (ASSUMED: no qualified part exists (AVL-EEG-017 section 1.4.1))
+   clearance to the plate: 8.00 mm
+   findings: 0
+     none
+
+B  THE DEVKIT AGAINST THE PLATE OPENING AND ITS NEIGHBOURS
+   DevKit body (80.7, 3.2)-(106.2, 66.2), 13.6 mm tall
+   plate opening (78.0, 4.0, 109.0, 65.0)
+   findings: 1
+     the DevKit body (80.7, 3.2)-(106.2, 66.2) is not inside the plate opening (78.0, 4.0)-(109.0, 65.0); it would foul the plate
+
+C  MODULES ON THE PLATE
+   6 of 12 placed
+   findings: 13
+     M1a could not be placed on MP-01 at all
+     M1b could not be placed on MP-01 at all
+     M9 could not be placed on MP-01 at all
+     M10 could not be placed on MP-01 at all
+     M11 could not be placed on MP-01 at all
+     M12 could not be placed on MP-01 at all
+     M1a has NO position on the plate at all: no grid position leaves a 65 x 56 mm module inside the 8 mm border and clear of the DevKit opening, with the plate otherwise empty. This does not depend on the proposed placement.
+     M1b has NO position on the plate at all: no grid position leaves a 65 x 56 mm module inside the 8 mm border and clear of the DevKit opening, with the plate otherwise empty. This does not depend on the proposed placement.
+     M4 cannot reach J10 in 60 mm from ANY position on the plate: the best case is about 86 mm. This does not depend on the proposed placement.
+     M5 cannot reach J11 in 60 mm from ANY position on the plate: the best case is about 72 mm. This does not depend on the proposed placement.
+     M6 to J12 is about 136 mm of jumper run against the 60 mm of ICD-EEG-006 section 3.2, at the proposed placement; 58 mm is reachable if the plate were free
+     M7 to J12 is about 124 mm of jumper run against the 60 mm of ICD-EEG-006 section 3.2, at the proposed placement; 58 mm is reachable if the plate were free
+     M8 to J25 is about 106 mm of jumper run against the 60 mm of ICD-EEG-006 section 3.2, at the proposed placement; 21 mm is reachable if the plate were free
+
+   Jumper run: nearest module edge to the carrier connector,
+   Manhattan, plus the 21.0 mm rise to the plate's top face. No bend
+   slack is added, so these are floors.  'best' is the shortest that
+   module could have with the plate to itself, which does not depend on
+   the proposed placement.
+
+     module connector   proposed    best
+     M1a    J1         not placed  no position   OVER
+     M1b    J3         not placed  no position   OVER
+     M4     J10             86 mm        86 mm   OVER
+     M5     J11             88 mm        72 mm   OVER
+     M6     J12            136 mm        58 mm
+     M7     J12            124 mm        58 mm
+     M9     J20        not placed        24 mm
+     M3     J8              44 mm        21 mm
+     M8     J25            106 mm        21 mm
+     M10    J21        not placed        21 mm
+     M11    J28        not placed        21 mm
+     M12    J19        not placed        21 mm
+
+D  PLAN AREA -- NOT ASKED FOR, AND IT IS THE BINDING CONSTRAINT
+   plate 146 x 126 mm, 8 mm solid border
+   usable inside the border             14300 mm2
+   less the DevKit opening               1891 mm2
+   net usable                           12409 mm2
+   twelve declared module envelopes     17356 mm2
+   fill                                   140 %
+   findings: 1
+     the twelve declared module envelopes need 17356 mm2 and the plate offers 12409 mm2 inside its 8 mm border and clear of the DevKit opening: 140 % fill. No arrangement fits.
+
+   Sensitivity, because the envelopes are assumptions and the conclusion
+   must not rest on them: the two ADS1299 boards alone are 7345 mm2,
+   which is 59 % of the net usable plate, and that figure is the
+   Raspberry Pi HAT standard rather than an assumption.  Halving every
+   OTHER envelope still leaves 12351 mm2 against 12409 mm2.
+
+WHAT IS NOT CHECKED HERE
+  Anything needing a real module: a connector overhanging a PCB edge, a
+  heatsink, a cable bend radius, or the pod lid.  Nothing in this package
+  has been manufactured or measured.
+

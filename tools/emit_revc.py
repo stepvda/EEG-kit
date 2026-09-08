@@ -21,6 +21,15 @@ What it writes into package/kicad:
     EEG-CAR-01_RevC.kicad_pro                  net classes, rules and severities
     EEG-CAR-01_RevC_outline_and_fixed_connectors.dxf   the mechanical inputs
 
+and into package/mech:
+
+    step/footprints/*.step                     one body per footprint class, bound
+                                               into the board's 3D view
+    step/EEG-CAR-01_RevC_carrier_envelopes.step
+    step/MP-01_RevC_plate_and_standoffs.step
+    step/EEG-CAR-01_RevC_module_envelopes.step
+    EEG-CAR-01_RevC_collision_check.txt
+
 The two CPL files are PROVISIONAL and say so in the file: outside the thirty connectors,
 Rev C placement is what the contractor is being paid to decide, and the coordinates in
 them are Rev B's.  The netlist needs no routing -- it is a list of pads by net -- so it
@@ -38,9 +47,11 @@ sys.path.insert(0, HERE)
 
 import design as D          # noqa: E402
 import gerber               # noqa: E402
+import collision_check      # noqa: E402
 import dxf_out              # noqa: E402
 import emit_kicad_sch       # noqa: E402
 import kicad_pcb8           # noqa: E402
+import mech_bodies          # noqa: E402
 import pcbgen               # noqa: E402
 import rules                # noqa: E402
 import sch_netlist          # noqa: E402
@@ -172,6 +183,9 @@ def emit_board(board, verbose=True):
     # silently absent for the contractor, which is the opposite of the point.  That the
     # board is unrouted is said in its own title block, in comment 1, in the file's
     # first four lines and in LAY-EEG-034, none of which a file name has to repeat.
+    models = mech_bodies.write_footprint_models(
+        os.path.join(PKG, "mech", "step", "footprints"))
+    kicad_pcb8.set_models(models)
     pcb = os.path.join(KDIR, f"{stem}.kicad_pcb")
     made.append(kicad_pcb8.write_pcb(pcb, board))
     made.append(kicad_pcb8.write_pro(os.path.join(KDIR, f"{stem}.kicad_pro"), board,
@@ -181,11 +195,25 @@ def emit_board(board, verbose=True):
     made.append(dxf)
     st = verify_board(pcb, board, nfixed)
     if verbose:
+        print(f"    {len(models)} footprint 3D bodies bound")
         print(f"    board reads back: {st['footprints']} footprints, {st['pads']} pads, "
               f"{st['nets']} nets, {st['segments']} segments, {st['vias']} vias, "
               f"{st['locked']} locked")
         for m in made:
             print("   ", os.path.relpath(m, PKG))
+    return made
+
+
+def emit_mech(verbose=True):
+    """The 3D bodies and the collision check (ECO-EEG-033, finding 6)."""
+    made = mech_bodies.write_step(os.path.join(PKG, "mech", "step"))
+    n, report = collision_check.main(verbose=False)
+    made.append(report)
+    if verbose:
+        for m in made:
+            print("   ", os.path.relpath(m, PKG))
+        print(f"    collision check: {n} finding(s) -- see the report; they are NOT "
+              f"all closed")
     return made
 
 
@@ -199,6 +227,7 @@ def main(verbose=True):
     made = emit_bom_cpl_netlist(board, verbose)
     made += emit_rules(verbose)
     made += emit_board(board, verbose)
+    made += emit_mech(verbose)
     made += emit_kicad_sch.main(verbose)
     ndiff, nprob, report = sch_netlist.main(write=True)
     made.append(report)

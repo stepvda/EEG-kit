@@ -409,6 +409,8 @@ data, each with the document that owns it, the tool that writes it, and what it 
 | `fixtures/` | the FIX-01 to FIX-04 test-fixture data: board data for `pcb/FIX-01` and `pcb/FIX-04`, seven printed parts in `step/` and `stl/`, the M1-M3 fixture controller firmware under `fixtures/firmware/`, and `MANIFEST.json` with a SHA-256 for every file | JIG-EEG-009 Rev B | `tools/fixture_gen.py`, except `fixtures/firmware/`, which is hand-written C | released as fixture data. **The two fixture boards are NOT a fabrication set** -- there is no copper layer on either, and `fixtures/README_fixture_data_index.txt` says why |
 | `records/` | the machine-readable per-unit test record: the JSON schema, a worked example record, the lot-summary CSV header and the calibration-certificate template | TST-EEG-004 Rev C sections 12 and 13 | `records/make_records.py`, which reads the step list out of TST-EEG-004 at generation time and fails rather than writes if the document and the table disagree | released, generated |
 | `kicad/wh-bus-01/` | the WH-BUS-01 Rev A fabrication data for the contact-light bus board: Gerbers, drill, IPC-D-356A netlist, placement and BOM note, and the checksum file | PARTS-EEG-019 Rev B registers the part; WH-EEG-008 Rev B owns the harness it serves | `tools/wh_bus.py` -- **not** `emit_all.py`; see section 1.2 | released, generated |
+| `mech/step/footprints/` and the three Rev C body files in `mech/step/` | the 3D bodies of ECO-EEG-033: one per footprint class, bound into `kicad/EEG-CAR-01_RevC.kicad_pcb`; the carrier's component height envelopes; MP-01 and its standoffs; and the thirteen module assemblies as **declared maximum envelopes**, which are assumptions (ASM-EEG-023 MECH-D6-MODULE-ENVELOPES) and not measurements | ICD-EEG-006 Rev B section 4 owns MP-01; ASM-EEG-023 owns the envelopes | `tools/mech_bodies.py` on `tools/step_write.py` -- **not** `tools/mech_gen.py`, which needs cadquery and could not be run here | released as body data. **NOT a printable part set**: they are envelopes, not parts, and no STEP reader has read them |
+| `mech/EEG-CAR-01_RevC_collision_check.txt` | the interference report of ECO-EEG-033 finding 6 | ASM-EEG-023 MECH-D6-MODULE-ENVELOPES | `tools/collision_check.py` | released, generated. **Three of its four cases are open and one blocks a build** |
 | `firmware/tools/` | the provisioning station: `provision.py` and `provision_selftest.py`, `atecc608b_config.py` and the three configuration files it writes, `calibration_schema.py` and its schema, and `verify_stream.py` | FW-EEG-001 Rev C section 7 | hand-written, except the three ATECC configuration files and the calibration schema, which their own generators write and check | released as tooling. **`ATECC608B_CONFIG_TEMPLATE.md` is a PROPOSAL in its own words** -- not reviewed, never written to a part, not released for production |
 
 Two files in that last tree read like documents and are not. `firmware/tools/README_provisioning.md`
@@ -1530,6 +1532,50 @@ connector courtyards with pin-1 marks, in **`design.py`'s convention -- top-left
 down** -- which is the board file's convention too, so the two overlay without transforming
 anything. The CAM convention is the other one and the DXF says so on its own face as well as
 in the README.
+
+**3. The 3D bodies and the collision check (finding 6).** `tools/step_write.py`,
+`tools/mech_bodies.py` and `tools/collision_check.py`.
+
+**cadquery could not be installed on the machine this was generated on** -- 472 MB free where
+`cadquery-ocp` needs several times that -- so `tools/mech_gen.py` cannot even be imported
+there, let alone run, and no printed part was regenerated. Rather than claim a body set that
+does not exist, `step_write.py` writes the bodies the check needs from first principles with
+no dependency at all: `FACETED_BREP`, planar faces, one solid per extruded polygon. It cannot
+do fillets, holes in a face or curved surfaces, and does not pretend to -- a standoff is a
+hexagonal prism and MP-01 is four rectangles around its DevKit opening. **No STEP reader was
+available to verify the files**; they are checked structurally, and that is what is claimed.
+
+Written: one body per **footprint class**, 22 of them, **bound into the `.kicad_pcb`** so the
+contractor's 3D view is populated without importing anything; the carrier with the height
+envelope of all 211 parts; MP-01 with the four M3 x 18 standoffs; and the thirteen module
+assemblies.
+
+**The twelve module envelopes are DECLARED MAXIMA and no vendor drawing was consulted for any
+of them.** They are registered in ASM-EEG-023 under **MECH-D6-MODULE-ENVELOPES**, which is new
+and **blocks a build**. The placement of the modules on MP-01 is a proposal for the same
+reason: ICD-EEG-006 section 4 deliberately does not drill the plate to a pattern.
+
+**What the check found, and three of the four are open.**
+
+| Case | Result |
+|---|---|
+| A -- carrier parts against the plate underside | **clear.** The tallest carrier part is J15 at 10.00 mm against a plate underside at 18.0 mm: 8.00 mm of clearance |
+| B -- the DevKit against the plate opening | **THE OPENING IS 2 mm TOO SHORT.** J6 and J7 are 1x22 sockets, so the pin span is 53.34 mm, and the ESP32-S3-DevKitC-1 PCB is 63.0 mm long: it needs 3.2 to 66.2 mm in carrier Y and MP-01's opening runs 4.0 to 65.0 mm. The board fouls the plate at both ends |
+| C -- modules against each other and their jumper reach | **six of twelve cannot be placed at all**, and **four cannot reach their connector within the 60 mm of ICD-EEG-006 section 3.2 from ANY position on the plate** -- M4 to J10 is 86 mm at best, M5 to J11 is 72 mm at best. That 60 mm is a crosstalk limit, not a mechanical one |
+| D -- plan area, which nothing in this package had ever checked | **the twelve envelopes need 17 356 mm2 and the plate offers 12 409 mm2: 140 % fill** |
+
+**Case D is the one that matters and it does not rest on the assumptions.** The two ADS1299
+boards alone are 7 345 mm2, **59 % of the net usable plate**, and that figure is the Raspberry
+Pi HAT standard rather than a guess -- the PiEEG-8 is a Pi shield. Halving every other
+envelope still leaves 12 351 mm2 against 12 409 mm2. ICD-EEG-006 section 4's stack budget
+finds 6.4 mm of margin in HEIGHT and says nothing about area, and area is the binding
+constraint.
+
+**Nothing here is closed by this ECO.** Four routes would each move the answer -- a larger
+plate, a second tier of standoffs, an ADS1299 breakout that is not a Pi HAT (AVL-EEG-017
+section 2 M1 permits the breakout to change under the section 6 qualification even though the
+DEVICE may not), or moving the modules whose jumpers cannot reach onto the carrier as fitted
+parts. None is decided and none is costed. They are for the programme.
 
 *Verified.* The board is parsed back after writing and checked against `design.py`: **211
 footprints, 636 pads, 156 nets, 0 segments, 0 vias, 37 locked**, netlist identical, every rule

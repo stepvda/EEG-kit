@@ -132,6 +132,17 @@ def _rule_area(name, layers, pts, tracks="not_allowed", vias="not_allowed",
             "  )"]
 
 
+MODELS = {}          # footprint name -> ${KIPRJMOD}-relative STEP path
+
+
+def set_models(paths):
+    """`paths` is {footprint name: absolute path}; stored as project-relative."""
+    MODELS.clear()
+    for name, p in paths.items():
+        MODELS[name] = "${KIPRJMOD}/../mech/step/footprints/" + os.path.basename(p)
+    return MODELS
+
+
 def write_pcb(path, board, revision=None):
     rev = revision or D.REV_C
     nets = sorted(board.nets())
@@ -224,6 +235,14 @@ def write_pcb(path, board, revision=None):
                 o.append(f'      (uuid "{_u("fpl", part.ref, lay, k)}"))')
         for pd in part.pads:
             o += _pad_sexp(pd, part, netid)
+        model = MODELS.get(part.fpname)
+        if model:
+            # written in the 3D scene's own orientation, so no offset and no rotation
+            o.append(f'    (model "{esc(model)}"')
+            o.append("      (offset (xyz 0 0 0))")
+            o.append("      (scale (xyz 1 1 1))")
+            o.append("      (rotate (xyz 0 0 0))")
+            o.append("    )")
         o.append("  )")
 
     # ---- reference planes ---------------------------------------------------

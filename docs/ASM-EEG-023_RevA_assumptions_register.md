@@ -40,9 +40,10 @@ approval, and the programme does not confuse the two.
 
 ## Summary
 
-- **22 assumptions** decided.
-- **8 derived**, **11 judgement**, **3 cannot be decided here**.
-- **10 block a build**: D2-FIX01-OUTLINE, D3-CAL-COMMUTATOR, MECH-D1, MECH-D5, D2-EAR-REFERENCE-COUPLER, D3-BIAS-FPZ-TERMINATION, D4-D11-C11-PATIENT-SIDE, D1-ATECC-CONFIG, D1-HM04-CROWN-AND-LEAF, D5-K12-SPRING-ENVELOPE.
+- **23 assumptions** decided.
+- **8 derived**, **12 judgement**, **3 cannot be decided here**.
+- **MECH-D6-MODULE-ENVELOPES is new, added 8 September 2026 under ECO-EEG-033**, and it blocks a build.
+- **11 block a build**: MECH-D6-MODULE-ENVELOPES, D2-FIX01-OUTLINE, D3-CAL-COMMUTATOR, MECH-D1, MECH-D5, D2-EAR-REFERENCE-COUPLER, D3-BIAS-FPZ-TERMINATION, D4-D11-C11-PATIENT-SIDE, D1-ATECC-CONFIG, D1-HM04-CROWN-AND-LEAF, D5-K12-SPRING-ENVELOPE.
 - **All 22 require a human sign-off.** None is approved by this document.
 
 
@@ -3552,4 +3553,83 @@ reverts to three prose controls and the §5 quarantine line has to be strengthen
 in that order (provision.py:322-324 states the order).
 
 **Files this touches:** `docs/PKG-EEG-015_RevB_packing_labelling_and_shipping.md`, `docs/TST-EEG-004_RevC_production_test_specification.md`, `docs/QP-EEG-010_RevB_quality_plan.md`, `docs/RUL-EEG-021_RevA_rulings_register.md`, `docs/ECO-EEG-016_RevB_change_control_and_document_register.md`, `records/validate_test_record.py`, `records/README.txt`, `records/make_records.py`, `tools/artwork_gen.py`, `graphics/labels/ART-LBL-01_unit_label_specimen.svg`, `graphics/labels/ART-LBL-02_kit_id_plate_specimen.svg`, `graphics/labels/README_artwork.txt`, `firmware/main/drivers.c`
+
+---
+
+
+## MECH-D6-MODULE-ENVELOPES
+
+**Question.** How big is each of the twelve plate-mounted modules, and where does each one
+sit on MP-01?
+
+**Decision.**
+
+**DECIDED as a set of DECLARED MAXIMUM ENVELOPES rather than as dimensions.** No vendor
+drawing was consulted for any of the twelve. What `tools/mech_bodies.py` carries is, for each
+module, the box a bought module must fit inside -- a plan footprint and a height above the
+plate's top face. That converts twelve unknowns into twelve acceptance criteria, which
+ICD-EEG-006 section 6 step 9 can check at qualification; it already checks height and now has
+a footprint to check as well.
+
+| Module | Carrier | Plan (mm) | Height above the plate (mm) | Basis |
+|---|---|---|---|---|
+| M1a, M1b ADS1299 breakout x2 | J1/J2/J23, J3/J4/J29 | 65.0 x 56.5 | 15.0 | **form factor**: the PiEEG-8 is a Raspberry Pi shield, so the outline is the HAT mechanical standard. The height is assumed |
+| M3 audio codec | J8/J9 | 40.0 x 30.0 | 12.0 | assumed; OPEN WITH CRITERIA in AVL-EEG-017 section 2 |
+| M4 USB isolator | J10 | 65.0 x 45.0 | 15.0 | assumed; the USB-B receptacle is the tallest thing on it |
+| M5 secure element | J11 | 30.0 x 22.0 | 8.0 | assumed, Adafruit 4314 class |
+| M6 charger | J12 | 40.0 x 30.0 | 10.0 | assumed, Adafruit 4755 class. The baseline is ONE combined charger-plus-gauge board, in which case this envelope covers M6 and M7 together |
+| M7 fuel gauge | J12 | 30.0 x 22.0 | 8.0 | assumed, Adafruit 5580 class; not fitted separately in the baseline |
+| M8 buck-boost | J25 | 20.4 x 12.8 | 10.0 | **form factor**: the Pololu S13V15F5 is a catalogue 0.5 x 0.8 inch board. The height is assumed |
+| M9 microSD | J20 | 30.0 x 22.0 | 8.0 | assumed, Adafruit 4682 class |
+| M10 boom preamplifier | J21 | 30.0 x 22.0 | 10.0 | assumed; OPEN WITH CRITERIA, the MAX9814 is not approved |
+| M11 room microphone | J28 | 30.0 x 22.0 | 10.0 | assumed; OPEN WITH CRITERIA, no part is known to meet E-15 |
+| M12 74HC595 | J19 | 45.0 x 25.0 | 10.0 | assumed; OPEN WITH CRITERIA |
+
+**The placement on MP-01 is also decided here and is also a proposal.** ICD-EEG-006 section 4
+deliberately does not drill the plate to a pattern -- it takes a per-unit fitting decision
+instead -- so there is no placement to transcribe and one had to be invented before anything
+could be checked for interference. The rule, stated so that a reviewer can disagree with it:
+take the modules largest first; for each, walk the M2.5 fixing grid, allow a 90 degree turn,
+and keep the free position nearest that module's own carrier connector; skip any position
+that would foul the DevKit opening, a standoff, the 8 mm solid border or a module already
+placed.
+
+**Confidence: judgement.** **Blocks a build: yes.**
+
+**What the attack changed.**
+
+The first draft gave each module a plausible catalogue size and moved on. Attacking it asked
+the only question that matters: *do they fit?* Nothing in the package had ever asked. ICD-EEG-006
+section 4 budgets the stack in HEIGHT and finds 6.4 mm of margin, and says nothing about area.
+`tools/collision_check.py` measures it:
+
+| | mm2 |
+|---|---|
+| usable plate inside the 8 mm border | 14 300 |
+| less the DevKit opening | 1 891 |
+| **net usable** | **12 409** |
+| **the twelve declared envelopes** | **17 356** |
+| fill | **140 %** |
+
+**They do not fit, and six of the twelve cannot be placed at all.** The conclusion survives
+the assumptions, which is why it is stated: the two ADS1299 boards alone are 7 345 mm2, which
+is **59 % of the net usable plate**, and that figure is the Raspberry Pi HAT standard and not
+a guess. **Halving every other envelope still leaves 12 351 mm2 against 12 409 mm2** -- it
+would fit by 58 mm2, which is not a design margin.
+
+The attack also found that four of the modules cannot reach their carrier connector inside the
+60 mm of ICD-EEG-006 section 3.2 **from any position on the plate**, which is independent of
+the placement proposal. M4 to J10 is 86 mm at best and M5 to J11 is 72 mm at best. That 60 mm
+is a **crosstalk** limit, not a mechanical one -- coupling scales linearly with length -- so a
+longer jumper is not a fitting inconvenience.
+
+What was conceded: the envelope figures are not defended as dimensions and the entry no longer
+implies they are. What was kept: the conclusion, because it does not rest on them.
+
+**What would change it.** Buying one of each module and measuring it. Until then, four things
+would each move the answer, and they are for the programme and not for this document:
+a larger plate; a second tier of standoffs; an ADS1299 breakout that is not a Pi HAT --
+AVL-EEG-017 section 2 M1 allows the breakout to change under the section 6 qualification even
+though the DEVICE may not; or moving the modules whose jumpers cannot reach onto the carrier
+as fitted parts. **None of these is decided here and none is costed.**
 
