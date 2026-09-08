@@ -611,13 +611,17 @@ def run(report_path=None):
         # verdict.  Meeting it releases the data for REVIEW; it does not mean the
         # layout is good, and nothing here has been fabricated or measured.
         if n == 0 and uncl == 0 and bare == 0:
-            R.note("release state", "the ECO-EEG-016 section 3 gate is MET -- zero "
-                   "violations, every net one connected copper island.  The "
-                   "fabrication data is RELEASED FOR REVIEW under RFQ-EEG-002A and "
-                   "is NOT released for fabrication: no human layout engineer has "
-                   f"read this routing, and {relax} of its connections close at the "
-                   "minimum conductor or the minimum gap rather than the preferred "
-                   "width")
+            R.note("release state", "the ECO-EEG-016 section 3 gate was MET on this "
+                   "geometry -- zero violations, every net one connected copper "
+                   "island -- and it was NOT ENOUGH.  A layout engineer read the "
+                   "board between 3 and 5 September 2026, declined the review and "
+                   "advised a redesign, and Rev B is WITHDRAWN FROM FABRICATION "
+                   f"(ECO-EEG-030).  {relax} of its connections closed at the minimum "
+                   "conductor or the minimum gap rather than the preferred width, and "
+                   "six of his seven findings were rules this DRC did not have: "
+                   "regraded under them the same geometry shows 1311 occurrences "
+                   "(kicad/EEG-CAR-01_RevB_regraded_ECO-EEG-032.txt).  Rev C is "
+                   "UNROUTED and its placement and routing are bought")
             R.open_item("the placement of Rev C has not been reviewed",
                         "A human layout engineer HAS now read the Rev B routing: he "
                         "read it between 3 and 5 September 2026, declined the paid "
