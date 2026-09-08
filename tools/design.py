@@ -689,14 +689,20 @@ POWER_A_NETS = {"AVDD", "AVSS", "AVDD2", "AVSS2", "AGND_REF"}
 POWER_D_NETS = {"DVDD3V3", "DGND", "VBAT", "VSYS", "V5V", "VBUS_CHG", "VBUS_IN", "VDD_ISO"}
 USB_NETS = {"USB_DP", "USB_DN"}
 
-NETCLASS = {   # name: (track width mm, clearance mm)
-    "ELECTRODE": (0.30, 0.40),
-    "ANALOG":    (0.25, 0.30),
-    "POWER_A":   (0.40, 0.30),
-    "POWER_D":   (0.80, 0.30),
-    "USB":       (0.30, 0.35),
-    "DEFAULT":   (0.25, 0.25),
-}
+# The net-name sets above are circuit facts and live here.  The GEOMETRY that goes with
+# them -- widths, clearances, layer restrictions, via rules -- moved to tools/rules.py at
+# ECO-EEG-032, because it has to be exported to KiCad as well as measured by the DRC and
+# a rule kept in two places is a rule that will disagree with itself.  `rules.py` imports
+# this module; this module must not import it.
+#
+# Rev B's table was six classes, name: (width, clearance) --
+#     ELECTRODE (0.30, 0.40)  ANALOG (0.25, 0.30)  POWER_A (0.40, 0.30)
+#     POWER_D   (0.80, 0.30)  USB    (0.30, 0.35)  DEFAULT (0.25, 0.25)
+# -- and those figures survive as the PREFERRED values of the classes that replaced them.
+# What Rev B had no notion of is a per-class MINIMUM, which is why every one of the 169
+# relaxed connections was allowed down to the board floor of 0.20 mm.  Use
+# rules.width_clearance(net) for what a router aims at and rules.floor(net) for what the
+# DRC grades against.
 
 # Parts that may not be substituted, and the requirement that makes each one fixed.
 # AVL-EEG-017 section 6.4 is the home of this list; it is encoded here so that the BOM
@@ -772,18 +778,6 @@ TARGETED_REPAIRS = [
 NO_VIA_ZONES = [("J2", 1.0), ("J4", 1.0), ("J23", 1.0), ("J29", 1.0)]
 
 
-def netclass_of(net):
-    if net in ELECTRODE_NETS:
-        return "ELECTRODE"
-    if net in USB_NETS:
-        return "USB"
-    if net in POWER_A_NETS:
-        return "POWER_A"
-    if net in POWER_D_NETS:
-        return "POWER_D"
-    if net in ANALOG_NETS:
-        return "ANALOG"
-    return "DEFAULT"
 
 
 # ---------------------------------------------------------------------------

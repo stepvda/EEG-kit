@@ -37,6 +37,7 @@ import sys
 import time
 
 import design as D
+import rules
 import drc
 import netcheck
 import pcbgen
@@ -93,8 +94,8 @@ def main(apply=False):
 
     for net in broken:
         ok, _ncomp, stray = conn[net]
-        cls = D.netclass_of(net)
-        w, c = D.NETCLASS[cls]
+        cls = rules.netclass_of(net)
+        w, c = rules.BY_NAME[cls].pref_width, rules.BY_NAME[cls].pref_clearance
         targets = [p for p in board.nets()[net]
                    if f"pad {p.ref}.{p.num}" not in stray]
         for tag in stray:

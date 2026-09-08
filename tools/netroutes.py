@@ -15,6 +15,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import design as D   # noqa: E402
+import rules
 import pcbgen        # noqa: E402
 
 
@@ -46,7 +47,7 @@ def main(path):
         status = "connected" if ok else ("OPEN: " + ", ".join(
             s[4:] for s in conn[net][2]) if net in conn else "?")
         layers = "+".join(l for l, k in (("F", "F"), ("B", "B")) if r[k] > 0) or "planes"
-        print(f"| {net} | {D.netclass_of(net)} | {len(nets[net])} | {r['F']:.1f} | "
+        print(f"| {net} | {rules.netclass_of(net)} | {len(nets[net])} | {r['F']:.1f} | "
               f"{r['B']:.1f} | {r['F'] + r['B']:.1f} | {r['via']} | {r['seg']} | {status} |")
 
 

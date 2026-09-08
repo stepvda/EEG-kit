@@ -21,6 +21,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import design as D   # noqa: E402
+import rules
 import pcbgen        # noqa: E402
 
 
@@ -44,14 +45,14 @@ def main(report):
     uniq = {}
     for net, a, b, w, c in raw:
         uniq.setdefault((net, tuple(sorted((a, b)))), []).append((float(w), float(c)))
-    bycls = collections.Counter(D.netclass_of(n) for (n, _) in uniq)
+    bycls = collections.Counter(rules.netclass_of(n) for (n, _) in uniq)
     narrow = sum(1 for k, v in uniq.items()
-                 if min(w for w, _ in v) < D.NETCLASS[D.netclass_of(k[0])][0])
+                 if min(w for w, _ in v) < rules.width_clearance(k[0])[0])
     print(f"relaxed connections   {len(raw)} raw = {len(uniq)} unique pad-to-pad "
           f"(+{len(raw) - len(uniq)} re-listings of re-routed connections)")
     print(f"  unique by class     " + ", ".join(f"{k} {v}" for k, v in sorted(bycls.items())))
     print(f"  unique narrowed     {narrow}   unique reduced-gap-only {len(uniq) - narrow}")
-    pw = [k[0] for k in uniq if D.netclass_of(k[0]) == "POWER_D"]
+    pw = [k[0] for k in uniq if rules.netclass_of(k[0]) == "POWER"]
     print(f"  POWER_D nets hit    {dict(collections.Counter(pw))}")
     at_min = sum(1 for v in uniq.values() if min(w for w, _ in v) <= 0.201)
     print(f"  unique at 0.20 mm   {at_min}")

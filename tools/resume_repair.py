@@ -18,6 +18,7 @@ import types
 
 import pcbgen
 import design as D
+import rules
 import netcheck
 import pours
 import drc
@@ -49,7 +50,7 @@ for attempt in range(6):
         break
     fixed = 0
     for net, (_, _, stray) in broken.items():
-        w, c = D.NETCLASS[D.netclass_of(net)]
+        w, c = rules.width_clearance(net)
         allp = nets[net]
         srcs = [padmap[t[4:]] for t in stray if t[4:] in padmap] or allp[:1]
         for src in srcs:
@@ -91,7 +92,7 @@ if stuck:
     real.rebuild()
     for net in sorted(killed):
         pads = nets[net]
-        w, c = D.NETCLASS[D.netclass_of(net)]
+        w, c = rules.width_clearance(net)
         for a_, b_ in real._mst([(p.x, p.y) for p in pads]):
             real.try_ladder(net, pads[a_], pads[b_], w, c, False)
     for layer in BB.PLANE_LAYERS:
@@ -116,7 +117,7 @@ for attempt in range(3):
         break
     fixed = 0
     for net, (_, _, stray) in broken.items():
-        w, c = D.NETCLASS[D.netclass_of(net)]
+        w, c = rules.width_clearance(net)
         allp = nets[net]
         srcs = [padmap[t[4:]] for t in stray if t[4:] in padmap] or allp[:1]
         for src in srcs:

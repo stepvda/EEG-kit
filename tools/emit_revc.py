@@ -13,6 +13,7 @@ What it writes into package/kicad:
     EEG-CAR-01_RevC_CPL_SMT_top.csv            provisional placement, CAM convention
     EEG-CAR-01_RevC_CPL_THT_top.csv            provisional placement, CAM convention
     EEG-CAR-01_RevC-IPC-D-356A.ipc             netlist: 156 nets, from the pads alone
+    EEG-CAR-01_RevC.kicad_dru                  custom design rules, from tools/rules.py
 
 The two CPL files are PROVISIONAL and say so in the file: outside the thirty connectors,
 Rev C placement is what the contractor is being paid to decide, and the coordinates in
@@ -32,6 +33,7 @@ sys.path.insert(0, HERE)
 import design as D          # noqa: E402
 import gerber               # noqa: E402
 import pcbgen               # noqa: E402
+import rules                # noqa: E402
 
 KDIR = os.path.join(PKG, "kicad")
 
@@ -80,6 +82,18 @@ def emit_bom_cpl_netlist(board=None, verbose=True):
     return made
 
 
+def emit_rules(verbose=True):
+    """The KiCad custom-rules file.  One source of truth with the in-house DRC: both
+    sides read tools/rules.py, and neither is maintained by hand (ECO-EEG-032)."""
+    os.makedirs(KDIR, exist_ok=True)
+    path = os.path.join(KDIR, f"{D.stem(D.REV_C)}.kicad_dru")
+    with open(path, "w") as f:
+        f.write(rules.kicad_dru())
+    if verbose:
+        print("   ", os.path.relpath(path, PKG))
+    return [path]
+
+
 def main(verbose=True):
     board = pcbgen.BoardV2()
     board.validate()
@@ -88,6 +102,7 @@ def main(verbose=True):
         print(f"   {len(board.parts)} designators, "
               f"{sum(1 for _ in board.pads())} pads, {len(board.nets())} nets")
     made = emit_bom_cpl_netlist(board, verbose)
+    made += emit_rules(verbose)
     return made
 
 

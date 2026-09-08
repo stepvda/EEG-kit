@@ -20,6 +20,7 @@ from shapely.geometry import Point
 from shapely.ops import unary_union
 
 import design as D
+import rules
 import pcbgen
 import pours
 import router as R
@@ -211,8 +212,8 @@ def build(verbose=True, plot=None):
         padmap = {f"{p.ref}.{p.num}": p for p in board.pads()}
         for net, a, b in retry:
             pa, pb = padmap[a], padmap[b]
-            cls = D.netclass_of(net)
-            w, c = D.NETCLASS[cls]
+            cls = rules.netclass_of(net)
+            w, c = rules.BY_NAME[cls].pref_width, rules.BY_NAME[cls].pref_clearance
             if rt.try_ladder(net, pa, pb, w, c, False):
                 if verbose:
                     print(f"   recovered {net} {a} -> {b}")
@@ -303,8 +304,8 @@ def build(verbose=True, plot=None):
         fixed = 0
         padmap = {f"{p.ref}.{p.num}": p for p in board.pads()}
         for net, (_, _, stray) in broken.items():
-            cls = D.netclass_of(net)
-            w, c = D.NETCLASS[cls]
+            cls = rules.netclass_of(net)
+            w, c = rules.BY_NAME[cls].pref_width, rules.BY_NAME[cls].pref_clearance
             targets = [p for p in board.nets()[net]
                        if f"pad {p.ref}.{p.num}" not in stray]
             for tag in stray:
@@ -373,8 +374,8 @@ def build(verbose=True, plot=None):
         rt.rebuild()
         for net in sorted(killed_nets):
             pads = board.nets()[net]
-            cls = D.netclass_of(net)
-            w, c = D.NETCLASS[cls]
+            cls = rules.netclass_of(net)
+            w, c = rules.BY_NAME[cls].pref_width, rules.BY_NAME[cls].pref_clearance
             for a, bi in rt._mst([(p.x, p.y) for p in pads]):
                 rt.try_ladder(net, pads[a], pads[bi], w, c, False)
         for layer in PLANE_LAYERS:
@@ -415,8 +416,8 @@ def build(verbose=True, plot=None):
         fixed = 0
         padmap = {f"{p.ref}.{p.num}": p for p in board.pads()}
         for net, (_, _, stray) in broken.items():
-            cls = D.netclass_of(net)
-            w, c = D.NETCLASS[cls]
+            cls = rules.netclass_of(net)
+            w, c = rules.BY_NAME[cls].pref_width, rules.BY_NAME[cls].pref_clearance
             targets = [p for p in board.nets()[net]
                        if f"pad {p.ref}.{p.num}" not in stray]
             for tag in stray:

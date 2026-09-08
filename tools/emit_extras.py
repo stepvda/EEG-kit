@@ -31,6 +31,7 @@ V1 = os.path.join(os.path.dirname(PKG), "package")
 sys.path.insert(0, HERE)
 
 import design as D          # noqa: E402
+import rules
 import drc                  # noqa: E402
 import pcbgen               # noqa: E402
 
@@ -214,7 +215,7 @@ def netreport(board, st):
         # actually enforced is drc_minimums below, taken from drc.py itself so the two
         # cannot drift.  A DFM tool must grade the board against drc_minimums.
         "netclasses": {k: {"track_mm_preferred": v[0], "clearance_mm_preferred": v[1]}
-                       for k, v in D.NETCLASS.items()},
+                       for k, v in {c.name: (c.pref_width, c.pref_clearance) for c in rules.CLASSES}.items()},
         "drc_minimums": {"clearance_mm": drc.MIN_CLEARANCE,
                          "electrode_clearance_mm": drc.ELECTRODE_CLEARANCE,
                          "track_mm": drc.MIN_TRACK,
@@ -240,7 +241,7 @@ def netreport(board, st):
         ],
         "nets_detail": {
             n: {"pads": [f"{p.ref}.{p.num}" for p in ps],
-                "class": D.netclass_of(n),
+                "class": rules.netclass_of(n),
                 "zone": ("analogue" if n in D.ANALOG_ZONE_NETS
                          else "digital" if n in D.DIGITAL_ONLY_NETS else "either")}
             for n, ps in sorted(nets.items())},

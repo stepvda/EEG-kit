@@ -20,6 +20,19 @@ Rules checked
  11  no via inside a declared via keep-out
  12  every net is one connected component (delegated to netcheck)
 
+Rules 13 to 18 are the geometry findings of the external layout review (ECO-EEG-030),
+added at ECO-EEG-032 and measured by tools/drc_geometry.py.  They were not in the rule
+set the Rev B report was written against, which is why that report could stand at zero
+violations and still describe a board a layout engineer declined to review.
+
+ 13  no via inside an SMD pad                                    finding 1
+ 14  no dangling track end                                       finding 2a
+ 15  no redundant copper path between two pads, outside a plane  finding 2b
+ 16  no angle below 90 degrees between two segments of one       finding 3
+     track, and every segment on a 0/45/90/135 degree axis
+ 17  a track enters a pad through the pad centre                 finding 4
+ 18  per-class minimum width, permitted layers and via rule      finding 5
+
 Licence: CC BY-SA 4.0.
 """
 from __future__ import annotations
@@ -27,8 +40,10 @@ from shapely.geometry import box, LineString
 from shapely.strtree import STRtree
 
 import design as D
+import drc_geometry
 import netcheck
 import pours
+import rules
 
 MIN_CLEARANCE = 0.20
 ELECTRODE_CLEARANCE = 0.35
@@ -219,6 +234,11 @@ def run(board, tracks, vias, pour_geo, iso_box, max_report=40):
                 v.append(("via keep-out", f"via at ({vv.x:.1f}, {vv.y:.1f}) is inside the "
                                           f"{ref} keep-out"))
 
+    # 13 to 18 -- ECO-EEG-032, the geometry findings of the external layout review
+    gv, gstats = drc_geometry.run_all(board, tracks, vias, pour_geo)
+    v += gv
+    stats.update(gstats)
+
     # 12 connectivity
     conn = netcheck.check(board, tracks, vias, pour_geo)
     broken = [n for n, r in conn.items() if not r[0]]
@@ -262,7 +282,26 @@ def write_report(path, board, tracks, vias, pour_geo, iso_box, narrowed=()):
         f.write(f"  copper to board edge ..................... {EDGE_CLEARANCE:.2f} mm\n")
         f.write(f"  copper to a non-plated hole .............. {NPTH_CLEARANCE:.2f} mm\n")
         f.write(f"  annular ring ............................. {MIN_ANNULAR:.2f} mm\n")
-        f.write(f"  smallest plated hole ..................... {MIN_HOLE:.2f} mm\n\n")
+        f.write(f"  smallest plated hole ..................... {MIN_HOLE:.2f} mm\n")
+        f.write("\n  PER-CLASS RULES (tools/rules.py; ECO-EEG-032)\n")
+        f.write(f"  {'class':14s} {'nets':>5s} {'w min/pref':>12s} "
+                f"{'clr min/pref':>13s} {'layers':>10s} {'vias':>5s}\n")
+        for r in rules.summary_table():
+            f.write(f"  {r['name']:14s} {r['nets']:5d} "
+                    f"{r['min_width']:5.2f}/{r['pref_width']:<6.2f} "
+                    f"{r['min_clearance']:6.2f}/{r['pref_clearance']:<6.2f} "
+                    f"{r['layers']:>10s} {r['vias']:>5s}\n")
+        f.write("\n  GEOMETRY RULES (tools/drc_geometry.py; ECO-EEG-032)\n")
+        f.write("    no via inside an SMD pad, or within "
+                f"{rules.GEOMETRY['via_to_smd_pad_min']:.2f} mm of one\n")
+        f.write("    no dangling track end\n")
+        f.write("    no redundant copper path between two pads, outside a plane\n")
+        f.write(f"    no angle below {rules.GEOMETRY['min_segment_angle_deg']:.0f} "
+                f"degrees between two segments of one track\n")
+        f.write("    every segment on a 0, 45, 90 or 135 degree axis\n")
+        f.write("    a track enters a pad with its centreline within "
+                f"{rules.GEOMETRY['pad_entry_frac'] * 100:.0f} % of the pad's minor\n"
+                "      dimension of the pad centre\n\n")
         f.write("MEASURED\n")
         for k, val in stats.items():
             if k.startswith("_"):

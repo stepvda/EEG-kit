@@ -35,6 +35,7 @@ import numpy as np
 from shapely.geometry import LineString, Point, box as sbox
 
 import design as D
+import rules
 import pours
 import netcheck
 import router as R
@@ -55,8 +56,8 @@ def _repair(rt, board, pour_geo, net, verbose):
     """Re-join `net` after its copper was cut: strays -> nearest pads, honest ladder."""
     from build_board import _place_ground_via
     padmap = _padmap(board)
-    cls = D.netclass_of(net)
-    w, c = D.NETCLASS[cls]
+    cls = rules.netclass_of(net)
+    w, c = rules.BY_NAME[cls].pref_width, rules.BY_NAME[cls].pref_clearance
     fixed, still = 0, []
     for _pass in range(3):
         stray = _open_pads(board, rt, pour_geo, net)

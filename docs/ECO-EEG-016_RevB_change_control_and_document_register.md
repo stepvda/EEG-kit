@@ -480,6 +480,7 @@ indexes, this section is the register, and where they differ this section govern
 | ~~ECO-EEG-029~~ | -- | withdrawn; the layer count is a finding of ECO-EEG-018 | withdrawn |
 | ECO-EEG-030 | scope, with seven findings | an external layout engineer read the Rev B board, declined the review and advised redesign; Rev B is withdrawn from fabrication and Rev C is opened as a reviewable design whose layout is bought | implemented 8 September 2026 |
 | ECO-EEG-031 | major | four part numbers could not be bought or could not be fitted: the quad OPA4376 has no SOIC-14, the ferrite bead is not a Murata part, the tactile switch is a 12 x 12 mm part on a 6 x 6 mm land, and the patient-connected DIN sockets were not marked non-substitutable | implemented 8 September 2026 |
+| ECO-EEG-032 | major | the DRC reported zero violations against a rule set that did not contain six of the seven findings; the rules are now encoded once and exported to KiCad, and Rev B is regraded under them | implemented 8 September 2026 |
 
 ### ECO-EEG-001 -- the contact lights had no driver
 
@@ -1309,6 +1310,108 @@ Rev B file names with Rev C pads and produce a set whose copper does not reach i
 The Rev B fabrication set is frozen, is recovered from git rather than regenerated, and
 `emit_all.py --rev-b` refuses and says so.
 
+### ECO-EEG-032 -- the rule set the DRC was measuring against was incomplete
+
+**Class:** major. **Found by:** ECO-EEG-030. This ECO is that ECO's findings 1 to 5 turned
+into checks, and it is raised separately because it changes the tools rather than the design.
+
+**Was:** `kicad/EEG-CAR-01_RevB_DRC_report.txt` says "VIOLATIONS: 0 -- none. The board passes
+every rule listed above", and it is right. **The words that matter are "listed above".** The
+rule set had twelve rules and none of them looked for a via inside a pad, a dangling track
+end, a redundant copper loop, an acute corner, an off-centre pad entry or a conductor narrower
+than its own net class needs -- and the last of those could not be looked for, because there
+were no net classes with minima to look against. A report can be true and useless at the same
+time, and this one was: it was the evidence the board was ready for review, and the reviewer
+declined the review.
+
+**Now:** the rule set lives in **`tools/rules.py`** as data, and it is written down once.
+
+* **Net classes.** Eight, replacing Rev B's six: `ELECTRODE`, `ANALOGUE_REF`, `POWER`, `USB`,
+  `ANALOGUE`, `LED_DRIVE`, `DIGITAL`, `DEFAULT`. Every one of the 156 nets falls in exactly
+  one. Each class carries a **minimum** and a **preferred** width and clearance, the layers it
+  may use, and whether it may have a via at all. Rev B's table carried one width and one
+  clearance per class and no minimum, which is why all 169 relaxed connections were free to
+  fall to the 0.20 mm board floor with nothing to say that some of them were the wrong nets to
+  relax. Rev B's figures survive as the **preferred** column.
+* **Where the minima come from.** `POWER` at 0.40 mm because the worst case is about 610 mA at
+  J13 and IPC-2221 gives 0.40 mm of 35 µm outer copper about 1.29 A at a 10 °C rise.
+  `ANALOGUE_REF` at 0.30 mm for source impedance, not current -- the rails carry about 10 mA.
+  `LED_DRIVE` at 0.25 mm on 1.3 mA a site. `ELECTRODE` at 0.25 mm, above the board floor,
+  because a patient-connected conductor is the last place to spend the last 0.05 mm. **Four
+  numbers are proposals and not transcriptions and each is flagged `confirm` in the source and
+  printed as such in LAY-EEG-034 section 5**: the `ELECTRODE` minimum width, the `ELECTRODE`
+  layer and via restriction, the `ANALOGUE_REF` minimum width and the pad-entry tolerance.
+* **`ELECTRODE` is L1 only and may not have a via.** That is DSN-EEG-003 section 3.3 rule 3
+  read literally -- these nets run on L1 with the reference plane continuous beneath them, and
+  a via breaks the plane it is routed over. It constrains the contractor and it is achievable:
+  J14, the R/D/C protection rows and J2/J4/J23/J29 are all on the top side.
+* **Six checks in the in-house DRC**, in `tools/drc_geometry.py`, each with its own counted
+  line in the report: via inside an SMD pad; dangling track end; redundant copper path outside
+  a plane; angle below 90° between two segments and any segment off a 0/45/90/135° axis; a
+  track entering a pad more than 25 % of the pad's minor dimension off its centre; and per
+  class, width, layer and via rule.
+* **The same rules exported to KiCad.** `kicad/EEG-CAR-01_RevC.kicad_dru` is written from
+  `rules.py` and is 37 rules. `rules.check_dru()` balances its brackets on every emit, because
+  a `.kicad_dru` with one bracket missing loads as far as the error and silently drops every
+  rule after it -- which is this whole ECO's failure mode wearing a different hat.
+
+**What KiCad cannot check, said plainly rather than implied.** The angle rule and the
+pad-entry rule have no KiCad constraint and are not expressible in a `.kicad_dru`. They are
+checked by `tools/drc.py` on the geometry that comes back, and LAY-EEG-034 section 6 says so
+against each of them rather than leaving a reader to assume the contractor's DRC will catch
+them. Dangling ends and redundant loops are KiCad **built-in** checks and are raised to errors
+in the project file rather than restated as custom rules.
+
+**Verified, and this is the evidence that the findings were real.** `tools/grade_revb.py`
+regrades the **released** Rev B geometry under the new rules -- the pads, tracks and vias out
+of `kicad/EEG-CAR-01_RevB_routed.kicad_pcb` and the plane polygons out of `tools/routed.pkl`,
+checked against the released census of 3 745 segments and 552 vias before it grades. It reads
+the released artefact and not `design.py`, because `design.py` has moved to Rev C pads.
+
+| Finding | Rule | Occurrences in the released Rev B routing |
+|---|---|---|
+| 1 | vias inside an SMD pad | **67** |
+| 2a | dangling track ends | **5** |
+| 2b | redundant copper loops outside a plane | **221**, on 22 nets |
+| 3 | angle below 90° between two segments | **171** |
+| 3 | segments off a 0/45/90/135° axis | **158** |
+| 4 | off-centre pad entries | **299** |
+| 5 | conductors under their class minimum | **322** |
+| 5 | net classes on a forbidden layer | **50** |
+| 5 | vias on a class that forbids them | **18** |
+| | **total** | **1 311** |
+
+The loop line counts loops and the detail lists one line per net, so those two figures differ
+on purpose; every other line is one occurrence per detail line. The report is
+`kicad/EEG-CAR-01_RevB_regraded_ECO-EEG-032.txt`.
+
+**None of this is a regression and none of it is reverted.** Section 3's ECO gate forbids a
+change that adds a violation; a change that adds a **check** is not in that class, and the
+paragraph now says so. The Rev B DRC report is not withdrawn either -- it is correct about the
+twelve rules it had, and it is the report on a set that is withdrawn from fabrication for
+other reasons.
+
+**Two of the 1 311 are worth naming**, because they are in the register already. The 67
+via-in-pad occurrences include the `stub_via` at U1.3 that `design.py`'s `TARGETED_REPAIRS`
+records as a deliberate repair of 2 September 2026: a 1.0-1.5 mm stub from the op-amp's
+AGND_REF pin to a through via. It closed a net and it is finding 1. The 322 under-width
+conductors are not the 36 of the "169 relaxed connections" restated: that figure counted
+connections against the board's single 0.25 mm preferred width, and this one counts segments
+against eight per-class minima.
+
+**Impact.** The board -- none; no geometry moves and Rev C has no routing to grade. The
+firmware, the mechanical parts, the BOM, the test specification -- none. The safety case --
+none directly, though the `ELECTRODE` class now states in machine-readable form what
+DSN-EEG-003 section 3.3 rule 3 states in prose, which is a strengthening of an existing
+control and not a new one. Units already built -- none exist.
+
+**One structural change.** `design.py`'s `NETCLASS` table and `netclass_of()` are **removed**
+and their callers now read `rules.py`. `design.py` keeps the net-name membership sets, which
+are circuit facts; `rules.py` holds the geometry, because it has to be exported to KiCad as
+well as measured, and a rule kept in two places is a rule that will disagree with itself.
+`tools/kicad_parse.py` gained segment and via readers so that a released board file can be
+graded without its source.
+
 ### 2.2 Requirement changes and where they come from
 
 Every RFQ-EEG-001 requirement that changed between Rev C and this release, with the change
@@ -1802,7 +1905,7 @@ this register records the fact, it does not amend other documents from here.
    set moved, and the ECO says which checks it added or withdrew.
 6. **Record.** Add the ECO to section 2 with the same fields as the entries above and take
    the next free number in the **one EEG-nnn pool** that section 1.3A now rules, which is
-   **ECO-EEG-032**. Never ECO-EEG-016, which is this document, and never ECO-EEG-028 or
+   **ECO-EEG-033**. Never ECO-EEG-016, which is this document, and never ECO-EEG-028 or
    ECO-EEG-029, which are withdrawn under section 2 and are not reused. Bump the revision of
    every document the change touches, and update sections 1.1, 1.5 and 2.1.
 7. **Release.** A release is the whole package or nothing. Regenerate the checksums in

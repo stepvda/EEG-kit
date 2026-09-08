@@ -30,6 +30,7 @@ from scipy import ndimage
 from skimage.graph import MCP_Geometric
 
 import design as D
+import rules
 import pcbgen
 
 GRID = 0.1                      # mm per cell
@@ -645,8 +646,8 @@ class Router:
         nets = self.b.nets()
         for vnet in victims:
             pads = nets[vnet]
-            cls = D.netclass_of(vnet)
-            w, c = D.NETCLASS[cls]
+            cls = rules.netclass_of(vnet)
+            w, c = rules.BY_NAME[cls].pref_width, rules.BY_NAME[cls].pref_clearance
             for a, bi in self._mst([(p.x, p.y) for p in pads]):
                 if not self.try_ladder(vnet, pads[a], pads[bi], w, c, False):
                     lost.append((vnet, f"{pads[a].ref}.{pads[a].num}",
@@ -677,8 +678,8 @@ class Router:
             pads = nets.get(net, [])
             if len(pads) < 2:
                 continue
-            cls = D.netclass_of(net)
-            width, clearance = D.NETCLASS[cls]
+            cls = rules.netclass_of(net)
+            width, clearance = rules.BY_NAME[cls].pref_width, rules.BY_NAME[cls].pref_clearance
             top_only = cls == "ELECTRODE"
             pts = [(p.x, p.y) for p in pads]
             ok = 0

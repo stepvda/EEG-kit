@@ -1,0 +1,267 @@
+EEG-CAR-01 Rev B -- REGRADED against the ECO-EEG-032 rule set
+Generated 2026-09-08 by tools/grade_revb.py.
+==============================================================================
+
+WHAT THIS IS
+  The released Rev B routing, measured against the six geometry rules
+  the external layout review of ECO-EEG-030 asked for and the rule set
+  behind kicad/EEG-CAR-01_RevB_DRC_report.txt did not contain.  That
+  report says VIOLATIONS: 0 and it is not withdrawn: it is correct
+  about the rules it was given.  The counts below are what those rules
+  did not look for.
+
+  Geometry graded:
+    kicad/EEG-CAR-01_RevB_routed.kicad_pcb   211 designators, 636 pads, 156 nets
+    tools/routed.pkl                         3745 segments, 552 vias, 4 pour islands
+
+  Rev C is unrouted, so there is nothing of Rev C's to grade here.
+  These rules apply to the geometry the layout contractor returns.
+
+COUNTS
+  finding                            rule                                           count
+  1  drills in pads                  vias inside an SMD pad                            67
+  2a net stubs -- antennas           dangling track ends                                5
+  2b redundant copper loops          redundant copper loops                           221
+  3  sharp inside corners            sharp inside corners (< 90 deg)                  171
+  3  45-degree routing               segments off the 45-degree grid                  158
+  4  off-centre pad entry            off-centre pad entries                           299
+  5  under-width critical nets       conductors under their class minimum             322
+  5  net class layer restriction     net classes on a forbidden layer                  50
+  5  net class via restriction       vias on a class that forbids them                 18
+                                     TOTAL                                           1311
+
+  The redundant-loop line counts LOOPS and the detail below lists one
+  line per net, so those two numbers differ on purpose. Every other
+  line counts one occurrence per detail line.
+
+PER-CLASS RULES IN FORCE (tools/rules.py)
+  class           nets   w min/pref  clr min/pref     layers  vias
+  ELECTRODE         32  0.25/0.30     0.35/0.40         F.Cu    NO
+  ANALOGUE_REF       5  0.30/0.40     0.20/0.30          any   yes
+  POWER              8  0.40/0.80     0.20/0.30          any   yes
+  USB                2  0.30/0.30     0.35/0.35         F.Cu    NO
+  ANALOGUE          42  0.25/0.25     0.20/0.30          any   yes
+  LED_DRIVE         16  0.25/0.30     0.20/0.25          any   yes
+  DIGITAL           21  0.20/0.25     0.20/0.25          any   yes
+  DEFAULT           30  0.20/0.25     0.20/0.25          any   yes
+
+  Net membership is Rev C's, because the net names did not change:
+  ECO-EEG-031 moved footprints and part numbers and the netlist is
+  byte-identical to Rev B's.
+
+DETAIL
+
+  dangling track end  (5)
+    EMGIN3 on F.Cu: the start of the segment (20.800, 66.700)-(15.700, 61.600) touches nothing else on its net
+    EOGIN1 on F.Cu: the end of the segment (16.400, 72.800)-(16.400, 71.800) touches nothing else on its net
+    AVSS on B.Cu: the end of the segment (20.400, 76.400)-(22.300, 74.500) touches nothing else on its net
+    AVSS on B.Cu: the start of the segment (16.500, 65.100)-(16.500, 60.300) touches nothing else on its net
+    AVDD on F.Cu: the start of the segment (22.200, 67.400)-(22.700, 67.400) touches nothing else on its net
+
+  net class on a forbidden layer  (25)
+    EOGIN2 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    EOGIN2 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    EOGIN2 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    EMG1 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    EMG1 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    EMG1 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    EMG1 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    EMG2 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    EMG2 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    EMG2 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    EMG2 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    EMG2 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    EMG2 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    EMG3 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    EMG3 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    EMG3 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    EMG3 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    EMG3 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    SPARE1 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    SPARE1 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    SPARE1 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    SPARE1 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    SPARE1 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    SPARE1 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+    SPARE2 (ELECTRODE) has a segment on B.Cu; the class is restricted to F.Cu
+
+  off-centre pad entry  (25)
+    E_C4 on F.Cu: the end of segment (5.700, 21.900)-(14.900, 21.900) enters pad R5.1 with its centreline 0.300 mm off the pad centre, against 0.200 mm allowed on a 0.80 mm pad
+    EOGIN1 on F.Cu: the start of segment (16.400, 72.800)-(16.400, 71.800) enters pad J22.1 with its centreline 0.700 mm off the pad centre, against 0.400 mm allowed on a 1.60 mm pad
+    IN1 on F.Cu: the start of segment (27.900, 4.600)-(26.200, 4.600) enters pad C1.1 with its centreline 0.400 mm off the pad centre, against 0.219 mm allowed on a 0.88 mm pad
+    IN1 on F.Cu: the start of segment (22.600, 4.200)-(20.900, 4.200) enters pad D1.3 with its centreline 0.240 mm off the pad centre, against 0.150 mm allowed on a 0.60 mm pad
+    IN1 on F.Cu: the start of segment (28.500, 4.600)-(28.500, 4.400) enters pad C1.1 with its centreline 0.288 mm off the pad centre, against 0.219 mm allowed on a 0.88 mm pad
+    IN2 on F.Cu: the start of segment (27.900, 8.900)-(26.200, 8.900) enters pad C2.1 with its centreline 0.400 mm off the pad centre, against 0.219 mm allowed on a 0.88 mm pad
+    IN2 on F.Cu: the start of segment (22.600, 8.500)-(20.900, 8.500) enters pad D2.3 with its centreline 0.240 mm off the pad centre, against 0.150 mm allowed on a 0.60 mm pad
+    IN2 on F.Cu: the start of segment (28.500, 8.900)-(28.500, 8.700) enters pad C2.1 with its centreline 0.288 mm off the pad centre, against 0.219 mm allowed on a 0.88 mm pad
+    IN3 on F.Cu: the start of segment (27.900, 13.200)-(26.200, 13.200) enters pad C3.1 with its centreline 0.400 mm off the pad centre, against 0.219 mm allowed on a 0.88 mm pad
+    IN3 on F.Cu: the start of segment (22.600, 12.800)-(20.900, 12.800) enters pad D3.3 with its centreline 0.240 mm off the pad centre, against 0.150 mm allowed on a 0.60 mm pad
+    IN3 on F.Cu: the start of segment (28.500, 13.200)-(28.500, 13.000) enters pad C3.1 with its centreline 0.288 mm off the pad centre, against 0.219 mm allowed on a 0.88 mm pad
+    IN4 on F.Cu: the start of segment (27.900, 17.500)-(26.200, 17.500) enters pad C4.1 with its centreline 0.400 mm off the pad centre, against 0.219 mm allowed on a 0.88 mm pad
+    IN4 on F.Cu: the start of segment (22.600, 17.100)-(20.900, 17.100) enters pad D4.3 with its centreline 0.240 mm off the pad centre, against 0.150 mm allowed on a 0.60 mm pad
+    IN4 on F.Cu: the start of segment (28.500, 17.500)-(28.500, 17.300) enters pad C4.1 with its centreline 0.288 mm off the pad centre, against 0.219 mm allowed on a 0.88 mm pad
+    IN5 on F.Cu: the start of segment (27.900, 21.800)-(26.200, 21.800) enters pad C5.1 with its centreline 0.400 mm off the pad centre, against 0.219 mm allowed on a 0.88 mm pad
+    IN5 on F.Cu: the start of segment (22.600, 21.400)-(20.900, 21.400) enters pad D5.3 with its centreline 0.240 mm off the pad centre, against 0.150 mm allowed on a 0.60 mm pad
+    IN5 on F.Cu: the start of segment (28.500, 21.800)-(28.500, 21.600) enters pad C5.1 with its centreline 0.288 mm off the pad centre, against 0.219 mm allowed on a 0.88 mm pad
+    IN6 on F.Cu: the start of segment (27.900, 26.100)-(26.200, 26.100) enters pad C6.1 with its centreline 0.400 mm off the pad centre, against 0.219 mm allowed on a 0.88 mm pad
+    IN6 on F.Cu: the start of segment (22.600, 25.700)-(20.900, 25.700) enters pad D6.3 with its centreline 0.240 mm off the pad centre, against 0.150 mm allowed on a 0.60 mm pad
+    IN6 on F.Cu: the start of segment (28.500, 26.100)-(28.500, 25.900) enters pad C6.1 with its centreline 0.288 mm off the pad centre, against 0.219 mm allowed on a 0.88 mm pad
+    IN7 on F.Cu: the start of segment (27.900, 30.400)-(26.200, 30.400) enters pad C7.1 with its centreline 0.400 mm off the pad centre, against 0.219 mm allowed on a 0.88 mm pad
+    IN7 on F.Cu: the start of segment (22.600, 30.000)-(20.900, 30.000) enters pad D7.3 with its centreline 0.240 mm off the pad centre, against 0.150 mm allowed on a 0.60 mm pad
+    IN7 on F.Cu: the start of segment (28.500, 30.400)-(28.500, 30.200) enters pad C7.1 with its centreline 0.288 mm off the pad centre, against 0.219 mm allowed on a 0.88 mm pad
+    IN8 on F.Cu: the start of segment (27.900, 34.700)-(26.200, 34.700) enters pad C8.1 with its centreline 0.400 mm off the pad centre, against 0.219 mm allowed on a 0.88 mm pad
+    IN8 on F.Cu: the start of segment (22.600, 34.300)-(20.900, 34.300) enters pad D8.3 with its centreline 0.240 mm off the pad centre, against 0.150 mm allowed on a 0.60 mm pad
+
+  redundant copper path  (22)
+    net AVDD: 55 independent copper loops outside the planes (246 segments over 202 junctions in 11 components)
+    net AVSS: 50 independent copper loops outside the planes (366 segments over 318 junctions in 2 components)
+    net BIASOUT: 5 independent copper loops outside the planes (39 segments over 35 junctions in 1 component)
+    net BTN_B: 2 independent copper loops outside the planes (33 segments over 32 junctions in 1 component)
+    net CLK_ADS: 2 independent copper loops outside the planes (38 segments over 37 junctions in 1 component)
+    net CMP_RAW: 2 independent copper loops outside the planes (30 segments over 29 junctions in 1 component)
+    net CS: 1 independent copper loop outside the planes (15 segments over 15 junctions in 1 component)
+    net DGND: 1 independent copper loop outside the planes (42 segments over 68 junctions in 27 components)
+    net DVDD3V3: 54 independent copper loops outside the planes (453 segments over 402 junctions in 3 components)
+    net EMG3: 4 independent copper loops outside the planes (26 segments over 23 junctions in 1 component)
+    net EMGIN3: 10 independent copper loops outside the planes (66 segments over 57 junctions in 1 component)
+    net ENV_ROOM: 2 independent copper loops outside the planes (42 segments over 41 junctions in 1 component)
+    net I2S_BCLK: 2 independent copper loops outside the planes (14 segments over 13 junctions in 1 component)
+    net LED_OE: 2 independent copper loops outside the planes (15 segments over 14 junctions in 1 component)
+    net LED_SR_LATCH: 2 independent copper loops outside the planes (11 segments over 10 junctions in 1 component)
+    net MISO: 2 independent copper loops outside the planes (39 segments over 38 junctions in 1 component)
+    net MOSI: 2 independent copper loops outside the planes (33 segments over 32 junctions in 1 component)
+    net ROOM_PRE: 2 independent copper loops outside the planes (72 segments over 71 junctions in 1 component)
+    net SPARE1: 1 independent copper loop outside the planes (19 segments over 19 junctions in 1 component)
+    net START: 1 independent copper loop outside the planes (20 segments over 20 junctions in 1 component)
+    net V5V: 18 independent copper loops outside the planes (213 segments over 196 junctions in 1 component)
+    net VBUS_CHG: 1 independent copper loop outside the planes (39 segments over 39 junctions in 1 component)
+
+  segment off the 45-degree grid  (25)
+    AGND_REF on F.Cu: segment (55.175, 58.000)-(55.615, 59.062) lies at 67.50 degrees
+    USB_DP on F.Cu: segment (105.600, 53.000)-(104.860, 53.720) lies at 135.78 degrees
+    USB_DP on F.Cu: segment (135.300, 11.800)-(136.000, 11.080) lies at 134.19 degrees
+    USB_DN on F.Cu: segment (105.600, 55.600)-(104.860, 56.260) lies at 138.27 degrees
+    USB_DN on F.Cu: segment (136.700, 9.200)-(136.000, 8.540) lies at 43.32 degrees
+    E_Cz on F.Cu: segment (5.700, 13.800)-(5.000, 14.540) lies at 133.41 degrees
+    E_Pz on F.Cu: segment (5.700, 16.400)-(5.000, 17.080) lies at 135.83 degrees
+    E_C3 on F.Cu: segment (5.700, 18.900)-(5.000, 19.620) lies at 134.19 degrees
+    E_C4 on F.Cu: segment (5.700, 21.900)-(5.000, 22.160) lies at 159.62 degrees
+    E_T8 on F.Cu: segment (5.700, 27.900)-(5.000, 27.240) lies at 43.32 degrees
+    E_F7 on F.Cu: segment (5.700, 30.500)-(5.000, 29.780) lies at 45.81 degrees
+    REF_L on F.Cu: segment (5.700, 33.000)-(5.000, 32.320) lies at 44.17 degrees
+    REF_R on F.Cu: segment (5.700, 35.600)-(5.000, 34.860) lies at 46.59 degrees
+    EOGIN2 on B.Cu: segment (20.100, 72.800)-(20.780, 73.500) lies at 45.83 degrees
+    IN2 on F.Cu: segment (40.300, 8.100)-(41.000, 7.540) lies at 141.34 degrees
+    IN3 on F.Cu: segment (40.300, 10.800)-(41.000, 10.080) lies at 134.19 degrees
+    IN4 on F.Cu: segment (40.300, 13.300)-(41.000, 12.620) lies at 135.83 degrees
+    IN5 on F.Cu: segment (40.300, 15.900)-(41.000, 15.160) lies at 133.41 degrees
+    IN7 on F.Cu: segment (40.300, 20.900)-(41.000, 20.240) lies at 136.68 degrees
+    IN8 on F.Cu: segment (40.300, 23.500)-(41.000, 22.780) lies at 134.19 degrees
+    SRB1 on F.Cu: segment (40.300, 26.000)-(41.000, 25.320) lies at 135.83 degrees
+    SRB1 on F.Cu: segment (40.300, 69.600)-(41.000, 70.320) lies at 45.81 degrees
+    BIASIN on F.Cu: segment (47.700, 10.800)-(47.000, 10.080) lies at 45.81 degrees
+    BIASIN on F.Cu: segment (47.700, 28.400)-(47.000, 29.080) lies at 135.83 degrees
+    EMG2 on B.Cu: segment (40.300, 53.200)-(41.000, 52.540) lies at 136.68 degrees
+
+  sharp inside corner  (25)
+    EMGIN3 on F.Cu at (8.400, 98.900): two segments meet at 45.0 degrees, below the 90 degree floor
+    EMGIN3 on F.Cu at (15.500, 61.300): two segments meet at 45.0 degrees, below the 90 degree floor
+    EOGIN1 on F.Cu at (16.400, 72.800): two segments meet at 45.0 degrees, below the 90 degree floor
+    EOGIN1 on F.Cu at (15.500, 65.600): two segments meet at 45.0 degrees, below the 90 degree floor
+    SRB1 on F.Cu at (22.600, 38.600): two segments meet at 45.0 degrees, below the 90 degree floor
+    EMG3 on F.Cu at (17.100, 60.500): two segments meet at 0.0 degrees, below the 90 degree floor
+    EMG3 on B.Cu at (40.300, 55.800): two segments meet at 0.0 degrees, below the 90 degree floor
+    SPARE1 on B.Cu at (40.200, 66.000): two segments meet at 1.5 degrees, below the 90 degree floor
+    ENV_ROOM on B.Cu at (40.200, 63.500): two segments meet at 0.0 degrees, below the 90 degree floor
+    ENV2_AC on F.Cu at (20.900, 89.400): two segments meet at 45.0 degrees, below the 90 degree floor
+    ENV3_HW on F.Cu at (26.900, 100.600): two segments meet at 45.0 degrees, below the 90 degree floor
+    LED_SR_LATCH on B.Cu at (104.100, 41.800): two segments meet at 0.7 degrees, below the 90 degree floor
+    LED_OE on B.Cu at (77.200, 85.500): two segments meet at 0.0 degrees, below the 90 degree floor
+    I2S_BCLK on B.Cu at (89.200, 80.400): two segments meet at 0.7 degrees, below the 90 degree floor
+    MOSI on B.Cu at (65.200, 14.400): two segments meet at 0.7 degrees, below the 90 degree floor
+    MISO on B.Cu at (84.600, 56.400): two segments meet at 45.0 degrees, below the 90 degree floor
+    MISO on B.Cu at (82.700, 54.400): two segments meet at 0.0 degrees, below the 90 degree floor
+    CS on B.Cu at (66.800, 22.000): two segments meet at 1.5 degrees, below the 90 degree floor
+    CLK_ADS on B.Cu at (66.800, 28.100): two segments meet at 1.5 degrees, below the 90 degree floor
+    CLK_ADS on B.Cu at (73.300, 14.700): two segments meet at 0.0 degrees, below the 90 degree floor
+    ROOM_PRE on B.Cu at (113.300, 65.200): two segments meet at 0.0 degrees, below the 90 degree floor
+    ROOM_PRE on B.Cu at (113.200, 65.300): two segments meet at 1.5 degrees, below the 90 degree floor
+    BTN_B on B.Cu at (97.100, 91.100): two segments meet at 0.0 degrees, below the 90 degree floor
+    VBUS_CHG on F.Cu at (143.400, 43.500): two segments meet at 0.0 degrees, below the 90 degree floor
+    VBUS_CHG on F.Cu at (123.200, 47.000): two segments meet at 45.0 degrees, below the 90 degree floor
+
+  under-width for its class  (25)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+    DGND (POWER) on F.Cu: 0.300 mm against a class minimum of 0.40 mm (0.80 mm preferred)
+
+  via in pad  (25)
+    via AGND_REF at (45.450, 79.730) drill 0.30 mm is inside pad U1.3 (same net), or within 0.15 mm of it
+    via AGND_REF at (45.450, 82.270) drill 0.30 mm is inside pad U1.5 (same net), or within 0.15 mm of it
+    via AGND_REF at (45.450, 91.730) drill 0.30 mm is inside pad U2.3 (same net), or within 0.15 mm of it
+    via AGND_REF at (45.450, 94.270) drill 0.30 mm is inside pad U2.5 (same net), or within 0.15 mm of it
+    via AGND_REF at (45.450, 103.730) drill 0.30 mm is inside pad U3.3 (same net), or within 0.15 mm of it
+    via AGND_REF at (45.450, 106.270) drill 0.30 mm is inside pad U3.5 (same net), or within 0.15 mm of it
+    via SPARE1 at (17.500, 64.800) drill 0.30 mm is inside pad R15.2 (same net), or within 0.15 mm of it
+    via ENV1_INM at (35.300, 78.200) drill 0.30 mm is inside pad D20.2 (same net), or within 0.15 mm of it
+    via ENV1_ROUT at (34.400, 75.900) drill 0.30 mm is inside pad D20.3 (same net), or within 0.15 mm of it
+    via ENV1_ABS at (33.500, 81.400) drill 0.30 mm is inside pad R25.1 (same net), or within 0.15 mm of it
+    via ENV1_MID at (34.200, 80.500) drill 0.30 mm is inside pad R25.2 (same net), or within 0.15 mm of it
+    via ENV1_MID at (35.300, 80.900) drill 0.30 mm is inside pad R25.2 (same net), or within 0.15 mm of it
+    via ENV1_INP at (15.600, 84.800) drill 0.30 mm is inside pad C21.1 (same net), or within 0.15 mm of it
+    via ENV1_INP at (40.200, 81.400) drill 0.30 mm is inside pad R26.2 (same net), or within 0.15 mm of it
+    via ENV1_DIV at (33.700, 85.600) drill 0.30 mm is inside pad R28.1 (same net), or within 0.15 mm of it
+    via ENV2_MID at (34.200, 93.000) drill 0.30 mm is inside pad R45.2 (same net), or within 0.15 mm of it
+    via ENV2_DIV at (33.700, 97.400) drill 0.30 mm is inside pad R48.1 (same net), or within 0.15 mm of it
+    via ENV3_MID at (34.200, 105.000) drill 0.30 mm is inside pad R65.2 (same net), or within 0.15 mm of it
+    via ENV3_DIV at (33.700, 109.400) drill 0.30 mm is inside pad R68.1 (same net), or within 0.15 mm of it
+    via LED1 at (72.200, 90.100) drill 0.30 mm is inside pad R70.2 (same net), or within 0.15 mm of it
+    via LED2 at (72.200, 92.500) drill 0.30 mm is inside pad R71.2 (same net), or within 0.15 mm of it
+    via LED3 at (72.200, 95.400) drill 0.30 mm is inside pad R72.2 (same net), or within 0.15 mm of it
+    via LED5 at (72.200, 100.500) drill 0.30 mm is inside pad R74.2 (same net), or within 0.15 mm of it
+    via LED6 at (72.200, 102.800) drill 0.30 mm is inside pad R75.2 (same net), or within 0.15 mm of it
+    via LED7 at (72.200, 105.300) drill 0.30 mm is inside pad R76.2 (same net), or within 0.15 mm of it
+
+  via on a class that may not have one  (18)
+    EOGIN2 (ELECTRODE) has a via at (16.100, 70.700); the class forbids vias
+    EMG1 (ELECTRODE) has a via at (19.900, 51.500); the class forbids vias
+    EMG1 (ELECTRODE) has a via at (17.600, 51.900); the class forbids vias
+    EMG1 (ELECTRODE) has a via at (30.800, 50.800); the class forbids vias
+    EMG2 (ELECTRODE) has a via at (26.900, 56.200); the class forbids vias
+    EMG2 (ELECTRODE) has a via at (24.200, 56.200); the class forbids vias
+    EMG2 (ELECTRODE) has a via at (30.800, 53.700); the class forbids vias
+    EMG3 (ELECTRODE) has a via at (30.800, 58.000); the class forbids vias
+    SPARE1 (ELECTRODE) has a via at (19.900, 64.400); the class forbids vias
+    SPARE1 (ELECTRODE) has a via at (17.500, 64.800); the class forbids vias
+    SPARE1 (ELECTRODE) has a via at (32.000, 66.400); the class forbids vias
+    SPARE2 (ELECTRODE) has a via at (33.900, 68.300); the class forbids vias
+    EMG3 (ELECTRODE) has a via at (23.300, 58.800); the class forbids vias
+    EMGIN3 (ELECTRODE) has a via at (19.100, 62.400); the class forbids vias
+    EMGIN3 (ELECTRODE) has a via at (24.100, 72.600); the class forbids vias
+    EOGIN1 (ELECTRODE) has a via at (17.400, 68.000); the class forbids vias
+    EOGIN1 (ELECTRODE) has a via at (17.500, 70.800); the class forbids vias
+    BIAS_EL (ELECTRODE) has a via at (6.600, 44.100); the class forbids vias
+
+Nothing in this package has been manufactured or measured.

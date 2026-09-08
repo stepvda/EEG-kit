@@ -144,6 +144,28 @@ class Footprint:
 
 
 @dataclass
+class Segment:
+    layer: str
+    x1: float
+    y1: float
+    x2: float
+    y2: float
+    width: float
+    net: int
+    netname: str
+
+
+@dataclass
+class Via:
+    x: float
+    y: float
+    pad: float
+    drill: float
+    net: int
+    netname: str
+
+
+@dataclass
 class Board:
     nets: dict                  # code -> name
     footprints: list
@@ -151,6 +173,8 @@ class Board:
     width: float
     height: float
     setup: dict
+    segments: list = field(default_factory=list)
+    vias: list = field(default_factory=list)
 
     def pads(self):
         for f in self.footprints:
@@ -252,8 +276,32 @@ def load(path: str) -> Board:
 
     xs = [p for seg in outline for p in (seg[0][0], seg[1][0])] or [0, 130]
     ys = [p for seg in outline for p in (seg[0][1], seg[1][1])] or [0, 124]
+    # Tracks and vias.  Added at ECO-EEG-032 so that the RELEASED Rev B geometry can be
+    # regraded from the released artefact rather than from a source file that has since
+    # moved on to Rev C -- see tools/grade_revb.py.
+    segs = []
+    for g in children(root, "segment"):
+        st, en = child(g, "start"), child(g, "end")
+        nt = child(g, "net")
+        code = int(nt[1]) if nt else 0
+        segs.append(Segment(layer=(child(g, "layer") or [None, "F.Cu"])[1],
+                            x1=fnum(st[1]), y1=fnum(st[2]),
+                            x2=fnum(en[1]), y2=fnum(en[2]),
+                            width=fnum((child(g, "width") or [None, 0.25])[1]),
+                            net=code, netname=nets.get(code, "")))
+    vs = []
+    for g in children(root, "via"):
+        at = child(g, "at")
+        nt = child(g, "net")
+        code = int(nt[1]) if nt else 0
+        vs.append(Via(x=fnum(at[1]), y=fnum(at[2]),
+                      pad=fnum((child(g, "size") or [None, 0.6])[1]),
+                      drill=fnum((child(g, "drill") or [None, 0.3])[1]),
+                      net=code, netname=nets.get(code, "")))
+
     return Board(nets=nets, footprints=fps, outline=outline,
-                 width=max(xs) - min(xs), height=max(ys) - min(ys), setup=setup)
+                 width=max(xs) - min(xs), height=max(ys) - min(ys), setup=setup,
+                 segments=segs, vias=vs)
 
 
 if __name__ == "__main__":
