@@ -11,7 +11,7 @@ This report is a dry run of the manufacturing route against the data package. At
 
 It cannot find what only a real build finds: solderability, fit, ergonomics, electromagnetic behaviour, or whether a participant can actually put the helmet on. Nothing in this package has been manufactured or measured.
 
-**Result: 193 checks passed, 0 failed, 6 known open items.**
+**Result: 193 checks passed, 0 failed, 7 known open items.**
 
 A *failure* means the package does not support the step. An *open item* means it does, and somebody still has to take a decision that is recorded where it belongs. The open items are:
 
@@ -19,7 +19,8 @@ A *failure* means the package does not support the step. An *open item* means it
 |---|---|---|
 | 01 bare-board fabrication | static IRAM reports full, with one byte free | 1 byte(s) free of 16,384 on the linked image. If that is the real limit then the next function marked IRAM_ATTR fails the link with an error naming a section and not a cause, and this design has more interrupt work coming (E-13's tone scheduler, E-12's onset detector). Turning off the SPI-slave and gptimer ISRs -- neither of which this firmware uses -- did not move the figure by a single byte, so it is not those. Either the pool is genuinely full, or esp_idf_size is reporting against a fixed 16 KB window that is not the limit on an ESP32-S3 with octal SPIRAM and XIP. Reading the linker map against hardware settles it; guessing at sdkconfig from here does not |
 | 01 bare-board fabrication | the v1 HM-01 mesh is two disconnected bodies | measured with trimesh: it is watertight, which MANIFEST.json records, and it is not connected, which nothing recorded. It is a carried-over form study rather than a released printable part -- the parametric channel runs HM-01P-A/B/C were measured from it -- but a frame that is two shells is one more reason the redraw of PARTS-EEG-019 OA-1 has to happen |
-| 01 bare-board fabrication | no human layout engineer has reviewed the routing | the board passes the programme's own design-rule check, which is not the same as being a good layout; the review is the scope of RFQ-EEG-002A and gates fabrication release |
+| 01 bare-board fabrication | there is no fabrication data for the current board | Rev B is withdrawn from fabrication (ECO-EEG-030) and Rev C is UNROUTED: its placement and routing are bought. The Gerbers, drill, DRC report and drawings this station checks are Rev B's and are kept as history. A bare board cannot be ordered. What exists for Rev C is the layout input set in kicad/RevC_layout_inputs/ and the rule sheet LAY-EEG-034 |
+| 01 bare-board fabrication | the placement of Rev C has not been reviewed | A human layout engineer HAS now read the Rev B routing: he read it between 3 and 5 September 2026, declined the paid review and advised a redesign, and Rev B is withdrawn (ECO-EEG-030). What is open is the next review, not that one. RFQ-EEG-002A is re-scoped to the review of the layout contractor's PLACEMENT of Rev C, taken at the placement confirmation gate and before routing is confirmed, as a written findings list by net, pad pair and coordinate. There is no placement to review yet |
 | 09 functional test TST-EEG-004 | E-27 has never been seen to light | the driver is written and the current budget is met, but no unit exists, so no light has been driven and TST-EEG-004 T11 -- which reads the R/G ratio with a colorimeter -- has not been run. The alternation also quantises to the FreeRTOS tick, about 250 Hz rather than exactly 240, which meets the 'above 100 Hz' E-27 is written against and is what T11 will actually measure |
 | 09 functional test TST-EEG-004 | the two board-current figures cannot both be right | TST-EEG-004 T3 limits J13 to 150 mA while ICD-EEG-006 section 2.7 tallies about 440 mA. E-22 is met either way (20.0 h against 6.8 h), but the charger, the thermal budget and the T3 limit itself all rest on the number, and it is open item 14 of RFQ-EEG-001 Rev E. It is measured, not calculated, at T3 |
 | 09 functional test TST-EEG-004 | SR-01 is closed in the design and not yet signed off | S-02 is now met at 36.8 uA against 50 uA, because ECO-EEG-024 raised R1-R16 to 68 kOhm. Applying the fix the analysis pointed to is not the same as having it approved: the electrical safety reviewer of RISK-EEG-011 section 7 owns SR-01 and that review has not started. |
@@ -31,7 +32,7 @@ A *failure* means the package does not support the step. An *open item* means it
 
 | | Check | Detail |
 |---|---|---|
-| pass | carrier BOM exists | /Users/nstephane/Dev/onevoice/documentation/Study - EEG/EEG-kit-RFQ/package_v2.4/kicad/EEG-CAR-01_RevB_BOM.csv |
+| pass | carrier BOM exists | /Users/nstephane/Dev/EEG-kit/kicad/EEG-CAR-01_RevC_BOM.csv |
 | value | BOM lines | 79 |
 | pass | every purchased line carries a manufacturer part number |  |
 | pass | BOM quantity equals the placed part count | BOM 207, placed 207 |
@@ -101,29 +102,32 @@ A *failure* means the package does not support the step. An *open item* means it
 | pass | every stencil aperture is one ASM-EEG-007 section 2.3 specifies | 7 distinct apertures, all from the table |
 | pass | every land has an aperture rule | all lands ruled |
 | pass | every aperture is above the 0.66 area-ratio floor at 0.12 mm | worst 1.53 at (0.95, 0.6) mm |
-| pass | HM-05B enters HM-04 and turns its quarter | worst interference through the turn 0.000 mm3 |
-| pass | the seated carrier is free through its 0.40 mm of spring travel | 0.000 mm3 -- a bound carrier is a stiff electrode |
-| pass | the retaining lip holds the seated carrier against an inverted helmet | 1.557 mm3 of lip engagement |
-| pass | HM-01P carries TWO channels in its section | 2 channel(s) found across the halo band |
-| pass | the two channels are at the WH-EEG-008 section 7 pitch | 6.0 mm against 6.0 mm minimum -- this is the separation RFQ E-30 is written against |
-| pass | every pair of panel openings leaves wall between them | walls clear 2.0 mm, lid 1.5 mm |
+| note | mechanical fit | cadquery is not installed, so the HM-04/HM-05B bayonet fit was not measured on this run |
+| note | frame section | cadquery is not installed, so the HM-01P channel section was not measured on this run |
 | pass | the firmware release images are in the package | four images and a manifest |
 | pass | every image matches the SHA-256 in its manifest | 4 images |
-| note | firmware release | Built against a real ESP-IDF for the first time on 2026-09-02.  Getting here took five corrections to the project, each recorded in the file it was made in: a component that does not exist at this IDF version, a duplicated anti-rollback key that contradicted the Phase 1 intent and made the build refuse a table with a factory partition, a TinyUSB option name that does not exist so the vendor interface was silently absent, and three descriptor callbacks defined here AND in esp_tinyusb.  NOT RUN ON HARDWARE: no board exists.  This is a build, not a bring-up. |
-| value | firmware image | 405,245 bytes; static IRAM 16,383 used, 1 free |
+| note | firmware release | Built against a real ESP-IDF for the first time on 2026-09-02.  Getting here took five corrections to the project, each recorded in the file it was made in: a component that does not exist at this IDF version, a duplicated anti-rollback key that contradicted the Phase 1 intent and made the build refuse a table with a factory partition, a TinyUSB option name that does not exist so the vendor interface was silently absent, and three descriptor callbacks defined here AND in esp_tinyusb.  NOT RUN ON HARDWARE: no board exists.  This is a build, not a bring-up.  Re-issued 2026-09-02 after FW-D17 and FW-D18: the contact-light driver now derives its three colours from two lead-off comparator thresholds rather than from LOFF_STATP and LOFF_STATN, because this board's montage is single-ended and the N half carried no per-site information, which had made the red state unreachable; and CMD_LIGHTS modes 2, 3 and 4 are implemented rather than silently answered OK. |
+| value | firmware image | 405,541 bytes; static IRAM 16,383 used, 1 free |
 | **open** | static IRAM reports full, with one byte free | 1 byte(s) free of 16,384 on the linked image. If that is the real limit then the next function marked IRAM_ATTR fails the link with an error naming a section and not a cause, and this design has more interrupt work coming (E-13's tone scheduler, E-12's onset detector). Turning off the SPI-slave and gptimer ISRs -- neither of which this firmware uses -- did not move the figure by a single byte, so it is not those. Either the pool is genuinely full, or esp_idf_size is reporting against a fixed 16 KB window that is not the limit on an ESP32-S3 with octal SPIRAM and XIP. Reading the linker map against hardware settles it; guessing at sdkconfig from here does not |
 | pass | every printed part is a single closed body | 29 meshes, all one body |
 | **open** | the v1 HM-01 mesh is two disconnected bodies | measured with trimesh: it is watertight, which MANIFEST.json records, and it is not connected, which nothing recorded. It is a carried-over form study rather than a released printable part -- the parametric channel runs HM-01P-A/B/C were measured from it -- but a frame that is two shells is one more reason the redraw of PARTS-EEG-019 OA-1 has to happen |
 | pass | cross-language interop harness supplied |  |
 | pass | layer map and checksums supplied |  |
-| pass | fabrication drawing supplied |  |
-| pass | DRC report supplied |  |
-| pass | the DRC reports no violations | VIOLATIONS: 0 |
+| pass | Rev B fabrication drawing retained as history |  |
+| pass | the Rev B geometry has been regraded under the ECO-EEG-032 rule set |  |
+| pass | the layout rule sheet is issued |  |
+| pass | the 3D collision check has been run |  |
+| **open** | there is no fabrication data for the current board | Rev B is withdrawn from fabrication (ECO-EEG-030) and Rev C is UNROUTED: its placement and routing are bought. The Gerbers, drill, DRC report and drawings this station checks are Rev B's and are kept as history. A bare board cannot be ordered. What exists for Rev C is the layout input set in kicad/RevC_layout_inputs/ and the rule sheet LAY-EEG-034 |
+| pass | the Rev C layout input set is assembled |  |
+| pass | the Rev C schematic matches the design source | tools/sch_netlist.py reads the emitted .kicad_sch back and diffs it against design.py |
+| pass | every footprint is audited against its part number | docs/footprint_audit_RevC.md |
+| pass | Rev B DRC report retained as history |  |
+| pass | the Rev B DRC reported no violations against ITS rule set | VIOLATIONS: 0. That rule set did not contain six of the seven findings of ECO-EEG-030; the same geometry regraded under them is in kicad/EEG-CAR-01_RevB_regraded_ECO-EEG-032.txt |
 | pass | every routable net is one connected copper island | 145 of 145 connected, 0 unclosed, 0 without copper |
 | value | nets fully connected | 145 of 145 routable (156 in the design) |
 | value | connections routed at relaxed geometry | 169 |
 | note | release state | the ECO-EEG-016 section 3 gate is MET -- zero violations, every net one connected copper island.  The fabrication data is RELEASED FOR REVIEW under RFQ-EEG-002A and is NOT released for fabrication: no human layout engineer has read this routing, and 169 of its connections close at the minimum conductor or the minimum gap rather than the preferred width |
-| **open** | no human layout engineer has reviewed the routing | the board passes the programme's own design-rule check, which is not the same as being a good layout; the review is the scope of RFQ-EEG-002A and gates fabrication release |
+| **open** | the placement of Rev C has not been reviewed | A human layout engineer HAS now read the Rev B routing: he read it between 3 and 5 September 2026, declined the paid review and advised a redesign, and Rev B is withdrawn (ECO-EEG-030). What is open is the next review, not that one. RFQ-EEG-002A is re-scoped to the review of the layout contractor's PLACEMENT of Rev C, taken at the placement confirmation gate and before routing is confirmed, as a written findings list by net, pad pair and coordinate. There is no placement to review yet |
 
 ### Station 02 bare-board electrical test
 
@@ -143,7 +147,7 @@ A *failure* means the package does not support the step. An *open item* means it
 | pass | CPL origin is the bottom-left corner, Y positive | x 12.0..145.0  y 7.0..126.7 |
 | pass | every CPL row states the layer |  |
 | value | SMT placements | 153 placed parts, of which R89 is do-not-populate; the CPL has 156 rows because it also carries the 3 fiducials, which take copper and mask apertures but no paste |
-| value | distinct SMT packages | 8: C_0603_1608Metric, Fiducial_1mm_Mask3mm, L_0603_1608Metric, R_0603_1608Metric, R_1206_3216Metric, SOIC-14_3.9x8.7mm_P1.27mm, SOT-23, SOT-23-5 |
+| value | distinct SMT packages | 8: C_0603_1608Metric, Fiducial_1mm_Mask3mm, L_0603_1608Metric, R_0603_1608Metric, R_1206_3216Metric, SOT-23, SOT-23-5, TSSOP-14_4.4x5mm_P0.65mm |
 | pass | stencil (paste) layer supplied |  |
 | pass | every surface-mount pad that takes paste has a stencil aperture | stencil 366, pads taking paste 366 |
 | value | surface-mount pads deliberately without paste | 24 (TP1-TP18 probe pads and the three fiducials: copper and mask only, nothing is soldered to them) |
@@ -248,7 +252,7 @@ A *failure* means the package does not support the step. An *open item* means it
 | pass | no signal is assigned to GPIO45 (VDD_SPI strapping pin) |  |
 | pass | the reserved pins are named in the header so nobody re-uses them |  |
 | value | GPIOs assigned | 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 38, 39, 40, 41, 42, 43, 44, 46, 47, 48 |
-| note | firmware status | never compiled against a real ESP-IDF installation and never run on hardware; five drivers are stubs (DSN-EEG-003 Rev C section 5) |
+| note | firmware status | never compiled against a real ESP-IDF installation and never run on hardware; five drivers are stubs (DSN-EEG-003 Rev D section 5) |
 
 ### Station 09 functional test TST-EEG-004
 
@@ -273,7 +277,8 @@ A *failure* means the package does not support the step. An *open item* means it
 | pass | E-12: the comparator trips within the envelope's working range | 52.1 mV |
 | value | contact-light current per site | 1.30 mA |
 | pass | E-27, current only: GPIO48 can source all eight lights | 10.4 mA total against a 40 mA rating |
-| pass | E-27: the bicolour phase driver exists in the firmware | lights_phase() alternates LED_V against the shift register, and both halves of the lead-off word are read: neither detector gone = green, exactly one = amber, both = red |
+| pass | E-27: the bicolour phase driver exists in the firmware | lights_phase() alternates LED_V against the shift register |
+| pass | E-27: all three colours are reachable from what ads_init() enables | green, amber and red are computed from g_loff_insens, g_loff_sens, and the converter is configured to feed a swept LOFF_SENSP comparator |
 | **open** | E-27 has never been seen to light | the driver is written and the current budget is met, but no unit exists, so no light has been driven and TST-EEG-004 T11 -- which reads the R/G ratio with a colorimeter -- has not been run. The alternation also quantises to the FreeRTOS tick, about 250 Hz rather than exactly 240, which meets the 'above 100 Hz' E-27 is written against and is what T11 will actually measure |
 | value | raw sample payload at 1000 Hz | 50.0 kB/s (16 channels x 3 bytes + 2 aux, 1000 times a second) |
 | value | framed stream at 1000 Hz | 50.8 kB/s (1014 bytes of frame, 1015 after COBS, one every 20 ms) |

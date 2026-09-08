@@ -87,6 +87,19 @@ def _exists(p):
     return os.path.exists(p) and os.path.getsize(p) > 0
 
 
+def _csv_rows(path):
+    """Rows of a CSV, skipping any leading comment lines.
+
+    The Rev C CPL files open with a `#` line saying that the placement is PROVISIONAL
+    (ECO-EEG-033).  A CPL loader skips it; csv.DictReader does not, and read it as the
+    header, which is how this simulator came to report a KeyError on 'Designator'
+    instead of a placement.
+    """
+    with open(path) as f:
+        lines = [ln for ln in f if not ln.lstrip().startswith("#")]
+    return list(csv.DictReader(lines))
+
+
 def run(report_path=None):
     R = Report()
     board = pcbgen.BoardV2()
@@ -100,9 +113,9 @@ def run(report_path=None):
 
     # ---------------------------------------------------------------- 0 purchasing
     R.start(0, "purchase order and incoming goods")
-    bom_path = os.path.join(K, "EEG-CAR-01_RevB_BOM.csv")
+    bom_path = os.path.join(K, f"{D.stem(D.REV_C)}_BOM.csv")
     if R.check("carrier BOM exists", _exists(bom_path), bom_path):
-        rows = list(csv.DictReader(open(bom_path)))
+        rows = _csv_rows(bom_path)
         R.value("BOM lines", str(len(rows)))
         def purchased(r):
             # fiducials and test points are copper features, not parts anybody buys
@@ -121,7 +134,7 @@ def run(report_path=None):
         dnp = [r["Designators"] for r in rows if r["Fit"].strip() == "DNP"]
         R.value("do-not-populate", ", ".join(dnp) if dnp else "none")
     R.check("approved vendor list present",
-            _exists(os.path.join(DOC, "AVL-EEG-017_RevB_approved_vendor_list.md")))
+            _exists(os.path.join(DOC, "AVL-EEG-017_RevC_approved_vendor_list.md")))
     R.check("incoming inspection defined (quality plan)",
             _exists(os.path.join(DOC, "QP-EEG-010_RevB_quality_plan.md")))
 
@@ -532,15 +545,48 @@ def run(report_path=None):
 
     R.check("layer map and checksums supplied",
             _exists(os.path.join(G, "README_layer_map_and_checksums.txt")))
-    R.check("fabrication drawing supplied",
+    R.check("Rev B fabrication drawing retained as history",
             _exists(os.path.join(K, "EEG-CAR-01_RevB_fabrication_drawing.pdf")))
+    R.check("the Rev B geometry has been regraded under the ECO-EEG-032 rule set",
+            _exists(os.path.join(K, "EEG-CAR-01_RevB_regraded_ECO-EEG-032.txt")))
+    R.check("the layout rule sheet is issued",
+            _exists(os.path.join(DOC,
+                                 "LAY-EEG-034_RevA_carrier_layout_rule_sheet.pdf")))
+    R.check("the 3D collision check has been run",
+            _exists(os.path.join(PKG, "mech",
+                                 "EEG-CAR-01_RevC_collision_check.txt")))
+    # ECO-EEG-030: there IS no current fabrication data.  Rev B is withdrawn and Rev C
+    # is unrouted, so this station is reporting on a set that is history.  Saying so is
+    # the point of the station.
+    R.open_item("there is no fabrication data for the current board",
+                "Rev B is withdrawn from fabrication (ECO-EEG-030) and Rev C is "
+                "UNROUTED: its placement and routing are bought. The Gerbers, drill, "
+                "DRC report and drawings this station checks are Rev B's and are kept "
+                "as history. A bare board cannot be ordered. What exists for Rev C is "
+                "the layout input set in kicad/RevC_layout_inputs/ and the rule sheet "
+                "LAY-EEG-034")
+    R.check("the Rev C layout input set is assembled",
+            _exists(os.path.join(K, "RevC_layout_inputs", "SHA256SUMS.txt")))
+    R.check("the Rev C schematic matches the design source",
+            _exists(os.path.join(K, f"{D.stem(D.REV_C)}_schematic_netlist_check.txt"))
+            and "NETLIST DIFFERENCES: 0" in open(os.path.join(
+                K, f"{D.stem(D.REV_C)}_schematic_netlist_check.txt")).read(),
+            "tools/sch_netlist.py reads the emitted .kicad_sch back and diffs it "
+            "against design.py")
+    R.check("every footprint is audited against its part number",
+            _exists(os.path.join(DOC, "footprint_audit_RevC.md"))
+            and "| FAIL | 0 |" in open(os.path.join(
+                DOC, "footprint_audit_RevC.md")).read(),
+            "docs/footprint_audit_RevC.md")
     drcp = os.path.join(K, "EEG-CAR-01_RevB_DRC_report.txt")
-    if R.check("DRC report supplied", _exists(drcp)):
+    if R.check("Rev B DRC report retained as history", _exists(drcp)):
         t = open(drcp).read()
         m = re.search(r"VIOLATIONS: (\d+)", t)
         n = int(m.group(1)) if m else -1
-        R.check("the DRC reports no violations", n == 0,
-                f"VIOLATIONS: {n}")
+        R.check("the Rev B DRC reported no violations against ITS rule set", n == 0,
+                f"VIOLATIONS: {n}. That rule set did not contain six of the seven "
+                f"findings of ECO-EEG-030; the same geometry regraded under them is in "
+                f"kicad/EEG-CAR-01_RevB_regraded_ECO-EEG-032.txt")
         conn = int(m2.group(1)) if (m2 := re.search(
             r"nets fully connected\s+(\d+)", t)) else -1
         uncl = int(m3.group(1)) if (m3 := re.search(
@@ -572,10 +618,16 @@ def run(report_path=None):
                    f"read this routing, and {relax} of its connections close at the "
                    "minimum conductor or the minimum gap rather than the preferred "
                    "width")
-            R.open_item("no human layout engineer has reviewed the routing",
-                        "the board passes the programme's own design-rule check, "
-                        "which is not the same as being a good layout; the review "
-                        "is the scope of RFQ-EEG-002A and gates fabrication release")
+            R.open_item("the placement of Rev C has not been reviewed",
+                        "A human layout engineer HAS now read the Rev B routing: he "
+                        "read it between 3 and 5 September 2026, declined the paid "
+                        "review and advised a redesign, and Rev B is withdrawn "
+                        "(ECO-EEG-030). What is open is the next review, not that one. "
+                        "RFQ-EEG-002A is re-scoped to the review of the layout "
+                        "contractor's PLACEMENT of Rev C, taken at the placement "
+                        "confirmation gate and before routing is confirmed, as a "
+                        "written findings list by net, pad pair and coordinate. There "
+                        "is no placement to review yet")
         else:
             R.open_item(f"the DRC reports {n} violations, {uncl} unclosed nets, so "
                         "the fabrication data is NOT RELEASED FOR FABRICATION",
@@ -600,9 +652,9 @@ def run(report_path=None):
 
     # ---------------------------------------------------------------- 3 SMT
     R.start(3, "SMT assembly")
-    cpl = os.path.join(K, "EEG-CAR-01_RevB_CPL_SMT_top.csv")
+    cpl = os.path.join(K, f"{D.stem(D.REV_C)}_CPL_SMT_top.csv")
     if R.check("SMT pick-and-place file supplied", _exists(cpl)):
-        rows = list(csv.DictReader(open(cpl)))
+        rows = _csv_rows(cpl)
         smd_parts = {p.ref for p in board.parts
                      if not p.is_tht and not p.fpname.startswith("MountingHole")
                      and not p.fpname.startswith("TestPoint")}
@@ -651,9 +703,9 @@ def run(report_path=None):
 
     # ---------------------------------------------------------------- 4 through-hole
     R.start(4, "through-hole assembly")
-    tht_cpl = os.path.join(K, "EEG-CAR-01_RevB_CPL_THT_top.csv")
+    tht_cpl = os.path.join(K, f"{D.stem(D.REV_C)}_CPL_THT_top.csv")
     if R.check("through-hole position file supplied", _exists(tht_cpl)):
-        rows = list(csv.DictReader(open(tht_cpl)))
+        rows = _csv_rows(tht_cpl)
         tht_parts = {p.ref for p in board.parts
                      if p.is_tht and not p.fpname.startswith("MountingHole")}
         listed = {r["Designator"].strip('"') for r in rows}
@@ -673,7 +725,7 @@ def run(report_path=None):
 
     # ---------------------------------------------------------------- 5 modules
     R.start(5, "module preparation and the MP-01 plate")
-    icd = os.path.join(DOC, "ICD-EEG-006_RevB_interface_control_document.md")
+    icd = os.path.join(DOC, "ICD-EEG-006_RevC_interface_control_document.md")
     R.check("interface control document present", _exists(icd))
     R.check("module plate MP-01 model present",
             _exists(os.path.join(M, "stl", "MP-01_module_plate.stl")))
@@ -731,7 +783,7 @@ def run(report_path=None):
             os.path.isdir(os.path.join(M, "drawings"))
             and len(os.listdir(os.path.join(M, "drawings"))) > 0)
     R.check("rulings register present",
-            _exists(os.path.join(DOC, "RUL-EEG-021_RevA_rulings_register.md")))
+            _exists(os.path.join(DOC, "RUL-EEG-021_RevB_rulings_register.md")))
     R.check("part identifier register present",
             _exists(os.path.join(DOC, "PARTS-EEG-019_RevB_part_identifier_register.md")))
     # does the carrier fit POD-P1?
@@ -769,7 +821,7 @@ def run(report_path=None):
                 all(f"RESERVED" in t and str(b) in t for b in (35, 36, 37, 45)))
         R.value("GPIOs assigned", ", ".join(str(g) for g in sorted(assigned)))
     R.note("firmware status", "never compiled against a real ESP-IDF installation and never "
-                              "run on hardware; five drivers are stubs (DSN-EEG-003 Rev C "
+                              "run on hardware; five drivers are stubs (DSN-EEG-003 Rev D "
                               "section 5)")
 
     # ---------------------------------------------------------------- 9 functional test
@@ -777,7 +829,7 @@ def run(report_path=None):
     R.check("test specification present",
             _exists(os.path.join(DOC, "TST-EEG-004_RevC_production_test_specification.md")))
     R.check("test fixture design present",
-            _exists(os.path.join(DOC, "JIG-EEG-009_RevB_test_fixture_design.md")))
+            _exists(os.path.join(DOC, "JIG-EEG-009_RevC_test_fixture_design.md")))
 
     # --- arithmetic that the acceptance limits depend on
     R.value("layer count", "4 -- L1 signal, L2 and L3 reference planes, L4 signal")
@@ -1100,7 +1152,7 @@ def run(report_path=None):
                                  "RISK-EEG-011_RevB_risk_analysis_and_safety_review_pack.md")))
     R.check("change control and document register present",
             _exists(os.path.join(DOC,
-                                 "ECO-EEG-016_RevB_change_control_and_document_register.md")))
+                                 "ECO-EEG-016_RevC_change_control_and_document_register.md")))
 
     # ---------------------------------------------------------------- write
     if report_path:

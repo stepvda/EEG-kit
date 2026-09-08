@@ -1,6 +1,6 @@
-# ASM-EEG-023 Rev A -- register of programme assumptions
+# ASM-EEG-023 Rev B -- register of programme assumptions
 
-**Document:** ASM-EEG-023  **Revision:** A  **Date:** 2 September 2026  
+**Document:** ASM-EEG-023  **Revision:** B  **Date:** 2 September 2026  
 **Status:** every entry below is a DECISION taken by the programme, not an approval.
 
 
@@ -187,7 +187,7 @@ is wrong and the fourth TPIC6B595 (~EUR 18 of relays plus the register and area)
 right spend, as §4.1 already says. And if the 4 mm snap ends of WH-06 are ever specified as
 touch-proof shrouded, the H4 half of the hazard drops and only the H2 false-FAIL remains.
 
-**Files this touches:** `docs/JIG-EEG-009_RevB_test_fixture_design.md`, `docs/WH-EEG-008_RevB_harness_and_cable_assembly.md`, `fixtures/firmware/src/fix_m3.c`, `fixtures/firmware/test/host_test.c`, `tools/fixture_gen.py`, `records/README.txt`
+**Files this touches:** `docs/JIG-EEG-009_RevC_test_fixture_design.md`, `docs/WH-EEG-008_RevB_harness_and_cable_assembly.md`, `fixtures/firmware/src/fix_m3.c`, `fixtures/firmware/test/host_test.c`, `tools/fixture_gen.py`, `records/README.txt`
 
 
 ## D1-HM04-CROWN-AND-LEAF
@@ -350,7 +350,7 @@ Also overturning: an input-referred noise run (TST-EEG-004 T8, inputs shorted, 1
 degrades with the joint fitted; or a first-article H6 that damages a strain-relief keyhole
 rather than the body, which moves the relief outboard onto the channel cover.
 
-**Files this touches:** `docs/RISK-EEG-011_RevB_risk_analysis_and_safety_review_pack.md`, `tools/mech_gen.py`, `docs/WH-EEG-008_RevB_harness_and_cable_assembly.md`, `docs/ASM-EEG-007_RevB_assembly_work_instructions.md`, `docs/SVC-EEG-013_RevB_service_and_refurbishment_manual.md`, `docs/AVL-EEG-017_RevB_approved_vendor_list.md`, `docs/PARTS-EEG-019_RevB_part_identifier_register.md`, `docs/DSN-EEG-003_RevC_manufacturing_design_package.md`, `docs/ECO-EEG-016_RevB_change_control_and_document_register.md`, `KNOWN_ISSUES.txt`
+**Files this touches:** `docs/RISK-EEG-011_RevB_risk_analysis_and_safety_review_pack.md`, `tools/mech_gen.py`, `docs/WH-EEG-008_RevB_harness_and_cable_assembly.md`, `docs/ASM-EEG-007_RevB_assembly_work_instructions.md`, `docs/SVC-EEG-013_RevB_service_and_refurbishment_manual.md`, `docs/AVL-EEG-017_RevC_approved_vendor_list.md`, `docs/PARTS-EEG-019_RevB_part_identifier_register.md`, `docs/DSN-EEG-003_RevD_manufacturing_design_package.md`, `docs/ECO-EEG-016_RevC_change_control_and_document_register.md`, `KNOWN_ISSUES.txt`
 
 
 ## D5-K12-SPRING-ENVELOPE
@@ -512,7 +512,7 @@ from 316 to Elgiloy. And if no maker will quote a multi-turn wave spring at OD 6
 the fallback is the one WH 3.1.1 already names — a leaded cup with the joint in the frame
 channel — which removes the spring from the electrical question entirely.
 
-**Files this touches:** `docs/AVL-EEG-017_RevB_approved_vendor_list.md`, `docs/WH-EEG-008_RevB_harness_and_cable_assembly.md`, `docs/PARTS-EEG-019_RevB_part_identifier_register.md`, `docs/ASM-EEG-007_RevB_assembly_work_instructions.md`, `docs/SVC-EEG-013_RevB_service_and_refurbishment_manual.md`, `docs/ECO-EEG-016_RevB_change_control_and_document_register.md`, `KNOWN_ISSUES.txt`
+**Files this touches:** `docs/AVL-EEG-017_RevC_approved_vendor_list.md`, `docs/WH-EEG-008_RevB_harness_and_cable_assembly.md`, `docs/PARTS-EEG-019_RevB_part_identifier_register.md`, `docs/ASM-EEG-007_RevB_assembly_work_instructions.md`, `docs/SVC-EEG-013_RevB_service_and_refurbishment_manual.md`, `docs/ECO-EEG-016_RevC_change_control_and_document_register.md`, `KNOWN_ISSUES.txt`
 
 
 ---
@@ -690,7 +690,7 @@ so the next reviewer can see that at a glance. Finally, if anyone proposes rever
 envelope that the vendor drawing shows is 26-57 % too small. At the real part the same generator
 returns NOT FEASIBLE.
 
-**Files this touches:** `tools/fixture_gen.py`, `docs/JIG-EEG-009_RevB_test_fixture_design.md`, `fixtures/pcb/FIX-01/FIX-01_constraints.txt`, `fixtures/pcb/FIX-01/FIX-01-Edge_Cuts.gbr`, `fixtures/pcb/FIX-01/FIX-01-NPTH.drl`, `fixtures/pcb/FIX-01/FIX-01-Zoning.gbr`, `fixtures/pcb/FIX-01/FIX-01-F_Silkscreen.gbr`, `fixtures/pcb/FIX-01/README_fixture_pcb_data.txt`, `fixtures/MANIFEST.json`, `KNOWN_ISSUES.txt`, `docs/ECO-EEG-016_RevB_change_control_and_document_register.md`
+**Files this touches:** `tools/fixture_gen.py`, `docs/JIG-EEG-009_RevC_test_fixture_design.md`, `fixtures/pcb/FIX-01/FIX-01_constraints.txt`, `fixtures/pcb/FIX-01/FIX-01-Edge_Cuts.gbr`, `fixtures/pcb/FIX-01/FIX-01-NPTH.drl`, `fixtures/pcb/FIX-01/FIX-01-Zoning.gbr`, `fixtures/pcb/FIX-01/FIX-01-F_Silkscreen.gbr`, `fixtures/pcb/FIX-01/README_fixture_pcb_data.txt`, `fixtures/MANIFEST.json`, `KNOWN_ISSUES.txt`, `docs/ECO-EEG-016_RevC_change_control_and_document_register.md`
 
 
 ## D3-CAL-COMMUTATOR
@@ -850,7 +850,7 @@ shifts toward deleting the reversal. 4. The Omron G6K-2F-Y land pattern. It gove
 outline is likely to be re-cut regardless of this ruling. 5. A measurement on a built board.
 Nothing in FIX-01 has been built, and section 7 says so.
 
-**Files this touches:** `tools/fixture_gen.py`, `fixtures/pcb/FIX-01/FIX-01_netlist.txt`, `fixtures/pcb/FIX-01/FIX-01_netlist.json`, `fixtures/pcb/FIX-01/FIX-01_constraints.txt`, `fixtures/firmware/src/fix_m1.c`, `docs/JIG-EEG-009_RevB_test_fixture_design.md`, `docs/TST-EEG-004_RevC_production_test_specification.md`, `docs/RUL-EEG-021_RevA_rulings_register.md`, `docs/ECO-EEG-016_RevB_change_control_and_document_register.md`, `KNOWN_ISSUES.txt`
+**Files this touches:** `tools/fixture_gen.py`, `fixtures/pcb/FIX-01/FIX-01_netlist.txt`, `fixtures/pcb/FIX-01/FIX-01_netlist.json`, `fixtures/pcb/FIX-01/FIX-01_constraints.txt`, `fixtures/firmware/src/fix_m1.c`, `docs/JIG-EEG-009_RevC_test_fixture_design.md`, `docs/TST-EEG-004_RevC_production_test_specification.md`, `docs/RUL-EEG-021_RevB_rulings_register.md`, `docs/ECO-EEG-016_RevC_change_control_and_document_register.md`, `KNOWN_ISSUES.txt`
 
 
 ## MECH-D1
@@ -993,7 +993,7 @@ out at 0.60 N.m per sheet 18. If it fails, the remedy is the drawing's own — t
 down — which also relieves the bearing case and may retire H-3a. Measured torque coefficient K
 above ~0.35 would likewise make the bare head acceptable.
 
-**Files this touches:** `tools/mech_gen.py`, `tools/mech_drawings.py`, `mech/HARDWARE_SCHEDULE.md`, `mech/MANIFEST.json`, `mech/MECH_RELEASE_STATUS.md`, `mech/stl/POD-P1_prototype_enclosure_base.stl`, `mech/step/POD-P1_prototype_enclosure_base.step`, `mech/drawings/MECH-EEG-020_RevA_printed_part_drawings.pdf`, `docs/ASM-EEG-007_RevB_assembly_work_instructions.md`, `docs/ASM-EEG-007_RevB_assembly_work_instructions.docx`, `docs/ASM-EEG-007_RevB_assembly_work_instructions.pdf`, `docs/AVL-EEG-017_RevB_approved_vendor_list.md`, `docs/PARTS-EEG-019_RevB_part_identifier_register.md`, `docs/ECO-EEG-016_RevB_change_control_and_document_register.md`, `docs/EEG_kit_BOM_for_bidders_RevC.xlsx`, `docs/EEG_kit_BOM_INTERNAL_RevC_costed.xlsx`, `KNOWN_ISSUES.txt`
+**Files this touches:** `tools/mech_gen.py`, `tools/mech_drawings.py`, `mech/HARDWARE_SCHEDULE.md`, `mech/MANIFEST.json`, `mech/MECH_RELEASE_STATUS.md`, `mech/stl/POD-P1_prototype_enclosure_base.stl`, `mech/step/POD-P1_prototype_enclosure_base.step`, `mech/drawings/MECH-EEG-020_RevA_printed_part_drawings.pdf`, `docs/ASM-EEG-007_RevB_assembly_work_instructions.md`, `docs/ASM-EEG-007_RevB_assembly_work_instructions.docx`, `docs/ASM-EEG-007_RevB_assembly_work_instructions.pdf`, `docs/AVL-EEG-017_RevC_approved_vendor_list.md`, `docs/PARTS-EEG-019_RevB_part_identifier_register.md`, `docs/ECO-EEG-016_RevC_change_control_and_document_register.md`, `docs/EEG_kit_BOM_for_bidders_RevC.xlsx`, `docs/EEG_kit_BOM_INTERNAL_RevC_costed.xlsx`, `KNOWN_ISSUES.txt`
 
 
 ## MECH-D5
@@ -1135,7 +1135,7 @@ being a numbering question: ENTRY_PAD_D, OE_SEAT_D and the 32.00 mm axis spacing
 _pod_holds() and _oe_holds() fail the build, and HM-12 is re-cut in geometry and not just in
 marking.
 
-**Files this touches:** `docs/PARTS-EEG-019_RevB_part_identifier_register.md`, `docs/AVL-EEG-017_RevB_approved_vendor_list.md`, `tools/RULINGS.md`, `docs/RUL-EEG-021_RevA_rulings_register.md`, `tools/mech_gen.py`, `mech/HARDWARE_SCHEDULE.md`, `mech/MECH_RELEASE_STATUS.md`, `mech/MANIFEST.json`, `mech/drawings/MECH-EEG-020_sheet_index.csv`, `docs/SVC-EEG-013_RevB_service_and_refurbishment_manual.md`, `docs/EEG_kit_BOM_for_bidders_RevC.xlsx`, `docs/ECO-EEG-016_RevB_change_control_and_document_register.md`
+**Files this touches:** `docs/PARTS-EEG-019_RevB_part_identifier_register.md`, `docs/AVL-EEG-017_RevC_approved_vendor_list.md`, `tools/RULINGS.md`, `docs/RUL-EEG-021_RevB_rulings_register.md`, `tools/mech_gen.py`, `mech/HARDWARE_SCHEDULE.md`, `mech/MECH_RELEASE_STATUS.md`, `mech/MANIFEST.json`, `mech/drawings/MECH-EEG-020_sheet_index.csv`, `docs/SVC-EEG-013_RevB_service_and_refurbishment_manual.md`, `docs/EEG_kit_BOM_for_bidders_RevC.xlsx`, `docs/ECO-EEG-016_RevC_change_control_and_document_register.md`
 
 
 ## D2-EAR-REFERENCE-COUPLER
@@ -1317,7 +1317,7 @@ acceptable at any length, and the clip lead must be screened or the coupler move
 end. A temple wire exit added to tools/mech_gen.py and registered closes provision (4) and lets
 the H6 15 N leg be written against a real anchor; until then it stays open and is not tested.
 
-**Files this touches:** `docs/WH-EEG-008_RevB_harness_and_cable_assembly.md`, `docs/AVL-EEG-017_RevB_approved_vendor_list.md`, `docs/PKG-EEG-015_RevB_packing_labelling_and_shipping.md`, `docs/IFU-EEG-014_RevB_participant_quick_start_and_placement_guide.md`, `docs/SVC-EEG-013_RevB_service_and_refurbishment_manual.md`, `docs/RISK-EEG-011_RevB_risk_analysis_and_safety_review_pack.md`, `docs/ECO-EEG-016_RevB_change_control_and_document_register.md`, `docs/PARTS-EEG-019_RevB_part_identifier_register.md`, `tools/mech_gen.py`, `KNOWN_ISSUES.txt`
+**Files this touches:** `docs/WH-EEG-008_RevB_harness_and_cable_assembly.md`, `docs/AVL-EEG-017_RevC_approved_vendor_list.md`, `docs/PKG-EEG-015_RevB_packing_labelling_and_shipping.md`, `docs/IFU-EEG-014_RevB_participant_quick_start_and_placement_guide.md`, `docs/SVC-EEG-013_RevB_service_and_refurbishment_manual.md`, `docs/RISK-EEG-011_RevB_risk_analysis_and_safety_review_pack.md`, `docs/ECO-EEG-016_RevC_change_control_and_document_register.md`, `docs/PARTS-EEG-019_RevB_part_identifier_register.md`, `tools/mech_gen.py`, `KNOWN_ISSUES.txt`
 
 
 ## D3-BIAS-FPZ-TERMINATION
@@ -1466,7 +1466,7 @@ three open terminations, though it does not change the termination itself. And i
 reviewer draws the HM-01 anchorage, the coupler retention goes to 15 N and aligns with H6; if
 not, it is capped at H5's 13 N.
 
-**Files this touches:** `docs/WH-EEG-008_RevB_harness_and_cable_assembly.md`, `docs/AVL-EEG-017_RevB_approved_vendor_list.md`, `docs/PARTS-EEG-019_RevB_part_identifier_register.md`, `docs/ECO-EEG-016_RevB_change_control_and_document_register.md`, `docs/RISK-EEG-011_RevB_risk_analysis_and_safety_review_pack.md`, `docs/IFU-EEG-014_RevB_participant_quick_start_and_placement_guide.md`, `docs/SVC-EEG-013_RevB_service_and_refurbishment_manual.md`, `docs/PKG-EEG-015_RevB_packing_labelling_and_shipping.md`, `KNOWN_ISSUES.txt`
+**Files this touches:** `docs/WH-EEG-008_RevB_harness_and_cable_assembly.md`, `docs/AVL-EEG-017_RevC_approved_vendor_list.md`, `docs/PARTS-EEG-019_RevB_part_identifier_register.md`, `docs/ECO-EEG-016_RevC_change_control_and_document_register.md`, `docs/RISK-EEG-011_RevB_risk_analysis_and_safety_review_pack.md`, `docs/IFU-EEG-014_RevB_participant_quick_start_and_placement_guide.md`, `docs/SVC-EEG-013_RevB_service_and_refurbishment_manual.md`, `docs/PKG-EEG-015_RevB_packing_labelling_and_shipping.md`, `KNOWN_ISSUES.txt`
 
 
 ## D4-D11-C11-PATIENT-SIDE
@@ -1496,7 +1496,7 @@ VIOLATIONS: 0. The one thing the package genuinely cannot compute — whether th
 amplifier is stable driving 10 nF at its own pin, now that the 47 kOhm no longer isolates it —
 is not resolved by guessing a capacitor value. It is declared where this package already
 declares everything it assumes about a module it has not yet bought: add a row to ICD-EEG-006
-Rev B section 2.1's assumption table, beside "Inputs tolerate the series protection resistance",
+Rev C section 2.1's assumption table, beside "Inputs tolerate the series protection resistance",
 reading "Bias amplifier stable driving 10 nF C0G at BIASOUT, with 47 kOhm (68 kOhm after ECO-
 EEG-024) in series to the electrode" with the consequence-if-untrue "bias loop peaks or
 oscillates; common-mode rejection degrades on all sixteen channels". That is an incoming-
@@ -1600,7 +1600,7 @@ larger half of it, and the smaller half is answerable without a number by naming
 interface requirement on a module that has not been selected. Inventing 1 nF to fill the box, as
 the attack's fallback proposes, is the thing this method warns against.
 
-**Confidence:** judgement  |  **Blocks a build:** yes  |  **Signed off by:** The electrical safety reviewer of RISK-EEG-011 section 7 — the independent chartered engineer that section 7.1 defines and that section 7 records as not yet started — as the named owner of SR-12, SF-1a and SF-6a, who signs the disposition of SR-12 per section 11. Then DSN-EEG-003 Rev C's owner, because this changes the schematic, the netlist and a routed board that is released for review under RFQ-EEG-002A. The new ICD-EEG-006 section 2.1 assumption row is additionally the module-qualification owner's to accept, since it becomes a condition on a supplier not yet chosen, and it must be in the RFQ pack before any PIEEG-8-class module is qualified.
+**Confidence:** judgement  |  **Blocks a build:** yes  |  **Signed off by:** The electrical safety reviewer of RISK-EEG-011 section 7 — the independent chartered engineer that section 7.1 defines and that section 7 records as not yet started — as the named owner of SR-12, SF-1a and SF-6a, who signs the disposition of SR-12 per section 11. Then DSN-EEG-003 Rev D's owner, because this changes the schematic, the netlist and a routed board that is released for review under RFQ-EEG-002A. The new ICD-EEG-006 section 2.1 assumption row is additionally the module-qualification owner's to accept, since it becomes a condition on a supplier not yet chosen, and it must be in the RFQ pack before any PIEEG-8-class module is qualified.
 
 **What would change it.**
 
@@ -1623,7 +1623,7 @@ leaving SF-6a open. It is a legitimate reviewer's call and is recorded here as s
 not recommended: it preserves the special case in the source that produced this defect in the
 first place.
 
-**Files this touches:** `tools/design.py`, `tools/schematic.py`, `tools/DESIGN_FACTS.md`, `constraints/nets.md`, `kicad/EEG-CAR-01_RevB_routed.kicad_pcb`, `tools/drc_report.txt`, `docs/RISK-EEG-011_RevB_risk_analysis_and_safety_review_pack.md`, `docs/ICD-EEG-006_RevB_interface_control_document.md`, `docs/WH-EEG-008_RevB_harness_and_cable_assembly.md`, `docs/JIG-EEG-009_RevB_test_fixture_design.md`, `docs/DSN-EEG-003_RevC_manufacturing_design_package.md`, `docs/ECO-EEG-016_RevB_change_control_and_document_register.md`, `KNOWN_ISSUES.txt`
+**Files this touches:** `tools/design.py`, `tools/schematic.py`, `tools/DESIGN_FACTS.md`, `constraints/nets.md`, `kicad/EEG-CAR-01_RevB_routed.kicad_pcb`, `tools/drc_report.txt`, `docs/RISK-EEG-011_RevB_risk_analysis_and_safety_review_pack.md`, `docs/ICD-EEG-006_RevC_interface_control_document.md`, `docs/WH-EEG-008_RevB_harness_and_cable_assembly.md`, `docs/JIG-EEG-009_RevC_test_fixture_design.md`, `docs/DSN-EEG-003_RevD_manufacturing_design_package.md`, `docs/ECO-EEG-016_RevC_change_control_and_document_register.md`, `KNOWN_ISSUES.txt`
 
 
 ## D1-ATECC-CONFIG
@@ -1810,7 +1810,7 @@ bytes, READ THEM BACK from the config zone and diff before locking anything, the
 GenKey, export, and verify one signature with verify_stream.py. If that trial is run before item
 9 is closed, it proves nothing, because the write never reaches the part.
 
-**Files this touches:** `firmware/main/main.c`, `firmware/main/drivers.c`, `firmware/main/drivers.h`, `firmware/tools/provision.py`, `firmware/tools/provision_selftest.py`, `firmware/tools/ATECC608B_CONFIG_TEMPLATE.md`, `firmware/tools/README_provisioning.md`, `docs/FW-EEG-001_RevC_firmware_build_and_provisioning.md`, `docs/TST-EEG-004_RevC_production_test_specification.md`, `docs/SVC-EEG-013_RevB_service_and_refurbishment_manual.md`, `docs/ASM-EEG-007_RevB_assembly_work_instructions.md`, `docs/AVL-EEG-017_RevB_approved_vendor_list.md`, `KNOWN_ISSUES.txt`
+**Files this touches:** `firmware/main/main.c`, `firmware/main/drivers.c`, `firmware/main/drivers.h`, `firmware/tools/provision.py`, `firmware/tools/provision_selftest.py`, `firmware/tools/ATECC608B_CONFIG_TEMPLATE.md`, `firmware/tools/README_provisioning.md`, `docs/FW-EEG-001_RevD_firmware_build_and_provisioning.md`, `docs/TST-EEG-004_RevC_production_test_specification.md`, `docs/SVC-EEG-013_RevB_service_and_refurbishment_manual.md`, `docs/ASM-EEG-007_RevB_assembly_work_instructions.md`, `docs/AVL-EEG-017_RevC_approved_vendor_list.md`, `KNOWN_ISSUES.txt`
 
 
 ---
@@ -1963,7 +1963,7 @@ first measured coupler drive level, taken when a FIX-02/A or /B coupler is first
 70.0 dB SPL, is what closes the voice and room half — until then no second range should be
 fitted.
 
-**Files this touches:** `docs/JIG-EEG-009_RevB_test_fixture_design.md`, `fixtures/firmware/src/fix_m2.c`, `fixtures/firmware/include/fixproto.h`, `fixtures/firmware/include/fixhal.h`, `fixtures/firmware/src/hal_rp2040.c`, `docs/TST-EEG-004_RevC_production_test_specification.md`, `docs/ECO-EEG-016_RevB_change_control_and_document_register.md`
+**Files this touches:** `docs/JIG-EEG-009_RevC_test_fixture_design.md`, `fixtures/firmware/src/fix_m2.c`, `fixtures/firmware/include/fixproto.h`, `fixtures/firmware/include/fixhal.h`, `fixtures/firmware/src/hal_rp2040.c`, `docs/TST-EEG-004_RevC_production_test_specification.md`, `docs/ECO-EEG-016_RevC_change_control_and_document_register.md`
 
 
 ## D4-FIRMWARE-TIMING
@@ -2116,7 +2116,7 @@ poll bound off 400 ms. And a measured SELFTEST RELAYS wall time on real USB CDC 
 measured figure rather than an estimate. If host_test.c gains checks for the new TIMEOUT path,
 the "154" in all five places moves with it.
 
-**Files this touches:** `fixtures/firmware/src/fix_m1.c`, `fixtures/firmware/src/fix_m3.c`, `fixtures/firmware/test/hal_sim.c`, `fixtures/firmware/test/host_test.c`, `docs/JIG-EEG-009_RevB_test_fixture_design.md`, `docs/ECO-EEG-016_RevB_change_control_and_document_register.md`, `fixtures/firmware/README.md`
+**Files this touches:** `fixtures/firmware/src/fix_m1.c`, `fixtures/firmware/src/fix_m3.c`, `fixtures/firmware/test/hal_sim.c`, `fixtures/firmware/test/host_test.c`, `docs/JIG-EEG-009_RevC_test_fixture_design.md`, `docs/ECO-EEG-016_RevC_change_control_and_document_register.md`, `fixtures/firmware/README.md`
 
 
 ## D6-FIX04-OUTLINE
@@ -2294,7 +2294,7 @@ consequence of J401, J402, J403 and J407 sitting at y = 6.0; moving them to the 
 an end panel returns roughly 10 mm of height and makes four columns of six the largest-carrying
 grid instead of five of five.
 
-**Files this touches:** `docs/JIG-EEG-009_RevB_test_fixture_design.md`, `tools/fixture_gen.py`, `fixtures/pcb/FIX-04/FIX-04_constraints.txt`, `fixtures/pcb/FIX-04/README_fixture_pcb_data.txt`, `fixtures/MANIFEST.json`, `docs/JIG-EEG-009_RevB_test_fixture_design.docx`, `docs/JIG-EEG-009_RevB_test_fixture_design.pdf`, `KNOWN_ISSUES.txt`
+**Files this touches:** `docs/JIG-EEG-009_RevC_test_fixture_design.md`, `tools/fixture_gen.py`, `fixtures/pcb/FIX-04/FIX-04_constraints.txt`, `fixtures/pcb/FIX-04/README_fixture_pcb_data.txt`, `fixtures/MANIFEST.json`, `docs/JIG-EEG-009_RevC_test_fixture_design.docx`, `docs/JIG-EEG-009_RevC_test_fixture_design.pdf`, `KNOWN_ISSUES.txt`
 
 
 ## MECH-D2
@@ -2440,7 +2440,7 @@ reconsidered. Separately, if POD-P1-04 is redesigned to hold the jacket 16.25 mm
 instead of 9.0 mm, the pod entry's internal-bend finding closes and the pod line becomes clean
 on its own terms.
 
-**Files this touches:** `tools/mech_gen.py`, `mech/HARDWARE_SCHEDULE.md`, `docs/AVL-EEG-017_RevB_approved_vendor_list.md`, `docs/WH-EEG-008_RevB_harness_and_cable_assembly.md`, `docs/PARTS-EEG-019_RevB_part_identifier_register.md`, `docs/ASM-EEG-007_RevB_assembly_work_instructions.md`, `docs/SVC-EEG-013_RevB_service_and_refurbishment_manual.md`, `docs/PKG-EEG-015_RevB_packing_labelling_and_shipping.md`, `docs/EEG_kit_BOM_for_bidders_RevC.xlsx`, `docs/ECO-EEG-016_RevB_change_control_and_document_register.md`, `docs/RUL-EEG-021_RevA_rulings_register.md`
+**Files this touches:** `tools/mech_gen.py`, `mech/HARDWARE_SCHEDULE.md`, `docs/AVL-EEG-017_RevC_approved_vendor_list.md`, `docs/WH-EEG-008_RevB_harness_and_cable_assembly.md`, `docs/PARTS-EEG-019_RevB_part_identifier_register.md`, `docs/ASM-EEG-007_RevB_assembly_work_instructions.md`, `docs/SVC-EEG-013_RevB_service_and_refurbishment_manual.md`, `docs/PKG-EEG-015_RevB_packing_labelling_and_shipping.md`, `docs/EEG_kit_BOM_for_bidders_RevC.xlsx`, `docs/ECO-EEG-016_RevC_change_control_and_document_register.md`, `docs/RUL-EEG-021_RevB_rulings_register.md`
 
 
 ## MECH-D3
@@ -2633,7 +2633,7 @@ to be added to FIT-01, which exists to gate a printed fit and today carries only
 9.20/9.35/9.15 family. 5. THE FRAME'S +x CONVENTION. If a document ever states it and it runs
 the other way, OE-1 and OE-2 swap. Nothing else moves.
 
-**Files this touches:** `docs/ASM-EEG-007_RevB_assembly_work_instructions.md`, `docs/ECO-EEG-016_RevB_change_control_and_document_register.md`, `docs/WH-EEG-008_RevB_harness_and_cable_assembly.md`, `docs/PARTS-EEG-019_RevB_part_identifier_register.md`, `tools/mech_gen.py`, `mech/MECH_RELEASE_STATUS.md`, `mech/HARDWARE_SCHEDULE.md`, `KNOWN_ISSUES.txt`
+**Files this touches:** `docs/ASM-EEG-007_RevB_assembly_work_instructions.md`, `docs/ECO-EEG-016_RevC_change_control_and_document_register.md`, `docs/WH-EEG-008_RevB_harness_and_cable_assembly.md`, `docs/PARTS-EEG-019_RevB_part_identifier_register.md`, `tools/mech_gen.py`, `mech/MECH_RELEASE_STATUS.md`, `mech/HARDWARE_SCHEDULE.md`, `KNOWN_ISSUES.txt`
 
 
 ## MECH-D4
@@ -2780,7 +2780,7 @@ should be added to the first-article inspection before the ruling is relied on f
 will NOT change it: the identity of the lobe. Both candidate identifications (the left temple
 socket, or F7, the one unpaired 10-20 site) are left-side, so the ruling holds either way.
 
-**Files this touches:** `docs/RUL-EEG-021_RevA_rulings_register.md`, `docs/ICD-EEG-006_RevB_interface_control_document.md`, `docs/ASM-EEG-007_RevB_assembly_work_instructions.md`, `docs/WH-EEG-008_RevB_harness_and_cable_assembly.md`, `tools/mech_gen.py`, `tools/mech_drawings.py`, `mech/drawings/MECH-EEG-020_sheet_index.csv`, `mech/drawings/MECH-EEG-020_RevA_printed_part_drawings.pdf`, `KNOWN_ISSUES.txt`
+**Files this touches:** `docs/RUL-EEG-021_RevB_rulings_register.md`, `docs/ICD-EEG-006_RevC_interface_control_document.md`, `docs/ASM-EEG-007_RevB_assembly_work_instructions.md`, `docs/WH-EEG-008_RevB_harness_and_cable_assembly.md`, `tools/mech_gen.py`, `tools/mech_drawings.py`, `mech/drawings/MECH-EEG-020_sheet_index.csv`, `mech/drawings/MECH-EEG-020_RevA_printed_part_drawings.pdf`, `KNOWN_ISSUES.txt`
 
 
 ## D2-RECORD-SHA256
@@ -2816,7 +2816,7 @@ nnnn_test.json Printed beside it: a first-match `sed 's/[0-9a-f]\{64\}/0…0/'` 
 identity.firmware_sha256, not record_sha256 — verified. 7. PRINT — the 4x16 grouping is DROPPED.
 The hash prints unbroken on its own full-width line beneath the signature table of §13 item 8,
 labelled "SHA-256 of the source record — 64 hex characters, lower case, no spaces". This removes
-the collision with FW-EEG-001 Rev C §7.4 (whose spaces ARE part of the fingerprint value) and
+the collision with FW-EEG-001 Rev D §7.4 (whose spaces ARE part of the fingerprint value) and
 the table-cell wrap the 114.7 mm arithmetic ignored, and it preserves the certificate template's
 "filled from the record and from nowhere else" invariant with no amendment. 8. THREE PLACES: the
 JSON, the certificate, and the `record_sha256` column of records/lot_summary_template.csv. All
@@ -2865,7 +2865,7 @@ one record_sha256 with additionalProperties:false at both levels, and refurbishm
 {date, receipt_record_reference, results} with additionalProperties:false — so the collision the
 caveat guarded really cannot occur. Corrections (b) and (f) adopted; I publish the parse-based
 one-liner rather than hand-waving at shell. (4) The print collision is real and both citation
-slips are mine. FW-EEG-001 Rev C §7.4 (docs/FW-
+slips are mine. FW-EEG-001 Rev D §7.4 (docs/FW-
 EEG-001_RevC_firmware_build_and_provisioning.md:1173-1177) defines the fingerprint as 16
 uppercase hex in four groups of four separated by single spaces, with the spaces INSIDE the JSON
 value ("public_key_fingerprint": "A1B2 C3D4 E5F6 0718") and on the M-03 label; and the
@@ -2892,7 +2892,7 @@ is half wrong. The file must be rewritten sorted, but the hash value is unchange
 byte-identical to what canonical_bytes() serialises today, so the fix is one keyword,
 `sort_keys=True`, and the certificate's printed value stays put. FOUND BY ME, in neither the
 decision nor the attack — the edit list as written would be silently reverted.
-tools/finalise_docs.py main() rewrites docs/RUL-EEG-021_RevA_rulings_register.md from
+tools/finalise_docs.py main() rewrites docs/RUL-EEG-021_RevB_rulings_register.md from
 tools/RULINGS.md, and the register itself warns that a hand edit "is reverted, without a
 warning, on the next run": a ruling filed only in the register is lost. Five of the seven files
 I listed (the schema, the example, the CSV, the certificate template, README.txt) are OUTPUTS of
@@ -2942,7 +2942,7 @@ generator recomputes it, and the ruling's text must not quote a stale value. TST
 item 18 stands either way: the schema has never seen a real record, and the first Phase 1 record
 is where a field of the wrong shape will be found.
 
-**Files this touches:** `tools/RULINGS.md`, `docs/TST-EEG-004_RevC_production_test_specification.md`, `records/validate_test_record.py`, `records/make_records.py`, `records/TST-EEG-004_RevC_unit_test_record.schema.json`, `records/EXAMPLE_TIOV-B-0000_test.json`, `records/TST-EEG-004_RevC_calibration_certificate.md`, `records/README.txt`, `records/lot_summary_template.csv`, `docs/RUL-EEG-021_RevA_rulings_register.md`, `tools/finalise_docs.py`, `tools/make_docs.py`, `docs/TST-EEG-004_RevC_production_test_specification.docx`, `docs/TST-EEG-004_RevC_production_test_specification.pdf`, `KNOWN_ISSUES.txt`
+**Files this touches:** `tools/RULINGS.md`, `docs/TST-EEG-004_RevC_production_test_specification.md`, `records/validate_test_record.py`, `records/make_records.py`, `records/TST-EEG-004_RevC_unit_test_record.schema.json`, `records/EXAMPLE_TIOV-B-0000_test.json`, `records/TST-EEG-004_RevC_calibration_certificate.md`, `records/README.txt`, `records/lot_summary_template.csv`, `docs/RUL-EEG-021_RevB_rulings_register.md`, `tools/finalise_docs.py`, `tools/make_docs.py`, `docs/TST-EEG-004_RevC_production_test_specification.docx`, `docs/TST-EEG-004_RevC_production_test_specification.pdf`, `KNOWN_ISSUES.txt`
 
 
 ## D3-BAY-TAG-CAP-HEIGHT
@@ -3068,7 +3068,7 @@ roughly +0.2 mm of cap - not enough to change the ruling, but it should be writt
 than left open. 5. A Rev D re-columned sheet (already contemplated for the finger reliefs of
 open item 12) that widens the webs and the bays - it would move every flat run in this decision.
 
-**Files this touches:** `docs/PKG-EEG-015_RevB_packing_labelling_and_shipping.md`, `tools/artwork_gen.py`, `docs/ECO-EEG-016_RevB_change_control_and_document_register.md`, `docs/QP-EEG-010_RevB_quality_plan.md`
+**Files this touches:** `docs/PKG-EEG-015_RevB_packing_labelling_and_shipping.md`, `tools/artwork_gen.py`, `docs/ECO-EEG-016_RevC_change_control_and_document_register.md`, `docs/QP-EEG-010_RevB_quality_plan.md`
 
 
 ## D4-SPARE-CELL-TAG
@@ -3222,7 +3222,7 @@ a foam re-layout that changes the SPARE CELL bay from shallow to a deep well, wh
 its tag to the top face and re-open the height question. Nothing about the 60 x 12 mm blank or
 the 6.25 mm cap changes without one of those.
 
-**Files this touches:** `docs/PKG-EEG-015_RevB_packing_labelling_and_shipping.md`, `docs/SVC-EEG-013_RevB_service_and_refurbishment_manual.md`, `docs/REG-EEG-012_RevB_regulatory_and_compliance_file.md`, `docs/ECO-EEG-016_RevB_change_control_and_document_register.md`, `tools/artwork_gen.py`, `graphics/labels/ART-LBL-04_bay_tag_spare_cell.svg`, `graphics/labels/ART-LBL-04_foam_bay_tags.pdf`, `graphics/labels/README_artwork.txt`
+**Files this touches:** `docs/PKG-EEG-015_RevB_packing_labelling_and_shipping.md`, `docs/SVC-EEG-013_RevB_service_and_refurbishment_manual.md`, `docs/REG-EEG-012_RevB_regulatory_and_compliance_file.md`, `docs/ECO-EEG-016_RevC_change_control_and_document_register.md`, `tools/artwork_gen.py`, `graphics/labels/ART-LBL-04_bay_tag_spare_cell.svg`, `graphics/labels/ART-LBL-04_foam_bay_tags.pdf`, `graphics/labels/README_artwork.txt`
 
 
 ## D5-LABEL-POSITIONS
@@ -3552,7 +3552,7 @@ reverts to three prose controls and the §5 quarantine line has to be strengthen
 0999 has been allocated, which would need PKG-EEG-015 §5 and provision.py PHASE_BLOCKS changed
 in that order (provision.py:322-324 states the order).
 
-**Files this touches:** `docs/PKG-EEG-015_RevB_packing_labelling_and_shipping.md`, `docs/TST-EEG-004_RevC_production_test_specification.md`, `docs/QP-EEG-010_RevB_quality_plan.md`, `docs/RUL-EEG-021_RevA_rulings_register.md`, `docs/ECO-EEG-016_RevB_change_control_and_document_register.md`, `records/validate_test_record.py`, `records/README.txt`, `records/make_records.py`, `tools/artwork_gen.py`, `graphics/labels/ART-LBL-01_unit_label_specimen.svg`, `graphics/labels/ART-LBL-02_kit_id_plate_specimen.svg`, `graphics/labels/README_artwork.txt`, `firmware/main/drivers.c`
+**Files this touches:** `docs/PKG-EEG-015_RevB_packing_labelling_and_shipping.md`, `docs/TST-EEG-004_RevC_production_test_specification.md`, `docs/QP-EEG-010_RevB_quality_plan.md`, `docs/RUL-EEG-021_RevB_rulings_register.md`, `docs/ECO-EEG-016_RevC_change_control_and_document_register.md`, `records/validate_test_record.py`, `records/README.txt`, `records/make_records.py`, `tools/artwork_gen.py`, `graphics/labels/ART-LBL-01_unit_label_specimen.svg`, `graphics/labels/ART-LBL-02_kit_id_plate_specimen.svg`, `graphics/labels/README_artwork.txt`, `firmware/main/drivers.c`
 
 ---
 

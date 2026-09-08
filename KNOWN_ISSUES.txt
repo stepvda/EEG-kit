@@ -405,7 +405,7 @@ competent contract manufacturer, given ONLY these files and no access to the aut
 the stage and hand on a correct result?  The answer was no, at every one of the six stages,
 and the audit found thirty-two specific things that could not be done.
 
-TWENTY-EIGHT OF THE THIRTY-TWO WERE CLOSED by writing the missing files -- ASM-EEG-023 Rev A
+TWENTY-EIGHT OF THE THIRTY-TWO WERE CLOSED by writing the missing files -- ASM-EEG-023 Rev B
 is the record.  What was written: the stencil aperture table, the IPC-D-356A netlist, the lot
 coupon and lot documents, the ATECC608B configuration template and the provisioning
 safeguards, a working provision.py --dry-run, the calibration schema and its worked example,
@@ -441,7 +441,7 @@ unknown, and section 1.1a of that document asks bidders to say so.
 --------------------------------------------------------------------------------------
 Twenty-two questions were decisions rather than files: a threshold voltage nobody had fixed,
 a fastener nobody had chosen, a termination method nobody had drawn.  They are in
-docs/ASM-EEG-023 Rev A, one entry each -- 8 derived, 11 judgement, 3 that cannot be decided
+docs/ASM-EEG-023 Rev B, one entry each -- 8 derived, 11 judgement, 3 that cannot be decided
 from what exists.  TEN BLOCK A BUILD.
 
 Each was decided, then attacked by an independent reviewer, then re-decided against the
@@ -498,7 +498,7 @@ copy can see which claim moved and why.
   "TWENTY-FOUR OF THE THIRTY-TWO ARE NOW CLOSED", followed by a thirty-item remainder
   list.  Both were wrong together: the count was one pass behind and the list was the
   original audit output, so it named items the same section called closed.  ASM-EEG-023
-  Rev A records twenty-eight of thirty-two closed, and section 11 above states what is
+  Rev B records twenty-eight of thirty-two closed, and section 11 above states what is
   left without re-printing a list that another document owns.
 
   "Several sub-assemblies named in the packing list have no files at all: HM-03A/B/C,

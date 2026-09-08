@@ -4,7 +4,7 @@ subtitle: "TOOL-EEG-022 Rev A · functional specification, technical description
 ---
 
 **Document:** TOOL-EEG-022 **Revision:** A **Date:** 1 September 2026
-**Governing documents:** DSN-EEG-003 Rev C, then RFQ-EEG-001 Rev E, then FW-EEG-001 Rev C
+**Governing documents:** DSN-EEG-003 Rev D, then RFQ-EEG-001 Rev E, then FW-EEG-001 Rev D
 section 5, which is normative for the wire format.
 **Licence:** source MIT, this document CC BY-SA 4.0.
 **Status:** the tool is written and its logic is tested against a simulated device. **It has

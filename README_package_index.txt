@@ -133,13 +133,13 @@ at CAM time.
 --------------------------------------------------------------------------------------
 PRECEDENCE  (if two documents disagree, the higher one governs)
 --------------------------------------------------------------------------------------
-  1. DSN-EEG-003 Rev C   Manufacturing design package -- THE GOVERNING DOCUMENT
+  1. DSN-EEG-003 Rev D   Manufacturing design package -- THE GOVERNING DOCUMENT
   2. RFQ-EEG-001 Rev E   Requirements and acceptance (M/S/O), pricing template
-  3. ICD-EEG-006 Rev B   Interface control: module pinouts, jumpers, GPIO map
+  3. ICD-EEG-006 Rev C   Interface control: module pinouts, jumpers, GPIO map
   4. SCH-EEG-005 Rev B   Schematic set, eight sheets
   5. DSN-EEG-002 Rev E   Helmet, electrodes, wiring, fitting, case
   6. PARTS-EEG-019 Rev B Part identifier register
-  7. RUL-EEG-021 Rev A   Rulings register -- the answers the audit forced
+  7. RUL-EEG-021 Rev B   Rulings register -- the answers the audit forced
   8. EEG_kit_BOM_for_bidders_RevC.xlsx
 
 Where a number appears in a document AND in tools/design.py, DESIGN.PY GOVERNS.
@@ -149,7 +149,7 @@ package cannot drift.
 --------------------------------------------------------------------------------------
 WHAT IS IN THE PACKAGE
 --------------------------------------------------------------------------------------
-docs/        Twenty-one controlled documents.  Start with DSN-EEG-003 Rev C, then the RFQ.
+docs/        Twenty-one controlled documents.  Start with DSN-EEG-003 Rev D, then the RFQ.
              New in v2: ICD-EEG-006 (module interfaces), ASM-EEG-007 (assembly work
              instructions), WH-EEG-008 (harness wire list), JIG-EEG-009 (test fixtures),
              QP-EEG-010 (quality plan), RISK-EEG-011 (risk analysis and the safety-review

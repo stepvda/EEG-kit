@@ -100,7 +100,7 @@ KIT = [
      "Kingston SDCIT2", 1, "Yes", ""),
     ("Carrier", "EEG-CAR-01 Rev B carrier PCB, FOUR layers, 150.0 x 130.0 mm, ENIG",
      "fabricated from the released Gerber set", "none", 1, "n/a",
-     "v1 specified two layers and 130 x 124 mm; see DSN-EEG-003 Rev C section 3"),
+     "v1 specified two layers and 130 x 124 mm; see DSN-EEG-003 Rev D section 3"),
     ("Carrier", "EEG-CAR-01 assembly per the carrier sub-BOM sheet",
      "see sheet 'Carrier sub-BOM'", "per sub-BOM alternates", 1, "Per sub-BOM", ""),
     ("Carrier", "Ribbon-jumper set, keyed, per ICD-EEG-006 section 3",
@@ -251,7 +251,7 @@ def kit_bom(path, costed=False):
     ws3 = wb.create_sheet("Read me")
     for r in [
         ["EEG field kit -- kit bill of materials"],
-        ["Revision C, 1 September 2026. Companion to RFQ-EEG-001 Rev E and DSN-EEG-003 Rev C."],
+        ["Revision C, 1 September 2026. Companion to RFQ-EEG-001 Rev E and DSN-EEG-003 Rev D."],
         [],
         ["What changed from Rev B"],
         ["The carrier is four layers and 150.0 x 130.0 mm, not two layers and 130 x 124 mm."],
@@ -299,7 +299,7 @@ def contacts(path):
     note = wb.create_sheet("Rev B note")
     for r in [
         ["EEG field kit -- manufacturer contact list, Revision B"],
-        ["1 September 2026. Companion to DSN-EEG-003 Rev C and RFQ-EEG-001 Rev E."],
+        ["1 September 2026. Companion to DSN-EEG-003 Rev D and RFQ-EEG-001 Rev E."],
         [],
         [f"Correction applied: {fixed} cell(s) claiming ISO 13485 certification changed to "
          "ISO 9001, at the company's own request. The RFQ requests no certification, so "

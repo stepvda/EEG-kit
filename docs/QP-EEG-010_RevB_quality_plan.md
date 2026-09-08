@@ -3,7 +3,7 @@
 **Document:** QP-EEG-010  **Revision:** B  **Date:** 2026-09-01
 **Issued by:** TI One Voice research programme (one.witysk.org), Brussels, Belgium
 **Licence:** CC BY-SA 4.0
-**Governing documents:** DSN-EEG-003 Rev C, then RFQ-EEG-001 Rev E. Where this
+**Governing documents:** DSN-EEG-003 Rev D, then RFQ-EEG-001 Rev E. Where this
 document and design.py disagree, design.py governs.
 **Revision note (Rev B):** carrier corrected to 150.0 x 130.0 mm and to four layers, with
 inner-layer registration, plane continuity and misregistration added to incoming inspection,
@@ -25,7 +25,7 @@ unchanged: these are corrections within the same release.
 
 **Corrections after the firmware build and ECO-EEG-024 (2026-09-02), revision letter again unchanged.** Two things this plan asserted throughout stopped being true on the day it was issued, and both are restated rather than deleted. **S-02 is met in the design.** ECO-EEG-024 is applied in `tools/design.py`: R1 to R16 are **68 kOhm** (Vishay TNPW060368K0BEEA), the single-fault DC current is **36.8 uA** against the 50 uA limit, and E-10 moves to the **+/- 1.0 dB** branch the requirement already carried. Row IQC-2.3, row FA-03, section 1.4's pointer row and open item 3 of section 14.2 are restated; the 47 kOhm figures are kept beside the new ones as the superseded set. **Met in the design is not signed off**: nothing is measured, no unit exists, and the electrical safety reviewer named in open item 1 has not started, so S-02 remains that reviewer's item. **The contact-light driver is written.** `firmware/main/main.c` implements E-27's bicolour phase scheme -- both halves of the converter's lead-off status are captured, neither detector gone is green, exactly one is amber, both is red -- so open item 7's "the bicolour phase scheme is specified and not yet coded, so the contact-light test step cannot pass" is superseded. TST-EEG-004 T11 is written against it and has never been run: no unit exists. The firmware itself is now **built** -- ESP-IDF v5.2.5, target esp32s3, images and SHA-256 manifest in `firmware/release/` -- and has run only under QEMU emulation, never on hardware.
 
-**Corrections after the verification review of package v2.2 (2026-09-02), revision letter again unchanged:** two figures are corrected to the artefacts they describe. Row IQC-B15 dated the released DRC report 1 September; `kicad/EEG-CAR-01_RevB_DRC_report.txt` is dated 2 September on its own `Generated` line, and the date an inspector compares is the date printed on the report. Section 12.4's fixture self-test named the lead-off references by the rounded values 5 k / 10 k / 50 k; FIX-01/A switches the E96 parts **4k99 / 10k0 / 49k9**, which is what JIG-EEG-009 Rev B section 0.1 and TST-EEG-004 Rev C T10 already name, and the rounding is not harmless at the top of the range. Both are corrections of wording to fitted fact; nothing about the plan, the sampling or the limits changes.
+**Corrections after the verification review of package v2.2 (2026-09-02), revision letter again unchanged:** two figures are corrected to the artefacts they describe. Row IQC-B15 dated the released DRC report 1 September; `kicad/EEG-CAR-01_RevB_DRC_report.txt` is dated 2 September on its own `Generated` line, and the date an inspector compares is the date printed on the report. Section 12.4's fixture self-test named the lead-off references by the rounded values 5 k / 10 k / 50 k; FIX-01/A switches the E96 parts **4k99 / 10k0 / 49k9**, which is what JIG-EEG-009 Rev C section 0.1 and TST-EEG-004 Rev C T10 already name, and the rounding is not harmless at the top of the range. Both are corrections of wording to fitted fact; nothing about the plan, the sampling or the limits changes.
 
 ## Why this document exists
 
@@ -74,7 +74,7 @@ pin count is 620, not 636; the 16 that carry none are the 6 fiducial pads and th
 non-plated holes. This plan inspects against the 636, because a stencil, an AOI recipe and
 a bare-board test all have to account for pads that no netlist mentions.
 
-**AVL-EEG-017 Rev B section 1 gives 614 for the same board, and that figure is not this
+**AVL-EEG-017 Rev C section 1 gives 614 for the same board, and that figure is not this
 one.** The difference is exactly 22: the 18 test pads plus the 4 mounting-hole pads. So 614
 is this board with those left in place and left out of the count -- the six fiducial pads
 are in both figures -- and it is neither a different board nor the 620 netlist pins.
@@ -198,7 +198,7 @@ file. Regulus Electronics (New Taipei, Taiwan) holds **ISO 9001 and does not hol
 13485**; the manufacturer contact list continued to assert "ISO 13485 capable" against them
 until package_v2.2. Two further contact corrections recorded as complete were also never
 applied: RayPCB should read PCBSync (contact stan@pcbsync.com), and NextPCB was to be
-dropped from the mailing but remained listed twice. All three are corrected in AVL-EEG-017 Rev B, which is now the single source for supplier identity and certification status. No
+dropped from the mailing but remained listed twice. All three are corrected in AVL-EEG-017 Rev C, which is now the single source for supplier identity and certification status. No
 certification claim about any bidder is to be restated in a programme document without a
 copy of the certificate on file.
 
@@ -219,7 +219,7 @@ One table, one home. This plan cites the following and does not repeat them:
 | Lithium shipping procedure | PKG-EEG-015 section 7 |
 | Foam pocket schedule and label artwork | PKG-EEG-015 sections 2 and 5 |
 | Serial format `TIOV-B-nnnn` | PKG-EEG-015 section 5 |
-| The rulings that settled the cross-document disagreements | RUL-EEG-021 Rev A |
+| The rulings that settled the cross-document disagreements | RUL-EEG-021 Rev B |
 
 The geometry recap in section 1.1 is the one deliberate exception: the two layout changes
 must be visible in every document of the release, and the inspection rows below refer back
@@ -688,7 +688,7 @@ to bound a suspect population is by press lot.
 
 - The permissive language in the v1 kit BOM -- "Chinese equivalent", "generic", "certified
   generic", "generic ADS1299 breakout with same header pinout" -- is superseded. Every line
-  in AVL-EEG-017 Rev B is either a named approved part or an explicit open-with-criteria
+  in AVL-EEG-017 Rev C is either a named approved part or an explicit open-with-criteria
   entry that states the criteria.
 - **J15 to J17 have no confirmed part and that is a live procurement risk.** `design.py`
   names Stäubli SLB1,5-F / LB-I1,5 as a class, not a confirmed PCB part. A touch-proof
@@ -780,7 +780,7 @@ unit inside a screened enclosure before it is failed.
   > 0.2 % or noise drift > 0.15 uV halts the line** until the fixture is investigated.
 - Fixture self-test at shift start: divider ratio against a 6.5-digit DMM, the three
   reference resistors (**4k99, 10k0 and 49k9**, the E96 parts FIX-01/A actually switches --
-  JIG-EEG-009 Rev B section 0.1 and TST-EEG-004 Rev C T10 name the same three), continuity
+  JIG-EEG-009 Rev C section 0.1 and TST-EEG-004 Rev C T10 name the same three), continuity
   of all 12 J14 pins and the three DIN plugs. Logged. *Was: "5 k, 10 k, 50 k"* -- a rounding
   of the fitted parts, and one that does not stay harmless at the top of the range:
   RISK-EEG-011 Rev B H-24 records that 49k9 read through 47 kOhm and the 10 nF shunt gives

@@ -3,7 +3,7 @@
 **Document:** WH-EEG-008  **Revision:** B  **Date:** 2026-09-01
 **Issued by:** TI One Voice research programme (one.witysk.org), Brussels, Belgium
 **Licence:** CC BY-SA 4.0
-**Governing documents:** DSN-EEG-003 Rev C, then RFQ-EEG-001 Rev E. Where this
+**Governing documents:** DSN-EEG-003 Rev D, then RFQ-EEG-001 Rev E. Where this
 document and design.py disagree, design.py governs.
 
 **Revision note, Rev A to Rev B.** Re-issued against the 150.0 x 130.0 mm four-layer
@@ -1702,7 +1702,7 @@ option is taken, since no cable in this register lands on J22 (section 2). This 
 keying decision ICD-EEG-006 section 6 records for the module jumpers:
 a shrouded polarised header at the module end where the module has one, and the printed
 carrier-end shroud over every socket that takes a jumper. The shroud names SHR-14-A,
-SHR-30-A and SHR-22-A of JIG-EEG-009 Rev A are withdrawn: JIG-EEG-009 Rev B section 1.10 calls
+SHR-30-A and SHR-22-A of Rev A of JIG-EEG-009 are withdrawn: JIG-EEG-009 Rev C section 1.10 calls
 all three WH-KEY-01, and PARTS-EEG-019 records the old names as legacy. The consequences if the
 shroud is omitted:
 
@@ -1741,7 +1741,7 @@ standoffs above the floor, so the loops sit under the plate and not against the 
 ### 6.1 WH-KEY-01, dimensioned
 
 Rev A named the shroud, made it mandatory, and drew nothing. It is now modelled, in
-`tools/mech_gen.py wh_key01()`, in the three forms JIG-EEG-009 Rev B section 1.10 asks for,
+`tools/mech_gen.py wh_key01()`, in the three forms JIG-EEG-009 Rev C section 1.10 asks for,
 and it is released as STEP and STL with the rest of the MP-01 print set. MJF PA12.
 Coordinates are the design convention of section 1. **Every figure here is from the model;
 nothing has been printed and no housing has been in a shroud.**
@@ -1921,7 +1921,7 @@ have been eight LED_V splices.
 ## 9. Test
 
 **These limits are the single home for the harness electrical test.** JIG-EEG-009 section 4.2
-cites this table and does not restate it. Where JIG-EEG-009 Rev B gave different figures --
+cites this table and does not restate it. Where JIG-EEG-009 Rev C gave different figures --
 a 500 V all-pairs sweep, a 1000 V AC 1 s dielectric withstand, a 10 N termination pull on 1
 in 10 terminations -- those are superseded by the table below. **There is no AC
 dielectric-withstand test on any harness assembly.** The only high-voltage tests in this

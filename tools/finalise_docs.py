@@ -109,14 +109,14 @@ def main():
     print("revisions:", " ".join(f"{k}={v}" for k, v in sorted(REV_OF.items())))
 
     # 4. register the rulings file
-    rul = os.path.join(DOCS, "RUL-EEG-021_RevA_rulings_register.md")
+    rul = os.path.join(DOCS, "RUL-EEG-021_RevB_rulings_register.md")
     src = open(os.path.join(HERE, "RULINGS.md")).read()
     header = (
         "# Rulings Register\n\n"
         "**Document:** RUL-EEG-021  **Revision:** A  **Date:** 1 September 2026\n"
         "**Issued by:** TI One Voice research programme (one.witysk.org), Brussels, Belgium\n"
         "**Licence:** CC BY-SA 4.0\n"
-        "**Governing documents:** DSN-EEG-003 Rev C, then RFQ-EEG-001 Rev E. Where this\n"
+        "**Governing documents:** DSN-EEG-003 Rev D, then RFQ-EEG-001 Rev E. Where this\n"
         "document and `tools/design.py` disagree, `design.py` governs.\n\n"
         "## Why this document exists\n\n"
         "A cross-document audit on 1 September 2026 found sixty places where seventeen "
@@ -141,7 +141,7 @@ def main():
         t = t.replace("`<<ROUTING_STATS>>`", text)
         t = t.replace("&lt;&lt;ROUTING_STATS&gt;&gt;", text)
         # governing-document lines
-        t = re.sub(r"DSN-EEG-003\s+Rev\s+B\b", "DSN-EEG-003 Rev C", t)
+        t = re.sub(r"DSN-EEG-003\s+Rev\s+B\b", "DSN-EEG-003 Rev D", t)
         t = re.sub(r"RFQ-EEG-001\s+Rev\s+D\b", "RFQ-EEG-001 Rev E", t)
         for did, rev in REV_OF.items():
             if did in ("DSN-EEG-003", "RFQ-EEG-001"):

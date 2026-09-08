@@ -3,9 +3,9 @@
 **Document:** TST-EEG-004  **Revision:** C  **Date:** 2026-09-01
 **Issued by:** TI One Voice research programme (one.witysk.org), Brussels, Belgium
 **Licence:** CC BY-SA 4.0
-**Governing documents:** DSN-EEG-003 Rev C, then RFQ-EEG-001 Rev E. Where this
+**Governing documents:** DSN-EEG-003 Rev D, then RFQ-EEG-001 Rev E. Where this
 document and design.py disagree, design.py governs. The binding rulings are
-**RUL-EEG-021 Rev A**, a controlled document in `docs/`; the uncontrolled worksheet
+**RUL-EEG-021 Rev B**, a controlled document in `docs/`; the uncontrolled worksheet
 `tools/RULINGS.md` is not part of the release and is not cited here.
 
 **Rev C in one line:** the carrier is now 150.0 x 130.0 mm on four layers; this document
@@ -124,7 +124,7 @@ programme's electrical safety review (RISK-EEG-011), which has not yet happened.
 **This document owns the step numbers.** Every other document in the package cites
 T-numbers from the table below and never invents one. If a document needs a step that does
 not exist here, it says so and raises it as an open item rather than numbering it itself.
-JIG-EEG-009 Rev B, REG-EEG-012 Rev B, PARTS-EEG-019 Rev B, RISK-EEG-011 Rev B,
+JIG-EEG-009 Rev C, REG-EEG-012 Rev B, PARTS-EEG-019 Rev B, RISK-EEG-011 Rev B,
 PKG-EEG-015 Rev B and IFU-EEG-014 Rev B all cite T19 to T25 with meanings this table does
 not give them; those citations are wrong and are corrected against this table, not the
 other way round.
@@ -182,7 +182,7 @@ calibration-certificate template.
 
 ## 3. Precedence, and what changed from Rev B
 
-Precedence, highest first: DSN-EEG-003 Rev C, RFQ-EEG-001 Rev E, ICD-EEG-006, SCH-EEG-005,
+Precedence, highest first: DSN-EEG-003 Rev D, RFQ-EEG-001 Rev E, ICD-EEG-006, SCH-EEG-005,
 DSN-EEG-002 Rev E, PARTS-EEG-019 Rev B, the BOM workbook. Where a number appears here and
 in `tools/design.py`, design.py governs and this document is corrected.
 
@@ -223,7 +223,7 @@ which is a check anyone can make with `ls`, and `tools/make_docs.py` is what fix
 | Every "E-28 deviation" note deleted | **RFQ-EEG-001 Rev E**, the revision this document governs to, asks for TP1 to TP18 plus a 1x6 debug header at J26 and withdraws the 2x5 JTAG header, so there is no deviation to record. Rev C's citation of "RFQ Rev D" here was stale |
 | Golden unit is **TIOV-B-0001** | One serial format, **defined once in PKG-EEG-015 section 5** and cited, not restated, by everyone else including this document. The ruling behind it is RUL-EEG-021 section B |
 
-**The rulings this revision applies are the registered ones.** RUL-EEG-021 Rev A is a
+**The rulings this revision applies are the registered ones.** RUL-EEG-021 Rev B is a
 controlled document in `docs/` and is what this specification cites, by section letter. The
 uncontrolled worksheet `tools/RULINGS.md` is not part of the release and is cited nowhere
 below. The end-to-end exercise of this specification is **SIM-EEG-018 Rev A**, the production
@@ -866,7 +866,7 @@ expanded uncertainty at k = 2 unless stated. All expected values are **calculate
 | Uncertainty | Tester +/- 5 %; humidity is the dominant environmental term, which is why RH is recorded |
 | Record | Applied voltage, measured resistance, dwell, RH, module type and lot |
 | On failure | Quarantine the unit. Do not repeat the test; do not increase the voltage |
-| Note | **The per-unit isolation test is a 500 V DC insulation-resistance measurement and nothing else. There is no per-unit hipot anywhere in this specification, and a manufacturer must not build one.** The 2.5 kV RMS type test is the **module supplier's certificate**, collected once at T00 and never repeated per unit; The per-unit 2500 V AC station that JIG-EEG-009 Rev A carried is deleted, and JIG-EEG-009 Rev B builds none. The 8 mm creepage of S-03 is a property of the artwork and is verified once per routed Gerber revision in the first-article report, not per unit. Neither is a substitute for the safety review |
+| Note | **The per-unit isolation test is a 500 V DC insulation-resistance measurement and nothing else. There is no per-unit hipot anywhere in this specification, and a manufacturer must not build one.** The 2.5 kV RMS type test is the **module supplier's certificate**, collected once at T00 and never repeated per unit; The per-unit 2500 V AC station that Rev A of JIG-EEG-009 carried is deleted, and JIG-EEG-009 Rev C builds none. The 8 mm creepage of S-03 is a property of the artwork and is verified once per routed Gerber revision in the first-article report, not per unit. Neither is a substitute for the safety review |
 
 ### T21 -- VBUS detection and charge-path interlock
 
@@ -1471,7 +1471,7 @@ Written because a test specification that does not state its own blind spots is 
 | 9 | **VID and PID** are placeholders pending a pid.codes allocation. T5 and T6 record whatever is programmed | programme | Blocks the fleet, not the prototypes |
 | 10 | **The host stream-decoding tool does not yet exist.** Eleven steps produce numbers that only a decoder can produce -- T7, T8, T9, T10, T12, T13, T14, T15, T16, T26 and T27 -- and nothing in the package decodes a channel and reports a microvolt. **The connectivity test program is no longer part of this item, because it now exists**: TOOL-EEG-022 Rev A ships as `webtest/EEG-Connectivity-Test.html`, it is run per unit as **T30**, and the protocol code it runs is proved against the shipped firmware source by `webtest/tests/interop/run.sh`, which is condition (e) of the section 4 readiness gate. It takes no measurement, so it closes none of the eleven steps above. The provisioning script is likewise not part of this item: `firmware/tools/provision.py` exists and its ten steps are documented in FW-EEG-001 section 7, so T6 has the script it needs. **Was: "the host test tool `eegtest` does not yet exist".** That name is withdrawn: it named no file in any revision of this package, and the host-side tools that do ship are TOOL-EEG-022, `firmware/tools/provision.py` and `firmware/tools/verify_stream.py`. The remaining naming divergence is FW-EEG-001 open item 12 | programme | Blocks T12 to T17 |
 | 11 | **The DevKit 3V3 rail is measured, not solved.** 288 mA calculated, about 0.5 W in a closed pod. If T3 reports a case temperature above 85 degC, a carrier-side 3.3 V regulator fed from V5V is an ECO against Rev C | programme | Phase 1 measurement |
-| 12 | **Fixture naming is settled: section 6.1 is the authority and JIG-EEG-009 Rev B follows it.** The colorimeter head is FIX-01/E, the per-unit 2500 V AC station is deleted, "Part" is no longer used for a sub-assembly, and H-A, H-B, H-C, CPL-V, CPL-R and FIX-04/H-D are withdrawn. What is still open is hardware rather than naming: **FIX-02/C, the artificial ear and the class 1 sound level meter that T28 needs, is not yet built, priced or on the calibration schedule** | programme | Blocks the T28 type test, not the per-unit line |
+| 12 | **Fixture naming is settled: section 6.1 is the authority and JIG-EEG-009 Rev C follows it.** The colorimeter head is FIX-01/E, the per-unit 2500 V AC station is deleted, "Part" is no longer used for a sub-assembly, and H-A, H-B, H-C, CPL-V, CPL-R and FIX-04/H-D are withdrawn. What is still open is hardware rather than naming: **FIX-02/C, the artificial ear and the class 1 sound level meter that T28 needs, is not yet built, priced or on the calibration schedule** | programme | Blocks the T28 type test, not the per-unit line |
 | 13 | **No safety engineer has reviewed this design.** T20 and T23 are routine evidence for that reviewer, never a substitute for the review. **No hardware in this package has been built or measured** -- the firmware image of section 4 is the only thing that has been built, and it has run only under emulation. *Corrected 2026-09-02 from "Nothing in this package has been built or measured"* | programme | Blocks use on a person |
 | 14 | **The routing closes, and it has not been reviewed.** The Rev B DRC report records zero violations, all 145 nets connected, every net one connected copper island and both inner planes continuous under the analogue zone, so the ECO-EEG-016 section 3 gate is met and the data is **released for review under RFQ-EEG-002A**. It is **not released for fabrication**: routing produced by the programme's own tools has not been seen by a human layout engineer, and 169 connections are relaxed -- 36 narrower than the 0.25 mm preferred width, 133 at full width with a reduced gap, all at or above the 0.20 mm minimum conductor and gap. Until that review is done and boards are made, **no board exists to test** | programme, layout engineer | Blocks T0, and therefore every step in section 8 |
 | 15 | **The T9b CMRR limit has no requirement behind it.** RFQ section 9.1 item 6 names CMRR as one of the things T9 measures and states no figure, and RFQ section 5 carries no CMRR E-item at all, so T9's >= 100 dB is set by this document alone. Either an E-item states the figure, or T9b records CMRR without a pass/fail decision | programme | A unit is accepted or rejected against a limit no requirement carries |

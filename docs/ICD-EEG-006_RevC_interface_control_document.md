@@ -1,9 +1,9 @@
 # INTERFACE CONTROL DOCUMENT -- CARRIER TO MODULES
 
-**Document:** ICD-EEG-006  **Revision:** B  **Date:** 2026-09-01
+**Document:** ICD-EEG-006  **Revision:** C  **Date:** 2026-09-01
 **Issued by:** TI One Voice research programme (one.witysk.org), Brussels, Belgium
 **Licence:** CC BY-SA 4.0
-**Governing documents:** DSN-EEG-003 Rev C, then RFQ-EEG-001 Rev E. Where this
+**Governing documents:** DSN-EEG-003 Rev D, then RFQ-EEG-001 Rev E. Where this
 document and design.py disagree, design.py governs.
 
 **Revision note.** Rev B carries the two geometry findings of the layout work -- the carrier
@@ -17,7 +17,7 @@ revision letter and without a further letter change: the module count is stated
 unconditionally, the MP-01 geometry is restated from `tools/mech_gen.py`, RFQ E-23's 45 C
 charge inhibit is stated as not met, and the rail budgets of sections 2.7 and 5.3 are
 reconciled with each other and read against TST-EEG-004 T3. The rulings those corrections
-apply are RUL-EEG-021 Rev A, which is now a controlled document in `docs/`.
+apply are RUL-EEG-021 Rev B, which is now a controlled document in `docs/`.
 
 **Corrections within Rev B, after the design and firmware changes of 2026-09-02**, made in
 place with their date and without a further revision letter: **ECO-EEG-024 is applied**, so
@@ -154,17 +154,17 @@ column says whether the socket carries a WH-KEY-01 printed keying shroud (sectio
 | J2 | PinSocket_1x10_P2.54mm_Vertical | 10 | 41.0, 5.0 | A | module | yes | ADS1299 module #1, analogue signals |
 | J23 | PinSocket_1x06_P2.54mm_Vertical | 6 | 47.0, 5.0 | A | module | yes | ADS1299 module #1, analogue rails |
 | J3 | PinSocket_1x12_P2.54mm_Vertical | 12 | 66.0, 42.0 | D | module | yes | ADS1299 module #2, digital |
-| J4 | PinSocket_1x10_P2.54mm_Vertical | 10 | 41.0, 36.0 | A | module | yes | ADS1299 module #2, analogue signals |
+| J4 | PinSocket_1x10_P2.54mm_Vertical | 10 | 41.0, 50.0 | A | module | yes | ADS1299 module #2, analogue signals |
 | J29 | PinSocket_1x06_P2.54mm_Vertical | 6 | 47.0, 24.0 | A | module | yes | ADS1299 module #2, analogue rails |
 | J5 | PinSocket_1x04_P2.54mm_Vertical | 4 | 72.0, 6.0 | D | module | yes | ADS1299 module #1 DAISY_IN / CLKOUT stub |
 | J6 | PinSocket_1x22_P2.54mm_Vertical | 22 | 82.0, 8.0 | D | **direct** | no | ESP32-S3-DevKitC-1 row A |
 | J7 | PinSocket_1x22_P2.54mm_Vertical | 22 | 104.86, 8.0 | D | **direct** | no | ESP32-S3-DevKitC-1 row B |
 | J8 | PinSocket_1x14_P2.54mm_Vertical | 14 | 90.0, 72.0 | D | module | yes | audio codec module |
-| J9 | PinSocket_1x04_P2.54mm_Vertical | 4 | 66.0, 78.0 | D | module | yes | codec microphone feeds |
+| J9 | PinSocket_1x04_P2.54mm_Vertical | 4 | 114.0, 62.0 | D | module | yes | codec microphone feeds |
 | J10 | PinSocket_1x04_P2.54mm_Vertical | 4 | 136.0, 6.0 | D | module | yes | USB isolator, device side |
 | J11 | PinSocket_1x04_P2.54mm_Vertical | 4 | 136.0, 20.0 | D | module | yes | secure element breakout |
 | J12 | PinSocket_1x08_P2.54mm_Vertical | 8 | 136.0, 34.0 | D | module | yes | charger and fuel gauge |
-| J13 | JST_PH_B2B-PH-K_1x02_P2.00mm | 2 | 136.0, 60.0 | D | cell | no, JST keyed | protected 18650 carrier |
+| J13 | JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical | 2 | 136.0, 60.0 | D | cell | no, JST keyed | protected 18650 carrier |
 | J14 | PinSocket_1x12_P2.54mm_Vertical | 12 | 5.0, 12.0 | A | harness | yes, WH-EEG-008 | electrode cable, 12-way screened |
 | J15 | DIN42802_1p5mm_Socket | 1 | 8.0, 76.0 | A | panel | no, touch-proof | EMG1 cheek |
 | J16 | DIN42802_1p5mm_Socket | 1 | 8.0, 88.0 | A | panel | no, touch-proof | EMG2 submental |
@@ -173,13 +173,25 @@ column says whether the socket carries a WH-KEY-01 printed keying shroud (sectio
 | J19 | PinSocket_1x16_P2.54mm_Vertical | 16 | 78.0, 72.0 | D | module | yes | 74HC595 contact-light driver |
 | J20 | PinSocket_1x08_P2.54mm_Vertical | 8 | 136.0, 72.0 | D | module | yes | microSD breakout, one-bit SDMMC |
 | J21 | PinSocket_1x06_P2.54mm_Vertical | 6 | 122.0, 72.0 | D | module | yes | boom microphone preamplifier |
-| J22 | PinSocket_1x03_P2.54mm_Vertical | 3 | 30.0, 116.0 (90 deg) | A | panel | yes, WH-EEG-008 | EOG / spare electrode header, Phase 2 option |
-| J24 | JST_PH_B2B-PH-K_1x02_P2.00mm | 2 | 143.0, 80.0 | D | panel | no, JST keyed | charge-only USB-C pigtail |
+| J22 | PinSocket_1x03_P2.54mm_Vertical | 3 | 15.7, 73.5 (270 deg) | A | panel | yes, WH-EEG-008 | EOG / spare electrode header, Phase 2 option |
+| J24 | JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical | 2 | 143.0, 80.0 | D | panel | no, JST keyed | charge-only USB-C pigtail |
 | J25 | PinSocket_1x06_P2.54mm_Vertical | 6 | 128.0, 86.0 | D | module | yes | buck-boost module |
-| J26 | PinSocket_1x06_P2.54mm_Vertical | 6 | 128.0, 104.0 | D | debug | no, marked only | console and recovery header |
+| J26 | PinSocket_1x06_P2.54mm_Vertical | 6 | 117.0, 8.0 | D | debug | no, marked only | console and recovery header |
 | J27 | PinSocket_1x04_P2.54mm_Vertical | 4 | 128.0, 72.0 | D | panel | no, marked only | 3.5 mm headphone jack pigtail |
 | J28 | PinSocket_1x04_P2.54mm_Vertical | 4 | 122.0, 102.0 | D | module | yes | room microphone module |
 | J30 | PinSocket_1x10_P2.54mm_Vertical | 10 | 66.0, 90.0 | D | harness | yes, WH-EEG-008 | contact-light cable, 10-way |
+
+**Four coordinates in the table above were wrong until 8 September 2026, and `design.py`
+governs (ECO-EEG-016 section 1.4).** They are corrected under ECO-EEG-033, which needed them
+right to write the DXF of fixed connector positions and to lock them in the board file, and
+found them wrong by comparing every row against the source rather than reading it. **J4** was
+given as 41.0, 36.0 and is **41.0, 50.0** -- ECO-EEG-018 moved it to face its protection rows
+and this table was not followed through. **J9** was given as 66.0, 78.0 and is **114.0, 62.0**.
+**J22** was given as 30.0, 116.0 at 90 degrees and is **15.7, 73.5 at 270 degrees** -- also an
+ECO-EEG-018 move, recorded in `design.py`'s own comment and not here. **J26** was given as
+128.0, 104.0 and is **117.0, 8.0**. The two JST footprint names were abbreviated and are given
+in full. Nothing in `design.py` moved: this table did. RUL-EEG-021 section C carries the
+ruling.
 
 **Thirty connectors, J1 to J30.** Seventeen are module connectors and carry the jumper set of
 section 3. Two (J6, J7) take the DevKit directly. The remaining eleven are harness, panel,
@@ -785,7 +797,7 @@ is not twenty minutes.** Building the set costs 60 minutes per unit in Phase 1, 
 in Phases 2 and 3 where the set is bought pre-made; fitting it and running the keying check
 costs a further 20 minutes in every phase (ASM steps 2.4 and 2.6). The "twenty minutes"
 carried in earlier issues of this section is the size of ASM's fitting step alone and leaves
-the build out, so it is withdrawn here. **DSN-EEG-003 Rev C section 2.1 still says "roughly
+the build out, so it is withdrawn here. **DSN-EEG-003 Rev D section 2.1 still says "roughly
 twenty minutes of assembly labour" and is wrong by the same margin**; it is corrected at the
 next revision of that document. Either way the point it was making stands -- a hand-built
 jumper set per unit is the accepted cost of the module architecture, and it is the largest
@@ -1098,7 +1110,7 @@ Each shroud is printed with the socket designator raised on its outer face and i
 that a jumper made for a different socket of the same way count will not enter. The three
 harness sockets **J14, J22 and J30** take the same shroud at the carrier end, specified with
 the cables in WH-EEG-008 section 6. The SHR-14-A, SHR-30-A and SHR-22-A names of
-JIG-EEG-009 Rev A are withdrawn: JIG-EEG-009 Rev B calls all three WH-KEY-01.
+Rev A of JIG-EEG-009 are withdrawn: JIG-EEG-009 Rev C calls all three WH-KEY-01.
 **J26 (debug), J18 and
 J27 (panel pigtails), J13 and J24 (JST PH, keyed by the connector itself) and J6/J7 (the
 DevKit, which is keyed by its own 22-way-by-22.86 mm geometry) carry no shroud** and rely on

@@ -3,7 +3,7 @@
 **Document:** REG-EEG-012  **Revision:** B  **Date:** 2026-09-01
 **Issued by:** TI One Voice research programme (one.witysk.org), Brussels, Belgium
 **Licence:** CC BY-SA 4.0
-**Governing documents:** DSN-EEG-003 Rev C, then RFQ-EEG-001 Rev E. Where this
+**Governing documents:** DSN-EEG-003 Rev D, then RFQ-EEG-001 Rev E. Where this
 document and design.py disagree, design.py governs.
 
 **Rev B in one line:** the carrier is now 150.0 x 130.0 mm on **four** layers and POD-P1 has

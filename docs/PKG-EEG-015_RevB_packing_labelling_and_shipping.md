@@ -3,15 +3,15 @@
 **Document:** PKG-EEG-015  **Revision:** B  **Date:** 2026-09-01
 **Issued by:** TI One Voice research programme (one.witysk.org), Brussels, Belgium
 **Licence:** CC BY-SA 4.0
-**Governing documents:** DSN-EEG-003 Rev C, then RFQ-EEG-001 Rev E. Where this
+**Governing documents:** DSN-EEG-003 Rev D, then RFQ-EEG-001 Rev E. Where this
 document and design.py disagree, design.py governs.
 
 **Revision letters used below.** Every cross-reference in this document names the current
-issue of the document it cites: DSN-EEG-002 Rev E, DSN-EEG-003 Rev C, RFQ-EEG-001 Rev E,
-FW-EEG-001 Rev C, TST-EEG-004 Rev C, SCH-EEG-005 Rev B, ICD-EEG-006 Rev B, ASM-EEG-007
-Rev B, WH-EEG-008 Rev B, JIG-EEG-009 Rev B, QP-EEG-010 Rev B, RISK-EEG-011 Rev B,
-REG-EEG-012 Rev B, SVC-EEG-013 Rev B, IFU-EEG-014 Rev B, ECO-EEG-016 Rev B, AVL-EEG-017
-Rev B, SIM-EEG-018 Rev A, PARTS-EEG-019 Rev B, MECH-EEG-020 Rev A and RUL-EEG-021 Rev A.
+issue of the document it cites: DSN-EEG-002 Rev E, DSN-EEG-003 Rev D, RFQ-EEG-001 Rev E,
+FW-EEG-001 Rev D, TST-EEG-004 Rev C, SCH-EEG-005 Rev B, ICD-EEG-006 Rev C, ASM-EEG-007
+Rev B, WH-EEG-008 Rev B, JIG-EEG-009 Rev C, QP-EEG-010 Rev B, RISK-EEG-011 Rev B,
+REG-EEG-012 Rev B, SVC-EEG-013 Rev B, IFU-EEG-014 Rev B, ECO-EEG-016 Rev C, AVL-EEG-017
+Rev C, SIM-EEG-018 Rev A, PARTS-EEG-019 Rev B, MECH-EEG-020 Rev A and RUL-EEG-021 Rev B.
 Where an earlier letter appears it is deliberate and names a superseded issue, as in the
 Rev C and Rev D readings of RFQ M-05 in section 3.1.
 
@@ -46,7 +46,7 @@ entry the package holds for the missing fuel-gauge step, because RFQ-EEG-001 Rev
 9.1 item 12 raises it "as an open item" against a register that carries no such item.
 
 **The label and packaging artwork is generated, at this issue, revision letter again
-unchanged.** ECO-EEG-016 Rev B section 1 has registered ART-LBL-01 to ART-LBL-07,
+unchanged.** ECO-EEG-016 Rev C section 1 has registered ART-LBL-01 to ART-LBL-07,
 ART-PACK-01, ART-DIS-01, ART-RET-01 and DRW-LBL-PLACEMENT as generated artifacts under
 `graphics/` since Rev B was issued, and none of them existed. Section 1.1 ticked against
 three files that were not in the package, section 4.2 made the QA placement sign-off a check
@@ -102,7 +102,7 @@ be both the reference plane and the second routing surface, and it cannot be bot
 layers give two full routing surfaces and a continuous reference under every analogue
 trace, which is what DSN-EEG-002 Rev E section 13's "layout rules that are requirements, not
 preferences" ask for, and which a swiss-cheesed two-layer pour cannot deliver. The zoning,
-star-point and isolation rules that go with them are DSN-EEG-003 Rev C section 3.3. At 2
+star-point and isolation rules that go with them are DSN-EEG-003 Rev D section 3.3. At 2
 units that is about €35 more in total; at 50 units it is about €3 per board. The reference
 planes are AGND_REF left of x = 62 mm and DGND right of it, on both inner layers, with
 through vias only, 0.60 mm pad on a 0.30 mm finished hole, in a stack of mask / 35 µm L1 /
@@ -122,7 +122,7 @@ about 130 g heavier, the foam sheet has to be re-cut, and both the case and the 
 
 This table **is** KPL-EEG-001. TST-EEG-004 Rev C T18 and RFQ-EEG-001 Rev E section 9.1
 step 10 tick against it, line by line. It is derived from `EEG_kit_BOM_for_bidders_RevB`
-and from the part register PARTS-EEG-019 Rev B and DSN-EEG-003 Rev C section 4; where the kit BOM
+and from the part register PARTS-EEG-019 Rev B and DSN-EEG-003 Rev D section 4; where the kit BOM
 was wrong, the corrected quantity is given here and the correction is listed in section 1.2.
 
 Pocket names are the legends of the foam schedule in section 2.2. "Fitted" means the item
@@ -571,7 +571,7 @@ Phase 1 acceptance item, signed by the programme before Phase 2 is released.
 RFQ-EEG-001 Rev C M-05 said internal approximately 300 × 220 × 110 mm, Nanuk 910 / Peli
 1400 class. Kit BOM Rev B item 34 said approximately 340 × 250 × 210 mm, Nanuk 915 / Peli
 1450, which agrees with the Rev B foam sheet. RFQ-EEG-001 Rev E M-05 carries the larger of
-the two. AVL-EEG-017 Rev B K21 restates it no longer: at this issue K21 cites section 3.2
+the two. AVL-EEG-017 Rev C K21 restates it no longer: at this issue K21 cites section 3.2
 for the envelope, names the same shell this section names and states the same measurement
 rule, so the fourth figure that was in circulation -- K21's "internal ≥ 340 × 250 × 210 mm
 (M-05)" -- is withdrawn. **The three that remain are all too small**, and section 2.4 is
@@ -597,7 +597,7 @@ withdrawn.
 ### 3.2 The internal envelope, settled
 
 **This section is the single home of the travel-case internal dimensions.** AVL-EEG-017
-Rev B K21 and PARTS-EEG-019 Rev B CASE-01 cite it; RFQ-EEG-001 M-05 is corrected to it at
+Rev C K21 and PARTS-EEG-019 Rev B CASE-01 cite it; RFQ-EEG-001 M-05 is corrected to it at
 the next revision under CN-PKG-03. One shell, one transcription, one set of numbers, so that
 the foam file of section 2.2 and the carton of section 6 can both be drawn from the same
 figures instead of from two.
@@ -635,7 +635,7 @@ cutting**: their sheet is 516.0 × 390.0 mm because the published internal footp
 518 × 392 mm, and the sheet is re-drawn to the **measured** footprint minus 2 mm on each
 axis before a sheet of foam is bought or cut.
 
-AVL-EEG-017 Rev B K21 agrees with this section at this issue. It names the Peli 1560,
+AVL-EEG-017 Rev C K21 agrees with this section at this issue. It names the Peli 1560,
 unwheeled, as the baseline; it quotes the same published 518 × 392 × 229 mm; it carries the
 Nanuk 960 as the alternate the CASE-00 Rev C layout does not fit; and it states the
 measure-before-you-cut rule rather than a fourth set of numbers. Where the two ever differ,
@@ -699,7 +699,7 @@ Content, in this order:
 Data Matrix content, pipe-delimited, no spaces:
 `TIOV-B-0001|EEG-CAR-01-B|<18 hex ATECC factory serial>|<16 hex fingerprint>`
 
-The fingerprint is defined once, in **FW-EEG-001 Rev C section 7**, and this document does
+The fingerprint is defined once, in **FW-EEG-001 Rev D section 7**, and this document does
 not restate the derivation. ASM-EEG-007 Rev B section 6.2, QP-EEG-010 Rev B,
 TST-EEG-004 Rev C T6 and REG-EEG-012 Rev B cite the same definition, and all of them must
 return the same string for the same unit. The **serial** is the other way round: FW-EEG-001
@@ -766,7 +766,7 @@ sleeve to the panel legend beside J15/J16/J17 so a participant matches by colour
 
 ### 4.3 The artwork files
 
-ECO-EEG-016 Rev B section 1 registers ART-LBL-01 to ART-LBL-07, ART-PACK-01, ART-DIS-01,
+ECO-EEG-016 Rev C section 1 registers ART-LBL-01 to ART-LBL-07, ART-PACK-01, ART-DIS-01,
 ART-RET-01 and DRW-LBL-PLACEMENT as "artwork files controlled as generated artifacts under
 `graphics/`" owned by this document. Until 2 September 2026 none of them existed: the
 register named eleven files, section 1.1 ticked against three of them, section 4.2 made the
@@ -825,7 +825,7 @@ wiped or read by a verifier.
 ## 5. Serial number scheme
 
 **This section is the single home of the `TIOV-B-nnnn` serial format.** It is defined here
-and nowhere else. FW-EEG-001 Rev C, WH-EEG-008 Rev B, ASM-EEG-007 Rev B, QP-EEG-010 Rev B,
+and nowhere else. FW-EEG-001 Rev D, WH-EEG-008 Rev B, ASM-EEG-007 Rev B, QP-EEG-010 Rev B,
 TST-EEG-004 Rev C, IFU-EEG-014 Rev B, PARTS-EEG-019 Rev B and RFQ-EEG-001 Rev E F-04 and
 M-03 all use the format and all **cite** this section for it rather than restating it.
 
@@ -835,7 +835,7 @@ section 7 for the serial format has the wrong section of the wrong document.
 **PARTS-EEG-019 section 4.2 registers the three identifiers a unit carries** -- the
 programme serial, the ATECC608B factory serial and the fingerprint -- and cites this section
 for the format of the first of them; it settles which identifiers exist, not how the serial
-is written. **RUL-EEG-021 Rev A section B** records the ruling that fixed the format; it is
+is written. **RUL-EEG-021 Rev B section B** records the ruling that fixed the format; it is
 the minute of the decision, and this section is the specification the ruling asked for.
 
 Format, fixed by this document:

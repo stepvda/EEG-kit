@@ -3,7 +3,7 @@
 **Document:** ASM-EEG-007  **Revision:** B  **Date:** 2026-09-01
 **Issued by:** TI One Voice research programme (one.witysk.org), Brussels, Belgium
 **Licence:** CC BY-SA 4.0
-**Governing documents:** DSN-EEG-003 Rev C, then RFQ-EEG-001 Rev E. Where this
+**Governing documents:** DSN-EEG-003 Rev D, then RFQ-EEG-001 Rev E. Where this
 document and design.py disagree, design.py governs.
 
 **Revision note, Rev A to Rev B:** the carrier is now 150.0 x 130.0 mm and FOUR layers,
@@ -182,7 +182,7 @@ substitute away:
 
 JIG-EEG-009 owns fixture numbering and uses **FIX-01 to FIX-04** with sub-assemblies
 FIX-01/A, FIX-01/B and so on. This document does not allocate a fixture number. The socket
-comb of 1.4 and the retention bar of 3.6 are assembly aids that JIG-EEG-009 Rev B must
+comb of 1.4 and the retention bar of 3.6 are assembly aids that JIG-EEG-009 Rev C must
 number; until it does, they are named by function here and that is an open item (section
 11).
 
@@ -280,7 +280,7 @@ applied once, in `tools/gerber.py`, and is stated in the layer-map README.
 
 ### 2.2 Incoming board check (IQC)
 
-The full board specification lives in **DSN-EEG-003 Rev C section 3.2** and is not restated
+The full board specification lives in **DSN-EEG-003 Rev D section 3.2** and is not restated
 here. This section lists only what the receiving operator does with it.
 
 Per board, before it enters the EPA:
@@ -295,7 +295,7 @@ Per board, before it enters the EPA:
    invisible on a finished board. Require, with each fabrication lot, the inner-layer AOI
    images or the inner-layer films, and check on them: the AGND_REF and DGND plane split at
    x = 62 mm with no bridge between them, and that the isolation keep-out at
-   **x ≥ 141 mm, y = 2 to 22 mm** is bare on **all four layers** (RFQ S-03; DSN-EEG-003 Rev C section 3.3, which owns this rule). An assembler who cannot see the inner layers
+   **x ≥ 141 mm, y = 2 to 22 mm** is bare on **all four layers** (RFQ S-03; DSN-EEG-003 Rev D section 3.3, which owns this rule). An assembler who cannot see the inner layers
    and is not given the evidence has no way to accept the board, and this is the one IQC
    step the layer change adds.
 5. Confirm every via is tented on both sides and that no via is open in the mask.
@@ -322,7 +322,7 @@ thickness, hole-wall copper and mask registration it already carried.
 > the same positions, (12, 10), (144, 100) and (12, 120). Its first issue transcribed them as
 > (8, 8), (142, 8) and (8, 122); that transcription error is corrected in the register, and
 > `tools/design.py` governs where any two documents disagree. The
-> uncontrolled worksheet `tools/RULINGS.md` is no longer cited by this document; RUL-EEG-021 Rev A
+> uncontrolled worksheet `tools/RULINGS.md` is no longer cited by this document; RUL-EEG-021 Rev B
 > is the controlled rulings register and is listed in ECO-EEG-016 section 1.
 
 ### 2.3 Stencil and paste
@@ -426,7 +426,7 @@ a two-layer coupon and not a board from an earlier lot. A recipe proved on a two
 board will under-soak this one.
 
 The thermal asymmetry to watch is the pour split: AGND_REF on both inner layers left of
-x = 62 mm, DGND on both inner layers right of it (DSN-EEG-003 Rev C section 3.3). Four
+x = 62 mm, DGND on both inner layers right of it (DSN-EEG-003 Rev D section 3.3). Four
 thermocouples on the profiling board, in design coordinates:
 
 | TC | Location | Design (x, y) mm | Why |
@@ -498,7 +498,7 @@ limit than any other.
 ### 2.8 The two star points, and R89
 
 Three parts on this board carry a rule that no inspection standard will catch. The rule
-itself, and the reason for it, live in **DSN-EEG-003 Rev C section 3.3**; what follows is
+itself, and the reason for it, live in **DSN-EEG-003 Rev D section 3.3**; what follows is
 the operator's action.
 
 **R90 is the single star point between AGND_REF and DGND.** Fit exactly one 0R link at R90
@@ -655,7 +655,7 @@ decided rather than procedural:
 One jumper per module connection, built to the cut lengths in ICD-EEG-006. Phase 1 builds
 them by hand from 2.54 mm ribbon and IDC connectors; Phase 2 onward buys pre-made sets. The
 jumper is a hand-built item per unit and that is a known cost of the module architecture
-(DSN-EEG-003 Rev C section 8, open item 5).
+(DSN-EEG-003 Rev D section 8, open item 5).
 
 Fit checks per jumper: full pin engagement, no bent pin, ribbon not strained across the
 plate edge, service slack ≤ 15 mm so nothing can chafe on the pod wall.

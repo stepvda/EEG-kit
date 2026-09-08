@@ -151,7 +151,7 @@ FILES
       67b7597386971c060448f50fb7b85473e17863bf5fcc7e84c1aa94fb05773b7d  5298 bytes
   LAY-EEG-034_RevA_carrier_layout_rule_sheet.pdf
       input 6: THE RULE SHEET. It is part of the order specification
-      4cf054698a930b51a5a162cea2700f0cca7b02bd56611d10a34838d2f859f821  152234 bytes
+      c1e7093f3bdc56980b1e248879019dd82371cf755e8731ef6e7bef3b6ae053ac  152232 bytes
   LAY-EEG-034_RevA_carrier_layout_rule_sheet.md
       input 6, as text
       e11d045abff3439b42f3d7da90171067ea4167d744c4b97d45d66eab202d2894  12589 bytes
@@ -159,7 +159,7 @@ FILES
       what is locked, the coordinate convention, which rules KiCad checks and which we check on return
       48a96da13d5031388fb34053ca0ce0b8e308abcfd9206b96d0d988bf52cd9918  5679 bytes
 
-50 files listed above, 2705956 bytes, plus this manifest: 51 files in the directory.
+50 files listed above, 2705954 bytes, plus this manifest: 51 files in the directory.
 
 NOT SENT FROM THIS REPOSITORY.  Nothing in tools/ transmits anything.
 

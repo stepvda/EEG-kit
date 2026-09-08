@@ -1,9 +1,9 @@
 # Change Control and Document Register
 
-**Document:** ECO-EEG-016 **Revision:** B **Date:** 1 September 2026, corrected 2 September 2026
+**Document:** ECO-EEG-016 **Revision:** C **Date:** 1 September 2026, corrected 2 September 2026
 **Issued by:** TI One Voice research programme (one.witysk.org), Brussels, Belgium
 **Licence:** CC BY-SA 4.0
-**Governing documents:** DSN-EEG-003 Rev C, then RFQ-EEG-001 Rev E. Where this document
+**Governing documents:** DSN-EEG-003 Rev D, then RFQ-EEG-001 Rev E. Where this document
 and `tools/design.py` disagree, `design.py` governs.
 
 **Revision note, Rev A to Rev B.** The routing-scope change is renumbered from ECO-EEG-016
@@ -119,38 +119,47 @@ release whose own register said that what is not listed is not part of it.
 
 | ID | Title | Rev | Status | Governs |
 |---|---|---|---|---|
-| DSN-EEG-003 | Manufacturing design package | **C** | released | architecture, carrier, precedence -- **the governing document** |
+| DSN-EEG-003 | Manufacturing design package | **D** | released | architecture, carrier, precedence -- **the governing document** |
 | RFQ-EEG-001 | RFQ and engineering specification | **E** | released | requirements and acceptance (M/S/O), pricing |
-| ICD-EEG-006 | Interface control document | **B** | released | module interfaces, jumper schedule, GPIO map |
+| ICD-EEG-006 | Interface control document | **C** | released | module interfaces, jumper schedule, GPIO map |
 | SCH-EEG-005 | Schematic set, 8 sheets | B | generated | the circuit |
 | DSN-EEG-002 | Helmet design and assembly | E | released, **not reissued in this round** | helmet, electrodes, wiring, fitting, case |
 | PARTS-EEG-019 | Part identifier register | **B** | released | every part number in the package |
 | ASM-EEG-007 | Assembly work instructions | **B** | released | how one unit is built |
 | WH-EEG-008 | Harness and cable assembly | **B** | released | every cable, every conductor |
 | TST-EEG-004 | Production test specification | **C** | released | what every unit is tested to, and it owns the T-numbers |
-| JIG-EEG-009 | Test fixture design | **B** | released | the fixtures TST-EEG-004 needs, FIX-01 to FIX-04 |
+| JIG-EEG-009 | Test fixture design | **C** | released | the fixtures TST-EEG-004 needs, FIX-01 to FIX-04 |
 | QP-EEG-010 | Quality plan | **B** | released | IQC, FAI, AQL, records, traceability |
 | RISK-EEG-011 | Risk analysis and safety review pack | **B** | **released as an input** | the pack the safety reviewer receives |
 | REG-EEG-012 | Regulatory and compliance file | **B** | released | RoHS, REACH, UN38.3, CISPR, 60601 gap analysis |
 | SVC-EEG-013 | Service and refurbishment manual | **B** | released | the turnaround between participants |
 | IFU-EEG-014 | Participant quick-start and placement guide | **B** | released | what goes in the case lid |
 | PKG-EEG-015 | Packing, labelling and shipping | **B** | released | packing list, labels, foam, lithium shipping |
-| ECO-EEG-016 | Change control and document register | **B** | released | this document |
-| AVL-EEG-017 | Approved vendor list | **B** | released | sourcing, alternates, substitution |
+| ECO-EEG-016 | Change control and document register | **C** | released | this document |
+| AVL-EEG-017 | Approved vendor list | **C** | released | sourcing, alternates, substitution |
 | SIM-EEG-018 | End-to-end production simulation report | A | **released, generated** | the dry run of the manufacturing route against the data package |
-| FW-EEG-001 | Firmware build and provisioning | **C** | released | firmware, build, provisioning, host tool, key fingerprint |
+| FW-EEG-001 | Firmware build and provisioning | **D** | released | firmware, build, provisioning, host tool, key fingerprint |
 | MECH-EEG-020 | Printed part drawings | A | generated | dimensioned drawings of every printed part |
-| RUL-EEG-021 | Rulings register | A | **released** | one answer to each cross-document disagreement, cited by section letter |
+| RUL-EEG-021 | Rulings register | **B** | **released** | one answer to each cross-document disagreement, cited by section letter |
 | TOOL-EEG-022 | Connectivity test program: specification, technical description and user manual | A | **released** | the browser tool that tests the USB link, and the browser client the study reuses |
 | LAY-EEG-034 | Carrier layout rule sheet | A | released, **generated**, issued 8 September 2026 | the rule set the external layout contractor works under, and part of the order specification. Written by `tools/emit_rule_sheet.py` from `tools/rules.py`, so it and `kicad/EEG-CAR-01_RevC.kicad_dru` cannot disagree |
-| ASM-EEG-023 | Register of programme assumptions | A | released, issued 2 September 2026 | every open question the completeness audit left that was a DECISION rather than a missing file, each decided, attacked by an independent reviewer and re-decided against that attack. Twenty-two entries, ten of which block a build, three of which cannot be decided from what exists. **Nothing in it is a sign-off** |
+| ASM-EEG-023 | Register of programme assumptions | **B** | released, issued 2 September 2026 | every open question the completeness audit left that was a DECISION rather than a missing file, each decided, attacked by an independent reviewer and re-decided against that attack. **Twenty-three entries at Rev B**, eleven of which block a build, three of which cannot be decided from what exists. The twenty-third, MECH-D6-MODULE-ENVELOPES, is new under ECO-EEG-033 and blocks a build. **Nothing in it is a sign-off** |
 
 Four entries need reading carefully rather than counting.
 
-**SIM-EEG-018** is a report written by `tools/simulate_production.py` on each run. It is a
+**SIM-EEG-018** is a report written by `tools/simulate_production.py` on each run.
+**The run behind this issue prints 193 passed, 0 failed and 7 open**, and that is what its
+own file states because the simulator wrote it. **It is not the same 193 as the run of
+2 September 2026.** Six checks were added under ECO-EEG-030 to ECO-EEG-033 -- the Rev C input
+set assembled, the schematic matching the design source, every footprint audited, Rev B
+regraded, the rule sheet issued, the collision check run -- and **six were lost, because
+cadquery could not be installed on the machine this round was run on**, so the HM-04/HM-05B
+bayonet fit and the HM-01P channel section were not measured. The two happen to cancel. A
+passed count is a count of the checks that RAN, and a run on a machine with cadquery would
+print 199. It is a
 file in `docs/`, but it is never edited by hand: it is the output of the last run, and a
-correction to it is a correction to the simulator or to `design.py`. **The last run of
-2 September 2026 reports 193 checks passed, 0 failed and 6 open items**, and
+correction to it is a correction to the simulator or to `design.py`. **The last run, of
+8 September 2026, reports 193 checks passed, 0 failed and 7 open items**, and
 `docs/SIM-EEG-018_RevA_production_simulation.md` states those three figures because the
 simulator wrote that file. **It did not write this one.** Rev B said the totals agreed
 "because the simulator wrote both"; that is false and is **withdrawn on 2 September 2026**.
@@ -168,10 +177,24 @@ design and not yet signed off** -- S-02 is met at 36.8 µA because ECO-EEG-024 w
 implemented, and applying the fix an analysis pointed to is not the same as having it
 approved.
 
-**Three figures, three dates, and only the last one is the total.** 169 passed, 0 failed,
+**Four figures, four dates, and only the last one is the total.** 169 passed, 0 failed,
 5 open at the 1 September 2026 issue, whose first open item was the 25 DRC violations; 171,
-0 and 5 earlier on 2 September, which is what Rev B stated and is now history; **193, 0 and
-6 at the run behind this release**. Between the two runs of 2 September, **one item left**
+0 and 5 earlier on 2 September; 193, 0 and 6 at the last run of 2 September, which is what
+Rev B stated and is now history; **193, 0 and 7 at the run behind this release, on
+8 September 2026**. The seventh open item is that **there is no fabrication data for the
+current board at all**: Rev B is withdrawn and Rev C is unrouted. The one that was there and
+has changed its words is the layout review -- a human layout engineer HAS now read the Rev B
+routing, which is why Rev B is withdrawn, and what is open is the review of the CONTRACTOR'S
+PLACEMENT of Rev C, which cannot happen until there is a placement.
+
+**The two 193s are not the same 193 and the coincidence is worth a sentence**, because
+section 1.1's rule is that a passed count moves when the check set moves. Six checks were
+added in this round and six were lost, and they cancel: added are the Rev C input set
+assembled, the schematic matching the design source, every footprint audited against its part
+number, Rev B regraded under the ECO-EEG-032 rule set, the rule sheet issued and the collision
+check run; lost are the six that need **cadquery**, which could not be installed on the
+machine this round ran on, so the HM-04/HM-05B bayonet fit and the HM-01P channel section were
+not measured. A run on a machine with cadquery would print **199**. Between the two runs of 2 September, **one item left**
 the list -- E-11's low-pass half, because the Sallen-Key moved to C0G; **two joined it** --
 the IRAM pool and the HM-01 mesh, both found by measuring things nobody had measured; and
 **two were restated rather than closed** -- E-27's moved from *the phase driver is not
@@ -206,7 +229,7 @@ been written, issued at Rev A and cited by other documents while appearing on no
 all. That is the defect ECO-EEG-015 was raised against in the part namespace and section 1.3
 was written to close in this one, reappearing in the register itself: this section states
 that a document not on this list is not part of the release, so for one release TOOL-EEG-022
-was formally not part of a release it shipped in. **FW-EEG-001 Rev C section 5 is normative
+was formally not part of a release it shipped in. **FW-EEG-001 Rev D section 5 is normative
 for the wire format and governs where the tool and the specification disagree**, and
 TST-EEG-004 owns the T-numbers under which the tool is run -- **T30, the host link check** --
 so a step that uses the tool is cited from TST-EEG-004 and not from TOOL-EEG-022.
@@ -324,7 +347,7 @@ which is the same defect in a worse place: four released documents -- TST-EEG-00
 ASM-EEG-007 section 2.2, AVL-EEG-017 and this document at ECO-EEG-020 -- cited an
 uncontrolled worksheet under `tools/` as though it were a released document, and several
 cited the production simulation by name. Both are now controlled documents in section 1.1:
-the worksheet is issued as **RUL-EEG-021 Rev A** and is cited as RUL-EEG-021 with a section
+the worksheet is issued as **RUL-EEG-021 Rev B** and is cited as RUL-EEG-021 with a section
 letter, and the simulation report is **SIM-EEG-018 Rev A**. The file `tools/RULINGS.md` is
 not a document, is not the controlled copy, and is not cited by anything in the release.
 
@@ -362,6 +385,20 @@ PARTS-EEG-019 → the kit BOM workbook.** Where a number appears in a document a
 
 ### 1.5 Revision letters in this release
 
+**Eight documents advanced a letter on 8 September 2026 under ECO-EEG-030 to
+ECO-EEG-033**, and the set is at the letters in section 1.1: DSN-EEG-003 to **Rev D**;
+ECO-EEG-016, ICD-EEG-006, JIG-EEG-009 and AVL-EEG-017 to **Rev C**; FW-EEG-001 to **Rev D**;
+ASM-EEG-023 and RUL-EEG-021 to **Rev B**. **LAY-EEG-034 is new at Rev A.** The bump, the
+**218** citations that had to follow it and the file renames were done by
+`tools/revision_bump.py` rather than by hand, because doing it by hand across twenty documents
+is how this package came to have sixty disagreements in the first place. Three documents the
+round did not touch keep their letters, deliberately: **PARTS-EEG-019 stays Rev B** because
+ECO-EEG-031 changed no part identifier, only manufacturer part numbers, which AVL-EEG-017
+owns; **RISK-EEG-011 stays Rev B** because none of the four ECOs touches the electrode path,
+the isolation, the battery, the charge interlock or the patient-current budget; and
+**RFQ-EEG-001 stays Rev E**, with E-26's self-contradicting switch class recorded as an open
+item rather than corrected here.
+
 Every document marked in bold in section 1.1 was reissued on 1 September 2026 and its
 revision letter advanced by one. RUL-EEG-021, SIM-EEG-018 and TOOL-EEG-022 are new, at
 Rev A; TOOL-EEG-022 was issued at Rev A on that date but was not registered here until
@@ -375,13 +412,14 @@ a cross-reference does give a letter, that letter must be the one in section 1.1
 
 | Document | Letter to cite |
 |---|---|
-| DSN-EEG-003, the governing document | Rev C |
+| DSN-EEG-003, the governing document | Rev D |
 | RFQ-EEG-001 | Rev E |
 | TST-EEG-004 | Rev C |
-| FW-EEG-001 | Rev C |
+| FW-EEG-001 | Rev D |
 | DSN-EEG-002 | Rev E |
-| ICD-EEG-006, SCH-EEG-005, PARTS-EEG-019, ASM-EEG-007, WH-EEG-008, JIG-EEG-009, QP-EEG-010, RISK-EEG-011, REG-EEG-012, SVC-EEG-013, IFU-EEG-014, PKG-EEG-015, ECO-EEG-016, AVL-EEG-017 | Rev B |
-| SIM-EEG-018, MECH-EEG-020, RUL-EEG-021, TOOL-EEG-022, ASM-EEG-023, LAY-EEG-034 | Rev A |
+| ICD-EEG-006, JIG-EEG-009, ECO-EEG-016, AVL-EEG-017 | Rev C |
+| SCH-EEG-005, PARTS-EEG-019, ASM-EEG-007, WH-EEG-008, QP-EEG-010, RISK-EEG-011, REG-EEG-012, SVC-EEG-013, IFU-EEG-014, PKG-EEG-015, ASM-EEG-023, RUL-EEG-021 | Rev B |
+| SIM-EEG-018, MECH-EEG-020, TOOL-EEG-022, LAY-EEG-034 | Rev A |
 
 An older letter in a cross-reference is a defect to be corrected, not a synonym. **Rev A of
 this document said that an older letter "means the same document as corrected in this
@@ -391,7 +429,7 @@ prevent. A release is the whole set at the letters in section 1.1 or it is nothi
 
 Two letters are easy to trip over, and both are correct as written. **The board is
 EEG-CAR-01 Rev B and stays Rev B** through this correction round, so "an ECO against Rev C
-of the board" in section 2.3 means the *next* board revision and not DSN-EEG-003 Rev C.
+of the board" in section 2.3 means the *next* board revision and not DSN-EEG-003 Rev D.
 **SCH-EEG-005's letter follows the board's letter**, not the document round's, which is why
 it is B while the documents around it are B or C for a different reason.
 
@@ -407,12 +445,12 @@ data, each with the document that owns it, the tool that writes it, and what it 
 
 | Tree | What it is | Owned by | Written by | Status |
 |---|---|---|---|---|
-| `fixtures/` | the FIX-01 to FIX-04 test-fixture data: board data for `pcb/FIX-01` and `pcb/FIX-04`, seven printed parts in `step/` and `stl/`, the M1-M3 fixture controller firmware under `fixtures/firmware/`, and `MANIFEST.json` with a SHA-256 for every file | JIG-EEG-009 Rev B | `tools/fixture_gen.py`, except `fixtures/firmware/`, which is hand-written C | released as fixture data. **The two fixture boards are NOT a fabrication set** -- there is no copper layer on either, and `fixtures/README_fixture_data_index.txt` says why |
+| `fixtures/` | the FIX-01 to FIX-04 test-fixture data: board data for `pcb/FIX-01` and `pcb/FIX-04`, seven printed parts in `step/` and `stl/`, the M1-M3 fixture controller firmware under `fixtures/firmware/`, and `MANIFEST.json` with a SHA-256 for every file | JIG-EEG-009 Rev C | `tools/fixture_gen.py`, except `fixtures/firmware/`, which is hand-written C | released as fixture data. **The two fixture boards are NOT a fabrication set** -- there is no copper layer on either, and `fixtures/README_fixture_data_index.txt` says why |
 | `records/` | the machine-readable per-unit test record: the JSON schema, a worked example record, the lot-summary CSV header and the calibration-certificate template | TST-EEG-004 Rev C sections 12 and 13 | `records/make_records.py`, which reads the step list out of TST-EEG-004 at generation time and fails rather than writes if the document and the table disagree | released, generated |
 | `kicad/wh-bus-01/` | the WH-BUS-01 Rev A fabrication data for the contact-light bus board: Gerbers, drill, IPC-D-356A netlist, placement and BOM note, and the checksum file | PARTS-EEG-019 Rev B registers the part; WH-EEG-008 Rev B owns the harness it serves | `tools/wh_bus.py` -- **not** `emit_all.py`; see section 1.2 | released, generated |
-| `mech/step/footprints/` and the three Rev C body files in `mech/step/` | the 3D bodies of ECO-EEG-033: one per footprint class, bound into `kicad/EEG-CAR-01_RevC.kicad_pcb`; the carrier's component height envelopes; MP-01 and its standoffs; and the thirteen module assemblies as **declared maximum envelopes**, which are assumptions (ASM-EEG-023 MECH-D6-MODULE-ENVELOPES) and not measurements | ICD-EEG-006 Rev B section 4 owns MP-01; ASM-EEG-023 owns the envelopes | `tools/mech_bodies.py` on `tools/step_write.py` -- **not** `tools/mech_gen.py`, which needs cadquery and could not be run here | released as body data. **NOT a printable part set**: they are envelopes, not parts, and no STEP reader has read them |
+| `mech/step/footprints/` and the three Rev C body files in `mech/step/` | the 3D bodies of ECO-EEG-033: one per footprint class, bound into `kicad/EEG-CAR-01_RevC.kicad_pcb`; the carrier's component height envelopes; MP-01 and its standoffs; and the thirteen module assemblies as **declared maximum envelopes**, which are assumptions (ASM-EEG-023 MECH-D6-MODULE-ENVELOPES) and not measurements | ICD-EEG-006 Rev C section 4 owns MP-01; ASM-EEG-023 owns the envelopes | `tools/mech_bodies.py` on `tools/step_write.py` -- **not** `tools/mech_gen.py`, which needs cadquery and could not be run here | released as body data. **NOT a printable part set**: they are envelopes, not parts, and no STEP reader has read them |
 | `mech/EEG-CAR-01_RevC_collision_check.txt` | the interference report of ECO-EEG-033 finding 6 | ASM-EEG-023 MECH-D6-MODULE-ENVELOPES | `tools/collision_check.py` | released, generated. **Three of its four cases are open and one blocks a build** |
-| `firmware/tools/` | the provisioning station: `provision.py` and `provision_selftest.py`, `atecc608b_config.py` and the three configuration files it writes, `calibration_schema.py` and its schema, and `verify_stream.py` | FW-EEG-001 Rev C section 7 | hand-written, except the three ATECC configuration files and the calibration schema, which their own generators write and check | released as tooling. **`ATECC608B_CONFIG_TEMPLATE.md` is a PROPOSAL in its own words** -- not reviewed, never written to a part, not released for production |
+| `firmware/tools/` | the provisioning station: `provision.py` and `provision_selftest.py`, `atecc608b_config.py` and the three configuration files it writes, `calibration_schema.py` and its schema, and `verify_stream.py` | FW-EEG-001 Rev D section 7 | hand-written, except the three ATECC configuration files and the calibration schema, which their own generators write and check | released as tooling. **`ATECC608B_CONFIG_TEMPLATE.md` is a PROPOSAL in its own words** -- not reviewed, never written to a part, not released for production |
 
 Two files in that last tree read like documents and are not. `firmware/tools/README_provisioning.md`
 and `firmware/tools/ATECC608B_CONFIG_TEMPLATE.md` both open with a `Document:` line, a
@@ -1250,7 +1288,7 @@ without knowing it must not be.
 package: TSSOP-14, TI's PW. The `D` suffix is SOIC and there is no SOIC-14 quad, so
 `OPA4376AIDR` is not an orderable part number. **The part is `OPA4376AIPWR` and the footprint
 is `TSSOP-14_4.4x5mm_P0.65mm`.** What makes this worse than a typing error is the record:
-AVL-EEG-017 Rev A quoted `OPA4376AIPWR`, which is correct, and Rev B **withdrew it** on the
+Rev A of AVL-EEG-017 quoted `OPA4376AIPWR`, which is correct, and its Rev B **withdrew it** on the
 ground that it did not fit the SOIC-14 land pattern `design.py` placed -- the package was
 corrected to match the footprint instead of the footprint to match the package. That
 withdrawal is withdrawn. `fplib`'s SOIC-14 docstring argued the choice on the two-layer escape
@@ -1492,9 +1530,9 @@ every placed symbol is on a net, no designator is placed twice and every unit of
 part is placed exactly once, no net has one pin unless `design.py` declares it as one of the
 eleven single-pad nets, and every power net is driven by a power symbol. **Zero findings.**
 
-*The symbol library.* `kicad/EEG-CAR-01.kicad_sym`, generated. ICD-EEG-006 Rev B said no such
-file existed and that Rev A was wrong to claim one; that was true of Rev B and is superseded
-here, and the ICD is corrected in the same change rather than left contradicting the tree. The
+*The symbol library.* `kicad/EEG-CAR-01.kicad_sym`, generated. Rev B of ICD-EEG-006 said no such
+file existed and that its own Rev A was wrong to claim one; that was true of board Rev B and
+is superseded here, and the ICD is corrected in the same change rather than left contradicting the tree. The
 contractor needs it: a schematic whose symbols live only inside itself opens, and nobody can
 edit it.
 
@@ -1701,7 +1739,7 @@ they are listed here so that anyone holding a printed copy can see what changed 
 | C-10 | SIM graded **E-27** a pass on the light current alone, while ECO-EEG-016 and TST-EEG-004 T11 both record E-27 as not met | SIM-EEG-018 | the current check is retitled *current only*, and E-27's missing bicolour phase driver is an open item. **Superseded 2 September 2026:** the driver is written, so the open item is no longer the missing driver but *E-27 has never been seen to light* -- no unit exists and T11 has not been run. The split between a current check and a colour check is what this row bought, and it stands |
 | C-11 | SIM graded **E-22** on a 150 mA board current that ICD-EEG-006 disputes at about 440 mA | SIM-EEG-018 | E-22 is checked at **both** figures -- 20.0 h and 6.8 h, so it is met either way -- and the unreconciled current is an open item, as RFQ-EEG-001 Rev E open item 14 |
 | C-12 | The DRC report's "CONDUCTORS BELOW THE 0.25 mm PREFERRED WIDTH: 19" contained entries at 0.28 and 0.56 mm, and disagreed with the "200" under MEASURED | `tools/drc.py` | the section is **CONNECTIONS THE ROUTER HAD TO RELAX**, split into *narrower than 0.25 mm* and *full width with a reduced gap*, and it states that it counts connections while MEASURED counts segments. The counts move with the route: **169 as the board now stands, 36 and 133**, against 19 when this row was written |
-| C-13 | Four citations pointed at things that do not exist: `firmware/pinmap_EEG-CAR-01.h` (twice), "DSN-EEG-003 Rev B section 5", "ASM-EEG-007 stage 2" for the reflow profile, and "FW-EEG-001 section 8" for F-08 | ICD-EEG-006, SIM-EEG-018 | `firmware/main/board_pins.h`, **Rev C** section 5, **ASM-EEG-007 section 2.5**, **FW-EEG-001 section 5.6**. The reflow figures now match ASM-EEG-007 section 2.5 exactly: 45–90 s above liquidus, 235–245 °C at the U1 body, 245 °C maximum anywhere |
+| C-13 | Four citations pointed at things that do not exist: `firmware/pinmap_EEG-CAR-01.h` (twice), "DSN-EEG-003, Rev B as it then stood, section 5", "ASM-EEG-007 stage 2" for the reflow profile, and "FW-EEG-001 section 8" for F-08 | ICD-EEG-006, SIM-EEG-018 | `firmware/main/board_pins.h`, **Rev C** section 5, **ASM-EEG-007 section 2.5**, **FW-EEG-001 section 5.6**. The reflow figures now match ASM-EEG-007 section 2.5 exactly: 45–90 s above liquidus, 235–245 °C at the U1 body, 245 °C maximum anywhere |
 
 ### 2A.1 What package v1 had and package v2 had dropped
 
@@ -1860,7 +1898,7 @@ way on J12 or J13, so it does not exist and cannot be tested.
 
 **Class:** not a change to the instrument, and **it takes no ECO number.** No requirement,
 schematic, netlist, BOM, mechanical part or pin assignment moves in this section. What moved
-is firmware source that did not do what FW-EEG-001 Rev C already required of it, and browser
+is firmware source that did not do what FW-EEG-001 Rev D already required of it, and browser
 source that did not either. FW-EEG-001 owns the firmware defect register and the FW-Dnn
 numbers; this section records what happened so that the register is not the only place it is
 written down. The next free ECO number is unchanged at **ECO-EEG-030**.

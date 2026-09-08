@@ -45,10 +45,10 @@ that problems are found here rather than at CAM time.
    is v2.4).
 2. **`docs/RFQ-EEG-001 Rev E`** — the actual request: numbered requirements (E-, S-, F-, T-), the
    pricing template, and §9.4's correction-iteration terms for prototypes that arrive not working.
-3. **`docs/DSN-EEG-003 Rev C`** — the governing document. Architecture, the carrier board, and the
+3. **`docs/DSN-EEG-003 Rev D`** — the governing document. Architecture, the carrier board, and the
    precedence rules that decide which document wins when two disagree.
 
-**Precedence:** DSN-EEG-003 Rev C > RFQ-EEG-001 Rev E > ICD-EEG-006 > SCH-EEG-005 > DSN-EEG-002 >
+**Precedence:** DSN-EEG-003 Rev D > RFQ-EEG-001 Rev E > ICD-EEG-006 > SCH-EEG-005 > DSN-EEG-002 >
 PARTS-EEG-019 > RUL-EEG-021 > the bidder BOM. Where a number appears in a document *and* in
 `tools/design.py`, **design.py governs** — `tools/emit_all.py` regenerates every fabrication file
 from it in one pass, so the package cannot drift.
@@ -113,7 +113,7 @@ reviewed — that write is irreversible, so it gates on a real part.
 
 - **TST-EEG-004 Rev C** — the per-unit test: 32 steps T00–T30, with a 5,033-line JSON Schema and a
   stdlib-only validator so any two vendors emit the same record file.
-- **JIG-EEG-009 Rev B + `fixtures/`** — four test fixtures as buildable data, with RP2040
+- **JIG-EEG-009 Rev C + `fixtures/`** — four test fixtures as buildable data, with RP2040
   controller firmware passing 154 host checks.
 - **TOOL-EEG-022** — the browser connectivity test (`webtest/EEG-Connectivity-Test.html`) and the
   interop harness that keeps firmware and protocol from drifting apart.

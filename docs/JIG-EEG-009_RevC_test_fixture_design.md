@@ -1,9 +1,9 @@
 # TEST FIXTURE DESIGN
 
-**Document:** JIG-EEG-009  **Revision:** B  **Date:** 2026-09-01
+**Document:** JIG-EEG-009  **Revision:** C  **Date:** 2026-09-01
 **Issued by:** TI One Voice research programme (one.witysk.org), Brussels, Belgium
 **Licence:** CC BY-SA 4.0
-**Governing documents:** DSN-EEG-003 Rev C, then RFQ-EEG-001 Rev E. Where this
+**Governing documents:** DSN-EEG-003 Rev D, then RFQ-EEG-001 Rev E. Where this
 document and design.py disagree, design.py governs. Step numbers are owned by
 TST-EEG-004 Rev C and are never invented here.
 
@@ -2085,4 +2085,4 @@ index peg did on its first pass.
 | B | 2026-09-02 | **ECO-EEG-024 is applied, and every figure in this document that was computed through the 47 kΩ series resistor is recomputed.** `tools/design.py` fits **68 kΩ** at R1-R16 (Vishay TNPW060368K0BEEA). Section 1.2's "R1-R16 are 47 kΩ on the Phase 1 prototypes and do not stay that way" is superseded and the recomputation it asked for is done here: section 1.6's lead-off arithmetic is run at 68 kΩ, so a 4.99 kΩ reference reads about 73 kΩ, the R_off pass band becomes **68 kΩ +/-5 %**, and the 7.8 Hz worst case 49.9 k + 68 k = 117.9 kΩ shunted by 2.04 MΩ reads **111.5 kΩ**, 5.5 % low, which is the figure TST-EEG-004 T10 now prints. The 92.5 kΩ / 4.5 % pair is kept beside it as the superseded 47 kΩ case, because it is still the contrast that justifies naming the references 4k99 / 10k0 / 49k9 rather than 5 k / 10 k / 50 k. Section 2.3's FIX-02/D single-fault current falls from 41.8 µA to **29.1 µA** with R15. Section 4.3 and the section 7 open item are restated: the single-fault patient auxiliary current is **36.8 µA calculated against 50 µA and S-02 is met in the design**, where both said "53.2 µA, S-02 is not met"; E-10 sits at its **+/-1.0 dB** branch and was +/-0.5 dB at 47 kΩ. **Nothing here is signed off and nothing is measured**: 36.8 µA is a calculation, no board and no fixture exist to measure it on, and SR-01 stays with the electrical safety reviewer of RISK-EEG-011 section 7, who has not started. RISK-EEG-011 section 4, which this document points at for the noise and flatness arithmetic, still runs it at 47 kΩ and is owed the same correction. Separately, the preamble's "nothing in this package has been built or measured" is narrowed to **no hardware**: the ESP32-S3 firmware is built (ESP-IDF v5.2.5, `firmware/release/`) and has run only under QEMU emulation, while **no fixture has been built and no RP2040 image for M1 or M2 exists**, which section 7 already says and this revision does not soften. No fixture geometry, part number, cost or calibration interval changes. |
 
 Changes to any limit or calibration interval in this document require a change note against
-DSN-EEG-003 Rev C and an entry in ECO-EEG-016.
+DSN-EEG-003 Rev D and an entry in ECO-EEG-016.

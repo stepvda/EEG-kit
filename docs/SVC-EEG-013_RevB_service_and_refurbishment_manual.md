@@ -3,18 +3,18 @@
 **Document:** SVC-EEG-013  **Revision:** B  **Date:** 2026-09-01
 **Issued by:** TI One Voice research programme (one.witysk.org), Brussels, Belgium
 **Licence:** CC BY-SA 4.0
-**Governing documents:** DSN-EEG-003 Rev C, then RFQ-EEG-001 Rev E, then ICD-EEG-006 Rev B,
+**Governing documents:** DSN-EEG-003 Rev D, then RFQ-EEG-001 Rev E, then ICD-EEG-006 Rev C,
 then PARTS-EEG-019 Rev B. Where this document and `tools/design.py` disagree,
 `tools/design.py` governs. The rulings this document is written against are collected in
-RUL-EEG-021 Rev A, which is a controlled document in `docs/` and may be cited by section
+RUL-EEG-021 Rev B, which is a controlled document in `docs/` and may be cited by section
 letter.
 
 **Cross-references.** Every other document is cited here at the revision current at this
-issue: FW-EEG-001 Rev C, DSN-EEG-002 Rev E, DSN-EEG-003 Rev C, TST-EEG-004 Rev C,
-SCH-EEG-005 Rev B, ICD-EEG-006 Rev B, ASM-EEG-007 Rev B, WH-EEG-008 Rev B, JIG-EEG-009
-Rev B, QP-EEG-010 Rev B, RISK-EEG-011 Rev B, REG-EEG-012 Rev B, IFU-EEG-014 Rev B,
-PKG-EEG-015 Rev B, ECO-EEG-016 Rev B, AVL-EEG-017 Rev B, SIM-EEG-018 Rev A, PARTS-EEG-019
-Rev B, MECH-EEG-020 Rev A, RUL-EEG-021 Rev A and RFQ-EEG-001 Rev E. ECO-EEG-016 Rev B
+issue: FW-EEG-001 Rev D, DSN-EEG-002 Rev E, DSN-EEG-003 Rev D, TST-EEG-004 Rev C,
+SCH-EEG-005 Rev B, ICD-EEG-006 Rev C, ASM-EEG-007 Rev B, WH-EEG-008 Rev B, JIG-EEG-009
+Rev C, QP-EEG-010 Rev B, RISK-EEG-011 Rev B, REG-EEG-012 Rev B, IFU-EEG-014 Rev B,
+PKG-EEG-015 Rev B, ECO-EEG-016 Rev C, AVL-EEG-017 Rev C, SIM-EEG-018 Rev A, PARTS-EEG-019
+Rev B, MECH-EEG-020 Rev A, RUL-EEG-021 Rev B and RFQ-EEG-001 Rev E. ECO-EEG-016 Rev C
 section 1 is the register of record for those letters; where this list and that register
 disagree, the register governs.
 
@@ -25,7 +25,7 @@ withdrawn as a kit item and its wash schedule with it, the module counts are twe
 and thirteen assemblies, the headphone load is 47.0 Ω, the serial format is `TIOV-B-nnnn`,
 and every requirement this document touches that is not met now says so where it is stated.
 **The findings of the second cross-document audit of 2026-09-01 are closed in this issue at
-the same revision letter:** the microSD card layout is now cited from FW-EEG-001 Rev C
+the same revision letter:** the microSD card layout is now cited from FW-EEG-001 Rev D
 instead of being restated here, the serial-number scheme is cited from PKG-EEG-015 Rev B
 section 5 instead of being redefined here, and every cross-reference carries the revision
 letter current at this issue. **Corrections within Rev B, after the verification review of
@@ -166,10 +166,10 @@ The card is the study's evidence of record. It is read by the programme and by n
 
 1. Remove the card from J20 with the case open on the bench, not with the pod open.
 2. Copy the unit's session directory to the ingest store with a verifying copy. **The card
-   layout is not restated here.** The firmware is what writes the card, so FW-EEG-001 Rev C
+   layout is not restated here.** The firmware is what writes the card, so FW-EEG-001 Rev D
    owns the path, the extension, the filesystem and the sidecar, and the bench works from
    that document and from nothing else. The competing `/SESSIONS/...` path and the 512-byte
-   plain-text header carried in Rev A of this manual are withdrawn. FW-EEG-001 Rev C section
+   plain-text header carried in Rev A of this manual are withdrawn. FW-EEG-001 Rev D section
    10 item 11 gives the layout in outline only and carries it as that document's own open
    item, so **this step is not to be turned into a work instruction with a fixed path
    written into it until that item is closed**; until then the operator copies the whole of
@@ -179,7 +179,7 @@ The card is the study's evidence of record. It is read by the programme and by n
    each file matches the copy; the signature chain verifies against the unit's exported
    public key; the frame sequence has no gaps that the host copy does not also have.
 4. **Calculated data volume.** The frame payload at 1000 Hz is **50.7 kB/s** -- 1015 bytes
-   every 20 ms, fifty frames a second, derived once in FW-EEG-001 Rev C §5.8. RFQ E-20's
+   every 20 ms, fifty frames a second, derived once in FW-EEG-001 Rev D §5.8. RFQ E-20's
    "≈70 kB/s" and F-12's "≈64 kB/s" are not different measurements of the same thing; they
    are allowances that add STATUS and SIGNATURE frames and filesystem overhead on top of the
    payload, and neither requirement changes. At 50.7 kB/s a recording hour is 182.5 MB, a
@@ -194,9 +194,9 @@ The card is the study's evidence of record. It is read by the programme and by n
 1. Only after step R2's verification has passed and the ingest store has acknowledged.
 2. Secure-erase the card (full overwrite, not a quick format). A quick format leaves the
    previous participant's recordings recoverable, and the kit is about to go to a stranger.
-3. Re-format to the filesystem FW-EEG-001 Rev C specifies, which is exFAT, with a 128 kB
+3. Re-format to the filesystem FW-EEG-001 Rev D specifies, which is exFAT, with a 128 kB
    cluster and the unit serial as the volume label.
-4. Create the empty session directory that FW-EEG-001 Rev C names for that serial, and write
+4. Create the empty session directory that FW-EEG-001 Rev D names for that serial, and write
    `PROVISIONED.txt` into it with the erase date, the operator and the card serial.
 5. Re-seat the card and confirm the slot latch. The card stays with the unit; it is not
    pooled between units, because the volume label is part of the evidence chain.
@@ -317,7 +317,7 @@ port.
    for is not fitted and stays not fitted:** there is no NTC net in `design.py` and no
    thermistor way on J12 or J13, so S-04 is not met, the charge inhibit rests on the charger
    module's own thermal regulation alone, and the bench cannot test it. It is an open
-   hardware item (section 10 item 10, DSN-EEG-003 Rev C §11, RISK-EEG-011).
+   hardware item (section 10 item 10, DSN-EEG-003 Rev D §11, RISK-EEG-011).
 6. **Cell replacement policy. This list is the only one in the package.** Replace the cell
    outright **annually on age, whatever its condition**, and at any of: measured capacity
    below **80 % of rated** at the bench check of section 3.2, OCV below 3.5 V after a full
@@ -366,7 +366,7 @@ headphone, the ATH-M20x, is a 47 Ω model; the output level is measured per mode
 calibration, not assumed. The 32.0 Ω load of Rev A is withdrawn.
 
 Steps deliberately **not** in RTS-1: T7 and T9 need the FIX-01/F 1000:1 divider built by
-JIG-EEG-009 Rev B and a signal generator, and the gain and CMRR constants cannot drift
+JIG-EEG-009 Rev C and a signal generator, and the gain and CMRR constants cannot drift
 unless the front end has been opened -- they are re-run whenever section 5 says so. T14 runs
 for 30 min and is run every fifth turnaround rather than every one. T6 and T16 are re-run
 only when identity changes.
@@ -702,7 +702,7 @@ the helmet shell, and POD-P1 carries no gland feature.
 Field-replaceable units, one row per module type. Swap difficulty is bench minutes for a
 technician at an ESD workstation. **There are twelve purchased module types and thirteen
 module assemblies per unit, because the ADS1299 breakout is fitted twice.** ICD-EEG-006 Rev
-B section 1 owns the module-to-connector table; the sockets below are repeated only so the
+C section 1 owns the module-to-connector table; the sockets below are repeated only so the
 technician can find the jumper.
 
 | FRU (module type) | Socket | Time | Re-test | Calibration record |
@@ -725,7 +725,7 @@ Two notes on that table, both of which the bench needs before it orders a part.
 
 **Which preamplifier is not settled.** The MAX9814 named in package v1 has automatic gain
 control, which RFQ E-14 forbids, and disabling it is a module-dependent modification, so the
-MAX9814 is **not approved** and the module is specified by interface in ICD-EEG-006 Rev B.
+MAX9814 is **not approved** and the module is specified by interface in ICD-EEG-006 Rev C.
 The preferred route is a fixed-gain part of the MAX4466 class. A swap therefore also
 re-checks R89, which is do-not-populate by default and is fitted only if the module fitted
 does not supply its own electret bias.
@@ -736,12 +736,12 @@ field-replaceable unit. **That baseline changes neither count.** There are twelv
 types and thirteen module assemblies per unit however J12 is populated, because what makes
 the thirteenth assembly is the second ADS1299 breakout and not the charger. Where two
 separate breakouts are supplied, the gauge mounts on MP-01 and its VBAT and I²C taps are
-made at the MP-01 end of a Y jumper drawn in ICD-EEG-006 Rev B section 3.3 -- a drawn part,
+made at the MP-01 end of a Y jumper drawn in ICD-EEG-006 Rev C section 3.3 -- a drawn part,
 not a hand-built variation.
 
 Modules sit on the **MP-01 module plate, 146.0 x 126.0 x 3.0 mm**, above the carrier on four
 M3 x 18 mm nylon female-female hex standoffs with eight M3 x 6 nylon pan screws, and are
-joined to the carrier by keyed 2.54 mm ribbon jumpers per ICD-EEG-006 Rev B. The 18 mm
+joined to the carrier by keyed 2.54 mm ribbon jumpers per ICD-EEG-006 Rev C. The 18 mm
 standoff is load-bearing for safety, not just for packaging: it makes the slant path from
 carrier copper, over the edge of the isolation keep-out and up to any host-side conductor on
 MP-01, at least 18 mm, against the 8 mm the safety case asks for. Only the DevKitC-1 inserts
@@ -809,7 +809,7 @@ and its fingerprint is on the label (M-03). A replacement module therefore:
    revision, calibration constants, configuration-zone lock;
 2. must be **re-labelled** with the new fingerprint -- the first 8 bytes of SHA-256 over the
    64-byte uncompressed public key, printed as 16 uppercase hex characters in four groups of
-   four, defined once in FW-EEG-001 Rev C section 7 -- and the Data Matrix re-verified
+   four, defined once in FW-EEG-001 Rev D section 7 -- and the Data Matrix re-verified
    against the record;
 3. must have the platform's device registration updated, and the participant's browser will
    be asked to re-authorise the device once, because the persistent WebUSB grant is bound to
@@ -1048,11 +1048,11 @@ illustrated version, and the disinfection guide in the pouch is the extract of s
 | 5 | Every failure rate in section 6 marked *assumed* has no measured basis and is a first estimate | One year of fleet data |
 | 6 | **Closed at this issue.** The serial format is `TIOV-B-nnnn`, defined once in PKG-EEG-015 Rev B section 5 and cited in section 8. ASM-EEG-007 Rev B, QP-EEG-010 Rev B and PKG-EEG-015 Rev B all carry that form, and the three package v1 forms are withdrawn. The row is kept rather than renumbered so that references to the item numbers below it do not move | Closed |
 | 7 | **Closed at this issue.** The CASE-00 SPARE CELL bay stays in the foam and travels empty in circulation; it carries a spare only on depot-to-depot moves handled by the programme's trained shipper, and its tag reads `SPARE CELL -- DEPOT ONLY, EMPTY IN CIRCULATION`. PKG-EEG-015 Rev B section 7 rules the bay and its tag, and this manual's earlier plan to delete the legend at the next foam revision is withdrawn. The row is kept rather than renumbered so that references to the item numbers below it do not move | Closed |
-| 8 | **The contact-light driver is written as of 2026-09-02**, so the item as Rev B stated it is closed: `firmware/main/main.c` reads the converter's positive-side lead-off comparator at two thresholds and lights a site green when it trips neither, amber when it trips only the sensitive one and red when it trips both, alternating with green in phase A and red in phase B. Two things replace it. The alternation quantises to the FreeRTOS tick, so it runs at about **250 Hz** rather than the compiled 240, which is inside E-27's "above 100 Hz" and is stated rather than hidden. And **the two thresholds are the ADS1299's documented endpoints, not measured trip points**, so the impedance at which a site turns amber, and the one at which it turns red, are not yet established -- a participant could be told to re-gel a site that was fine, or told nothing about one that was not. *Corrected again 2026-09-02 (FW-D17): this second point read "`LOFF_SENSN` is never enabled, so the red term can never be set". Red is reachable now, and enabling `LOFF_SENSN` was never the fix -- the montage is single-ended, so the N half has no per-site electrode to report on.* The release gate of section 2 R10 stays weak until an image is built and run, which is the general firmware gate and not this item | FW-EEG-001 Rev C for the register, with E-27's owner in DSN-EEG-003 §11 for the threshold values |
-| 9 | The microSD file layout is FW-EEG-001 Rev C's and is no longer restated here (section 2 R2), so the two incompatible definitions of the same card are down to one. That one is still an outline: FW-EEG-001 Rev C section 10 item 11 carries it as an open item, so the card path is not yet fixed and R2 cannot become a work instruction until it is. Separately, the disinfection validation protocol and the OTA procedure are cited by numbers that are not registered and that collide with registered documents | FW-EEG-001 for the card layout; ECO-EEG-016 Rev B, which owns the document namespace, for the two unregistered procedures |
-| 10 | **RFQ S-04's thermistor-monitored charging is not met and stays not met** (no NTC net, no thermistor way on J12 or J13), so the 45 °C inhibit of E-23 rests on the charger module alone and the bench cannot verify it | DSN-EEG-003 Rev C §11, RISK-EEG-011 |
+| 8 | **The contact-light driver is written as of 2026-09-02**, so the item as Rev B stated it is closed: `firmware/main/main.c` reads the converter's positive-side lead-off comparator at two thresholds and lights a site green when it trips neither, amber when it trips only the sensitive one and red when it trips both, alternating with green in phase A and red in phase B. Two things replace it. The alternation quantises to the FreeRTOS tick, so it runs at about **250 Hz** rather than the compiled 240, which is inside E-27's "above 100 Hz" and is stated rather than hidden. And **the two thresholds are the ADS1299's documented endpoints, not measured trip points**, so the impedance at which a site turns amber, and the one at which it turns red, are not yet established -- a participant could be told to re-gel a site that was fine, or told nothing about one that was not. *Corrected again 2026-09-02 (FW-D17): this second point read "`LOFF_SENSN` is never enabled, so the red term can never be set". Red is reachable now, and enabling `LOFF_SENSN` was never the fix -- the montage is single-ended, so the N half has no per-site electrode to report on.* The release gate of section 2 R10 stays weak until an image is built and run, which is the general firmware gate and not this item | FW-EEG-001 Rev D for the register, with E-27's owner in DSN-EEG-003 §11 for the threshold values |
+| 9 | The microSD file layout is FW-EEG-001 Rev D's and is no longer restated here (section 2 R2), so the two incompatible definitions of the same card are down to one. That one is still an outline: FW-EEG-001 Rev D section 10 item 11 carries it as an open item, so the card path is not yet fixed and R2 cannot become a work instruction until it is. Separately, the disinfection validation protocol and the OTA procedure are cited by numbers that are not registered and that collide with registered documents | FW-EEG-001 for the card layout; ECO-EEG-016 Rev C, which owns the document namespace, for the two unregistered procedures |
+| 10 | **RFQ S-04's thermistor-monitored charging is not met and stays not met** (no NTC net, no thermistor way on J12 or J13), so the 45 °C inhibit of E-23 rests on the charger module alone and the bench cannot verify it | DSN-EEG-003 Rev D §11, RISK-EEG-011 |
 | 11 | RFQ section 10's pricing template has no line for the section 6 spares, the eight HM-09 service keys, the WH-KEY-01 shrouds or the foam tooling, so the consignment split of section 6 cannot be quoted | RFQ-EEG-001, next revision |
-| 12 | The per-kit costs and BOM line numbers used in sections 7.3 and 7.4 come from `EEG_kit_BOM_for_bidders`, which is not in `package_v2.4/` and whose revision is cited as both Rev B and Rev C | ECO-EEG-016 Rev B |
+| 12 | The per-kit costs and BOM line numbers used in sections 7.3 and 7.4 come from `EEG_kit_BOM_for_bidders`, which is not in `package_v2.4/` and whose revision is cited as both Rev B and Rev C | ECO-EEG-016 Rev C |
 | 13 | The isolator module's host connector is USB-B where RFQ E-24 asks for USB-C. The interim answer is the WH-09 pigtail (5.5); it is a live non-conformance, not a settled design | Programme, before the Phase 2 order |
 | 14 | **Nothing in this package has been manufactured, cleaned, refurbished or measured.** Every time, force, volume and cycle figure above is calculated or estimated | Phase 1 |
 | 15 | **The carrier routing has not been reviewed by a human layout engineer.** It passes its design rule check with zero violations and all 145 nets connected, so the fabrication data is released for review; fabrication release awaits that review, and 169 of the connections were closed at relaxed geometry (5.7). Until it is done no board is made and there is nothing to service | RFQ-EEG-002A layout review |
@@ -1072,5 +1072,5 @@ illustrated version, and the disinfection guide in the pouch is the extract of s
 | `spares-and-field-replaceable-units` | Sections 5 and 6: the FRU table over twelve module types and thirteen assemblies including the J25 buck-boost, the identity rule in 5.8, and spares per 25 kits with arithmetic |
 | `rma-and-returns-form` | Section 7: fault codes, the three-part form, the repair-or-scrap tree, the "working unit" definition and the damage schedule |
 | `reprocessing-validation` (quality) | Sections 2 R5, 5.4 and 10 item 2: item-by-item reprocessing table, release criteria, and the unresolved bayonet-seizure finding carried forward as a named open item rather than silently dropped |
-| session-file handling (service half) | Section 2 R2 and R3: the card is read, verified, archived and securely erased by the programme, never by the participant. The file layout itself is FW-EEG-001 Rev C's, cited here and not restated, and remains open in that document (section 10 item 9) |
+| session-file handling (service half) | Section 2 R2 and R3: the card is read, verified, archived and securely erased by the programme, never by the participant. The file layout itself is FW-EEG-001 Rev D's, cited here and not restated, and remains open in that document (section 10 item 9) |
 | firmware-update path (service half) | Firmware updates are applied at refurbishment by the programme with the `eegtest` host tool, refused below 40 % SoC and during a session, and recorded in F1 §5. The OTA procedure is not yet a registered document (section 10 item 9) |

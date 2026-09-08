@@ -10,7 +10,7 @@ Every ruling is written as: **the answer**, then why, then what to change.
 
 **This worksheet is a generator input, not a dead file.** `tools/finalise_docs.py` job 4
 reads everything below the horizontal rule and writes it over the controlled register
-`docs/RUL-EEG-021_RevA_rulings_register.md` under a fixed header. A correction made by hand
+`docs/RUL-EEG-021_RevB_rulings_register.md` under a fixed header. A correction made by hand
 in the register and not back-ported here is therefore reverted, without a warning, on the
 next run: corrections belong here first. Everything above the rule is the worksheet's own
 and is not copied into the register.

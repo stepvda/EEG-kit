@@ -1,9 +1,9 @@
 # APPROVED VENDOR LIST AND SOURCING FILE
 
-**Document:** AVL-EEG-017  **Revision:** B  **Date:** 2026-09-01
+**Document:** AVL-EEG-017  **Revision:** C  **Date:** 2026-09-01
 **Issued by:** TI One Voice research programme (one.witysk.org), Brussels, Belgium
 **Licence:** CC BY-SA 4.0
-**Governing documents:** DSN-EEG-003 Rev C, then RFQ-EEG-001 Rev E. Where this document and
+**Governing documents:** DSN-EEG-003 Rev D, then RFQ-EEG-001 Rev E. Where this document and
 design.py disagree, design.py governs.
 
 **Revision note (Rev A to Rev B):** the carrier grew to 150.0 x 130.0 mm and became a
@@ -50,7 +50,7 @@ The findings of the second cross-document audit of 1 September 2026 are closed i
 issue, without a further revision letter: the routing result and the release status are stated
 from `kicad/EEG-CAR-01_RevB_DRC_report.txt` -- zero violations, all 145 nets connected, 169
 connections relaxed to get there, and the data released for review and not for fabrication --
-and the fiducial ruling is cited as RUL-EEG-021 Rev A rather than as the uncontrolled worksheet
+and the fiducial ruling is cited as RUL-EEG-021 Rev B rather than as the uncontrolled worksheet
 `tools/RULINGS.md`.
 
 ## Why this document exists
@@ -150,7 +150,7 @@ drill file, not to this document.
 | R94, R95 | 2 | **4.7 kΩ 1 % -- I²C pull-ups on SDA and SCL to DVDD3V3** | Vishay CRCW06034K70FKEA | 71-CRCW06034K70FKEA | PREFERRED | Yageo RC0603FR-074K7L | **New at this revision, ECO-EEG-021.** Rev A had no pull-up anywhere on the carrier and the bus depended on whatever the modules happened to carry, which is not a design. If a fitted module also carries pull-ups the parallel value must be checked against the bus capacitance before the fleet build; that check has not been done. |
 | R80 | 1 | 470 kΩ 1 % -- comparator threshold top | Vishay CRCW0603470KFKEA | 71-CRCW0603470KFKEA | PREFERRED | Yageo RC0603FR-07470KL | With R81 sets the 52 mV trip of E-12. Value may change under ECO-EEG-023 (§1.3). |
 | R82 | 1 | 1 MΩ 1 % -- comparator hysteresis, ≈ 5 mV | Vishay CRCW06031M00FKEA | 71-CRCW06031M00FKEA | PREFERRED | Yageo RC0603FR-071ML | -- |
-| R78, R79, R87, R90, R91, R92, R93 | 7 | 0 Ω jumper, ≥ 1 A | Vishay CRCW06030000Z0EA | 71-CRCW06030000Z0EA | PREFERRED | Yageo RC0603JR-070RL | **A real 0 Ω part, never a solder bridge or a wire link.** R90 and R91 are the single star points; the rule that governs them is DSN-EEG-003 Rev C §3.3 and is not restated here. R78's approved alternate is 47 Ω where light current needs trimming. |
+| R78, R79, R87, R90, R91, R92, R93 | 7 | 0 Ω jumper, ≥ 1 A | Vishay CRCW06030000Z0EA | 71-CRCW06030000Z0EA | PREFERRED | Yageo RC0603JR-070RL | **A real 0 Ω part, never a solder bridge or a wire link.** R90 and R91 are the single star points; the rule that governs them is DSN-EEG-003 Rev D §3.3 and is not restated here. R78's approved alternate is 47 Ω where light current needs trimming. |
 | R89 | 1 (**DNP**) | 2.2 kΩ 1 % -- electret bias, do not populate | Vishay CRCW06032K20FKEA | 71-CRCW06032K20FKEA | PREFERRED | Yageo RC0603FR-072K2L | Buy the line, do not fit it. Fitted only if the preamplifier module on MP-01 supplies no microphone bias (ICD-EEG-006 §7.2). |
 
 Seventy-two resistor placements, one of them DNP. Packaging for every line above: cut tape
@@ -203,7 +203,7 @@ two boards.
 | J15, J16, J17 | 3 | Touch-proof 1.5 mm safety socket to DIN 42802, **PCB-mount**, colour-coded (EMG1 cheek / EMG2 submental / EMG3 laryngeal) | -- see below -- | -- | **OPEN WITH CRITERIA** | -- | See §1.4.1. |
 | SW1, SW2, SW3 | 3 | Tactile push switch, 6.0 × 6.0 mm body, **projected plunger 7.3 mm**, ≥ 100 000 cycles, 160 gf ±50 | Omron **B3F-1052** | 653-B3F-1052 | PREFERRED | C&K PTS645SM50SMTR92; E-Switch TL1105AF160Q | RFQ E-26 is a **6 mm tactile switch with a 12 mm coloured cap on an extender**; the "≥ 12 mm actuator" wording of Rev C described the cap, not the switch, and the two were read as one part. The panel openings are **13.0 mm on a 14 mm pitch at y = 76, 90 and 104 mm** on the POD-P1 right wall. The 12 mm caps (A green, B blue, stop red) and their extenders are a separate kit line. A substitute with a different actuator height needs a lid change, not a BOM change. Board holes are 1.20 mm. **Corrected under ECO-EEG-031, found by `tools/footprint_audit.py`.** `B3F-4055` is a **12 × 12 mm** switch: Omron splits the B3F family by body size, 6 × 6 mm being B3F-1000/-3000/-6000 and 12 × 12 mm being B3F-4000/-5000/-5001. It met neither this row's own 6.0 × 6.0 mm body nor its 160 gf ±50 force, being 260 gf, and it does not fit the 6.5 × 4.5 mm four-terminal land pattern `design.py` places or the 14 mm pitch the three sit on. **B3F-1052** is the 6 × 6 mm projected-plunger part at 1.47 N {150 gf}, inside this row's force window; projected, because a 12 mm B32-series key top mounts only to a projected plunger. **RFQ-EEG-001 Rev E E-26 still reads "a 6 mm tactile switch (Omron B3F-4055 class)", which contradicts itself in its own sentence and is an open item for the next issue of that document.** |
 | MH1–MH4 | 4 | M3 non-plated mounting holes, Ø3.2 mm at (5,5), (145,5), (5,125) and (145,125), 6 mm copper keep-out | -- | -- | not purchased | -- | Fabricated feature (ECO-EEG-007). Coordinates moved with the board outline at this revision. Fixing hardware is in §1.6. |
-| FID1–FID3 | 3 | Ø1.0 mm round copper fiducials with Ø3.0 mm mask openings, at (12, 10), (144, 100) and (12, 120) | -- | -- | not purchased | -- | **New at this revision, ECO-EEG-020.** Fabricated feature. They exist so the placement machine has three global fiducials of its own; the v1 workaround of teaching vision on test-point pads is withdrawn. **RUL-EEG-021 Rev A section A** transcribes them as (8, 8), (142, 8) and (8, 122); `design.py` governs, and the coordinates above -- (12, 10), (144, 100) and (12, 120) -- are the ones in the source file, confirmed against `tools/design.py` at this correction. |
+| FID1–FID3 | 3 | Ø1.0 mm round copper fiducials with Ø3.0 mm mask openings, at (12, 10), (144, 100) and (12, 120) | -- | -- | not purchased | -- | **New at this revision, ECO-EEG-020.** Fabricated feature. They exist so the placement machine has three global fiducials of its own; the v1 workaround of teaching vision on test-point pads is withdrawn. **RUL-EEG-021 Rev B section A** transcribes them as (8, 8), (142, 8) and (8, 122); `design.py` governs, and the coordinates above -- (12, 10), (144, 100) and (12, 120) -- are the ones in the source file, confirmed against `tools/design.py` at this correction. |
 | TP1–TP18 | 18 | Ø1.5 mm test pads | -- | -- | not purchased | -- | Bare copper, mask-relieved. |
 
 #### 1.4.1 The DIN 42802 sockets -- the one line with no qualified vendor
@@ -248,16 +248,16 @@ Phase 2.
 
 ### 1.5 Bare board
 
-**The board specification table is not restated here.** It lives in **DSN-EEG-003 Rev C §3.2**
+**The board specification table is not restated here.** It lives in **DSN-EEG-003 Rev D §3.2**
 and the fabricator is quoted against that table plus the Gerber, drill and IPC-D-356A set.
 That set is **released for review, not for fabrication** -- see the routing result at the end
 of this section -- so it supports a quotation and a layout review, and not yet an order. The
 review is RFQ-EEG-002A; a bare-board order follows it. The isolation keep-out and the
-star-point rule live in **DSN-EEG-003 Rev C §3.3**. What this section carries is only what a buyer needs in order to raise the order.
+star-point rule live in **DSN-EEG-003 Rev D §3.3**. What this section carries is only what a buyer needs in order to raise the order.
 
 | Item | Purchasing summary | State |
 |---|---|---|
-| EEG-CAR-01 Rev B bare PCB | **150.0 × 130.0 mm**, rectangular, no cut-outs or slots. **FOUR layers: L1 signal, L2 reference plane, L3 reference plane, L4 signal.** FR-4, Tg ≥ 150 °C, **1.60 mm ± 10 %** finished. **Outer copper 1 oz (35 µm) finished; inner copper 0.5 oz (17 µm).** Stack-up: mask / 35 µm L1 / prepreg 0.200 / 17 µm L2 / core 1.065 / 17 µm L3 / prepreg 0.200 / 35 µm L4 / mask. ENIG, Au 0.05–0.10 µm over Ni 3.0–6.0 µm. Green LPI mask both sides, white legend both sides. Minimum track 0.20 mm, minimum clearance 0.20 mm. **Through vias only -- 0.60 mm pad / 0.30 mm finished hole, tented both sides. No blind, buried, back-drilled, filled or plugged vias: do not quote them and do not offer them.** Plated holes 0.30 / 0.90 / 1.00 / 1.20 / 1.70 mm. Non-plated: 4 × 3.2 mm, 6 × 1.50 mm, **no copper and no mask** (ECO-EEG-012). IPC-6012 class 2 and IPC-A-600 class 2 (IPC-A-610 class 2 applies to the assembly, §6.2 evidence line 9). 100 % electrical test to the supplied IPC-D-356A netlist, 156 nets. Full specification: DSN-EEG-003 Rev C §3.2. | PREFERRED: any fabricator meeting the above with a lot-specific CoC |
+| EEG-CAR-01 Rev B bare PCB | **150.0 × 130.0 mm**, rectangular, no cut-outs or slots. **FOUR layers: L1 signal, L2 reference plane, L3 reference plane, L4 signal.** FR-4, Tg ≥ 150 °C, **1.60 mm ± 10 %** finished. **Outer copper 1 oz (35 µm) finished; inner copper 0.5 oz (17 µm).** Stack-up: mask / 35 µm L1 / prepreg 0.200 / 17 µm L2 / core 1.065 / 17 µm L3 / prepreg 0.200 / 35 µm L4 / mask. ENIG, Au 0.05–0.10 µm over Ni 3.0–6.0 µm. Green LPI mask both sides, white legend both sides. Minimum track 0.20 mm, minimum clearance 0.20 mm. **Through vias only -- 0.60 mm pad / 0.30 mm finished hole, tented both sides. No blind, buried, back-drilled, filled or plugged vias: do not quote them and do not offer them.** Plated holes 0.30 / 0.90 / 1.00 / 1.20 / 1.70 mm. Non-plated: 4 × 3.2 mm, 6 × 1.50 mm, **no copper and no mask** (ECO-EEG-012). IPC-6012 class 2 and IPC-A-600 class 2 (IPC-A-610 class 2 applies to the assembly, §6.2 evidence line 9). 100 % electrical test to the supplied IPC-D-356A netlist, 156 nets. Full specification: DSN-EEG-003 Rev D §3.2. | PREFERRED: any fabricator meeting the above with a lot-specific CoC |
 
 **Why the board changed, and what it costs.** Package v1 asserted that a two-layer carrier
 would be cheap and easy to route. Actually laying it out showed that it is not: on two layers
@@ -277,7 +277,7 @@ Approved fabricators, none yet used by the programme: Eurocircuits (Mechelen, BE
 CN). All six quote four-layer FR-4 with ENIG as a standard process; none of them needs a
 non-standard stack-up for this board. The two mandatory hard-reject checks at goods-in are
 IQC-B6 (the six DIN retention holes and the four M3 holes carry no plating and no mask) and
-IQC-B7 (the isolation keep-out defined in DSN-EEG-003 Rev C §3.3 is free of copper on **all
+IQC-B7 (the isolation keep-out defined in DSN-EEG-003 Rev D §3.3 is free of copper on **all
 four** layers, inner planes included -- the plane cut-out is new work for the fabricator and is
 the check most likely to be missed on a first article). Both are safety characteristics under
 S-03. Buy 25 % spare bare boards at Phase 2 and Phase 3.
@@ -293,7 +293,7 @@ every non-plated hole, no digital net enters the analogue zone, there are no dup
 and no duplicate via positions, and there is exactly one AGND_REF-to-DGND bridge and one
 HARN_SHIELD-to-DGND bridge. **The report raises no violation of any kind** -- its own line is
 "VIOLATIONS: 0 -- none.  The board passes every rule listed above" -- so the keep-out of
-DSN-EEG-003 Rev C §3.3 is free of copper on all four layers in the layout as routed, stated here
+DSN-EEG-003 Rev D §3.3 is free of copper on all four layers in the layout as routed, stated here
 because the report says it, and IQC-B7 above is still what confirms it on the fabricated article.
 
 **The layout passes the programme's own DRC, at minimum geometry.** Closing the board cost the
@@ -727,7 +727,7 @@ returned, not queued.
 | **R1–R16 thin film, 0.1 %, 25 ppm** | E-03 and E-07. Thick film is prohibited: its excess noise and tempco appear directly in the 1.0 µV RMS budget. **The value is 68 kΩ**: ECO-EEG-024 was implemented on 2 September 2026 and S-02 is met in the design at 36.8 µA against 50 µA. The construction and the value are both fixed; what is open is SR-01, the safety reviewer's written disposition, which is not a sourcing question. |
 | **C1–C16, 10 nF C0G `GCM1885C1H103JA16D`** | E-10. X7R is prohibited **on this line**. The sixteen time constants set the 100 Hz flatness and the common-mode match; X7R moves with voltage and temperature and the failure appears at T8 and T9, after the batch is built. Note that C21/C41/C61 carry the **same** C0G part number since ECO-EEG-019 rescaled the Sallen-Key, so they are on this line by value and are not on it by requirement: "no X7R" is a rule about C1–C16 and not about the board. Rev B's statement that C21/C41/C61 are X7R by decision is withdrawn (ECO-EEG-031). |
 | **D1–D16, BAV99** | E-07. Pinout locked, pin 3 on the input node. BAT54S is explicitly not approved here: Schottky leakage across the series resistor is a measurable offset. |
-| **R90 and R91, 0 Ω** | DSN-EEG-003 Rev C §3.3. They are the single star points. Fit exactly one of each, as a real 0 Ω part. Never bridge with a wire or a solder blob, and never fit a second path. |
+| **R90 and R91, 0 Ω** | DSN-EEG-003 Rev D §3.3. They are the single star points. Fit exactly one of each, as a real 0 Ω part. Never bridge with a wire or a solder blob, and never fit a second path. |
 | **DIN 42802 touch-proof sockets** (J15–J17) | E-09, S-02. A patient-safety part. No "or equivalent": a sample is approved in writing or it is not bought (§1.4.1). |
 | **Protected 18650 cell** (K16) | S-04, S-09. Protection, retention and the UN 38.3 report are requirements, not features -- and S-04's thermistor is not met by any of them. |
 | **Sintered Ag/AgCl cups** (K1) | A-01. Sintered, not plated. |
@@ -782,7 +782,7 @@ order.
 
 | # | Check | |
 |---|---|---|
-| 1 | The BOM revision on the order is **AVL-EEG-017 Rev B** and the board revision is **EEG-CAR-01 Rev B**. | ☐ |
+| 1 | The BOM revision on the order is **AVL-EEG-017 Rev C** and the board revision is **EEG-CAR-01 Rev B**. | ☐ |
 | 2 | Every line is quoted by **manufacturer part number**, not by description or by distributor code alone. | ☐ |
 | 3 | Every distributor code has been re-checked against the MPN in the live catalogue **today**. | ☐ |
 | 4 | Lifecycle status re-checked. Any line not **Active** has written programme approval attached. | ☐ |

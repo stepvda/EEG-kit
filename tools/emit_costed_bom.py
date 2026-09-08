@@ -45,7 +45,7 @@ NRE = [("Layout review NRE placeholder (EUR)", 1500,
         "distinct programmes, not one. The figure is not re-estimated here because the "
         "Rev C cut file has not been drawn (PKG-EEG-015 open item 1)."),
        ("Stencil, fixtures and test jig placeholder (EUR)", 400,
-        "JIG-EEG-009 Rev B specifies more fixtures than v1 assumed. Held at v1's figure "
+        "JIG-EEG-009 Rev C specifies more fixtures than v1 assumed. Held at v1's figure "
         "until JIG-EEG-009 section 6.1 is quoted.")]
 
 # ------------------------------------------------------------------- the price table
@@ -201,7 +201,7 @@ def build(path):
     ws.title = "Assumptions"
     ws.append(["EEG field kit -- internal bill of materials, indicative costing"])
     ws["A1"].font = TITLE
-    ws.append([f"Rev {REV}, {DATE}.  Companion to RFQ-EEG-001 Rev E and DSN-EEG-003 Rev C."])
+    ws.append([f"Rev {REV}, {DATE}.  Companion to RFQ-EEG-001 Rev E and DSN-EEG-003 Rev D."])
     ws.append(["THIS IS THE PROGRAMME'S OWN COPY AND IT CARRIES PRICES.  The bidders' "
                "workbook (EEG_kit_BOM_for_bidders_RevC.xlsx) is the same part list with "
                "the prices removed and empty cells for the bidder.  Do not send this file "

@@ -1,9 +1,9 @@
 # Rulings Register
 
-**Document:** RUL-EEG-021  **Revision:** A  **Date:** 1 September 2026
+**Document:** RUL-EEG-021  **Revision:** B  **Date:** 1 September 2026
 **Issued by:** TI One Voice research programme (one.witysk.org), Brussels, Belgium
 **Licence:** CC BY-SA 4.0
-**Governing documents:** DSN-EEG-003 Rev C, then RFQ-EEG-001 Rev E. Where this
+**Governing documents:** DSN-EEG-003 Rev D, then RFQ-EEG-001 Rev E. Where this
 document and `tools/design.py` disagree, `design.py` governs.
 
 ## Why this document exists
@@ -161,3 +161,32 @@ on MP-01 is ≥ 18 mm, which is more than twice the 8 mm the safety case asks fo
 
 4. **Where a requirement is not met, say so in the same sentence as the requirement.** Do not
    put "met" in a compliance table and the exception three sections later.
+
+**Rulings 5 to 8 were added on 8 September 2026 under ECO-EEG-030 to ECO-EEG-033, and each
+settles a contradiction that was found rather than one that was reported.**
+
+5. **A design-rule check reports on the rule set it was given, and the report must say which
+   rule set that was.** `kicad/EEG-CAR-01_RevB_DRC_report.txt` read "VIOLATIONS: 0 -- none.
+   The board passes every rule listed above" and was correct; six of the seven findings an
+   external layout engineer then made were rules it did not have, and the same geometry
+   regraded under them shows **1 311 occurrences** (ECO-EEG-032). A report at zero is evidence
+   about a rule set and not about a board. **Every DRC report in this package states the rule
+   set it measured against**, and a number quoted from one is quoted with it.
+
+6. **`tools/design.py` governs coordinates, and a table that transcribes them is checked
+   against it rather than read.** ICD-EEG-006 section 1 gave four connector positions -- J4,
+   J9, J22 and J26 -- that `design.py` had moved and the table had not followed. Two of the
+   four moved at ECO-EEG-018, months before, and nothing compared them. **A transcription of
+   `design.py` is verified by a tool that reads both, or it is not verified.**
+
+7. **A part number that contradicts its own requirement in the same sentence is a defect in
+   the requirement.** RFQ-EEG-001 Rev E E-26 asks for "a 6 mm tactile switch (Omron B3F-4055
+   class)"; B3F-4055 is a **12 x 12 mm** switch, so the sentence cannot be satisfied. The rule:
+   **where a requirement names both a characteristic and a part, the characteristic governs**
+   and the part number is corrected. Here the switch is 6 x 6 mm and the part becomes B3F-1052
+   (ECO-EEG-031). The RFQ is not re-issued for it and carries it as an open item.
+
+8. **Document numbers and change numbers come from one pool.** They always did, and
+   ECO-EEG-016 was once both a document and a change number. The next free number is one above
+   the highest used by either namespace, counting withdrawn numbers as used. The rule and the
+   current allocation live in **ECO-EEG-016 section 1.3A**, which is their one home.
