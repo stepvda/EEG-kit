@@ -17,6 +17,9 @@ What it writes into package/kicad:
     EEG-CAR-01_RevC*.kicad_sch                 the native hierarchical schematic
     EEG-CAR-01.kicad_sym                       the symbol library it is drawn from
     EEG-CAR-01_RevC_schematic_netlist_check.txt  the gate on the schematic
+    EEG-CAR-01_RevC_unrouted.kicad_pcb         the board: placed, netted, NO copper
+    EEG-CAR-01_RevC.kicad_pro                  net classes, rules and severities
+    EEG-CAR-01_RevC_outline_and_fixed_connectors.dxf   the mechanical inputs
 
 The two CPL files are PROVISIONAL and say so in the file: outside the thirty connectors,
 Rev C placement is what the contractor is being paid to decide, and the coordinates in
@@ -35,7 +38,9 @@ sys.path.insert(0, HERE)
 
 import design as D          # noqa: E402
 import gerber               # noqa: E402
+import dxf_out              # noqa: E402
 import emit_kicad_sch       # noqa: E402
+import kicad_pcb8           # noqa: E402
 import pcbgen               # noqa: E402
 import rules                # noqa: E402
 import sch_netlist          # noqa: E402
@@ -99,6 +104,91 @@ def emit_rules(verbose=True):
     return [path]
 
 
+def verify_board(pcb, board, nfixed):
+    """Read the board back and check it against design.py.
+
+    The board file is the thing the contractor routes.  A footprint dropped, a net lost
+    or a stray track left in it is not a cosmetic defect: it is a board routed to the
+    wrong netlist.  So it is parsed back rather than trusted.
+    """
+    import json
+    import kicad_parse
+    text = open(pcb).read()
+    for token in ("(segment ", "(via ", "(arc "):
+        if token in text:
+            raise SystemExit(f"{os.path.basename(pcb)} contains {token.strip()} -- "
+                             f"Rev C is unrouted and this file must carry no copper")
+    got = kicad_parse.load(pcb)
+    if len(got.footprints) != len(board.parts):
+        raise SystemExit(f"{len(got.footprints)} footprints written, "
+                         f"{len(board.parts)} expected")
+    want_nets, got_nets = {}, {}
+    for pd in board.pads():
+        if pd.net:
+            want_nets.setdefault(pd.net, set()).add(f"{pd.ref}.{pd.num}")
+    for pd in got.pads():
+        if pd.netname:
+            got_nets.setdefault(pd.netname, set()).add(f"{pd.ref}.{pd.num}")
+    if want_nets != got_nets:
+        bad = [k for k in set(want_nets) | set(got_nets)
+               if want_nets.get(k) != got_nets.get(k)]
+        raise SystemExit(f"the board's netlist differs from design.py on {len(bad)} "
+                         f"net(s): {sorted(bad)[:8]}")
+    n_locked = text.count("(locked yes)")
+    if n_locked != len(kicad_pcb8.LOCKED):
+        raise SystemExit(f"{n_locked} footprints locked, "
+                         f"{len(kicad_pcb8.LOCKED)} expected")
+    for name, _lay, _pts, _why in rules.AREAS:
+        if f'(name "{name}")' not in text:
+            raise SystemExit(f"rule area {name} is missing from the board; the "
+                             f".kicad_dru refers to it by that name")
+    pro = os.path.join(KDIR, f"{D.stem(D.REV_C)}.kicad_pro")
+    cfg = json.load(open(pro))
+    names = {c["name"] for c in cfg["net_settings"]["classes"]}
+    want = {("Default" if c.name == "DEFAULT" else c.name) for c in rules.CLASSES}
+    if names != want:
+        raise SystemExit(f"the project file's net classes are {sorted(names)}, "
+                         f"not {sorted(want)}")
+    if len(cfg["net_settings"]["netclass_patterns"]) != len(set(D.N.values())):
+        raise SystemExit("the project file does not assign every net to a class")
+    if cfg["board"]["design_settings"]["rule_severities"]["track_dangling"] != "error":
+        raise SystemExit("track_dangling is not an error in the project file")
+    return dict(footprints=len(got.footprints), pads=sum(1 for _ in got.pads()),
+                nets=len(got_nets), locked=n_locked, segments=len(got.segments),
+                vias=len(got.vias))
+
+
+def emit_board(board, verbose=True):
+    """The unrouted board, the project file and the DXF."""
+    os.makedirs(KDIR, exist_ok=True)
+    stem = D.stem(D.REV_C)
+    made = []
+    # The board is `<project>.kicad_pcb` and NOT `<project>_unrouted.kicad_pcb`.
+    #
+    # A KiCad project expects its board and its schematic to share the project's stem.
+    # A board named `..._unrouted.kicad_pcb` opens standalone, and standalone means
+    # WITHOUT `EEG-CAR-01_RevC.kicad_pro` -- so the eight net classes, the 156 net
+    # assignments and the rule severities that make track_dangling an error would all be
+    # silently absent for the contractor, which is the opposite of the point.  That the
+    # board is unrouted is said in its own title block, in comment 1, in the file's
+    # first four lines and in LAY-EEG-034, none of which a file name has to repeat.
+    pcb = os.path.join(KDIR, f"{stem}.kicad_pcb")
+    made.append(kicad_pcb8.write_pcb(pcb, board))
+    made.append(kicad_pcb8.write_pro(os.path.join(KDIR, f"{stem}.kicad_pro"), board,
+                                     os.path.basename(pcb)))
+    dxf, nfixed = dxf_out.write(
+        os.path.join(KDIR, f"{stem}_outline_and_fixed_connectors.dxf"), board)
+    made.append(dxf)
+    st = verify_board(pcb, board, nfixed)
+    if verbose:
+        print(f"    board reads back: {st['footprints']} footprints, {st['pads']} pads, "
+              f"{st['nets']} nets, {st['segments']} segments, {st['vias']} vias, "
+              f"{st['locked']} locked")
+        for m in made:
+            print("   ", os.path.relpath(m, PKG))
+    return made
+
+
 def main(verbose=True):
     board = pcbgen.BoardV2()
     board.validate()
@@ -108,6 +198,7 @@ def main(verbose=True):
               f"{sum(1 for _ in board.pads())} pads, {len(board.nets())} nets")
     made = emit_bom_cpl_netlist(board, verbose)
     made += emit_rules(verbose)
+    made += emit_board(board, verbose)
     made += emit_kicad_sch.main(verbose)
     ndiff, nprob, report = sch_netlist.main(write=True)
     made.append(report)

@@ -224,7 +224,10 @@ def load(path: str) -> Board:
             outline.append(((fnum(st[1]), fnum(st[2])), (fnum(en[1]), fnum(en[2]))))
 
     fps = []
-    for m in children(root, "module"):
+    # KiCad 5 calls it `module` and KiCad 6 onwards `footprint`.  Both are read, because
+    # the Rev B artefact is the first and the Rev C board and whatever the layout
+    # contractor returns are the second (ECO-EEG-033).
+    for m in list(children(root, "module")) + list(children(root, "footprint")):
         at = child(m, "at")
         fx, fy = fnum(at[1]), fnum(at[2])
         frot = fnum(at[3]) if len(at) > 3 else 0.0
@@ -234,6 +237,11 @@ def load(path: str) -> Board:
             if t[1] == "reference":
                 ref = t[2]
             elif t[1] == "value":
+                val = t[2]
+        for t in children(m, "property"):
+            if len(t) > 2 and t[1] == "Reference":
+                ref = t[2]
+            elif len(t) > 2 and t[1] == "Value":
                 val = t[2]
         fp = Footprint(ref=ref, value=val, lib=m[1], x=fx, y=fy, rot=frot, layer=lay)
 

@@ -1495,6 +1495,49 @@ here, and the ICD is corrected in the same change rather than left contradicting
 contractor needs it: a schematic whose symbols live only inside itself opens, and nobody can
 edit it.
 
+**2. The unrouted board, the project and the DXF (inputs 2 and 4).**
+`kicad/EEG-CAR-01_RevC.kicad_pcb`, written by `tools/kicad_pcb8.py` at
+`(kicad_pcb (version 20240108))`. `tools/kicad_write.py`, which writes the Rev B routed board
+in the KiCad 5 dialect, is untouched: that dialect was the right choice for a fabrication set
+going to houses on older tools and is the wrong one here, because net classes, rule areas and
+custom rules do not survive it and they are the whole point.
+
+What is in it: the outline on Edge.Cuts and the four-layer stack-up of DSN-EEG-003 section 3.2
+in `(setup)`; all **211** footprints with their pads and nets and **no track, no via and no
+arc**; AGND_REF and DGND zones on In1.Cu and In2.Cu split at x = 62 mm; and rule areas under
+exactly the names the `.kicad_dru` refers to -- `ISOLATION_KEEPOUT` on all four copper layers,
+`ANALOGUE_ZONE`, `DIGITAL_ZONE`, four `MOUNT_KEEPOUT_MH*` and `NO_VIA_J2/J4/J23/J29`.
+
+**37 footprints are locked**: J1 to J30, MH1 to MH4 and FID1 to FID3. The connectors are fixed
+by the pod, the module plate and the harness and the contractor may not move them; everything
+else is at its Rev B coordinate, unlocked, and is theirs to place.
+
+`kicad/EEG-CAR-01_RevC.kicad_pro` carries the eight net classes, an assignment for **all 156**
+nets, the board minima, and the rule severities that make **`track_dangling` an error** --
+which is finding 2a handed to KiCad's own built-in check rather than restated as a custom rule.
+
+**The board is `EEG-CAR-01_RevC.kicad_pcb` and not `EEG-CAR-01_RevC_unrouted.kicad_pcb`, and
+that is deliberate.** A KiCad project expects its board and its schematic to share the
+project's stem. A differently named board opens standalone -- which means without the project
+file, so the net classes, the assignments and the severities would all be silently absent for
+the contractor. That the board is unrouted is said in its title block, in its comments, in
+LAY-EEG-034 and in the handover README; a file name does not have to repeat it, and a broken
+project association costs more than the name is worth.
+
+`kicad/EEG-CAR-01_RevC_outline_and_fixed_connectors.dxf` is the mechanical input: outline,
+MH1-MH4 with their 6 mm keep-outs, the isolation strip, the zone split and all thirty
+connector courtyards with pin-1 marks, in **`design.py`'s convention -- top-left origin, Y
+down** -- which is the board file's convention too, so the two overlay without transforming
+anything. The CAM convention is the other one and the DXF says so on its own face as well as
+in the README.
+
+*Verified.* The board is parsed back after writing and checked against `design.py`: **211
+footprints, 636 pads, 156 nets, 0 segments, 0 vias, 37 locked**, netlist identical, every rule
+area present under the name the `.kicad_dru` uses, the project file's classes and its 156
+assignments complete, and `track_dangling` at error. `kicad-cli pcb drc` was **NOT RUN**:
+KiCad is not installed on this machine. On an unrouted board its only finding would be
+unconnected items, one per net, and that is not a substitute for the check.
+
 ### 2.2 Requirement changes and where they come from
 
 Every RFQ-EEG-001 requirement that changed between Rev C and this release, with the change
