@@ -29,9 +29,11 @@ deliberately not advanced: these are corrections inside the same release.
 **zero violations and all 145 nets connected**, so the fabrication-release gate of section 3
 is met and that section is rewritten to say so. ECO-EEG-018's routed-result table carries the
 current figures and **section 2B records what was changed to close the board and what closing
-it cost**. The fabrication data is **released for review under RFQ-EEG-002A and is still not
-released for fabrication**, because no human layout engineer has read the routing. The
-revision letter is again not advanced: this is a correction inside the same release.
+it cost**. *That paragraph said the fabrication data was released for review under
+RFQ-EEG-002A and not for fabrication, because no human layout engineer had read the routing.
+**It is superseded at Rev C**: one has read it, declined the review and advised a redesign, and
+**Rev B is withdrawn from fabrication** -- ECO-EEG-030.* The revision letter was not advanced
+for the 2 September correction: it was a correction inside the same release.
 
 **Further corrections within Rev B, made on 2 September 2026, closing the findings of an
 independent external review of the package that name this document.** **TOOL-EEG-022 Rev A
@@ -1886,6 +1888,11 @@ netlist is not a fault path reviewed.
 **released for review under RFQ-EEG-002A**; the routing-result table in ECO-EEG-018 above and
 section 3.4 of DSN-EEG-003 are restated from the report. Nothing else moves. **Nothing here has
 been manufactured or measured, and no human layout engineer has reviewed the routing.**
+
+*This is the record of 2 September 2026 and it stands as a record. **Both of its last two
+statements are superseded by ECO-EEG-030 of 4 September 2026**: a human layout engineer has
+read the routing, and the data in `kicad/` for Rev B is withdrawn from fabrication rather than
+released for review. Section 3 is the current gate.*
 Rev B closed this section by naming two requirements that were not met and were untouched by
 the routing work: S-02 at a calculated 53.2 µA, and S-04's charge thermistor. **Corrected
 2 September 2026: S-02 is met in the design at 36.8 µA under ECO-EEG-024, and unsigned.

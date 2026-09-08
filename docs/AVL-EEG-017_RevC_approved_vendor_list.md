@@ -49,9 +49,9 @@ change; this is a correction within the same release.
 The findings of the second cross-document audit of 1 September 2026 are closed in this same
 issue, without a further revision letter: the routing result and the release status are stated
 from `kicad/EEG-CAR-01_RevB_DRC_report.txt` -- zero violations, all 145 nets connected, 169
-connections relaxed to get there, and the data released for review and not for fabrication --
-and the fiducial ruling is cited as RUL-EEG-021 Rev B rather than as the uncontrolled worksheet
-`tools/RULINGS.md`.
+connections relaxed to get there. **That release state is superseded: Rev B is withdrawn from
+fabrication (ECO-EEG-030) and Rev C is unrouted.** The fiducial ruling
+is cited as RUL-EEG-021 Rev B rather than as the uncontrolled worksheet `tools/RULINGS.md`.
 
 ## Why this document exists
 
@@ -250,9 +250,10 @@ Phase 2.
 
 **The board specification table is not restated here.** It lives in **DSN-EEG-003 Rev D §3.2**
 and the fabricator is quoted against that table plus the Gerber, drill and IPC-D-356A set.
-That set is **released for review, not for fabrication** -- see the routing result at the end
-of this section -- so it supports a quotation and a layout review, and not yet an order. The
-review is RFQ-EEG-002A; a bare-board order follows it. The isolation keep-out and the
+That set is **withdrawn from fabrication** (ECO-EEG-030) and **Rev C is unrouted**, so there
+is no bare-board data to quote against or to order from -- see the end of this section. What
+exists for Rev C is the layout input set in `kicad/RevC_layout_inputs/` and the rule sheet
+LAY-EEG-034. The isolation keep-out and the
 star-point rule live in **DSN-EEG-003 Rev D §3.3**. What this section carries is only what a buyer needs in order to raise the order.
 
 | Item | Purchasing summary | State |
@@ -304,13 +305,14 @@ should read the bare-board line above with that in mind: the 0.20 mm minimum tra
 really used -- the narrowest conductor on the board is 0.200 mm -- and this is not a layout with
 room to spare against its own minima.
 
-**The fabrication data is RELEASED FOR REVIEW under RFQ-EEG-002A, not for fabrication.** The
-release gate of ECO-EEG-016 §3 -- zero DRC violations, every net one connected copper island,
-both inner planes continuous under the analogue zone -- is met on all three counts. What has not
-happened is a human layout review: the routing came from the programme's own tools and no layout
-engineer has looked at it. **This document therefore supports a quotation against the bare-board
-line above, and the data may be issued for that review; a bare-board order follows the review,
-not this page.**
+**Rev B is WITHDRAWN FROM FABRICATION and Rev C is unrouted.** The release gate of
+ECO-EEG-016 §3 -- zero DRC violations, every net one connected copper island, both inner planes
+continuous under the analogue zone -- was met on all three counts, and it was not enough. A
+layout engineer read the board between 3 and 5 September 2026, declined the review and advised
+a redesign; six of his seven findings were rules that DRC did not have, and the same geometry
+regraded under them shows 1 311 occurrences (ECO-EEG-032). **There is no bare-board data to
+quote against or to order from.** Placement and routing of Rev C are bought; the input set is
+`kicad/RevC_layout_inputs/` and the rules are LAY-EEG-034.
 
 ### 1.6 Module interface hardware
 
@@ -857,7 +859,7 @@ Stated as plainly as the rest.
 | 9 | **The cell assembly is not a catalogue part** and its UN 38.3 evidence for the assembled pack does not exist yet. | Blocks despatch under S-09 even if the kits are built. | Pack builder's first article |
 | 10 | **No electrical safety reviewer has been appointed.** | No Class A substitution can be approved, and no unit may be used on a person. | DESIGN_FACTS §8 item 1 |
 | 11 | **No lead time, price or lifecycle status in this file has been quoted or verified by the programme**, including the four-layer premium of §1.5. | Every figure in §3 and §5 is a planning assumption. | The bidders' answers to RFQ-EEG-001 Rev E section 10 |
-| 12 | **The layout has not been reviewed by a human layout engineer.** It now passes the programme's own DRC -- `kicad/EEG-CAR-01_RevB_DRC_report.txt` records zero violations, all 145 nets connected and both inner planes continuous -- but it was produced by the programme's own tools, and it closes at minimum geometry: **169 connections were relaxed**, 36 below the 0.25 mm preferred width and 133 at full width with a reduced gap, all at or above the 0.20 mm minimum. The routing statistics quoted in §1.5 are taken from that report. | The data is **released for review, not for fabrication**: quoting against the §1.5 bare-board line is not blocked, and a bare-board order waits on the review. The safety case is separately blocked by item 10. | RFQ-EEG-002A: a human layout review and sign-off |
+| 12 | **The Rev B layout WAS read by a layout engineer, who declined the review and advised a redesign** (3-5 September 2026). It passed the programme's own DRC -- `kicad/EEG-CAR-01_RevB_DRC_report.txt` records zero violations -- against a rule set that did not contain six of his seven findings; regraded under them the same geometry shows **1 311** occurrences. **Rev B is withdrawn from fabrication and Rev C is unrouted** (ECO-EEG-030) | **superseded** | Placement and routing are bought. RFQ-EEG-002A is re-scoped to the review of the contractor's PLACEMENT, before routing is confirmed |
 | 13 | **The two halves of the HM-04 electrode termination, K25 and K26, are not a sourcing problem yet -- they are a design decision nobody has taken.** WH-EEG-008 §3.1.1 specifies the joint as a proposal: an annular crown on the HM-05B spigot and a sprung leaf anchored in HM-04, so that the bayonet is the disconnect. Until a mechanical reviewer accepts it, HM-04 and HM-05B gain the features it needs, and a safety reviewer signs the patient-applied path, no sample can be judged and no order can be raised. | **The site end of both helmet cables cannot be built.** Twenty-four joints per helmet -- eight electrode conductors and sixteen contact-light LED leads -- have no terminal, no method and no wire entry. | The mechanical reviewer on MECH-EEG-020 sheet 8, then the safety reviewer, then a sample against the K25 and K26 criteria. **Narrowed 2026-09-02**: two of the features that row waits on are cut in `tools/mech_gen.py` — the circumferential bayonet run (measured at 0.000 mm³ of interference through the quarter turn and the 0.40 mm of travel) and the LED seat, now an outboard pocket separated from the conductor run by 1.60 mm of PA12, which is RISK-EEG-011 SF-9 designed out rather than argued away. HM-04A, HM-05C, the 15 N anchorage, the dressed exit and the LED's two lead passages are still owed |
 | 14 | **The ear-reference coupler, K27, waits on the same kind of decision.** WH-EEG-008 §3.1.2 proposes a free-hanging touch-proof socket on the temple tail, which is the only reading that satisfies K2's leaded electrode, SVC-EEG-013 R4's tool-free release and IEC 60601-1's touch-proof expectation at once. **Ruled on 2026-09-02 and still unsigned** (WH-EEG-008 §3.1.2.1): the coupler and the clip do not change, and what is added is a 5–15 N separation window, the first-article probe-B check, a stated K2 lead length with T8 re-measured, and a **packing rule** — the clips travel mated and captive — that this file does not own and that K27's 500-cycle criterion depends on. | Two of the fourteen patient terminations cannot be built, and if the packing rule is refused the cycle criterion doubles and the mis-mate has to be designed out mechanically. | The safety reviewer on the interface, **the programme lead on the packing rule across PKG-EEG-015, IFU-EEG-014, SVC-EEG-013 and RISK-EEG-011**, then a sample against the K27 criteria; ordered on the same purchase order as K2 |
 | 15 | **Four purchased harness lines are open on datasheet facts, not on availability**: K37's lug order and detect contact, K38's flange envelope and nose length, K40's USB-B plug and braid, K41's non-moulded 3.5 mm plug. All four are in current catalogues; none has been read by the programme. | Each becomes buildable the moment one drawing is obtained. Getting K37's lug order wrong puts DGND on VOICE_RAW. | Obtain the four drawings before the Phase 1 order; §6.2 evidence line 1 |

@@ -17,9 +17,11 @@ advanced for them.
 **Correction within Rev C, 2 September 2026.** The carrier now routes to completion: the DRC
 reports **zero violations, all 145 nets one connected copper island, and both inner planes
 continuous under the analogue zone** -- the three conditions of the ECO-EEG-016 section 3 gate.
-Section 3.4 carries the current result and the release state, which is **released for review
-under RFQ-EEG-002A and not released for fabrication**, because no human layout engineer has yet
-looked at the routing. ECO-EEG-016 section 2B records how the board was closed. This too is a
+Section 3.4 carries that result. **It is superseded as a release state.** A layout engineer
+read the Rev B board between 3 and 5 September 2026, declined the review and advised a
+redesign; **Rev B is withdrawn from fabrication and Rev C is unrouted, with its placement and
+routing bought** (ECO-EEG-016 section 2, ECO-EEG-030). Six of his seven findings were rules
+this DRC did not have, and the same geometry regraded under them shows 1 311 occurrences. ECO-EEG-016 section 2B records how the board was closed. This too is a
 correction within the Rev C release and the revision letter is not advanced for it.
 
 **Second correction within Rev C, 2 September 2026, after the independent review of package
@@ -676,7 +678,7 @@ every unit.
 
 | Question | Answer | Why |
 |---|---|---|
-| Can you fabricate the bare board? | **Not yet: the data is released for review, not for fabrication.** | Gerber X2 for four copper layers, both drill files, IPC-D-356A netlist, fabrication drawing and stack-up are complete and checksummed; the DRC reports **zero violations** and every one of the 145 nets is one connected copper island (section 3.4). What is missing is not a number but a reader: **no human layout engineer has reviewed the routing**, and 169 connections sit at relaxed geometry. Quote from it today; fabricate from it once RFQ-EEG-002A has reviewed it and signed it off |
+| Can you fabricate the bare board? | **No. There is no current fabrication data at all.** | Rev B's Gerbers, drill files, IPC-D-356A netlist and drawings are complete, checksummed and **withdrawn from fabrication** (ECO-EEG-030): a layout engineer read the board, declined the review and advised a redesign. **Rev C is unrouted** -- its placement and routing are bought, and what exists for it is the layout input set in `kicad/RevC_layout_inputs/` and the rule sheet LAY-EEG-034. Nothing may be quoted or ordered from Rev B |
 | Can you assemble it? | **Yes, firm** | BOM with manufacturer part numbers, SMT and through-hole CPL, paste layer, assembly drawing, work instructions |
 | Can you print the mechanical parts? | **Yes** | STL, STEP and dimensioned drawings for every part. The foam is a separate answer: seven DXF layer files are drawn and **not released for cutting** until the case shell is measured -- section 4 and PKG-EEG-015 section 3.2 |
 | Can you build the harness? | **Yes** | WH-EEG-008 gives a complete from-to wire list, materials, tooling and test |
@@ -798,7 +800,7 @@ follows is what it found in the package as a whole, and what remains open.
 
 | # | Finding | Severity | Action |
 |---|---|---|---|
-| 1 | The routing is machine-generated and **unreviewed by a person**. The DRC now reports **zero violations**, all 145 nets connected, each reference plane one continuous island per net -- and **169 connections at relaxed geometry**, 36 of them narrower than the preferred width. The data is therefore **released for review under RFQ-EEG-002A and not for fabrication**. Section 3.4 carries the full transcription; `kicad/EEG-CAR-01_RevB_DRC_report.txt` is the authority | **blocking for fabrication release, not for quoting** | RFQ-EEG-002A reviews the whole routing, the 169 relaxed connections first, and signs it off; the DRC report lists every squeeze |
+| 1 | **CLOSED, and not the way it was expected to close.** The routing was machine-generated and unreviewed; a layout engineer read it between 3 and 5 September 2026, **declined the paid review and advised a redesign from the schematic**. Six of his seven findings are rules the DRC did not have; regraded under them the same geometry shows **1 311 occurrences** (`kicad/EEG-CAR-01_RevB_regraded_ECO-EEG-032.txt`). **Rev B is withdrawn from fabrication and Rev C is unrouted** | **was blocking; now superseded by ECO-EEG-030** | Placement and routing are bought. RFQ-EEG-002A is re-scoped to the review of the contractor's PLACEMENT, taken before routing is confirmed |
 | 2 | The analogue module jumper is a ten-way ribbon with no interleaved grounds | major | 60 mm length limit; screened ribbon specified; E-04 restated to −80 dB at 50 Hz on the carrier (ECO-EEG-026); consolidation is the Phase 2 fix |
 | 3 | LED_V is driven directly by GPIO48 | medium | 1 kΩ series with Vf 2.0 V gives (3.3 − 2.0)/1000 = **1.3 mA per site and 10.4 mA total**, within the ESP32-S3 pin rating; R78 allows a 47 Ω alternate; a buffer is the fallback |
 | 4 | GPIO0 is used as the shift-register latch and is a strapping pin | low | it is pulled up on the DevKit and is an input at boot; the latch is an input to the 595, so a static high is harmless. The consequence is that J26 cannot enter download mode, so end-of-line flashing uses the DevKit's own USB-C port (section 5) |
@@ -827,10 +829,10 @@ A manufacturer can quote, today, and can build most of it, today: the assembly, 
 parts, the harness, the provisioning and the production test of TST-EEG-004 Rev C. The bare
 board **cannot be fabricated yet**, and the reason has changed: the board now meets all three
 conditions of the ECO-EEG-016 section 3 gate -- zero DRC violations, every net one connected
-copper island, both inner planes continuous under the analogue zone -- so the fabrication data
-is **released for review under RFQ-EEG-002A** -- but it stays unreleased for fabrication until
-a human layout engineer has read the routing, the 169 relaxed connections of section 3.4
-included, and signed it off. Nobody orders boards from it before that.
+copper island, both inner planes continuous under the analogue zone. **That was met and it was
+not enough.** A layout engineer read the routing, declined the review and advised a redesign,
+and **Rev B is withdrawn from fabrication** (ECO-EEG-030). Rev C is unrouted and its layout is
+bought. **Nobody orders boards from any of it.**
 
 What a manufacturer still cannot do at all is ship a unit for use on a participant, because
 the firmware stubs must be completed, RFQ S-04's thermistor does not exist, and
@@ -941,10 +943,10 @@ copying it.
 > Two things we are asking for. First, if you have a layout desk: RFQ-EEG-002A is now a
 > **review** of the supplied routing rather than the routing itself -- read it against the rules
 > in section 3.3, correct what is wrong and sign it off. The DRC now reports zero violations
-> and all 145 nets connected, so there is nothing left to close; what there is to judge is
-> 169 connections the router had to take at relaxed geometry, and a routing no layout engineer
-> has yet read. **Until that review is done the fabrication data is released for review and
-> not for fabrication**, and we say so in section 3.4 rather than letting you find it.
+> and all 145 nets connected. **That routing has since been read by a layout engineer, who
+> declined the review and advised a redesign, and Rev B is withdrawn from fabrication**
+> (ECO-EEG-030). Rev C is unrouted and its placement and routing are bought. **There is no
+> fabrication data to quote from**, and we say so here rather than letting you find it.
 > Second: RFQ-EEG-002B, fabrication and assembly at 2, 10, 25 and 50 units, module procurement
 > or consignment, MJF printing, harness assembly, provisioning and test.
 >
