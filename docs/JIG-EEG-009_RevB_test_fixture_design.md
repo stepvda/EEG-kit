@@ -171,11 +171,12 @@ result rather than an assumption.
 **The board closes: zero DRC violations.** The report's own line is "VIOLATIONS: 0 -- none.
 The board passes every rule listed above." Zero violations, every net one connected copper
 island and both inner planes continuous under the analogue zone are the three conditions
-ECO-EEG-016 section 3 sets for releasing fabrication data, and all three are met, so **the data
-is RELEASED FOR REVIEW under RFQ-EEG-002A**. It is **not released for fabrication**: that
-awaits the review, because the routing was produced by the programme's own tools and **has not
-been reviewed by a human layout engineer** (DESIGN_FACTS section 8, item 4). Nor does it close
-comfortably. **169 connections are relaxed** -- 36 take a conductor narrower than the 0.25 mm
+ECO-EEG-016 section 3 sets for releasing fabrication data, and all three are met. **That was
+not enough, and Rev B is withdrawn from fabrication.** An external layout engineer read the
+board between 3 and 5 September 2026, declined the review and advised a redesign; his seven
+findings are ECO-EEG-016 section 2, ECO-EEG-030, and six of them are rules the programme's DRC
+was never given. **Nothing is released for fabrication or for review**: Rev C is unrouted and
+its layout is bought. Nor did Rev B close comfortably. **169 connections are relaxed** -- 36 take a conductor narrower than the 0.25 mm
 preferred width, and 133 keep full width and take a reduced gap -- all at or above the 0.20 mm
 minimum conductor and the 0.20 mm minimum gap. A board that closes at minimum geometry is not
 the same board as one that closes at preferred geometry, even when every rule passes, and the

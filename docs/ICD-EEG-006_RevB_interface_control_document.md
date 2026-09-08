@@ -93,12 +93,18 @@ width, and 133 kept full width and took a reduced gap instead. All 169 are at or
 the minimum is still not the same board as one that closes with margin everywhere, and the
 relaxed connections are listed pad by pad so a reviewer can see where.
 
-**The fabrication data is RELEASED FOR REVIEW under RFQ-EEG-002A, not for fabrication.** The
-release gate of ECO-EEG-016 section 3 -- zero DRC violations, every net one connected copper
-island, both inner planes continuous under the analogue zone -- is met on all three counts.
-What has not happened is a human layout review: this routing came from the programme's own
-tools and no layout engineer has looked at it. That review is the scope of RFQ-EEG-002A, and
-fabrication release waits on it.
+**Rev B is WITHDRAWN FROM FABRICATION and Rev C is unrouted.** The release gate of
+ECO-EEG-016 section 3 -- zero DRC violations, every net one connected copper island, both
+inner planes continuous under the analogue zone -- was met on all three counts, and it was not
+enough. An external layout engineer read the Rev B board between 3 and 5 September 2026,
+declined the review and advised a redesign; his seven findings are ECO-EEG-016 section 2,
+ECO-EEG-030, and six of them are rules the programme's DRC was never given. No board is
+ordered from Rev B and its data stays in the tree as history. **Rev C is the same circuit at
+corrected footprints and part numbers, with no routing of its own**: placement and routing are
+bought, and Rev C is released to the layout contractor under RFQ-EEG-002A as re-scoped by
+ECO-EEG-030, under the rules of LAY-EEG-034. **Nothing in this package is released for
+fabrication.** Every connector position, pin assignment and net name in this document is
+unchanged by that: Rev C moves footprints and part numbers only.
 
 **Modules to connectors.** This table is the one home of the module-to-connector mapping;
 DESIGN_FACTS, RFQ-EEG-001 and DSN-EEG-003 cite it rather than repeating it.
@@ -1195,7 +1201,7 @@ What is still open:
 | 12 | **Stack margin is 6.4 mm, calculated.** Comfortable, but every figure in it is a drawing dimension and not a measurement | section 4 | measure the real stack on the first article before any quantity of MP-01 is printed |
 | 13 | **The rail budgets of sections 2.7 and 5.3 and TST-EEG-004 T3's current limit disagree.** About 300 mA on V5V typical implies about 440 mA at J13 while recording; T3 limits the recording current at J13 to 150 mA | sections 2.7 and 5.3, both calculated; TST-EEG-004 T3 | the first article: measure idle and recording current at J13 and the five rails, then TST-EEG-004, which owns the step and its limit, sets a limit that matches the measurement. This document does not restate T3 |
 | 15 | **J28 is counted twice across the package.** Section 3.3 lists it as JMP-28 and WH-EEG-008 section 3.5 lists the same socket as WH-05's carrier end. They are one connector on one socket, and only WH-05 is built, because the room-microphone module is bonded to the pod wall and not fitted to MP-01. The schedule above still says seventeen jumpers and 134 carrier ways | section 3.3; WH-EEG-008 section 3.5 and section 3.9; AVL-EEG-017 section 1.6.1, which counts the housing once | an ECO that deletes JMP-28 from this schedule and restates the count as sixteen jumpers and 130 ways, together with the labour figures ASM-EEG-007 section 8 and DSN-EEG-003 section 2.1 derive from it |
-| 14 | **The routing has not been reviewed by a human layout engineer.** The DRC is clean -- zero violations, all 145 nets connected, both inner planes continuous -- but it was produced by the programme's own tools, and it closes at minimum geometry: 169 connections were relaxed, 36 below the 0.25 mm preferred width and 133 at full width with a reduced gap, all at or above the 0.20 mm minimum | `kicad/EEG-CAR-01_RevB_DRC_report.txt` | the layout review under RFQ-EEG-002A. Until it happens the data is released for review only, not for fabrication |
+| 14 | **Rev B was read by a layout engineer, who declined the review and advised a redesign.** The DRC was clean against the rule set it had -- zero violations, all 145 nets connected, both inner planes continuous -- and six of his seven findings are rules that rule set did not contain. Rev B is withdrawn from fabrication; Rev C is unrouted and its placement and routing are bought | ECO-EEG-016 section 2, ECO-EEG-030; the rule set is LAY-EEG-034 | the placement review under RFQ-EEG-002A as re-scoped, taken before routing is confirmed. Nothing is released for fabrication |
 
 ---
 

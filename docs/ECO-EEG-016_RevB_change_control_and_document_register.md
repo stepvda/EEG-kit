@@ -315,6 +315,25 @@ the label text, the Data Matrix, the USB `iSerialNumber`, the calibration record
 packing list. Every other form that appeared in package v1 and in package v2 Rev A drafts is
 withdrawn.
 
+### 1.3A One number pool for documents and for changes
+
+**Added 8 September 2026 (ECO-EEG-030).** Document identifiers and change identifiers have
+always been drawn from the same `EEG-nnn` run, and the register has already been bitten once
+by that: `ECO-EEG-016` is this document and was also, in a package v2 Rev A draft, a change
+number, so a citation of it was ambiguous everywhere it appeared. That change is now
+ECO-EEG-018 and 016 is reserved to the document. The same trap is open at every other number,
+because ECO-EEG-024 is a change and nothing stops a future document being numbered 024.
+
+**The rule from here: a number is allocated once, from one pool, whatever prefix uses it.**
+The next free number is one above the highest number used by either namespace, counting
+withdrawn numbers as used. Numbers 024 to 029 are **not** available to a document: 024 to 027
+are implemented changes and 028 and 029 are withdrawn ones.
+
+Allocated under this rule on 8 September 2026: **ECO-EEG-030**, **ECO-EEG-031**,
+**ECO-EEG-032** and **ECO-EEG-033** as changes, and **LAY-EEG-034** as a document -- the
+carrier layout rule sheet issued under ECO-EEG-033. The next free number after them is
+**035**.
+
 ### 1.4 Precedence
 
 Highest first: **DSN-EEG-003 → RFQ-EEG-001 → ICD-EEG-006 → SCH-EEG-005 → DSN-EEG-002 →
@@ -459,6 +478,7 @@ indexes, this section is the register, and where they differ this section govern
 | ECO-EEG-027 | major | the envelope AC-coupling corner removed the envelope | implemented |
 | ~~ECO-EEG-028~~ | -- | withdrawn; the board size is a finding of ECO-EEG-018 | withdrawn |
 | ~~ECO-EEG-029~~ | -- | withdrawn; the layer count is a finding of ECO-EEG-018 | withdrawn |
+| ECO-EEG-030 | scope, with seven findings | an external layout engineer read the Rev B board, declined the review and advised redesign; Rev B is withdrawn from fabrication and Rev C is opened as a reviewable design whose layout is bought | implemented 8 September 2026 |
 
 ### ECO-EEG-001 -- the contact lights had no driver
 
@@ -1118,6 +1138,77 @@ recorded 15.9 Hz is deleted.
 **Impact:** three capacitor values, one AVL line, one RFQ requirement, one test limit, and
 one corrected description in `design.py`.
 
+### ECO-EEG-030 -- an external layout engineer read Rev B, and Rev B is withdrawn
+
+**Class:** scope, with seven findings. **Found by:** Danny Van den Bliek, DVDB-electronics BV
+(Belgium), reading `kicad/EEG-CAR-01_RevB_routed.kicad_pcb` between 3 and 5 September 2026
+under RFQ-EEG-002A.
+
+**Was:** the Rev B routing was RELEASED FOR REVIEW under RFQ-EEG-002A and was waiting on a
+human layout engineer, which is the sixth open item of the production simulation and the
+fabrication-release gate of section 3. Nothing else was thought to stand between the data and
+a fabrication order.
+
+**Now:** the reviewer declined the paid review and advised a full redesign from the schematic.
+The programme accepted that on 4 September 2026. **Rev B is withdrawn from fabrication**: no
+board is ordered from it, and Dekimo and DVC were told so on 3 and 4 September 2026. The Rev B
+data stays in the tree under its own file names as history and is not deleted; it is no longer
+the current fabrication set.
+
+**The seven findings.** They are geometric, not circuit errors. Six are rules a design-rule
+check can enforce and the programme's own router was never given; the seventh is a missing
+check rather than a missing rule.
+
+| # | Finding | What it is |
+|---|---|---|
+| 1 | drills in pads | vias placed inside SMD pads |
+| 2 | net stubs and loops | dangling track ends; more than one copper path between the same two pads on one net |
+| 3 | sharp inside corners | an angle below 90 degrees between two consecutive segments of one track |
+| 4 | off-centre pad entry | a track entering a pad other than through the pad centre along the pad's major axis |
+| 5 | under-width critical nets | no net classes: power, analogue input, reference and light-drive nets routed at the generic width |
+| 6 | no module outlines for collision checking | no 3D bodies for the thirteen module assemblies, MP-01 or the DevKit, so no placement can be shown to be free of interference |
+| 7 | schematic not logically drawn | no native schematic exists; the eight-sheet PDF is drawn by `tools/schematic.py` and is not a netlist-bearing schematic a reviewer can read or import |
+
+The reviewer's stated principle, which the programme has adopted: **placement drives via count,
+must precede routing, and must be reviewed before routing starts.**
+
+**What Rev C is.** Rev C is a **board revision** that changes footprints, part numbers and the
+layout. It changes **no pin assignment, no net name, no connector coordinate, no outline, no
+stack-up, no zone split, no keep-out and no star point**; if a later change finds one of those
+necessary it is its own ECO and forces a regeneration and diff of `firmware/main/board_pins.h`.
+Rev C is produced in-house as a **reviewable** design and not as a fabricable one: the seven
+findings are encoded as rules and checks, a native KiCad schematic and 3D bodies are added, and
+**placement and routing are bought** from the JLCPCB layout desk. `tools/router.py` is no longer
+the producer of a fabrication set. Its two remaining roles are to hold and enforce the rules so
+that a returned board can be graded against them, and, optionally, to produce an in-house
+reference route for comparison.
+
+**RFQ-EEG-002A is re-scoped.** RFQ-EEG-001 Rev E section 1.1 defines 002A as the review and
+sign-off of the supplied carrier routing. There is no supplied carrier routing to review any
+more. 002A is now **the review of the layout contractor's PLACEMENT of Rev C**, taken at the
+placement-confirmation gate and before routing is confirmed, as a written findings list by net,
+pad pair and coordinate rather than as edits to the board file. It is capped at four to six
+hours and is agreed in principle with the same reviewer. The full-redesign quote of EUR 3,200
+(estimated EUR 3,200 to 4,500 plus VAT) is logged as a grant budget line and is not ordered;
+the envelope for the current phase is about EUR 500.
+
+**Two revision letters in `design.py`.** `REV` stays at `"B"` and keeps its file names; `REV_C`
+is new and is `"C"`, and `stem()` computes the file stem from a letter so that no Rev C file name
+is typed by hand. Rev B artifacts are unchanged in name and content by this ECO.
+
+**Verified:** `tools/emit_all.py --cached` and `tools/simulate_production.py` were re-run on the
+tree before any change. The DRC report reproduces byte for byte: 0 violations, 145 of 145 nets
+connected, 3 745 segments, 552 vias, minimum clearances 0.260 / 0.285 / 0.285 / 0.275 mm. The
+withdrawal is a change of release state, not of geometry, and it adds no violation, opens no net
+and puts no copper in the isolation keep-out.
+
+**Impact:** the board -- none, Rev B's geometry is untouched and Rev C has no routing yet. The
+firmware -- none, no pin assignment moves. The mechanical parts -- none. The BOM -- none in this
+ECO; ECO-EEG-031 carries the BOM corrections. The test specification -- none; the fixture data
+of JIG-EEG-009 is built against connector positions, and those do not move. The safety case --
+none: no electrode-path, isolation, battery, charge-interlock or patient-current value changes,
+so RISK-EEG-011 is not re-issued for this ECO. Units already built -- none exist.
+
 ### 2.2 Requirement changes and where they come from
 
 Every RFQ-EEG-001 requirement that changed between Rev C and this release, with the change
@@ -1574,24 +1665,31 @@ this register records the fact, it does not amend other documents from here.
 
    **The gate for releasing fabrication data** is that the DRC reports **zero violations**,
    that every net is one connected copper island, and that both inner planes remain
-   continuous under the analogue zone. **That gate is met, as of the DRC report of
-   2 September 2026:** zero violations, 145 of 145 nets connected with none left without
-   copper, and one continuous plane island per net on both inner layers. What met it is
-   recorded in section 2B. **The data in `kicad/` is therefore RELEASED FOR REVIEW under
-   RFQ-EEG-002A, and it is still not released for fabrication** -- that release waits on the
-   review itself, because the routing was produced by the programme's own tools and **no
-   human layout engineer has read it**, and because the board closed by taking the tightest
-   geometry the rules allow on **169 connections**. Nothing may be ordered from this data
-   until RFQ-EEG-002A has reviewed the routing and signed it off. A future change that
-   reopens a net or raises a violation puts the gate back where it was, and this paragraph
-   is rewritten again rather than quietly left standing.
+   continuous under the analogue zone. Rev B met all three on 2 September 2026, and that is
+   recorded in section 2B. **It is not enough, and this paragraph is rewritten rather than
+   left standing.** An external layout engineer read the Rev B board between 3 and 5
+   September 2026, declined the review and advised a redesign; his seven findings are in
+   ECO-EEG-030 and six of them are rules the programme's own DRC was never given, so a
+   report at zero violations was a report against an incomplete rule set. **Rev B is
+   withdrawn from fabrication.** No board is ordered from it and its data stays in the tree
+   as history.
+
+   **Nothing in this package is released for fabrication.** Rev C is defined by ECO-EEG-030,
+   is **unrouted**, and is released to an external layout contractor under RFQ-EEG-002A as
+   re-scoped by that ECO. The gate for releasing Rev C fabrication data is the three
+   conditions above **measured on the geometry the contractor returns**, under the rule set
+   of ECO-EEG-032 and LAY-EEG-034 rather than the Rev B rule set, **plus** the placement
+   review of RFQ-EEG-002A closed before routing was confirmed. Until a contractor's board
+   has been returned and graded, there is no candidate for the gate at all.
 
    **The gate for an ECO inside this release** is narrower, because the release is a review
    package rather than a fabrication package: the change must add no violation, must not
    increase the count of nets that are not one island, must not put copper in the isolation
    keep-out on any layer, and every violation it closes must be named in the ECO. Now that
    the report is at zero, a change that adds one is a regression and is reverted rather than
-   argued. The simulator must stay at zero failures; its open items are counted and named.
+   argued. **A change that adds a CHECK is not in that class**: ECO-EEG-032 adds six
+   geometry checks that Rev B was never measured against, and the counts they raise on the
+   Rev B routing are evidence that the checks bite, not regressions to be reverted. The simulator must stay at zero failures; its open items are counted and named.
    The DRC item is gone, because the report records no violations. **The six that stand are
    the static IRAM pool with one byte free, the carried-over v1 HM-01 mesh being two
    disconnected bodies, the unreviewed routing, E-27 never having been seen to light, the
@@ -1603,10 +1701,10 @@ this register records the fact, it does not amend other documents from here.
    count is a regression. A change that moves the passed count moves it because the check
    set moved, and the ECO says which checks it added or withdrew.
 6. **Record.** Add the ECO to section 2 with the same fields as the entries above and take
-   the next free number in the ECO-EEG-0nn sequence, which is **ECO-EEG-030**. Never
-   ECO-EEG-016, which is this document, and never ECO-EEG-028 or ECO-EEG-029, which are
-   withdrawn under section 2 and are not reused. Bump the revision of every document the
-   change touches, and update sections 1.1, 1.5 and 2.1.
+   the next free number in the **one EEG-nnn pool** that section 1.3A now rules, which is
+   **ECO-EEG-031**. Never ECO-EEG-016, which is this document, and never ECO-EEG-028 or
+   ECO-EEG-029, which are withdrawn under section 2 and are not reused. Bump the revision of
+   every document the change touches, and update sections 1.1, 1.5 and 2.1.
 7. **Release.** A release is the whole package or nothing. Regenerate the checksums in
    `kicad/gerber/README_layer_map_and_checksums.txt` and the package manifest.
 

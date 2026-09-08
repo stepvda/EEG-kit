@@ -406,16 +406,18 @@ two kinds, so a reviewer can go straight to where the router had to squeeze. The
 *connections*; the `tracks below 0.25 mm` figure under MEASURED counts *segments*, and one
 connection is many segments, which is why the two numbers differ.
 
-**The fabrication data is RELEASED FOR REVIEW under RFQ-EEG-002A. It is not released for
-fabrication.** ECO-EEG-016 section 3 sets the gate for releasing fabrication data as zero DRC
-violations, every net one connected copper island, and both inner planes continuous under the
-analogue zone. **All three are now met.** What has not happened is the review: the routing was
-produced by the programme's own tools and no human layout engineer has looked at it, and
-fabrication release awaits RFQ-EEG-002A. A manufacturer may quote from this data set and may
-plan from it. **No document in this package may describe the fabrication data as released for
-fabrication, or say that boards may be ordered from it, before that review is closed**, and no
-document may state a DRC result -- including that the board now passes -- without checking the
-report, as this section has.
+**The Rev B fabrication data is WITHDRAWN FROM FABRICATION and no board is ordered from it.**
+It met the three conditions ECO-EEG-016 section 3 sets as the fabrication-release gate -- zero
+DRC violations, every net one connected copper island, both inner planes continuous under the
+analogue zone -- and that was not enough. An external layout engineer read
+`kicad/EEG-CAR-01_RevB_routed.kicad_pcb` between 3 and 5 September 2026, declined the paid
+review and advised a redesign from the schematic; the programme accepted that on 4 September
+2026. His seven findings are recorded in **ECO-EEG-016 section 2, ECO-EEG-030**, and six of
+them are rules this DRC was never given, so a report at zero violations was a report against
+an incomplete rule set. The data above stays in the tree as history and is not deleted. It is
+not a quotation basis and nothing may be ordered from it. No document in this package may
+describe it as released for fabrication or for review, and no document may state a DRC result
+without checking the report, as this section has.
 
 **Why the DRC counts 145 nets and section 3.2 counts 156.** `design.py` declares **156 nets**
 across 211 reference designators and 636 pads, 620 of which carry a net. Eleven of those 156
@@ -427,12 +429,16 @@ electrical test of section 3.2 are written against. **145 is the connectivity fi
 what the DRC report grades and it can never exceed 156. Any document quoting either number
 states which of the two it is quoting.
 
-The routing has *not* been reviewed by a human layout engineer, and an autorouter has no
-opinion about return paths, coupling or manufacturability beyond the rules it was given.
-Passing every rule it was given does not change that. RFQ-EEG-002A is therefore re-scoped
-from *route this board* to **review this routing -- the 169 relaxed connections first --
-correct what is wrong and sign it off**: a much smaller and cheaper task than routing from a
-blank sheet, and one that starts from data that closes.
+An autorouter has no opinion about return paths, coupling or manufacturability beyond the
+rules it was given, and passing every rule it was given did not make the board reviewable.
+**The routing is no longer produced here.** Rev C is the same circuit at corrected footprints
+and part numbers, with **no routing of its own**: placement and routing are bought from an
+external layout desk, and `tools/router.py`'s remaining roles are to hold and enforce the rules
+so that a returned board can be graded against them, and, optionally, to produce an in-house
+reference route for comparison. **RFQ-EEG-002A is re-scoped again**, from *review this routing*
+to **review the layout contractor's PLACEMENT of Rev C**, taken before routing is confirmed and
+delivered as a written findings list by net, pad pair and coordinate. The scope is defined in
+ECO-EEG-030 and the rules the contractor works under are **LAY-EEG-034**.
 
 ---
 

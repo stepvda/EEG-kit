@@ -855,8 +855,12 @@ mask / 35 um L1 / prepreg 0.200 / 17 um L2 / core 1.065 / 17 um L3 / prepreg 0.2
 163.0 x 143.0 x 58.0 mm external and 158.0 x 138.0 x 55.5 mm internal, MP-01 module plate
 146.0 x 126.0 x 3.0 mm.
 
-**The routing closes, and it is released for review rather than for fabrication.** The
-firmware author will be handed a board file that may still change, and should know why.
+**The routing closed, and the board it closed on is withdrawn.** The firmware author will be
+handed a board file that will change, and should know why. An external layout engineer read
+the Rev B board between 3 and 5 September 2026, declined the review and advised a redesign;
+**Rev B is withdrawn from fabrication** (ECO-EEG-016 section 2, ECO-EEG-030) and **Rev C is
+unrouted**, with its placement and routing bought from an external layout desk. What follows
+is the Rev B result, kept because it is the measured state of the data in the tree.
 `kicad/EEG-CAR-01_RevB_DRC_report.txt` is the authority. It records 3 745 track segments and
 552 through vias on the four layers, each reference plane one continuous island per net, a
 smallest measured clearance of 0.260 mm on L1, 0.285 mm on the two planes and 0.275 mm on
@@ -868,12 +872,11 @@ the report says so, not because it was assumed. It records **zero violations** -
 clearance, width, annular-ring, hole-size, edge, non-plated-hole, isolation or via keep-out
 violation, and no unclosed connection. It also records that **169 connections were routed at
 relaxed geometry**: 36 took a conductor narrower than the 0.25 mm preferred width and 133
-kept full width but took a reduced gap, all of them at or above the 0.20 mm minimum. **The
-fabrication data is RELEASED FOR REVIEW under RFQ-EEG-002A and is not released for
-fabrication**, because no human layout engineer has read routing produced by the programme's
-own tools, and a board that closes at minimum geometry is not the board that closes at
-preferred geometry. Nothing here changes a pin assignment, so `board_pins.h` and every table in this
-document stand as written.
+kept full width but took a reduced gap, all of them at or above the 0.20 mm minimum. **None of
+that data is released for fabrication or for review**: Rev B is withdrawn and Rev C has no
+routing yet. **Nothing in Rev C changes a pin assignment**, so `board_pins.h` and every table
+in this document stand as written; if a later change to Rev C does move a pin, it is its own
+ECO and it obliges a regeneration and a diff of the header before the next build.
 
 The firmware consequence is narrow and it is procedural: `board_pins.h` is generated from
 `design.py`, so every geometry change obliges a regeneration and a diff of the header

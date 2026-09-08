@@ -21,9 +21,29 @@ from __future__ import annotations
 BOARD_W = 150.0
 BOARD_H = 130.0
 ZONE_SPLIT_X = 62.0          # analogue zone x < 62 mm, digital zone x > 62 mm
+
+# Two revision letters, and they are not interchangeable.
+#
+# REV is the ROUTED carrier, Rev B.  Every artifact that carries the Rev B routing --
+# the Gerbers, the drill, the CPL, the DRC report, the routed .kicad_pcb, the drawings
+# and the eight-sheet schematic PDF -- is stamped with it and keeps its file name.  Rev B
+# was withdrawn from fabrication on 2026-09-04 (ECO-EEG-030) and stays in the tree as
+# history; it is not the current fabrication set and no board is ordered from it.
+#
+# REV_C is the revision being prepared for EXTERNAL placement and routing.  It is the same
+# circuit at corrected footprints and part numbers, with no routing of its own: the layout
+# is bought (ECO-EEG-030).  Everything stamped REV_C carries "RevC" in its file stem, which
+# is why the stem is computed by stem() and never typed.
 REV = "B"
+REV_C = "C"
 DATE = "2026-09-02"
+DATE_C = "2026-09-08"
 BOARD_NAME = "EEG-CAR-01"
+
+
+def stem(rev=None):
+    """File stem for one revision of the carrier, e.g. 'EEG-CAR-01_RevC'."""
+    return f"{BOARD_NAME}_Rev{rev or REV}"
 
 # ---------------------------------------------------------------------------
 # 1. Components
