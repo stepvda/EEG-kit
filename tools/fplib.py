@@ -117,20 +117,36 @@ SOT23_5 = _sot23_5()
 
 # --------------------------------------------------------------------- TSSOP-14 (quad op-amp)
 def _tssop14():
+    """TSSOP-14, TI PW package: 4.40 mm body width, 5.00 mm body length, 6.40 mm lead
+    span, 0.65 mm pitch.  This is the ONLY package the quad OPA4376 is made in
+    (ECO-EEG-031), so U1-U3 are on it from Rev C.
+
+    The land pattern is KiCad's `TSSOP-14_4.4x5mm_P0.65mm` value for value -- pads
+    1.475 x 0.400 mm at x = +/-2.8625, courtyard 7.70 x 5.50 mm -- because fplib's
+    contract is that a house re-importing the netlist into its own CAD gets the same
+    land pattern, and KiCad's is the IPC-7351 nominal-density pattern for this package.
+    Rev B's own figures (2.85 / 1.45 x 0.45, courtyard 7.50 x 5.70) were close but not
+    that pattern, and nothing was placed on them.
+
+    Pad 1 is at y = -1.95 and pad 8 at y = +1.95: numbering runs down the left column
+    and back up the right, which is the KiCad and the TI convention and is what the
+    pin map in design.py section 2 is written against.
+    """
     pads = []
-    # 14 pins, 0.65 mm pitch, 7 per side, pad 1.45 x 0.45, span 5.7 mm centre-to-centre
     for i in range(7):
         y = (i - 3) * 0.65
-        pads.append(PadDef(str(i + 1), "smd", "roundrect", -2.85, y, 1.45, 0.45))
+        pads.append(PadDef(str(i + 1), "smd", "roundrect", -2.8625, y, 1.475, 0.400))
     for i in range(7):
         y = (3 - i) * 0.65
-        pads.append(PadDef(str(i + 8), "smd", "roundrect", +2.85, y, 1.45, 0.45))
-    return FootprintDef("TSSOP-14_4.4x5.0mm_P0.65mm", "TSSOP-14, 4.4x5.0 mm body, 0.65 mm pitch",
+        pads.append(PadDef(str(i + 8), "smd", "roundrect", +2.8625, y, 1.475, 0.400))
+    return FootprintDef("TSSOP-14_4.4x5mm_P0.65mm", "TSSOP-14, 4.4x5.0 mm body, "
+                        "6.4 mm lead span, 0.65 mm pitch (TI PW)",
                         pads,
+                        # the pin-1 tick belongs beside PAD 1, at y = -1.95
                         silk=[(-2.2, -2.5, 2.2, -2.5, 0.12), (-2.2, 2.5, 2.2, 2.5, 0.12),
-                              (-3.7, -2.5, -3.7, -2.05, 0.12)],   # pin 1 is at y = -1.95, not +1.95
+                              (-3.8, -2.5, -3.8, -2.05, 0.12)],
                         fab=_rect(-2.2, -2.5, 2.2, 2.5, 0.1),
-                        crtyd=_rect(-3.75, -2.85, 3.75, 2.85, 0.05),
+                        crtyd=_rect(-3.85, -2.75, 3.85, 2.75, 0.05),
                         body=(-2.2, -2.5, 2.2, 2.5))
 
 
@@ -140,10 +156,16 @@ TSSOP14 = _tssop14()
 def _soic14():
     """SOIC-14, 1.27 mm pitch, 3.9 mm body, 6.0 mm lead span.
 
-    Chosen over TSSOP-14 for U1-U3: the 0.67 mm gap between adjacent SOIC lands takes a
-    0.25 mm track at 0.20 mm clearance, and a 0.65 mm TSSOP does not.  On a two-layer
-    board with no vias allowed between the lands, that is the difference between the
-    envelope detectors routing and not routing.
+    NOT USED FROM REV C, and kept because the Rev B data in the tree was built on it.
+
+    It was chosen over TSSOP-14 for U1-U3 on the argument that the 0.67 mm gap between
+    adjacent SOIC lands takes a 0.25 mm track at 0.20 mm clearance and a 0.65 mm TSSOP
+    does not, which on a two-layer board with no vias between the lands was the
+    difference between the envelope detectors routing and not routing.  Two things
+    killed that argument.  The board went to four layers (ECO-EEG-018), so the escape no
+    longer has to happen between the lands; and **the quad OPA4376 is not made in
+    SOIC-14 at all** (ECO-EEG-031), so the choice was never available.  U1-U3 are on
+    TSSOP-14 from Rev C.
     """
     pads = []
     for i in range(7):
@@ -255,11 +277,24 @@ DIN42802 = _din42802()
 
 
 def _sw_push_6mm():
+    """Omron B3F 6 x 6 mm four-terminal pattern: terminals on 6.5 x 4.5 mm centres.
+
+    The holes are 1.2 mm where Omron's PCB processing dimensions say 1.0 mm; that is a
+    clearance hole for a 0.7 x 0.3 mm terminal and is deliberate, and it is the 1.20 mm
+    entry in the plated-hole census of DSN-EEG-003 section 3.2.
+
+    The name carried H5mm and the description "5 mm actuator" until ECO-EEG-031.  Both
+    were wrong: the part fitted has a PROJECTED plunger 7.3 mm high, because the design
+    puts a 12 mm B32-series key top on it through a 12.4 mm opening in the pod lid, and
+    B32 key tops mount only to projected-plunger models.  The height does not change the
+    land pattern; it changes the collision model, which is why it is corrected.
+    """
     pads = [PadDef("1", "thru_hole", "circle", -3.25, -2.25, 2.0, 2.0, 1.2),
             PadDef("1", "thru_hole", "circle", -3.25, 2.25, 2.0, 2.0, 1.2),
             PadDef("2", "thru_hole", "circle", 3.25, -2.25, 2.0, 2.0, 1.2),
             PadDef("2", "thru_hole", "circle", 3.25, 2.25, 2.0, 2.0, 1.2)]
-    return FootprintDef("SW_PUSH_6mm_H5mm", "Tactile switch 6x6 mm THT, 5 mm actuator", pads,
+    return FootprintDef("SW_PUSH_6mm_H7.3mm", "Tactile switch 6x6 mm THT, projected "
+                        "plunger 7.3 mm (Omron B3F-1050 class)", pads,
                         silk=[(-3.0, -3.2, 3.0, -3.2, 0.12), (3.0, -3.2, 3.0, 3.2, 0.12),
                               (3.0, 3.2, -3.0, 3.2, 0.12), (-3.0, 3.2, -3.0, -3.2, 0.12)],
                         fab=_rect(-3.0, -3.0, 3.0, 3.0, 0.1),

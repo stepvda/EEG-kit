@@ -195,7 +195,13 @@ ENV = [(1, 20, "HP_TAP", "ENV_STIM", 76.0, "stimulus, from the headphone tap"),
 ECOL = [16.0, 22.0, 28.0, 34.0, 40.0]
 for k, b, src, out, ybase, lbl in ENV:
     r0, r1, r2 = ybase + 1.0, ybase + 5.0, ybase + 9.0
-    add(f"U{k}", "SOIC-14_3.9x8.7mm_P1.27mm", "OPA4376AID", 47.0, r1, 0, "TI OPA4376AIDR",
+    # ECO-EEG-031: the quad OPA4376 is made in ONE package, TSSOP-14 (TI PW).  There is
+    # no SOIC-14 quad, so `OPA4376AIDR` -- which the D suffix makes a SOIC -- is not an
+    # orderable part number and never was.  The orderable part is `OPA4376AIPWR`.  The
+    # pin numbering is unchanged (1 OUTA .. 14 OUTD, see section 2), so no net moves; the
+    # land pattern and the courtyard do.  Found by Bittele/7pcb and repeated to Dekimo on
+    # 3 September 2026.
+    add(f"U{k}", "TSSOP-14_4.4x5mm_P0.65mm", "OPA4376AIPW", 47.0, r1, 0, "TI OPA4376AIPWR",
         f"quad precision op-amp: rectifier, absolute-value summer, 50 Hz filter and output "
         f"buffer for envelope channel {k} ({lbl})", "A")
     add(f"C{b}", C06, "10u X5R 16V", ECOL[0], r0, 0, "Murata GRM188R61C106MA73D",
@@ -335,11 +341,26 @@ add("J8", PS(14), "ES8388 codec module", 90.0, 72.0, 0, SKT(14),
     "1x14: I2S, I2C, headphone amplifier output, the stimulus envelope tap and 5 V", "D")
 add("C82", C06, "100n X7R 25V", 94.0, 110.0, 0, "Murata GCM188R71E104KA57D",
     "local supply decoupling at J8", "D")
-add("SW1", "SW_PUSH_6mm_H5mm", "BTN_A response (green)", 102.0, 76.0, 0, "Omron B3F-4055",
+# ECO-EEG-031, found by the footprint-versus-part-number audit and not by any reviewer:
+# **B3F-4055 is a 12 x 12 mm switch.**  Omron's B3F families split by body size -- the
+# 6 x 6 mm parts are B3F-1000 / -3000 / -6000 and the 12 x 12 mm parts are B3F-4000 /
+# -5000 / -5001 -- and the footprint here is the 6 x 6 mm four-terminal pattern on
+# 6.5 x 4.5 mm centres.  A 12 x 12 mm switch fits neither the land pattern nor the space:
+# the three sit on a 14 mm pitch.  RFQ E-26 asks for "a 6 mm tactile switch (Omron
+# B3F-4055 class)", which is a requirement contradicting itself in its own sentence, and
+# AVL-EEG-017 section 1.4 asks for 6.0 x 6.0 mm at 160 gf +/-50 -- which B3F-4055, at
+# 260 gf, does not meet either.
+#
+# The part that meets both is **B3F-1052**: 6 x 6 mm, PROJECTED plunger 7.3 mm high,
+# 1.47 N {150 gf}, silver contacts, four terminals, no ground terminal.  Projected,
+# because a 12 mm B32-series key top mounts only to a projected plunger and that is what
+# the pod lid's 12.4 mm opening is cut for; 150 gf, because that is inside the AVL's
+# 160 +/- 50 gf window.  The cap colours are the kit line, not the switch.
+add("SW1", "SW_PUSH_6mm_H7.3mm", "BTN_A response (green)", 102.0, 76.0, 0, "Omron B3F-1052",
     "response button A, 12 mm green cap on an extender", "D")
-add("SW2", "SW_PUSH_6mm_H5mm", "BTN_B response (blue)", 102.0, 90.0, 0, "Omron B3F-4055",
+add("SW2", "SW_PUSH_6mm_H7.3mm", "BTN_B response (blue)", 102.0, 90.0, 0, "Omron B3F-1052",
     "response button B, 12 mm blue cap on an extender", "D")
-add("SW3", "SW_PUSH_6mm_H5mm", "BTN_STOP (red)", 102.0, 104.0, 0, "Omron B3F-4055",
+add("SW3", "SW_PUSH_6mm_H7.3mm", "BTN_STOP (red)", 102.0, 104.0, 0, "Omron B3F-1052",
     "session stop button, 12 mm red cap, distinct tactile feel", "D")
 for rr, cc, net, ry in (("R50", "C50", "BTN_A", 76.0), ("R51", "C51", "BTN_B", 90.0),
                         ("R52", "C52", "BTN_STOP", 104.0)):
@@ -423,7 +444,18 @@ add("R86", R06, "100k 1%", 145.0, 71.0, 0, "Vishay CRCW0603100KFKEA",
 add("J24", "JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical", "Charge input from the panel USB-C",
     143.0, 80.0, 0, "JST B2B-PH-K-S(LF)(SN)",
     "charge-only USB-C receptacle pigtail; no data conductor enters here", "D")
-add("L1", L06, "600R at 100 MHz, 1.5 A", 130.0, 16.0, 90, "Murata BLM18PG601SN1D",
+# ECO-EEG-031: the design intent is 600 ohm at 100 MHz and it is unchanged.  What was
+# wrong is the part number.  Murata's own numbering (chip ferrite bead catalogue C31E,
+# part-numbering page) reads the three impedance figures as two significant digits and a
+# count of zeros, so `601` does mean 600 ohm at 100 MHz and the reviewer's reading of it
+# was wrong.  The defect is elsewhere: `PG` is the large-current power-supply series, and
+# that series is not made at 600 ohm in 1608 -- the same catalogue's impedance map stops
+# at 470 ohm (1 A) for BLM18P/S, so BLM18PG601SN1D is not a part.  600 ohm at 100 MHz in
+# 1608 exists in the A/T general series as BLM18AG601SN1D: 600 ohm +/-25 % at 100 MHz,
+# 500 mA rated, 0.38 ohm DC resistance.  The "1.5 A" of the old value string came with the
+# wrong part number and has no requirement behind it: L1 feeds VDD_ISO, the ADuM4160
+# module's device-side supply, which is tens of milliamperes.
+add("L1", L06, "600R at 100 MHz, 500 mA", 130.0, 16.0, 90, "Murata BLM18AG601SN1D",
     "ferrite between DVDD3V3 and the isolator device-side supply", "D")
 add("C89", C06, "10u X5R 16V", 130.0, 12.0, 0, "Murata GRM188R61C106MA73D",
     "isolator device-side bulk", "D")
@@ -570,7 +602,7 @@ for n, src, dst, lbl in PROT:
 # channel gives 41.2 uA.  RISK-EEG-011 recorded it as SF-1a, SF-6a and SR-12.
 #
 # The row is now generated by the loop like the other fifteen: src BIAS_EL (patient),
-# dst BIASOUT (module), with D11.3 and C11.1 on BIASOUT behind the 47 kOhm.  Nothing is
+# dst BIASOUT (module), with D11.3 and C11.1 on BIASOUT behind the series resistor.  Nothing is
 # added and no value changes; an exception is removed.  SF-1a collapses into the ordinary
 # SF-1 and SF-6a into SF-6, both of which are rows that already exist.
 #
@@ -666,6 +698,31 @@ NETCLASS = {   # name: (track width mm, clearance mm)
     "DEFAULT":   (0.25, 0.25),
 }
 
+# Parts that may not be substituted, and the requirement that makes each one fixed.
+# AVL-EEG-017 section 6.4 is the home of this list; it is encoded here so that the BOM
+# the buyer receives carries the words rather than relying on the buyer having the AVL
+# open beside it.  A part in this table is bought as specified or it is not bought:
+# "or equivalent" is not an acceptable answer to any of them (ECO-EEG-031).
+NOT_SUBSTITUTABLE = {
+    **{f"R{n}": "E-03, E-07: thin film 0.1 % 25 ppm. Thick film is prohibited -- its "
+                "excess noise and tempco appear directly in the 1.0 uV RMS budget"
+       for n in range(1, 17)},
+    **{f"C{n}": "E-10: 10 nF C0G. X7R is prohibited on this line -- it moves with voltage "
+                "and temperature and the failure appears at T8 and T9"
+       for n in range(1, 17)},
+    **{f"D{n}": "E-07: BAV99, pinout locked, pin 3 on the input node. BAT54S is not "
+                "approved here -- Schottky leakage across the series resistor is a "
+                "measurable offset"
+       for n in range(1, 17)},
+    "R90": "DSN-EEG-003 section 3.3: the AGND_REF-to-DGND star point. A real 0 ohm part, "
+           "exactly one, never a wire link or a solder blob",
+    "R91": "DSN-EEG-003 section 3.3: the HARN_SHIELD-to-DGND star point. A real 0 ohm "
+           "part, exactly one, never a wire link or a solder blob",
+    **{r: "E-09, S-02: PATIENT-CONNECTED under IEC 60601-1. A touch-proof DIN 42802 "
+          "socket approved in writing from a sample. No 'or equivalent'"
+       for r in ("J15", "J16", "J17")},
+}
+
 POURS = [("AGND_REF", "B.Cu", (0.0, ZONE_SPLIT_X)),
          ("DGND", "B.Cu", (ZONE_SPLIT_X, BOARD_W))]
 
@@ -746,7 +803,7 @@ NOTES = {
         "6.  Vias 0.60 mm pad / 0.30 mm finished hole, tented on both sides.",
         "7.  Smallest plated hole 0.30 mm (vias); largest 1.70 mm (J15-J17).",
         "8.  Four non-plated 3.2 mm holes at (5,5) (145,5) (5,125) (145,125); keep",
-        "    6.0 mm clear of copper on both layers.",
+        "    6.0 mm clear of copper on ALL FOUR layers.",
         "9.  IPC-6012 class 2, IPC-A-600 class 2.  100 % electrical test to the supplied",
         "    IPC-D-356A netlist.",
         "10. No controlled impedance is required.  USB_DP and USB_DN are a 0.30 mm pair on",
@@ -782,14 +839,15 @@ NOTES = {
         "on the contact-light shift register instead.",
     ],
     "safety": [
-        "Every conductor that can reach a person passes through a 47 kOhm 0.1 % series",
+        "Every conductor that can reach a person passes through a 68 kOhm 0.1 % series",
         "resistor (R1-R16) and a BAV99 clamp to AVDD/AVSS before it reaches a module.",
         "AGND_REF is the analogue 0 V mid-rail.  AVDD = +2.5 V and AVSS = -2.5 V are",
-        "generated on ADS1299 module #1 and brought onto the carrier at J2 pins 11-14.",
+        "generated on ADS1299 module #1 and brought onto the carrier at J23 pins 1, 2, 5",
+        "and 6 -- the 1x6 analogue rail socket, not the 1x10 signal socket J2.",
         "AGND_REF joins DGND at R90 ONLY.  HARN_SHIELD joins DGND at R91 ONLY.",
         "No copper crosses the isolation barrier.  The ADuM4160 module at J10 is the only",
         "path between the host and the battery-powered side.  Keep 8.0 mm clear of the J10",
-        "module outline on both layers -- the strip x >= 141 mm, y = 2 to 22 mm.",
+        "module outline on ALL FOUR layers -- the strip x >= 141 mm, y = 2 to 22 mm.",
         "The charge input (J24) is a separate, charge-only USB-C receptacle.  A session",
         "cannot start while VBUS is present (VBUS_DET) and the charger enable is held off",
         "by CHG_CE while a session is active.  The helmet is never worn while charging.",

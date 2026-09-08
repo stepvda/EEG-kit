@@ -479,6 +479,7 @@ indexes, this section is the register, and where they differ this section govern
 | ~~ECO-EEG-028~~ | -- | withdrawn; the board size is a finding of ECO-EEG-018 | withdrawn |
 | ~~ECO-EEG-029~~ | -- | withdrawn; the layer count is a finding of ECO-EEG-018 | withdrawn |
 | ECO-EEG-030 | scope, with seven findings | an external layout engineer read the Rev B board, declined the review and advised redesign; Rev B is withdrawn from fabrication and Rev C is opened as a reviewable design whose layout is bought | implemented 8 September 2026 |
+| ECO-EEG-031 | major | four part numbers could not be bought or could not be fitted: the quad OPA4376 has no SOIC-14, the ferrite bead is not a Murata part, the tactile switch is a 12 x 12 mm part on a 6 x 6 mm land, and the patient-connected DIN sockets were not marked non-substitutable | implemented 8 September 2026 |
 
 ### ECO-EEG-001 -- the contact lights had no driver
 
@@ -1209,6 +1210,105 @@ of JIG-EEG-009 is built against connector positions, and those do not move. The 
 none: no electrode-path, isolation, battery, charge-interlock or patient-current value changes,
 so RISK-EEG-011 is not re-issued for this ECO. Units already built -- none exist.
 
+### ECO-EEG-031 -- four part numbers, and only three of them were known
+
+**Class:** major. **Found by:** Bittele/7pcb, who reported the first three to the programme
+and to Dekimo on 3 September 2026; the fourth by `tools/footprint_audit.py`, written for this
+ECO, on 8 September 2026.
+
+**Was:** the carrier BOM carried four lines that could not be bought as written or could not be
+fitted to the land pattern beside them, and one class of part that a buyer could substitute
+without knowing it must not be.
+
+**Now**, item by item.
+
+**1. U1, U2, U3 -- `TI OPA4376AIDR` on a SOIC-14 land.** The quad OPA4376 is offered in **one**
+package: TSSOP-14, TI's PW. The `D` suffix is SOIC and there is no SOIC-14 quad, so
+`OPA4376AIDR` is not an orderable part number. **The part is `OPA4376AIPWR` and the footprint
+is `TSSOP-14_4.4x5mm_P0.65mm`.** What makes this worse than a typing error is the record:
+AVL-EEG-017 Rev A quoted `OPA4376AIPWR`, which is correct, and Rev B **withdrew it** on the
+ground that it did not fit the SOIC-14 land pattern `design.py` placed -- the package was
+corrected to match the footprint instead of the footprint to match the package. That
+withdrawal is withdrawn. `fplib`'s SOIC-14 docstring argued the choice on the two-layer escape
+between adjacent lands; the board went to four layers at ECO-EEG-018 and the argument had
+already lapsed, but the deciding fact is simply that the package does not exist.
+**Pin numbering is identical between SOIC-14 and TSSOP-14, so no net moves.**
+
+**2. L1 -- `Murata BLM18PG601SN1D`, 600 Ω at 100 MHz, 1.5 A.** The reviewer read the impedance
+code as some other impedance; that reading is wrong. Murata's part-numbering page states that
+the three impedance figures are two significant digits and a count of zeros, so `601` is
+600 Ω at 100 MHz and the design intent is correctly encoded. The defect is the series: `PG` is
+the large-current power-supply family, and the same catalogue's impedance map does not offer it
+at 600 Ω in 1608 -- the 0603 P/S range stops at 470 Ω (1 A). **There is no such part.** 600 Ω
+at 100 MHz in 1608 is a general-series part: **`BLM18AG601SN1D`, 600 Ω ±25 %, 500 mA rated,
+0.38 Ω DC resistance.** The "1.5 A" came with the wrong part number and has no requirement
+behind it; L1 feeds VDD_ISO, the ADuM4160 module's device-side supply, which is tens of
+milliamperes, so 0.38 Ω costs about 10 mV.
+
+**3. J15, J16, J17 -- `Stäubli SLB1,5-F / LB-I1,5`.** The part number is a class and not a
+qualified PCB part, which AVL-EEG-017 §1.4.1 and ICD-EEG-006 §1 both already said. What was
+missing is that a buyer reading the BOM could not see it. `design.py` now carries a
+`NOT_SUBSTITUTABLE` table -- AVL-EEG-017 §6.4 remains the home of the list -- and the generated
+BOM prints the reason on the line: **PATIENT-CONNECTED under IEC 60601-1, approved in writing
+from a sample, no "or equivalent".** The same table marks R1–R16, C1–C16, D1–D16, R90 and R91.
+`tools/footprint_audit.py` reports J15–J17 as **OPEN**, never as passes.
+
+**4. SW1, SW2, SW3 -- `Omron B3F-4055`. This one was not on anybody's list.** Omron splits the
+B3F family by body size: 6 × 6 mm is B3F-1000/-3000/-6000, and **12 × 12 mm is
+B3F-4000/-5000/-5001**. B3F-4055 is a 12 × 12 mm switch. The footprint beside it is the 6 × 6 mm
+four-terminal pattern on 6.5 × 4.5 mm centres, the three switches sit on a 14 mm pitch, and
+AVL-EEG-017 §1.4's own row asks for a 6.0 × 6.0 mm body at 160 gf ±50 -- which B3F-4055, at
+260 gf, does not meet either. **The part is `B3F-1052`**: 6 × 6 mm, projected plunger 7.3 mm,
+1.47 N {150 gf}, four terminals, no ground terminal. Projected, because a 12 mm B32-series key
+top mounts only to a projected plunger and the pod lid's 12.4 mm opening is cut for that cap.
+The footprint's own name was wrong with it -- `SW_PUSH_6mm_H5mm`, "5 mm actuator" -- and is now
+`SW_PUSH_6mm_H7.3mm`; the height does not change the land pattern, it changes the collision
+model of ECO-EEG-033. **RFQ-EEG-001 Rev E E-26 still reads "a 6 mm tactile switch (Omron
+B3F-4055 class)", a requirement that contradicts itself inside one sentence.** It is not
+re-issued here; it is recorded as an open item for the next issue of that document.
+
+**A fifth thing this ECO changes, and it is not a part number.** `tools/fplib.py`'s TSSOP-14
+land pattern was 1.45 × 0.45 mm pads at x = ±2.85 with a 7.50 × 5.70 mm courtyard. `fplib`'s
+stated contract is that a house re-importing the netlist into its own CAD gets the same land
+pattern as KiCad's standard library, and KiCad's `TSSOP-14_4.4x5mm_P0.65mm` is 1.475 × 0.400 mm
+at ±2.8625 with a 7.70 × 5.50 mm courtyard. Nothing was placed on the old figures, so this
+costs nothing; leaving them would have put U1–U3 on a pattern that is nobody's.
+
+**Three drawing notes had become false and are corrected in the same edit**, because
+`design.py`'s `NOTES` are printed onto the fabrication and assembly drawings: the series
+resistor was still described as **47 kΩ** where ECO-EEG-024 made it 68 kΩ on 2 September; the
+analogue rails were still said to arrive at **"J2 pins 11–14"**, and J2 has ten ways -- they
+arrive at J23, the 1×6 rail socket, which is what ECO-EEG-013 split out; and the isolation and
+mounting keep-outs were still stated as clear **"on both layers"** on a board that has had four
+since ECO-EEG-018.
+
+**Verified.** `tools/footprint_audit.py` audits all **211** designators against the package,
+way count and, where the part number encodes it, the value, tolerance, dielectric and voltage:
+**183 PASS, 0 FAIL, 3 OPEN (J15–J17), 0 UNRECOGNISED, 25 fabricated features.** The report is
+`docs/footprint_audit_RevC.md` and it is generated, not written. `pcbgen.BoardV2().validate()`
+returns **0 errors** on 211 designators, 636 pads and 156 nets -- no courtyard overlap, no edge
+breach -- with the TSSOP courtyards, which are shorter than the SOIC ones they replace.
+**The netlist is unchanged and that is measured, not asserted:** the pad-to-net mapping from
+`design.py` was compared against the released `kicad/gerber/EEG-CAR-01-IPC-D-356A.ipc`
+excluding its via records, and the two are **identical across all 156 nets**.
+
+**Impact.** The board -- U1–U3's land pattern and courtyard change and their placement lines in
+DSN-EEG-003 §3.3 rule 3 are unaffected, because the protection networks are the R–D–C rows and
+not the op-amps; nothing else moves. The firmware -- none; no pin assignment changes. The
+mechanical parts -- the switch is 7.3 mm to the top of the plunger where the drawing notes said
+5.0 mm, which is a collision-model input for ECO-EEG-033 and does not move a printed part; the
+pod lid opening at 12.4 mm is unchanged. The BOM -- four lines. The test specification -- none.
+The safety case -- **none of the four changes alters the electrode path, the isolation, the
+battery, the charge interlock or the patient-current budget**, so RISK-EEG-011 is not re-issued;
+J15–J17's marking makes an existing safety property visible to a buyer rather than changing it.
+Units already built -- none exist.
+
+**One consequence for the tools.** `emit_all.py` no longer regenerates the Rev B set. Rev B's
+routing was produced against SOIC-14 pads; running the old path from this source would write
+Rev B file names with Rev C pads and produce a set whose copper does not reach its own pads.
+The Rev B fabrication set is frozen, is recovered from git rather than regenerated, and
+`emit_all.py --rev-b` refuses and says so.
+
 ### 2.2 Requirement changes and where they come from
 
 Every RFQ-EEG-001 requirement that changed between Rev C and this release, with the change
@@ -1702,7 +1802,7 @@ this register records the fact, it does not amend other documents from here.
    set moved, and the ECO says which checks it added or withdrew.
 6. **Record.** Add the ECO to section 2 with the same fields as the entries above and take
    the next free number in the **one EEG-nnn pool** that section 1.3A now rules, which is
-   **ECO-EEG-031**. Never ECO-EEG-016, which is this document, and never ECO-EEG-028 or
+   **ECO-EEG-032**. Never ECO-EEG-016, which is this document, and never ECO-EEG-028 or
    ECO-EEG-029, which are withdrawn under section 2 and are not reused. Bump the revision of
    every document the change touches, and update sections 1.1, 1.5 and 2.1.
 7. **Release.** A release is the whole package or nothing. Regenerate the checksums in

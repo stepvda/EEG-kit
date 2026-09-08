@@ -318,7 +318,7 @@ def excellon(path, board, vias, plated=True):
 
 
 # --------------------------------------------------------------------------- IPC-D-356A
-def ipc356(path, board, vias, netid):
+def ipc356(path, board, vias, netid, rev=None):
     """Write the bare-board test netlist.
 
     IPC-D-356A is a FIXED-COLUMN format: a field is identified by where it starts, not by
@@ -346,7 +346,8 @@ def ipc356(path, board, vias, netid):
     this netlist, derive the netlist from those and tell us, because that is a defect here
     and not in the board.
     """
-    lines = ["C  IPC-D-356A netlist for " + D.BOARD_NAME + " Rev " + D.REV,
+    rev = rev or D.REV
+    lines = ["C  IPC-D-356A netlist for " + D.BOARD_NAME + " Rev " + rev,
              "C  TI One Voice research programme -- CC BY-SA 4.0",
              "C  units 0.0001 inch, board origin at the bottom-left corner",
              "C  ",
@@ -453,7 +454,7 @@ def bom(path, board):
         key = (p.value, p.fpname, p.mpn)
         groups.setdefault(key, []).append(p.ref)
     rows = ["Item,Qty,Designators,Value,Footprint,Manufacturer part number,"
-            "Fit,Notes"]
+            "Fit,Substitution,Notes"]
     for i, ((val, fp, mpn), refs) in enumerate(groups.items(), start=1):
         if fp.startswith("TestPoint"):
             # bare copper: nothing is bought and nothing is placed, so it appears in no CPL
@@ -463,8 +464,20 @@ def bom(path, board):
         else:
             fit = "DNP" if "DNP" in val else "fit"
         note = board.part(refs[0]).descr.replace('"', "'")
+        # AVL-EEG-017 section 6.4 is the home of the not-substitutable list; design.py
+        # encodes it so that the buyer reads the reason on the BOM line rather than
+        # having to have the AVL open beside it (ECO-EEG-031).
+        reasons = {D.NOT_SUBSTITUTABLE[r] for r in refs if r in D.NOT_SUBSTITUTABLE}
+        if len(reasons) == 1 and all(r in D.NOT_SUBSTITUTABLE for r in refs):
+            sub = "NOT SUBSTITUTABLE -- " + reasons.pop()
+        elif reasons:
+            sub = ("NOT SUBSTITUTABLE for " +
+                   " ".join(r for r in refs if r in D.NOT_SUBSTITUTABLE))
+        else:
+            sub = "equivalent permitted under AVL-EEG-017 section 6"
+        sub = sub.replace('"', "'")
         rows.append(f'{i},{len(refs)},"{" ".join(refs)}","{val}","{fp}","{mpn}",'
-                    f'"{fit}","{note}"')
+                    f'"{fit}","{sub}","{note}"')
     with open(path, "w") as f:
         f.write("\n".join(rows) + "\n")
     return path
