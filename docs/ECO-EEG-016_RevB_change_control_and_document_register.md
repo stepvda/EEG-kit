@@ -1603,6 +1603,31 @@ compressing either into a page would mean dropping the derivations, and a rule a
 cannot see the reason for is a rule that gets relaxed at the first difficulty. The sheet is
 still one document and is read in one sitting.
 
+**5. The handover set.** `kicad/RevC_layout_inputs/`, written by
+`tools/emit_handover.py`: **51 files, 2.6 MB** -- the project, the ten schematic sheets, the
+symbol library, the board, the `.kicad_dru`, the netlist, the BOM and the footprint audit, the
+two provisional CPLs, the DXF, twenty-five STEP bodies, the collision report, the rule sheet in
+both forms, a **SHA-256 for every file**, and `README_layout_inputs.md`.
+
+The README is the covering note and it says the four things a contractor otherwise has to
+guess: **open the `.kicad_pro` and not the board**, because a board opened alone has none of
+the net classes or the severities; the KiCad version, with an offer to re-emit for another
+one; **what is locked (37 footprints) and what is theirs (174)**, and that the unlocked
+coordinates are Rev B's and are a starting point rather than a specification; and **which two
+rules KiCad cannot check** and that this programme checks those itself on return, naming the
+tools. It also names the placement gate and asks that routing not begin on an unconfirmed
+placement.
+
+**Nothing in `tools/` sends anything.** The directory is written; it is uploaded by hand.
+
+**The build is deterministic and that is measured, not asserted**: two consecutive runs of
+`tools/emit_all.py` produce byte-identical checksums across all 51 files. So a checksum that
+does not match means a file changed, which is the only thing a manifest is worth.
+
+**ECO-EEG-033 closes here.** What it did NOT do is also part of the record: **no ERC and no
+DRC was run on any of it**, because KiCad is not installed on the machine that generated it,
+and no printed part was regenerated, because cadquery could not be installed there either.
+
 *Verified.* The board is parsed back after writing and checked against `design.py`: **211
 footprints, 636 pads, 156 nets, 0 segments, 0 vias, 37 locked**, netlist identical, every rule
 area present under the name the `.kicad_dru` uses, the project file's classes and its 156

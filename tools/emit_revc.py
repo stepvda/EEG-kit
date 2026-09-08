@@ -50,6 +50,7 @@ import gerber               # noqa: E402
 import collision_check      # noqa: E402
 import dxf_out              # noqa: E402
 import emit_kicad_sch       # noqa: E402
+import emit_handover        # noqa: E402
 import emit_rule_sheet      # noqa: E402
 import kicad_pcb8           # noqa: E402
 import mech_bodies          # noqa: E402
@@ -230,6 +231,7 @@ def main(verbose=True):
     made += emit_board(board, verbose)
     made += emit_mech(verbose)
     made += emit_rule_sheet.main(verbose)
+    made += emit_handover.main(verbose)
     made += emit_kicad_sch.main(verbose)
     ndiff, nprob, report = sch_netlist.main(write=True)
     made.append(report)

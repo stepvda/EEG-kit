@@ -1,0 +1,165 @@
+EEG-CAR-01 Rev C -- layout input set, SHA-256 manifest
+generated 2026-09-08 by tools/emit_handover.py
+
+Every file here is GENERATED from tools/design.py.  Re-running
+tools/emit_all.py rebuilds this directory identically, so a checksum that
+does not match means the file changed and not that the build is
+nondeterministic.
+
+FILES
+
+  EEG-CAR-01_RevC.kicad_pro
+      the KiCad project: eight net classes, an assignment for all 156 nets, the board minima and the DRC severities. Open THIS, not the board on its own
+      1177fbd346a917af803839c9c78d23e6f2a085fa26f6529a675b0f99b031960e  16384 bytes
+  EEG-CAR-01_RevC.kicad_sch
+      input 1: the root schematic, a block diagram of the nine sheets
+      d60426c5c55cb293fedc7136ed920a9434e24f655938e307b8997f61cf5d0f87  51851 bytes
+  EEG-CAR-01_RevC_10_power.kicad_sch
+      input 1: a schematic sheet
+      4abb321dd6bf64f0bf9766088b70a2f536aca8ffdb341204ea124be1b5c51d2e  72025 bytes
+  EEG-CAR-01_RevC_20_isolation_usb.kicad_sch
+      input 1: a schematic sheet
+      f609ff193a74f37ff14a3299b7ae9175fdc30644c15e518e7aa86825f7da1234  23037 bytes
+  EEG-CAR-01_RevC_30_controller.kicad_sch
+      input 1: a schematic sheet
+      d3ec25ef28aa19d64340e22590138608ed00ad705dd8e385bd5e3345fcc95aa9  100483 bytes
+  EEG-CAR-01_RevC_40_afe_1.kicad_sch
+      input 1: a schematic sheet
+      af58c303152a3362304a710105fc7ac8f6aef326fcbd2918bcd8b6179fcbe0c4  69893 bytes
+  EEG-CAR-01_RevC_41_afe_2.kicad_sch
+      input 1: a schematic sheet
+      40df2ba9942f25bfdc5722cb04ce98055207d29e10c485bbc6c68b81d9fa66ad  43446 bytes
+  EEG-CAR-01_RevC_50_harness_input.kicad_sch
+      input 1: a schematic sheet
+      65ecc4353aa832dfb8a86f48dd2202f8efa5aafa0212ba34d0846586526e8dbd  153182 bytes
+  EEG-CAR-01_RevC_60_audio.kicad_sch
+      input 1: a schematic sheet
+      b45d2996a8c3548e942b23c7356d3eb66e8c5351a76b72438d21e0c72fd3f6f5  210622 bytes
+  EEG-CAR-01_RevC_70_contact_lights.kicad_sch
+      input 1: a schematic sheet
+      b066956c30e7055314edd73a0f6a9f28b0cef65be5b4656a76c6e92433c486b5  54568 bytes
+  EEG-CAR-01_RevC_80_star_points_test.kicad_sch
+      input 1: a schematic sheet
+      649c14e9b73a25bc3ad6b9f45f807a2243a91611496e0299f0459b4e84563d7d  50034 bytes
+  EEG-CAR-01.kicad_sym
+      the symbol library the schematic is drawn from
+      afcd8f692b98ef9e94034fa154007160e91c0f3735d9c661605401131b1d44b6  221033 bytes
+  EEG-CAR-01_RevC.kicad_pcb
+      the board: placed, netted, LOCKED where it must be, and UNROUTED
+      4170d301bfdb72c9c26fbc541ddbcf32addddb07c10f2ee0a5a6b6d9f156ab6b  664669 bytes
+  EEG-CAR-01_RevC.kicad_dru
+      input 6, machine-readable: 37 custom design rules. Load it
+      57d34c084056c27fbb88ec12a5855a1290d3566836c6dce1547798c8cf8d9e6c  8880 bytes
+  EEG-CAR-01_RevC-IPC-D-356A.ipc
+      input 2: the netlist, 156 nets, from the pads alone
+      0c65066f5f9a9001a58841ffbb276b9226299f71f0a3a68dae8a035c93754d8c  47488 bytes
+  EEG-CAR-01_RevC_schematic_netlist_check.txt
+      the schematic read back and diffed against the design source: 0 differences
+      8557d93ce01678fc511e4452172dac10cbe72e2333f33ce180bd57d65889b181  1003 bytes
+  EEG-CAR-01_RevC_BOM.csv
+      input 3: the BOM, with a Substitution column
+      d48616df092ee46231ee21debf7855f34011968ad782e32d0533620421a8178c  18240 bytes
+  footprint_audit_RevC.md
+      input 3: what 'verified footprints' means -- all 211 designators audited against their part numbers
+      d95d3e2fd740088eb6b08c673aa5a0275f47cbd79664f190080f749283a8efef  32401 bytes
+  EEG-CAR-01_RevC_CPL_SMT_top.csv
+      PROVISIONAL placement, surface mount. Rev B's coordinates, not a specification
+      e7cdababa85d0fea5a51ef44573561c97da70d5573e9c55079a11e14f4e87fac  10284 bytes
+  EEG-CAR-01_RevC_CPL_THT_top.csv
+      PROVISIONAL placement, through hole
+      2dd0fdecaad729697d5de573c76a4967006df9e850c3c67d66ed57ff5707a3d8  4462 bytes
+  EEG-CAR-01_RevC_outline_and_fixed_connectors.dxf
+      input 4: outline, mounting holes and keep-outs, the isolation strip, the zone split and all thirty connector courtyards with pin-1 marks
+      c4114d826c5000a1b9563f9dbdae47c42ccb08ff7c9340ffd70c2da269a52c54  24267 bytes
+  step/EEG-CAR-01_RevC_carrier_envelopes.step
+      input 5: 3D bodies
+      2540751c9d0179c6bf36f743b5e08e32126444823ecdad05df04baa08158340a  524236 bytes
+  step/MP-01_RevC_plate_and_standoffs.step
+      input 5: 3D bodies
+      e1eb9516a905aaead80a30b97701eb9685ff6351ccd3c7470f64b65af1e18a18  23018 bytes
+  step/EEG-CAR-01_RevC_module_envelopes.step
+      input 5: 3D bodies
+      8077d6de241a52fe211b6a915886126090c6896e54184be86a276bc813482021  19885 bytes
+  step/footprints/C_0603_1608Metric.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      74a4a8b00b5a0ab53d5c77b7cd7061cbc6e1ee46e5d2d69472fcb15733b7ce12  3788 bytes
+  step/footprints/DIN42802_1p5mm_Socket.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      1b587bb2dc71f1749a21dbd5f2d6b13bcd43f939de85b2104974042ac68d1de8  3876 bytes
+  step/footprints/JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      dc223d39b6ad0aeb28f5d7e18dd32dd3481324ddb848cd16e4e571fe1380079c  3886 bytes
+  step/footprints/L_0603_1608Metric.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      cdde5ab980d9d7d6a62083ca9fd7cc1b91fc26235845829ae9bd64051c414ca0  3788 bytes
+  step/footprints/PinSocket_1x02_P2.54mm_Vertical.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      da6705b3b281bbb79a91a7cd751f8eb7f8903c4bc14960fecc3b724e3ede8333  3894 bytes
+  step/footprints/PinSocket_1x03_P2.54mm_Vertical.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      5fee3263ae07c9255b2098a2f4495d82a43c20922a4803187bfc7909987bfaa0  3894 bytes
+  step/footprints/PinSocket_1x04_P2.54mm_Vertical.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      dfadae060d6ef45636da8a7b25b75f94bc4b9fe15a41b14acc3611d1516de510  3894 bytes
+  step/footprints/PinSocket_1x06_P2.54mm_Vertical.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      54d5e4d052d233b5bc419a7231d2167fec22a91633dc821db743ab409e5d2575  3898 bytes
+  step/footprints/PinSocket_1x08_P2.54mm_Vertical.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      5bb6e2c837c03bd10a9209adfc0c2490c4931a1ed6a00dc6465ca3217506bbc9  3898 bytes
+  step/footprints/PinSocket_1x10_P2.54mm_Vertical.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      586b8dafb1bd576c6dee7eaaaf70e40081f8e971fb2ef4a48d0f6a45c792fb8f  3899 bytes
+  step/footprints/PinSocket_1x12_P2.54mm_Vertical.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      98e9a408f737af05745f4e723d96e2a7a985573a87edb76a6176839162f7113f  3899 bytes
+  step/footprints/PinSocket_1x14_P2.54mm_Vertical.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      7adf0a7bc0ca5217cd44862e757c88d3a6fc60db41d8444c2b01cc86930dcf87  3899 bytes
+  step/footprints/PinSocket_1x16_P2.54mm_Vertical.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      aab866779c29bc0120c0311d9707b4e1b8cc2561374cccbae491c5930879cd29  3899 bytes
+  step/footprints/PinSocket_1x22_P2.54mm_Vertical.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      44111368f3ecdab25a673172d5100cb79cd93ea1eee7c7a80db667596e94944f  3899 bytes
+  step/footprints/PinSocket_2x10_P2.54mm_Vertical.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      0447648a7b402134909cc6d2b8787b4b6998e0116f67fe9722644d93277c1673  3899 bytes
+  step/footprints/R_0603_1608Metric.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      af884ab4980f2d231fbec13d0fe2a4d12d7c378db87bafc6371b182f0767be28  3787 bytes
+  step/footprints/R_1206_3216Metric.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      17bd5b3fcf758462fc9399db6676ad9cad7f7bdcc6855905cd700c694b65e417  3783 bytes
+  step/footprints/SOIC-14_3.9x8.7mm_P1.27mm.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      d23b0e1bf92c8dd99f7eef62b9188f7a177e62b9da1aa47229cfdb2dd5605a28  3837 bytes
+  step/footprints/SOT-23-5.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      429f72a6cca435b365cd04c3c29e15bb7e0615aca1305e30cdc64401c4269556  3727 bytes
+  step/footprints/SOT-23.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      2b9539950628c03a90bb8ad4a386ea09a4010a264af4df72b412776978e28540  3736 bytes
+  step/footprints/SW_PUSH_6mm_H7.3mm.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      5c1922b988bc011ffbd188aaadf16525c64a6c6a29eb4f406bf7d5a21ce3c48a  3833 bytes
+  step/footprints/TSSOP-14_4.4x5mm_P0.65mm.step
+      input 5: the body bound to one footprint class, referenced by the board file
+      28b1a1b6eeb879d6a25c916dda9daffcf886b5872efeceaa91f58d0544218dd3  3852 bytes
+  EEG-CAR-01_RevC_collision_check.txt
+      the 3D collision report. Read case D
+      67b7597386971c060448f50fb7b85473e17863bf5fcc7e84c1aa94fb05773b7d  5298 bytes
+  LAY-EEG-034_RevA_carrier_layout_rule_sheet.pdf
+      input 6: THE RULE SHEET. It is part of the order specification
+      4cf054698a930b51a5a162cea2700f0cca7b02bd56611d10a34838d2f859f821  152234 bytes
+  LAY-EEG-034_RevA_carrier_layout_rule_sheet.md
+      input 6, as text
+      e11d045abff3439b42f3d7da90171067ea4167d744c4b97d45d66eab202d2894  12589 bytes
+  README_layout_inputs.md
+      what is locked, the coordinate convention, which rules KiCad checks and which we check on return
+      48a96da13d5031388fb34053ca0ce0b8e308abcfd9206b96d0d988bf52cd9918  5679 bytes
+
+50 files listed above, 2705956 bytes, plus this manifest: 51 files in the directory.
+
+NOT SENT FROM THIS REPOSITORY.  Nothing in tools/ transmits anything.
+
