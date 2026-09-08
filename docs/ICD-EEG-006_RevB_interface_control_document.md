@@ -43,9 +43,17 @@ which TST-EEG-004 step T2 checks continuity, the source from which the module sy
 schematic set SCH-EEG-005 are generated, and the form a builder fills in before accepting a
 substitute part.
 
-There is no separate KiCad symbol library for this board. Rev A said the symbols were
-generated into `kicad/EEG-CAR-01.kicad_sym`; that file does not exist and never did. The
-symbols are generated from `tools/design.py` straight into the eight sheets of SCH-EEG-005.
+**There is a KiCad symbol library for this board from Rev C, and it is generated.**
+`kicad/EEG-CAR-01.kicad_sym` is written by `tools/emit_kicad_sch.py` from
+`tools/schlib.py`, which builds every connector symbol from the `conn()` calls in
+`tools/design.py` that section 1.1 below is transcribed from -- so a connector symbol
+whose way count or pin names disagree with this document is not possible. Package v2 Rev
+B said no such file existed and that Rev A was wrong to claim one; **that was true of Rev
+B and is superseded by ECO-EEG-033**, which added the native schematic
+`kicad/EEG-CAR-01_RevC*.kicad_sch` for the same reason. It is not edited by hand. The
+eight-sheet PDF set SCH-EEG-005 continues to be drawn separately by `tools/schematic.py`
+for Rev B and is a picture, not a netlist; the Rev C schematic is the netlist-bearing
+one.
 
 **Nothing in this package has been built or measured, and no safety engineer has reviewed
 this design.** Every derived figure is labelled *calculated* and the first article is where

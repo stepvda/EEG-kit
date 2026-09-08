@@ -14,6 +14,9 @@ What it writes into package/kicad:
     EEG-CAR-01_RevC_CPL_THT_top.csv            provisional placement, CAM convention
     EEG-CAR-01_RevC-IPC-D-356A.ipc             netlist: 156 nets, from the pads alone
     EEG-CAR-01_RevC.kicad_dru                  custom design rules, from tools/rules.py
+    EEG-CAR-01_RevC*.kicad_sch                 the native hierarchical schematic
+    EEG-CAR-01.kicad_sym                       the symbol library it is drawn from
+    EEG-CAR-01_RevC_schematic_netlist_check.txt  the gate on the schematic
 
 The two CPL files are PROVISIONAL and say so in the file: outside the thirty connectors,
 Rev C placement is what the contractor is being paid to decide, and the coordinates in
@@ -32,8 +35,10 @@ sys.path.insert(0, HERE)
 
 import design as D          # noqa: E402
 import gerber               # noqa: E402
+import emit_kicad_sch       # noqa: E402
 import pcbgen               # noqa: E402
 import rules                # noqa: E402
+import sch_netlist          # noqa: E402
 
 KDIR = os.path.join(PKG, "kicad")
 
@@ -103,6 +108,15 @@ def main(verbose=True):
               f"{sum(1 for _ in board.pads())} pads, {len(board.nets())} nets")
     made = emit_bom_cpl_netlist(board, verbose)
     made += emit_rules(verbose)
+    made += emit_kicad_sch.main(verbose)
+    ndiff, nprob, report = sch_netlist.main(write=True)
+    made.append(report)
+    if ndiff or nprob:
+        raise SystemExit(f"the schematic does not match design.py: {ndiff} netlist "
+                         f"difference(s), {nprob} structural finding(s). "
+                         f"See {os.path.relpath(report, PKG)}")
+    if verbose:
+        print("   schematic netlist matches design.py: 0 differences")
     return made
 
 

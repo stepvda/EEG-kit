@@ -250,9 +250,28 @@ by hand, and section 1.4 ranks the kit BOM workbook last in precedence for that 
 same applies to `webtest/EEG-Connectivity-Test.html`, which `webtest/build.py` inlines from
 the modules under `webtest/js/` and which TOOL-EEG-022 owns.
 
+**The Rev C layout-input set is in this class and is registered here on 8 September 2026
+(ECO-EEG-033).** `tools/emit_all.py` no longer regenerates the Rev B set -- it refuses, and
+says why (ECO-EEG-031) -- and writes these instead, all from `design.py` and none edited by
+hand:
+
+| File | Written by | What it is |
+|---|---|---|
+| `kicad/EEG-CAR-01_RevC.kicad_sch` and its nine sheets | `tools/emit_kicad_sch.py` | the native hierarchical schematic, KiCad 8 |
+| `kicad/EEG-CAR-01.kicad_sym` | `tools/emit_kicad_sch.py` | the symbol library those sheets are drawn from |
+| `kicad/EEG-CAR-01_RevC_schematic_netlist_check.txt` | `tools/sch_netlist.py` | the schematic read back and diffed against `design.py` |
+| `kicad/EEG-CAR-01_RevC.kicad_dru` | `tools/rules.py` | the custom design rules, 37 of them |
+| `kicad/EEG-CAR-01_RevC_BOM.csv` | `tools/gerber.py` | the BOM, with the substitution column |
+| `kicad/EEG-CAR-01_RevC_CPL_SMT_top.csv`, `..._CPL_THT_top.csv` | `tools/gerber.py` | **provisional** placement; the files say so |
+| `kicad/EEG-CAR-01_RevC-IPC-D-356A.ipc` | `tools/gerber.py` | the netlist, from the pads alone |
+| `kicad/EEG-CAR-01_RevB_regraded_ECO-EEG-032.txt` | `tools/grade_revb.py` | the released Rev B geometry under the new rule set |
+| `docs/footprint_audit_RevC.md` | `tools/footprint_audit.py` | every designator's footprint against its part number |
+
 SCH-EEG-005 is in this class. Its revision letter follows the board revision letter in
 `design.py`, which is **Rev B**, and it is regenerated rather than edited whenever the
-netlist changes. The board is still Rev B after ECO-EEG-019 to ECO-EEG-027, because Rev A
+netlist changes. **It is a picture and not a netlist**, which is finding 7 of ECO-EEG-030;
+the netlist-bearing schematic is the Rev C set above, and the two are emitted separately for
+now because `tools/schematic.py` still draws the Rev B PDF. The board is still Rev B after ECO-EEG-019 to ECO-EEG-027, because Rev A
 was the package v1 carrier and Rev B is the package v2 carrier throughout its drafting.
 
 ### 1.3 Identifiers the package cites that are not controlled documents
@@ -481,6 +500,7 @@ indexes, this section is the register, and where they differ this section govern
 | ECO-EEG-030 | scope, with seven findings | an external layout engineer read the Rev B board, declined the review and advised redesign; Rev B is withdrawn from fabrication and Rev C is opened as a reviewable design whose layout is bought | implemented 8 September 2026 |
 | ECO-EEG-031 | major | four part numbers could not be bought or could not be fitted: the quad OPA4376 has no SOIC-14, the ferrite bead is not a Murata part, the tactile switch is a 12 x 12 mm part on a 6 x 6 mm land, and the patient-connected DIN sockets were not marked non-substitutable | implemented 8 September 2026 |
 | ECO-EEG-032 | major | the DRC reported zero violations against a rule set that did not contain six of the seven findings; the rules are now encoded once and exported to KiCad, and Rev B is regraded under them | implemented 8 September 2026 |
+| ECO-EEG-033 | scope | the Rev C reviewable design set: a native KiCad schematic, an unrouted board and project, 3D bodies and a collision check, and the layout rule sheet LAY-EEG-034 | implemented 8 September 2026 |
 
 ### ECO-EEG-001 -- the contact lights had no driver
 
@@ -1412,6 +1432,69 @@ well as measured, and a rule kept in two places is a rule that will disagree wit
 `tools/kicad_parse.py` gained segment and via readers so that a released board file can be
 graded without its source.
 
+### ECO-EEG-033 -- the Rev C reviewable design set
+
+**Class:** scope. **Found by:** ECO-EEG-030, findings 6 and 7, and the input list the
+programme committed to the layout contractor on 8 September 2026.
+
+**Was:** four of the six inputs promised to the layout desk did not exist in any form -- a
+native schematic, a board outline and fixed connector DXF, 3D bodies of the thirteen module
+assemblies, and a rule sheet -- and a fifth, the netlist, existed only as IPC-D-356A.
+
+**Now**, and this entry grows as each part lands.
+
+**1. The native schematic (finding 7).** `kicad/EEG-CAR-01_RevC.kicad_sch` and nine sheets
+under it, written by `tools/emit_kicad_sch.py` from the same `design.py` data the eight-sheet
+PDF is drawn from. Ten files, KiCad 8 format, hierarchical, one sheet per block: power,
+isolation and USB, controller, the two analogue front ends, the harness and its sixteen
+protection networks, audio and the envelopes, the contact lights, and the star points and
+test points. All 211 designators are placed and the assignment is checked to be a partition
+of `design.C` -- a designator on two sheets or on none fails the build.
+
+*How connectivity is expressed.* Power and ground are global through power symbols and carry
+no sheet pin. Every other net with pads on more than one sheet -- **46 of the 156** -- is a
+hierarchical label on each sheet that uses it and a sheet pin on the root. The remaining
+**110** are local to one sheet or global through a power symbol.
+
+*What makes it readable rather than merely correct*, which is what finding 7 is about. The
+quad OPA4376 is drawn as **five units** -- four amplifiers and a power unit -- and not as a
+fourteen-pin box. Each of the sixteen protection networks is drawn as the straight line
+DSN-EEG-003 section 3.3 rule 3 asks the layout to place it in: resistor, then clamp, then
+filter capacitor, from the harness towards the module. Each envelope channel is drawn along
+its signal path. Notes wrap, and a sheet whose content runs off its page fails the build
+rather than emitting a PDF with the comparator missing.
+
+*The gate, and it is a measurement and not an opinion.* `tools/sch_netlist.py` reads the
+emitted files back -- pin geometry out of their own embedded `lib_symbols`, wires, junctions,
+labels, hierarchical labels and power symbols -- resolves the connectivity geometrically and
+diffs it against `design.py`. It does not ask the generator what it meant.
+
+| | design.py | schematic |
+|---|---|---|
+| nets | 156 | **156** |
+| pins | 614 | **614** |
+| structural problems | -- | **0** |
+| netlist differences | -- | **0** |
+
+It earned its keep on the first run: four pull-ups -- R50, R51, R52 and R94 -- were wired by
+geometry rather than by pin number and had pin 2 where `design.py` has pin 1. A resistor is
+symmetric so the circuit was right and the netlist was wrong, which is precisely the class of
+error that survives a human reading a schematic and does not survive this check. R94 and R95
+were also drawn as a divider and are two separate I2C pull-ups. Both are fixed and the
+helper that caused it now wires by pin number.
+
+*ERC.* **KiCad is not installed on the machine this was generated on, so `kicad-cli sch erc`
+was NOT RUN and no ERC result is claimed.** What was run is the structural half: every pin of
+every placed symbol is on a net, no designator is placed twice and every unit of a multi-unit
+part is placed exactly once, no net has one pin unless `design.py` declares it as one of the
+eleven single-pad nets, and every power net is driven by a power symbol. **Zero findings.**
+
+*The symbol library.* `kicad/EEG-CAR-01.kicad_sym`, generated. ICD-EEG-006 Rev B said no such
+file existed and that Rev A was wrong to claim one; that was true of Rev B and is superseded
+here, and the ICD is corrected in the same change rather than left contradicting the tree. The
+contractor needs it: a schematic whose symbols live only inside itself opens, and nobody can
+edit it.
+
 ### 2.2 Requirement changes and where they come from
 
 Every RFQ-EEG-001 requirement that changed between Rev C and this release, with the change
@@ -1905,7 +1988,7 @@ this register records the fact, it does not amend other documents from here.
    set moved, and the ECO says which checks it added or withdrew.
 6. **Record.** Add the ECO to section 2 with the same fields as the entries above and take
    the next free number in the **one EEG-nnn pool** that section 1.3A now rules, which is
-   **ECO-EEG-033**. Never ECO-EEG-016, which is this document, and never ECO-EEG-028 or
+   **ECO-EEG-034**. Never ECO-EEG-016, which is this document, and never ECO-EEG-028 or
    ECO-EEG-029, which are withdrawn under section 2 and are not reused. Bump the revision of
    every document the change touches, and update sections 1.1, 1.5 and 2.1.
 7. **Release.** A release is the whole package or nothing. Regenerate the checksums in
