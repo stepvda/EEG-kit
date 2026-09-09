@@ -110,18 +110,26 @@ def build():
     a(f"Eight classes over all **{len(set(D.N.values()))}** nets. **Minimum** is a floor "
       f"and a conductor below it is an error; **preferred** is what to route at wherever "
       f"the board allows it. `Vias` says whether the class may have one at all. "
-      f"`Confirm` marks a figure that is a proposal of this programme and not a "
-      f"transcription from a governing document -- if one of those is unroutable, say so "
-      f"at the placement gate rather than relaxing it silently.")
+      f"`Confirm` names the **columns of that row** that are proposals of this programme "
+      f"and not transcriptions from a governing document -- if one of those is "
+      f"unroutable, say so at the placement gate rather than relaxing it silently. "
+      f"Everything not named there is a requirement.")
     a("")
     a("| Class | Nets | Width min / pref (mm) | Clearance min / pref (mm) | Layers | "
       "Vias | Confirm |")
     a("|---|---|---|---|---|---|---|")
     for r in rules.summary_table():
+        conf = ", ".join(f"**{c}**" for c in r["confirm"]) if r["confirm"] else "no"
         a(f"| `{r['name']}` | {r['nets']} | {r['min_width']:.2f} / "
           f"{r['pref_width']:.2f} | {r['min_clearance']:.2f} / "
           f"{r['pref_clearance']:.2f} | {r['layers']} | {r['vias']} | "
-          f"{'**yes**' if r['confirm'] else 'no'} |")
+          f"{conf} |")
+    a("")
+    cited = [r for r in rules.summary_table() if r["cites"]]
+    for r in cited:
+        a(f"**`{r['name']}`** -- every column of that row except "
+          f"{', '.join(r['confirm'])} is a requirement transcribed from "
+          f"{r['cites']}, and is not open for confirmation.")
     a("")
     a("Where the numbers come from:")
     a("")

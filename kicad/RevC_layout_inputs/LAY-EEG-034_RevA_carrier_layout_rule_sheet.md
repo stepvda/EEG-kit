@@ -39,12 +39,12 @@ The 2.5 kV barrier itself is **on the purchased ADuM4160 module at J10**, not on
 
 ## 5. Net classes
 
-Eight classes over all **156** nets. **Minimum** is a floor and a conductor below it is an error; **preferred** is what to route at wherever the board allows it. `Vias` says whether the class may have one at all. `Confirm` marks a figure that is a proposal of this programme and not a transcription from a governing document -- if one of those is unroutable, say so at the placement gate rather than relaxing it silently.
+Eight classes over all **156** nets. **Minimum** is a floor and a conductor below it is an error; **preferred** is what to route at wherever the board allows it. `Vias` says whether the class may have one at all. `Confirm` names the **columns of that row** that are proposals of this programme and not transcriptions from a governing document -- if one of those is unroutable, say so at the placement gate rather than relaxing it silently. Everything not named there is a requirement.
 
 | Class | Nets | Width min / pref (mm) | Clearance min / pref (mm) | Layers | Vias | Confirm |
 |---|---|---|---|---|---|---|
-| `ELECTRODE` | 32 | 0.25 / 0.30 | 0.35 / 0.40 | F.Cu | NO | **yes** |
-| `ANALOGUE_REF` | 5 | 0.30 / 0.40 | 0.20 / 0.30 | any | yes | **yes** |
+| `ELECTRODE` | 32 | 0.25 / 0.30 | 0.35 / 0.40 | F.Cu | NO | **width** |
+| `ANALOGUE_REF` | 5 | 0.30 / 0.40 | 0.20 / 0.30 | any | yes | **width** |
 | `POWER` | 8 | 0.40 / 0.80 | 0.20 / 0.30 | any | yes | no |
 | `USB` | 2 | 0.30 / 0.30 | 0.35 / 0.35 | F.Cu | NO | no |
 | `ANALOGUE` | 42 | 0.25 / 0.25 | 0.20 / 0.30 | any | yes | no |
@@ -52,9 +52,11 @@ Eight classes over all **156** nets. **Minimum** is a floor and a conductor belo
 | `DIGITAL` | 21 | 0.20 / 0.25 | 0.20 / 0.25 | any | yes | no |
 | `DEFAULT` | 30 | 0.20 / 0.25 | 0.20 / 0.25 | any | yes | no |
 
+**`ELECTRODE`** -- every column of that row except width is a requirement transcribed from DSN-EEG-003 section 3.3 rule 3, and is not open for confirmation.
+
 Where the numbers come from:
 
-- **`ELECTRODE`** -- Patient-connected. The 0.35 mm clearance is DSN-EEG-003 section 3.3 rule 3 and is not a proposal. The rest of this row IS a proposal: rule 3 says these nets are routed on L1 with the reference plane continuous beneath them, and a via breaks the plane it is routed over, so L1-only and no vias is what rule 3 means read literally. It is achievable -- the harness socket J14, the R/D/C protection rows and the module sockets J2/J4/J23/J29 are all on the top side. The 0.25 mm floor is above the board's 0.20 mm because Rev B only reached 0.20 mm on these nets by relaxing, and a patient-connected conductor is the last place to spend the last 0.05 mm. Current is not the constraint: these carry microamperes.
+- **`ELECTRODE`** -- Patient-connected. **The clearance, the layer and the via restriction are requirements, not proposals.** DSN-EEG-003 section 3.3 rule 3 reads: every electrode net is routed on L1 with the reference plane continuous beneath it, at 0.35 mm clearance to any other net rather than 0.20 mm. The 0.35 mm is transcribed from that sentence and from the electrode-net clearance row of section 3.2; L1-only is transcribed from it word for word; and the via prohibition follows from both halves of it, because a net routed wholly on L1 has no via to place and a via would break the plane it is routed over. It is achievable -- the harness socket J14, the R/D/C protection rows and the module sockets J2/J4/J23/J29 are all on the top side. **What IS a proposal is the width pair**, and only that: no governing document fixes a width for these nets. Section 3.2 gives the board a 0.20 mm floor and a 0.25 mm preferred width and says nothing about the electrode class. The 0.25 mm minimum is set above the board floor because Rev B only reached 0.20 mm on these nets by relaxing, and a patient-connected conductor is the last place to spend the last 0.05 mm. Current is not the constraint: these carry microamperes.
 - **`ANALOGUE_REF`** -- AGND_REF, AVDD, AVSS and the module-2 pair. About 10 mA per rail (ICD-EEG-006 section 2.1), so 0.20 mm would carry it four times over: the width is for source impedance and for the mid-rail's noise, not for current. 0.40 mm preferred is what the Rev B router already aimed at.
 - **`POWER`** -- VSYS, VBAT, V5V, VBUS_CHG, VBUS_IN, DVDD3V3, VDD_ISO, DGND. The worst case is about 610 mA at J13 (ICD-EEG-006 section 2.7, calculated). On 35 um outer copper at a 10 C rise, IPC-2221 gives about 1.29 A for 0.40 mm and about 0.89 A for 0.25 mm, so 0.40 mm is the floor with margin and 0.80 mm is the preferred width the Rev B router already used.
 - **`USB`** -- DSN-EEG-003 section 3.3 rule 5, transcribed and not proposed: a 0.30 mm pair on 0.35 mm spacing on L1 directly over the DGND plane on L2, about 95 ohm differential. The width is the impedance, so it is a fixed value and not a minimum; a via would move the reference and is not permitted.

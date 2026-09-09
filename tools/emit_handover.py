@@ -25,9 +25,49 @@ PKG = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 
 import design as D          # noqa: E402
+import kicad_fmt            # noqa: E402
 import rules                # noqa: E402
 
 OUT = os.path.join(PKG, "kicad", "RevC_layout_inputs")
+OUT_K10 = os.path.join(PKG, "kicad", "RevC_layout_inputs_kicad10")
+EQUIV = "EQUIVALENCE_kicad8_vs_kicad10.md"
+
+
+def out_dir(fmt):
+    return OUT if fmt.key == "kicad8" else OUT_K10
+
+
+# The two paragraphs that differ between the two sets.  Everything else in the README is
+# one text, because everything else about the two sets is the same by construction.
+KICAD_SECTION = """## KiCad version -- and there are two sets
+
+This directory is the **{label}** emission: `(kicad_sch (version {schv}))` and
+`(kicad_pcb (version {pcbv}))`, `(generator_version "{genv}")`.
+
+**{other_line}**
+
+Both sets are generated from one source, `tools/design.py`, in a single run. The {k10}
+set is the {k8} set passed through KiCad's own `kicad-cli pcb upgrade`, `sch upgrade`
+and `sym upgrade`, so the two are equivalent by construction and not by assertion; the
+schema is KiCad's to define and this programme does not hand-write it. They have then
+been **diffed against each other and the result written down** -- netlist, board census,
+net classes, the 37 custom rules, the DRC severities, the locked footprints, the fixed
+geometry and the rule areas. Read **`{equiv}`** in the KiCad 10 directory. Where a check
+could not be performed it says so rather than inferring the answer.
+
+Independently of KiCad, `{stem}_schematic_netlist_check.txt` is the schematic parsed
+back out of the emitted files -- pin geometry from their own `lib_symbols`, wires,
+junctions, labels and power symbols -- and diffed against the design source: **156 nets
+and 614 pins on both sides, 0 differences.** The generator is not asked what it meant.
+
+{drc_line}"""
+
+K8_OTHER = ("If you are on KiCad 10, use `kicad/RevC_layout_inputs_kicad10/` instead. "
+            "This directory is the KiCad 8 reference set and stays as the published "
+            "one.")
+K10_OTHER = ("This is the set for the JLCPCB layout desk, which has confirmed it runs "
+             "KiCad 10. The KiCad 8 set is kept alongside at "
+             "`kicad/RevC_layout_inputs/` for anyone still on 8.")
 
 
 def sha256(path):
@@ -134,16 +174,7 @@ is most of the specification.
 
 Load **`{stem}.kicad_dru`** with the project. It is 37 rules and it is not optional.
 
-## KiCad version
-
-Written for **KiCad 8**: `(kicad_sch (version 20231120))` and
-`(kicad_pcb (version 20240108))`. **Tell us if you are on a different major version**
-before you start and we will re-emit; these are generated files and re-emitting costs
-nothing. **KiCad is not installed on the machine that generated them**, so `kicad-cli
-sch erc` and `kicad-cli pcb drc` were **NOT RUN** and no ERC or DRC result is claimed for
-them. What was run is in `{stem}_schematic_netlist_check.txt`: the schematic parsed back
-and diffed against the design source, 156 nets and 614 pins on both sides, **0
-differences**.
+{kicad_section}
 
 ## What is locked, and what is yours
 
@@ -225,59 +256,163 @@ stephane@stepvda.com
 """
 
 
-def main(verbose=True):
-    if os.path.isdir(OUT):
-        shutil.rmtree(OUT)
-    os.makedirs(OUT)
+def _write_readme(fmt, drc_line, verbose=True):
+    other = K8_OTHER if fmt.key == "kicad8" else K10_OTHER
+    section = KICAD_SECTION.format(
+        label=fmt.label, schv=fmt.sch_version, pcbv=fmt.pcb_version,
+        genv=fmt.generator_version, other_line=other, equiv=EQUIV,
+        k8=kicad_fmt.KICAD8.label, k10=kicad_fmt.KICAD10.label,
+        stem=D.stem(D.REV_C), drc_line=drc_line)
+    readme = README.format(rev=D.REV_C, w=D.BOARD_W, h=D.BOARD_H, date=D.DATE_C,
+                           stem=D.stem(D.REV_C),
+                           frac=rules.GEOMETRY["pad_entry_frac"] * 100,
+                           kicad_section=section)
+    p = os.path.join(out_dir(fmt), "README_layout_inputs.md")
+    open(p, "w").write(readme)
+    return p
+
+
+def _write_manifest(fmt, files, extra, verbose=True):
+    """SHA256SUMS.txt over this directory's own files."""
+    OUTD = out_dir(fmt)
+    if fmt.key == "kicad8":
+        repro = ["Every file here is GENERATED from tools/design.py.  Re-running",
+                 "tools/emit_all.py rebuilds this directory identically, so a checksum",
+                 "that does not match means the file changed and not that the build is",
+                 "nondeterministic."]
+    else:
+        # Say this plainly rather than let the manifest make a promise it cannot keep.
+        repro = [
+            "Every file here is GENERATED from tools/design.py.  These checksums",
+            "identify THIS emission and verify what you received against what was",
+            "sent, which is what a manifest is for.",
+            "",
+            "They are NOT reproducible run to run, and the KiCad 8 set's are.  Two",
+            "files move on every emission and neither is a change to the design:",
+            "",
+            "  * the .kicad_pcb and the .kicad_sch files, because KiCad mints a fresh",
+            "    random UUID for each element it upgrades.  Measured across two full",
+            "    runs: 844 differing lines in the board, ALL of them (uuid ...) and",
+            "    NONE of them anything else.  The board this programme writes uses",
+            "    derived UUIDs and does not have this property; KiCad's upgrader",
+            "    reintroduces it and there is no flag to seed it.",
+            "  * drc_kicad10.txt, which carries the wall-clock time of the DRC run in",
+            "    its second line, and the equivalence report, which quotes that line",
+            "    verbatim.",
+            "",
+            "The netlist, the net classes, the 37 rules, the severities, the locked",
+            "footprints and the geometry are identical run to run; that is what",
+            "EQUIVALENCE_kicad8_vs_kicad10.md checks and it is checked on every",
+            "emission."]
+    lines = [f"EEG-CAR-01 Rev {D.REV_C} -- layout input set, SHA-256 manifest",
+             f"{fmt.label} emission, generated {D.DATE_C} by tools/emit_handover.py",
+             ""] + repro + [
+             "",
+             kicad_fmt.report(fmt),
+             "",
+             "FILES", ""]
+    total, n = 0, 0
+    for name, what in [(f[1], f[2]) for f in files] + extra:
+        p = os.path.join(OUTD, name)
+        if not os.path.exists(p):
+            continue
+        total += os.path.getsize(p)
+        n += 1
+        lines.append(f"  {name}")
+        lines.append(f"      {what}")
+        lines.append(f"      {sha256(p)}  {os.path.getsize(p)} bytes")
+    lines += ["", f"{n} files listed above, {total} bytes, plus this "
+                  f"manifest: {n + 1} files in the directory.",
+              "",
+              "NOT SENT FROM THIS REPOSITORY.  Nothing in tools/ transmits anything.",
+              ""]
+    man = os.path.join(OUTD, "SHA256SUMS.txt")
+    open(man, "w").write("\n".join(lines) + "\n")
+    if verbose:
+        print(f"    {n + 1} files in {os.path.relpath(OUTD, PKG)} "
+              f"({total // 1024} kB) -- {fmt.label}")
+    return man, total, n + 1
+
+
+def main(verbose=True, targets=("kicad8", "kicad10")):
+    """Assemble the handover set once per format target.
+
+    The KiCad 8 directory is built from the generated files.  Every other target is
+    built by COPYING that directory and converting it with KiCad's own upgrader, so the
+    two sets cannot drift: there is one emission and one conversion, not two emitters.
+    """
     files = _files()
     missing = [src for src, _n, _w in files if not os.path.exists(src)]
     if missing:
         raise SystemExit("the handover set is incomplete; run tools/emit_all.py first:\n"
                          + "\n".join("  " + os.path.relpath(m, PKG) for m in missing))
+
+    if os.path.isdir(OUT):
+        shutil.rmtree(OUT)
+    os.makedirs(OUT)
     for src, name, _what in files:
         dst = os.path.join(OUT, name)
         os.makedirs(os.path.dirname(dst), exist_ok=True)
         shutil.copy2(src, dst)
+    kicad_fmt.verify(OUT, kicad_fmt.KICAD8, verbose)
 
-    readme = README.format(rev=D.REV_C, w=D.BOARD_W, h=D.BOARD_H, date=D.DATE_C,
-                           stem=D.stem(D.REV_C),
-                           frac=rules.GEOMETRY["pad_entry_frac"] * 100)
-    open(os.path.join(OUT, "README_layout_inputs.md"), "w").write(readme)
+    made = [kicad_fmt.KICAD8]
+    if "kicad10" in targets:
+        fmt = kicad_fmt.KICAD10
+        if os.path.isdir(OUT_K10):
+            shutil.rmtree(OUT_K10)
+        shutil.copytree(OUT, OUT_K10)
+        kicad_fmt.convert_tree(OUT_K10, fmt, verbose=verbose)
+        kicad_fmt.verify(OUT_K10, fmt, verbose)
+        made.append(fmt)
 
-    lines = [f"EEG-CAR-01 Rev {D.REV_C} -- layout input set, SHA-256 manifest",
-             f"generated {D.DATE_C} by tools/emit_handover.py",
-             "",
-             "Every file here is GENERATED from tools/design.py.  Re-running",
-             "tools/emit_all.py rebuilds this directory identically, so a checksum that",
-             "does not match means the file changed and not that the build is",
-             "nondeterministic.",
-             "",
-             "FILES", ""]
-    total = 0
-    for _src, name, what in files:
-        p = os.path.join(OUT, name)
-        total += os.path.getsize(p)
-        lines.append(f"  {name}")
-        lines.append(f"      {what}")
-        lines.append(f"      {sha256(p)}  {os.path.getsize(p)} bytes")
-    p = os.path.join(OUT, "README_layout_inputs.md")
-    total += os.path.getsize(p)
-    lines.append("  README_layout_inputs.md")
-    lines.append("      what is locked, the coordinate convention, which rules KiCad "
-                 "checks and which we check on return")
-    lines.append(f"      {sha256(p)}  {os.path.getsize(p)} bytes")
-    lines += ["", f"{len(files) + 1} files listed above, {total} bytes, plus this "
-                  f"manifest: {len(files) + 2} files in the directory.",
-              "",
-              "NOT SENT FROM THIS REPOSITORY.  Nothing in tools/ transmits anything.",
-              ""]
-    man = os.path.join(OUT, "SHA256SUMS.txt")
-    open(man, "w").write("\n".join(lines) + "\n")
+    # the equivalence check, and the DRC that check 9 records, both run against the
+    # finished directories and before either manifest is taken.
+    import emit_equivalence           # noqa: E402  (circular at module scope)
+    stem = D.stem(D.REV_C)
+    extra8, extra10 = [], []
+    drc_line8 = ("**No DRC or ERC result is claimed for this set.** KiCad 8 is not "
+                 "installed on the machine that generated it and Homebrew carries no "
+                 "`kicad@8`, so `kicad-cli` could not be run against it. The KiCad 10 "
+                 "set WAS checked; see the equivalence report.")
+    drc_line10 = ""
+    if kicad_fmt.KICAD10 in made:
+        drc = kicad_fmt.run_drc(OUT_K10, f"{stem}.kicad_pcb")
+        eq_path, checks = emit_equivalence.main(OUT, OUT_K10, drc, verbose)
+        extra10.append((EQUIV, "the two emissions compared, check by check"))
+        if drc[2]:
+            extra10.append((os.path.basename(drc[2]),
+                            "the KiCad 10 DRC report, verbatim"))
+            drc_line10 = (
+                f"**This set was opened by KiCad {kicad_fmt.cli_version()} and DRC was "
+                f"run against the `.kicad_dru`.** It loads with no schema warning and "
+                f"no rule-parse error. The report is in this directory as "
+                f"`{os.path.basename(drc[2])}` and is read in check 9 of `{EQUIV}` -- "
+                f"including what the counts in it do and do not mean.")
+        else:
+            drc_line10 = drc_line8
 
-    if verbose:
-        print(f"    {len(files) + 2} files in "
-              f"{os.path.relpath(OUT, PKG)} ({total // 1024} kB)")
-    return [OUT]
+    # KiCad writes a `.kicad_prl` (local editor state: the visible layers, the active
+    # grid) whenever it opens a project, and `-backups/` alongside it.  Neither is part
+    # of the specification and neither is reproducible, so they are removed before the
+    # manifest is taken rather than shipped and checksummed.
+    for fmt in made:
+        d = out_dir(fmt)
+        for name in sorted(os.listdir(d)):
+            p = os.path.join(d, name)
+            if name.endswith((".kicad_prl", ".lck")):
+                os.remove(p)
+            elif name.endswith("-backups") and os.path.isdir(p):
+                shutil.rmtree(p)
+
+    for fmt in made:
+        _write_readme(fmt, drc_line8 if fmt.key == "kicad8" else drc_line10, verbose)
+        ex = extra8 if fmt.key == "kicad8" else extra10
+        _write_manifest(fmt, files, list(ex) + [
+            ("README_layout_inputs.md",
+             "what is locked, the coordinate convention, which KiCad this set is for, "
+             "and which rules we check on return")], verbose)
+    return [out_dir(f) for f in made]
 
 
 if __name__ == "__main__":

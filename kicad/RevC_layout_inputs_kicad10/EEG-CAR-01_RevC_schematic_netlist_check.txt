@@ -1,0 +1,28 @@
+EEG-CAR-01 Rev C -- schematic against design.py
+Generated 2026-09-08 by tools/sch_netlist.py.
+==============================================================================
+
+WHAT THIS IS
+  The netlist read back out of the emitted .kicad_sch files -- pin
+  geometry from their own lib_symbols, wires, junctions, labels and
+  power symbols -- diffed against tools/design.py.  The generator is
+  not asked what it meant.
+
+  files            10
+  nets in design.py 156
+  nets found        156
+  pins in design.py 614
+  pins found        614
+
+STRUCTURAL PROBLEMS: 0
+
+STRUCTURAL ERC: 0 finding(s)
+  KiCad is not installed on this machine, so `kicad-cli sch erc` was
+  NOT RUN and this is not an ERC result.  It is the four checks an ERC
+  would fail on that can be made from the files alone: every pin on a
+  net, no designator placed twice, no accidental single-pin net, and
+  every power net driven by a power symbol.
+
+NETLIST DIFFERENCES: 0
+  none.  The schematic and design.py describe the same netlist.
+

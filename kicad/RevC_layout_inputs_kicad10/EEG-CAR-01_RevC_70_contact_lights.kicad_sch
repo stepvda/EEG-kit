@@ -1,0 +1,4778 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "cfaaaa36-e349-5242-b9e0-fb1faa842b72")
+	(paper "A2")
+	(title_block
+		(title "74HC595 shift-register module and the ten-way light harness")
+		(date "2026-09-08")
+		(rev "C")
+		(company "TI One Voice research programme")
+		(comment 1 "UNROUTED. Placement and routing are external (ECO-EEG-030).")
+		(comment 2 "Generated from tools/design.py by tools/emit_kicad_sch.py.")
+		(comment 3 "Licence CC BY-SA 4.0.")
+	)
+	(lib_symbols
+		(symbol "CONN_J19_R"
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "J"
+				(at 0 23.45 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "CONN_J19_R"
+				(at 0 -23.45 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "74HC595 contact-light driver (PinSocket_1x16_P2.54mm_Vertical)"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "CONN_J19_R_1_1"
+				(rectangle
+					(start -6.35 21.59)
+					(end 0 -21.59)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 19.05) (xy -0.9 19.05)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 16.51) (xy -0.9 16.51)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 13.97) (xy -0.9 13.97)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 11.43) (xy -0.9 11.43)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 8.89) (xy -0.9 8.89)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 6.35) (xy -0.9 6.35)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 3.81) (xy -0.9 3.81)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 1.27) (xy -0.9 1.27)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -1.27) (xy -0.9 -1.27)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -3.81) (xy -0.9 -3.81)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -6.35) (xy -0.9 -6.35)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -8.89) (xy -0.9 -8.89)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -11.43) (xy -0.9 -11.43)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -13.97) (xy -0.9 -13.97)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -16.51) (xy -0.9 -16.51)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -19.05) (xy -0.9 -19.05)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 5.08 19.05 180)
+					(length 5.08)
+					(name "DVDD3V3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 16.51 180)
+					(length 5.08)
+					(name "DGND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 13.97 180)
+					(length 5.08)
+					(name "LED_SR_DATA"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 11.43 180)
+					(length 5.08)
+					(name "LED_SR_CLK"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 8.89 180)
+					(length 5.08)
+					(name "LED_SR_LATCH"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 6.35 180)
+					(length 5.08)
+					(name "LED_OE"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 3.81 180)
+					(length 5.08)
+					(name "LED_MR"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 1.27 180)
+					(length 5.08)
+					(name "SR_Q0"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -1.27 180)
+					(length 5.08)
+					(name "SR_Q1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -3.81 180)
+					(length 5.08)
+					(name "SR_Q2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -6.35 180)
+					(length 5.08)
+					(name "SR_Q3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "11"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -8.89 180)
+					(length 5.08)
+					(name "SR_Q4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "12"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -11.43 180)
+					(length 5.08)
+					(name "SR_Q5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "13"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -13.97 180)
+					(length 5.08)
+					(name "SR_Q6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "14"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -16.51 180)
+					(length 5.08)
+					(name "SR_Q7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "15"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -19.05 180)
+					(length 5.08)
+					(name "NC_SR_Q7S"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "16"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "CONN_J30_L"
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "J"
+				(at 0 15.83 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "CONN_J30_L"
+				(at 0 -15.83 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Helmet harness -- contact lights (10-way) (PinSocket_1x10_P2.54mm_Vertical)"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "CONN_J30_L_1_1"
+				(rectangle
+					(start 0 13.97)
+					(end 6.35 -13.97)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 11.43) (xy 0.9 11.43)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 8.89) (xy 0.9 8.89)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 6.35) (xy 0.9 6.35)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 3.81) (xy 0.9 3.81)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 1.27) (xy 0.9 1.27)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -1.27) (xy 0.9 -1.27)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -3.81) (xy 0.9 -3.81)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -6.35) (xy 0.9 -6.35)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -8.89) (xy 0.9 -8.89)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -11.43) (xy 0.9 -11.43)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -5.08 11.43 0)
+					(length 5.08)
+					(name "LED1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 8.89 0)
+					(length 5.08)
+					(name "LED2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 6.35 0)
+					(length 5.08)
+					(name "LED3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 3.81 0)
+					(length 5.08)
+					(name "LED4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 1.27 0)
+					(length 5.08)
+					(name "LED5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -1.27 0)
+					(length 5.08)
+					(name "LED6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -3.81 0)
+					(length 5.08)
+					(name "LED7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -6.35 0)
+					(length 5.08)
+					(name "LED8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -8.89 0)
+					(length 5.08)
+					(name "LED_V"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -11.43 0)
+					(length 5.08)
+					(name "LED_GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "C_V"
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "C"
+				(at 2.2 1.2 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "C_V"
+				(at 2.2 -1.2 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Unpolarised capacitor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "C_V_0_1"
+				(polyline
+					(pts
+						(xy -2.032 0.635) (xy 2.032 0.635)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.032 -0.635) (xy 2.032 -0.635)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "C_V_1_1"
+				(pin passive line
+					(at 0 5.08 270)
+					(length 4.445)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -5.08 90)
+					(length 4.445)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "PWR_DGND"
+			(power global)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "#PWR"
+				(at 0 -4.4 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "PWR_DGND"
+				(at 0 -6 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Power flag: DGND"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "PWR_DGND_1_1"
+				(polyline
+					(pts
+						(xy -2.54 -1.27) (xy 2.54 -1.27)
+					)
+					(stroke
+						(width 0.25)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.6 -2.03) (xy 1.6 -2.03)
+					)
+					(stroke
+						(width 0.25)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.7 -2.79) (xy 0.7 -2.79)
+					)
+					(stroke
+						(width 0.25)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 -1.27)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin power_in line
+					(at 0 0 270)
+					(length 0)
+					(name "DGND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "PWR_DVDD3V3"
+			(power global)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "#PWR"
+				(at 0 5.2 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "PWR_DVDD3V3"
+				(at 0 3.6 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Power flag: DVDD3V3"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "PWR_DVDD3V3_1_1"
+				(polyline
+					(pts
+						(xy -1.27 1.27) (xy 1.27 1.27)
+					)
+					(stroke
+						(width 0.25)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 0 2.9)
+					(radius 0.36)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 1.27) (xy 0 2.54)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 1.27)
+					)
+					(stroke
+						(width 0.15)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin power_in line
+					(at 0 0 90)
+					(length 0)
+					(name "DVDD3V3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "R_H"
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "R"
+				(at 0 2.2 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "R_H"
+				(at 0 -3.6 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Resistor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "R_H_0_1"
+				(rectangle
+					(start -2.54 -1.016)
+					(end 2.54 1.016)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "R_H_1_1"
+				(pin passive line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 2.54)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+	(text "being GPIO48, an input at reset, so no current can flow through any light whatever the register"
+		(exclude_from_sim no)
+		(at 260 352.96 0)
+		(effects
+			(font
+				(size 1.1 1.1)
+			)
+			(justify left)
+		)
+		(uuid "067c03c8-ce9c-502b-af26-40518ac151b1")
+	)
+	(text "70  CONTACT LIGHTS -- 74HC595 and the light harness"
+		(exclude_from_sim no)
+		(at 20 18 0)
+		(effects
+			(font
+				(size 2.5 2.5)
+			)
+			(justify left)
+		)
+		(uuid "09297fb1-f567-5352-b8d0-216c4b38dc5e")
+	)
+	(text "74HC595 shift-register module"
+		(exclude_from_sim no)
+		(at 66 42 0)
+		(effects
+			(font
+				(size 1.2 1.2)
+			)
+			(justify left)
+		)
+		(uuid "0f16f847-f8f4-5f68-9e69-af4c0465d510")
+	)
+	(text "1 k per site: (3.3 - 2.0) / 1000 = 1.3 mA, and 10.4 mA on the LED_V common -- inside the"
+		(exclude_from_sim no)
+		(at 260 232 0)
+		(effects
+			(font
+				(size 1.1 1.1)
+			)
+			(justify left)
+		)
+		(uuid "1ae78efa-08eb-5756-9302-4b7e2072f953")
+	)
+	(text "ten-way ribbon at J30, so nothing digital enters J14."
+		(exclude_from_sim no)
+		(at 20 30.24 0)
+		(effects
+			(font
+				(size 1.2 1.2)
+			)
+			(justify left)
+		)
+		(uuid "2ec4204d-15b7-5de9-9e72-b38120607ee5")
+	)
+	(text "R87 ties the output enable active"
+		(exclude_from_sim no)
+		(at 260 312 0)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify left)
+		)
+		(uuid "4eed5e6e-225f-5a16-98e6-37a048d388a4")
+	)
+	(text "measurement. ECO-EEG-014 moved the eight light lines out of the electrode harness into their own"
+		(exclude_from_sim no)
+		(at 20 27.12 0)
+		(effects
+			(font
+				(size 1.2 1.2)
+			)
+			(justify left)
+		)
+		(uuid "78bf966d-6fcc-5cfa-808e-d27f858bd313")
+	)
+	(text "R88 and C88 are the 74HC595 power-on reset. Dark-at-boot is guaranteed in hardware by LED_V"
+		(exclude_from_sim no)
+		(at 260 350 0)
+		(effects
+			(font
+				(size 1.1 1.1)
+			)
+			(justify left)
+		)
+		(uuid "8253d435-6575-5cbf-84e7-7d99872888c7")
+	)
+	(text "contact-light harness, 10-way"
+		(exclude_from_sim no)
+		(at 450 42 0)
+		(effects
+			(font
+				(size 1.2 1.2)
+			)
+			(justify left)
+		)
+		(uuid "bac692e2-e6e9-530c-a640-93e9698d8b3c")
+	)
+	(text "74HC595's 35 mA per output and 70 mA per package."
+		(exclude_from_sim no)
+		(at 260 234.96 0)
+		(effects
+			(font
+				(size 1.1 1.1)
+			)
+			(justify left)
+		)
+		(uuid "c0a2d876-29c7-5824-acf3-631913746872")
+	)
+	(text "local decoupling at J19"
+		(exclude_from_sim no)
+		(at 450 272 0)
+		(effects
+			(font
+				(size 1.2 1.2)
+			)
+			(justify left)
+		)
+		(uuid "c24693f1-d173-5fb2-8ec3-6071e673901b")
+	)
+	(text "holds (RFQ E-27)."
+		(exclude_from_sim no)
+		(at 260 355.92 0)
+		(effects
+			(font
+				(size 1.1 1.1)
+			)
+			(justify left)
+		)
+		(uuid "e66af9ba-9535-525d-8d4e-28b3d5a1e357")
+	)
+	(text "Eight bicolour contact lights in the helmet, driven from the converter's own lead-off"
+		(exclude_from_sim no)
+		(at 20 24 0)
+		(effects
+			(font
+				(size 1.2 1.2)
+			)
+			(justify left)
+		)
+		(uuid "ee30e53c-5364-533d-a51c-9d636de5f05d")
+	)
+	(wire
+		(pts
+			(xy 294.92 141.28) (xy 287.3 141.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "09e91841-e15f-5570-9705-2ac11023b2c9")
+	)
+	(wire
+		(pts
+			(xy 305.08 325) (xy 312.7 325)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0f32b5f6-e15c-5b8d-bcf1-e744fe5254ad")
+	)
+	(wire
+		(pts
+			(xy 464.92 91.11) (xy 454.76 91.11)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "17c726d7-a26a-5c7e-a481-fffe2465781b")
+	)
+	(wire
+		(pts
+			(xy 95.08 121.11) (xy 105.24 121.11)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "27926db2-584d-5b7e-bcc3-dae9faaeac8e")
+	)
+	(wire
+		(pts
+			(xy 464.92 103.81) (xy 454.76 103.81)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2aaef13e-477d-5e26-b245-4ae023202ed1")
+	)
+	(wire
+		(pts
+			(xy 400 325.08) (xy 400 328.89)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "31b25145-c481-50bc-a66e-5916a15eb38b")
+	)
+	(wire
+		(pts
+			(xy 464.92 93.65) (xy 454.76 93.65)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "38162d24-0fe5-5412-a2a8-7479269ce5ea")
+	)
+	(wire
+		(pts
+			(xy 305.08 100.64) (xy 312.7 100.64)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "39794120-3de1-5b62-b95e-2d0573f6d6ba")
+	)
+	(wire
+		(pts
+			(xy 95.08 131.27) (xy 105.24 131.27)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "39df612c-e16d-5edf-9a00-0936f08373c5")
+	)
+	(wire
+		(pts
+			(xy 95.08 113.49) (xy 105.24 113.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "44e04503-4211-5b2f-8608-125dc06d1b02")
+	)
+	(wire
+		(pts
+			(xy 294.92 80.32) (xy 287.3 80.32)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4524c97a-daf4-5269-8e6e-39d5ae87a957")
+	)
+	(wire
+		(pts
+			(xy 294.92 300) (xy 287.3 300)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "46c29099-c56f-57b5-a3ad-4c2400ff6ba9")
+	)
+	(wire
+		(pts
+			(xy 294.92 120.96) (xy 287.3 120.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4ebb7cfd-8fb0-5e8d-a979-cebf07e80ea5")
+	)
+	(wire
+		(pts
+			(xy 305.08 300) (xy 312.7 300)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "579fd443-ed73-5871-9557-1f1d1bcbb60e")
+	)
+	(wire
+		(pts
+			(xy 470 255.08) (xy 470 258.89)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "57febf0e-fb36-51f4-81a7-2658a7ccdd49")
+	)
+	(wire
+		(pts
+			(xy 470 244.92) (xy 470 241.11)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5af033c2-d700-56c2-912a-e0e261a8ec69")
+	)
+	(wire
+		(pts
+			(xy 95.08 136.35) (xy 105.24 136.35)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6734ce04-352e-58ff-bea8-eaf32502d21c")
+	)
+	(wire
+		(pts
+			(xy 95.08 128.73) (xy 105.24 128.73)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6d582a9e-1633-5acf-bd52-d69bb627a4f3")
+	)
+	(wire
+		(pts
+			(xy 305.08 141.28) (xy 312.7 141.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6f537866-3782-5e90-a637-76b6f0c29c2c")
+	)
+	(wire
+		(pts
+			(xy 464.92 101.27) (xy 454.76 101.27)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6f969ced-eed0-5e5d-920a-de2ee2db0297")
+	)
+	(wire
+		(pts
+			(xy 305.08 181.92) (xy 312.7 181.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "727e6359-2084-5078-9d1b-8de14ab8dc47")
+	)
+	(wire
+		(pts
+			(xy 294.92 100.64) (xy 287.3 100.64)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7635d206-722b-5088-a19e-3bc3f5ee40e9")
+	)
+	(wire
+		(pts
+			(xy 305.08 250) (xy 312.7 250)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "790206e5-acce-5105-a5ae-cf84f44bcfbb")
+	)
+	(wire
+		(pts
+			(xy 294.92 202.24) (xy 287.3 202.24)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7a6d4e47-9558-5bb0-a089-f80972509821")
+	)
+	(wire
+		(pts
+			(xy 95.08 138.89) (xy 105.24 138.89)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7e1beda8-fd96-510b-80f1-05ae7ccbf0b8")
+	)
+	(wire
+		(pts
+			(xy 305.08 161.6) (xy 312.7 161.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7e8d3ae2-27dd-5785-bc6e-05ae76d3a86e")
+	)
+	(wire
+		(pts
+			(xy 95.08 126.19) (xy 105.24 126.19)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "84c193d7-6ef3-59be-9925-746a0d79305a")
+	)
+	(wire
+		(pts
+			(xy 95.08 110.95) (xy 105.24 110.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "879cb9d0-c59e-5b00-906d-2b7cd9544cec")
+	)
+	(wire
+		(pts
+			(xy 95.08 146.51) (xy 105.24 146.51)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "887e2f19-62e8-520f-978f-b0424ce8f51e")
+	)
+	(wire
+		(pts
+			(xy 305.08 275) (xy 312.7 275)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "88c1504f-2be8-55a0-b786-52883478ee91")
+	)
+	(wire
+		(pts
+			(xy 464.92 108.89) (xy 454.76 108.89)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8ad9cfc5-e394-529f-991c-f624e5a34ae9")
+	)
+	(wire
+		(pts
+			(xy 464.92 98.73) (xy 454.76 98.73)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "913c5e70-530a-5e14-97e9-c931a5194ee1")
+	)
+	(wire
+		(pts
+			(xy 95.08 133.81) (xy 105.24 133.81)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9387dac6-d730-59f8-a440-332393978560")
+	)
+	(wire
+		(pts
+			(xy 294.92 275) (xy 287.3 275)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "99f5a7c9-0b6b-5979-82dd-6f45287a8ed7")
+	)
+	(wire
+		(pts
+			(xy 305.08 60) (xy 312.7 60)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a17bc715-04a0-57d7-a9a9-faa12fb175af")
+	)
+	(wire
+		(pts
+			(xy 95.08 118.57) (xy 105.24 118.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a1b1ff3f-70f1-5a74-947a-dd237fc15ed2")
+	)
+	(wire
+		(pts
+			(xy 464.92 88.57) (xy 454.76 88.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ab19adac-7780-5235-b916-41d21b84953e")
+	)
+	(wire
+		(pts
+			(xy 400 314.92) (xy 400 311.11)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ab999e07-5644-5927-aa69-04ffd1d8fa7d")
+	)
+	(wire
+		(pts
+			(xy 294.92 181.92) (xy 287.3 181.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b100cce6-c691-510a-8643-ef4e1198b2ee")
+	)
+	(wire
+		(pts
+			(xy 95.08 149.05) (xy 105.24 149.05)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b147e395-59ac-5535-8e31-88a749c46f81")
+	)
+	(wire
+		(pts
+			(xy 305.08 80.32) (xy 312.7 80.32)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b6dd257a-1bc8-5191-8659-a0e0850f28d4")
+	)
+	(wire
+		(pts
+			(xy 294.92 250) (xy 287.3 250)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c234ee76-d11d-58d0-b667-915e0884a337")
+	)
+	(wire
+		(pts
+			(xy 305.08 120.96) (xy 312.7 120.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cb091359-3236-5a54-afd1-f4bbb1572667")
+	)
+	(wire
+		(pts
+			(xy 464.92 111.43) (xy 454.76 111.43)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d1a5d7d1-e42a-53d7-a1b8-3d2823462b3b")
+	)
+	(wire
+		(pts
+			(xy 95.08 143.97) (xy 105.24 143.97)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dc039564-4d1b-586d-b1ea-a79e3fa12877")
+	)
+	(wire
+		(pts
+			(xy 95.08 116.03) (xy 105.24 116.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e1a4228f-ffda-5c3a-bbcd-802a5cc47a9c")
+	)
+	(wire
+		(pts
+			(xy 95.08 123.65) (xy 105.24 123.65)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e2b6ca15-00d5-5863-bbf9-4a77642dde00")
+	)
+	(wire
+		(pts
+			(xy 95.08 141.43) (xy 105.24 141.43)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e7e98e12-dd48-587f-8926-6f67af39d875")
+	)
+	(wire
+		(pts
+			(xy 294.92 60) (xy 287.3 60)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "eaa6f149-94d7-5dd5-8f00-8bf185df0a43")
+	)
+	(wire
+		(pts
+			(xy 305.08 202.24) (xy 312.7 202.24)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f180d1a8-0e87-5fd4-ac1b-a9e581669e8e")
+	)
+	(wire
+		(pts
+			(xy 464.92 96.19) (xy 454.76 96.19)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f99ed1a9-8530-5827-901f-e7ea13fa02e4")
+	)
+	(wire
+		(pts
+			(xy 294.92 161.6) (xy 287.3 161.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f9cf2973-4b77-5cea-a996-1411e8ef0073")
+	)
+	(wire
+		(pts
+			(xy 464.92 106.35) (xy 454.76 106.35)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fce2f7df-d487-5a3a-9115-7f47bfa122c1")
+	)
+	(wire
+		(pts
+			(xy 294.92 325) (xy 287.3 325)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fd9b8ceb-5d9e-5dce-b947-54832e070548")
+	)
+	(label "SR_Q6"
+		(at 287.3 181.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "00b3cd85-7b91-51eb-842b-6e31ba2214d8")
+	)
+	(label "LED4"
+		(at 312.7 120.96 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "03ff1c0f-4619-5703-98c5-d627f9da3e86")
+	)
+	(label "LED_V"
+		(at 454.76 108.89 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "0fae7979-7fe3-592c-8623-b779e0b4f542")
+	)
+	(label "LED6"
+		(at 454.76 101.27 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "15cf2eb0-71c6-5ed1-9f7b-eade6d8f253b")
+	)
+	(label "LED6"
+		(at 312.7 161.6 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "1d111993-cedd-5af6-bd73-251f7fb25a05")
+	)
+	(label "SR_Q0"
+		(at 287.3 60 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "214d13db-621d-51be-a13b-fdb9499071a6")
+	)
+	(label "LED_GND"
+		(at 287.3 275 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "258ba07f-715b-5656-8b41-c5bd096c006c")
+	)
+	(label "SR_Q5"
+		(at 105.24 141.43 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "2b1d0969-69c1-5979-b91d-cdb87eac437a")
+	)
+	(label "LED5"
+		(at 454.76 98.73 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "2f78664d-90f8-55af-8b67-a0e7956570f7")
+	)
+	(label "SR_Q2"
+		(at 105.24 133.81 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "3917cfe5-e73d-50f7-9794-8f548620ca85")
+	)
+	(label "LED5"
+		(at 312.7 141.28 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "397538a9-8af7-5de4-b183-950bb37d085d")
+	)
+	(label "SR_Q1"
+		(at 287.3 80.32 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "3ab2f715-4892-59b8-bc0d-82f4e4ca64a8")
+	)
+	(label "LED8"
+		(at 454.76 106.35 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "3b556043-b4e3-57cc-8cd6-85a33ab4c4f6")
+	)
+	(label "LED_V"
+		(at 312.7 250 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "4dcc68d1-daa5-52be-937c-f5e3342351ba")
+	)
+	(label "LED2"
+		(at 312.7 80.32 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "56d973b6-a4d4-5be1-ad20-36b7f0229238")
+	)
+	(label "SR_Q4"
+		(at 287.3 141.28 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "56ef68a4-8c9b-5323-b45f-89bc9de57188")
+	)
+	(label "LED3"
+		(at 454.76 93.65 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "5d1d2cbb-1a40-5bd3-b642-ec285014d10a")
+	)
+	(label "LED8"
+		(at 312.7 202.24 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "63e4adce-43f9-5b99-a14b-50c37a782ee7")
+	)
+	(label "LED_MR"
+		(at 105.24 126.19 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "691c6d95-bc47-5a9b-97b4-7905a345d2da")
+	)
+	(label "NC_SR_Q7S"
+		(at 105.24 149.05 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "6b685ce1-ea7b-52b1-a964-48a07e6400b1")
+	)
+	(label "SR_Q5"
+		(at 287.3 161.6 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "717e7f75-4ef2-5dc1-a65a-898fe282452c")
+	)
+	(label "LED1"
+		(at 454.76 88.57 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "7946f7cd-27d8-51b3-b22c-a15e0236e89f")
+	)
+	(label "LED_MR"
+		(at 287.3 325 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "8e75e305-f73e-5bb5-818c-58ddc0a25cbb")
+	)
+	(label "LED4"
+		(at 454.76 96.19 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "8f4411cd-9362-518b-baf9-2d0b80ef030d")
+	)
+	(label "LED3"
+		(at 312.7 100.64 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "8fd052a2-7fd4-5022-9847-7f473047c991")
+	)
+	(label "SR_Q7"
+		(at 287.3 202.24 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "93c432f6-ef7b-5170-a807-86ed56d91b5d")
+	)
+	(label "LED_OE"
+		(at 287.3 300 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "9acd4369-5aaf-58f6-b703-4d5c9d682920")
+	)
+	(label "SR_Q3"
+		(at 105.24 136.35 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "9bccc80c-f7a0-5d32-b12c-ad7aa6165e3a")
+	)
+	(label "SR_Q6"
+		(at 105.24 143.97 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "9f8e3ac0-afb5-5e69-bf01-58bae9ae2b7e")
+	)
+	(label "LED2"
+		(at 454.76 91.11 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a52675da-38a0-5ec4-8eb4-5dcd8971e510")
+	)
+	(label "LED7"
+		(at 312.7 181.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b26c09e0-dacf-5273-a0e4-c84ed4f5e80c")
+	)
+	(label "SR_Q4"
+		(at 105.24 138.89 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "ba1785a4-f078-56bd-a947-4006e74cff34")
+	)
+	(label "LED_OE"
+		(at 105.24 123.65 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "be5fdaa1-1ad4-5bc9-aa69-1c2b8f7b45f2")
+	)
+	(label "SR_Q7"
+		(at 105.24 146.51 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "c96e62a8-d505-5ef9-99a9-c2015f042759")
+	)
+	(label "LED7"
+		(at 454.76 103.81 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "cd8e8a4f-e998-54ef-bfaa-896ae8ebc3cf")
+	)
+	(label "LED1"
+		(at 312.7 60 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "cf5af749-7bc5-5332-ba4f-82af47f7e6dd")
+	)
+	(label "SR_Q2"
+		(at 287.3 100.64 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e67c1912-76b4-50a5-962c-7310529f4d72")
+	)
+	(label "LED_GND"
+		(at 454.76 111.43 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "ef722207-a2f6-5f7e-b125-372016c5e8bd")
+	)
+	(label "LED_MR"
+		(at 400 311.11 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f20890ad-6fc2-516f-9fc8-ada72e88ec56")
+	)
+	(label "SR_Q0"
+		(at 105.24 128.73 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f395a148-4550-5e16-a9c7-4a8875d46933")
+	)
+	(label "SR_Q1"
+		(at 105.24 131.27 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "fe29267d-f7a8-5fdd-8acd-797c5102fdad")
+	)
+	(label "SR_Q3"
+		(at 287.3 120.96 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "fe812173-002a-5964-94c3-47cf8fec8414")
+	)
+	(hierarchical_label "LED_SR_DATA"
+		(shape passive)
+		(at 105.24 116.03 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "52aa74ba-e2a9-5b76-87ac-20600708e25d")
+	)
+	(hierarchical_label "LED_PWM"
+		(shape passive)
+		(at 287.3 250 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "5430aba6-d8a3-5e62-82b2-2c6a1f4a9041")
+	)
+	(hierarchical_label "LED_SR_LATCH"
+		(shape passive)
+		(at 105.24 121.11 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "911486b8-3a55-5470-89e2-e90c4c368cc9")
+	)
+	(hierarchical_label "LED_SR_CLK"
+		(shape passive)
+		(at 105.24 118.57 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "f920eb54-a9e0-5295-926d-e9b691ea3caf")
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:PWR_DGND")
+		(at 400 328.89 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "0721f069-f349-5725-a843-ea20ba28885b")
+		(property "Reference" "#PWR005"
+			(at 400 323.81 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "DGND"
+			(at 400 333.97 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 400 328.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 400 328.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 400 328.89 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "365aa61f-8c81-5613-b55d-4b3af656f189")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "#PWR005")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:R_H")
+		(at 300 120.96 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "18ef8b44-0a36-5ef9-84d7-0e80a3f1f62a")
+		(property "Reference" "R73"
+			(at 300 115.88 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1k 1%"
+			(at 300 126.04 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "EEG-CAR-01:R_0603_1608Metric"
+			(at 300 120.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 300 120.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 300 120.96 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Vishay CRCW06031K00FKEA"
+			(at 300 120.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "df5ed9dd-5ddc-519d-88f7-25b7197fa9ae")
+		)
+		(pin "2"
+			(uuid "c5c7898e-fb14-511e-b12c-32a0b5a86f88")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "R73")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:R_H")
+		(at 300 202.24 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "1e1b9e49-9ee7-5fc8-9e6d-3139e86d3b1a")
+		(property "Reference" "R77"
+			(at 300 197.16 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1k 1%"
+			(at 300 207.32 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "EEG-CAR-01:R_0603_1608Metric"
+			(at 300 202.24 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 300 202.24 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 300 202.24 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Vishay CRCW06031K00FKEA"
+			(at 300 202.24 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "06391446-e1bb-5b32-af36-68ccb50b95b5")
+		)
+		(pin "2"
+			(uuid "34f53444-bfb0-518a-ab89-e229a8bd6d71")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "R77")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:PWR_DVDD3V3")
+		(at 470 241.11 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "2e5709c1-eb1f-5483-8098-3df965d64398")
+		(property "Reference" "#PWR006"
+			(at 470 236.03 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "DVDD3V3"
+			(at 470 246.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 470 241.11 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 470 241.11 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 470 241.11 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "cc1d42db-d886-5c51-8b31-3770cbbd0aef")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "#PWR006")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:PWR_DVDD3V3")
+		(at 105.24 110.95 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "3412489f-a710-567f-b73c-ab3df5ecf62e")
+		(property "Reference" "#PWR000"
+			(at 105.24 105.87 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "DVDD3V3"
+			(at 105.24 116.03 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 105.24 110.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 105.24 110.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 105.24 110.95 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f96bcb00-26d5-5f49-88f8-05347388afed")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "#PWR000")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:R_H")
+		(at 300 325 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "3a823a22-63ce-59c7-9cdf-a1aebdbd6077")
+		(property "Reference" "R88"
+			(at 300 319.92 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10k 1%"
+			(at 300 330.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "EEG-CAR-01:R_0603_1608Metric"
+			(at 300 325 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 300 325 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 300 325 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Vishay CRCW060310K0FKEA"
+			(at 300 325 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "2cb3f3f6-7621-5e9b-abe6-6913aa02091c")
+		)
+		(pin "2"
+			(uuid "da9265d4-4fe0-59cd-be35-ad5aaf370ca3")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "R88")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:PWR_DVDD3V3")
+		(at 312.7 325 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "40195034-7725-5430-86b2-7350c12cea69")
+		(property "Reference" "#PWR004"
+			(at 312.7 319.92 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "DVDD3V3"
+			(at 312.7 330.08 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 312.7 325 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 312.7 325 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 312.7 325 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "ab9d8d24-3dc7-5f12-a659-a9e052803557")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "#PWR004")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:R_H")
+		(at 300 181.92 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "44d1ceff-002c-5836-ae99-f82f7dc974c9")
+		(property "Reference" "R76"
+			(at 300 176.84 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1k 1%"
+			(at 300 187 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "EEG-CAR-01:R_0603_1608Metric"
+			(at 300 181.92 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 300 181.92 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 300 181.92 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Vishay CRCW06031K00FKEA"
+			(at 300 181.92 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f2eb122b-d07b-5eec-beb5-d77aa7470386")
+		)
+		(pin "2"
+			(uuid "77bdca8a-9ee0-5f64-ab52-30ed41f23e26")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "R76")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:R_H")
+		(at 300 80.32 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "51bb6243-fbbf-5a0f-abb9-896937a6869d")
+		(property "Reference" "R71"
+			(at 300 75.24 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1k 1%"
+			(at 300 85.4 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "EEG-CAR-01:R_0603_1608Metric"
+			(at 300 80.32 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 300 80.32 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 300 80.32 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Vishay CRCW06031K00FKEA"
+			(at 300 80.32 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "52355db8-9f00-5a36-a194-1221cce1c87b")
+		)
+		(pin "2"
+			(uuid "ef4902c3-932c-5c45-9a1e-3be87e910b55")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "R71")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:CONN_J19_R")
+		(at 90 130 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "69d95e42-903c-5402-b0f5-4d4d5b139519")
+		(property "Reference" "J19"
+			(at 90 124.92 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "74HC595 contact-light driver"
+			(at 90 135.08 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "EEG-CAR-01:PinSocket_1x16_P2.54mm_Vertical"
+			(at 90 130 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 90 130 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 90 130 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Samtec SSW-116-01-G-S or equivalent 2.54 mm socket strip"
+			(at 90 130 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f4002649-c63d-5bf9-a4a9-1c131fbdb90e")
+		)
+		(pin "10"
+			(uuid "a53c01ec-954b-5b70-a7f9-f6cbca794c9b")
+		)
+		(pin "11"
+			(uuid "99d3cce7-fdf9-5512-bdda-b1134922fa13")
+		)
+		(pin "12"
+			(uuid "0bfc5528-60cd-5cb7-9de4-2f096ff95f8c")
+		)
+		(pin "13"
+			(uuid "7dc92a5a-3313-57a9-a344-9ebf983b80c9")
+		)
+		(pin "14"
+			(uuid "2a2256fd-3a2a-54ae-a63a-ff70c57a0373")
+		)
+		(pin "15"
+			(uuid "c80595a0-7a8b-5984-8332-bf1be3679d2f")
+		)
+		(pin "16"
+			(uuid "a6d425ad-37b2-53d9-bda1-95691566a637")
+		)
+		(pin "2"
+			(uuid "7e32793a-d930-5e14-ac0d-2ae831b82afd")
+		)
+		(pin "3"
+			(uuid "13fb8b85-d095-5e19-802d-e5d22715a247")
+		)
+		(pin "4"
+			(uuid "5d263257-40f2-5b7a-a5b4-c5203b4ea281")
+		)
+		(pin "5"
+			(uuid "070ddf61-6910-5ea2-b59b-94641717c536")
+		)
+		(pin "6"
+			(uuid "9e61df81-0cc3-5703-93b4-0d0387bc7aa2")
+		)
+		(pin "7"
+			(uuid "235e3fdd-8c17-58f5-b6ba-3d92ae090632")
+		)
+		(pin "8"
+			(uuid "477fbc14-3a32-5762-82af-d278e55cd1b8")
+		)
+		(pin "9"
+			(uuid "cdb8793a-3567-5fa4-a3a5-c779cd2812da")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "J19")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:PWR_DGND")
+		(at 312.7 300 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "6fa075ab-86fd-5d14-94df-218965c49f30")
+		(property "Reference" "#PWR003"
+			(at 312.7 294.92 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "DGND"
+			(at 312.7 305.08 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 312.7 300 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 312.7 300 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 312.7 300 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "d8780c70-1580-5bb5-a6f0-48ea4580355c")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "#PWR003")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:R_H")
+		(at 300 300 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "8b7131d5-e1ce-5676-9431-69ea0b2516e2")
+		(property "Reference" "R87"
+			(at 300 294.92 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "0R"
+			(at 300 305.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "EEG-CAR-01:R_0603_1608Metric"
+			(at 300 300 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 300 300 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 300 300 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Vishay CRCW06030000Z0EA"
+			(at 300 300 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "22d8a2b1-d901-5457-93e5-6b9e6aca082e")
+		)
+		(pin "2"
+			(uuid "10eea567-d62b-5dc5-a395-e2e568dbb4bf")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "R87")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:PWR_DGND")
+		(at 105.24 113.49 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "a6326542-92dd-5a4e-bbdb-3c05b977fa95")
+		(property "Reference" "#PWR001"
+			(at 105.24 108.41 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "DGND"
+			(at 105.24 118.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 105.24 113.49 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 105.24 113.49 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 105.24 113.49 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "4baa824a-9451-5b65-9b65-e92970762a45")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "#PWR001")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:C_V")
+		(at 400 320 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "a8548688-e1ea-575b-a7b1-28f7120dba73")
+		(property "Reference" "C88"
+			(at 400 314.92 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100n X7R 25V"
+			(at 400 325.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "EEG-CAR-01:C_0603_1608Metric"
+			(at 400 320 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 400 320 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 400 320 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Murata GCM188R71E104KA57D"
+			(at 400 320 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "2901a359-a3d1-5ca6-a62a-abc10ada7439")
+		)
+		(pin "2"
+			(uuid "17ccca23-3916-58b0-b641-acd85e7e44b2")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "C88")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:R_H")
+		(at 300 161.6 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "ad15bed0-fa41-5523-997b-3737e3c2d044")
+		(property "Reference" "R75"
+			(at 300 156.52 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1k 1%"
+			(at 300 166.68 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "EEG-CAR-01:R_0603_1608Metric"
+			(at 300 161.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 300 161.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 300 161.6 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Vishay CRCW06031K00FKEA"
+			(at 300 161.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "4d857e62-90cd-5a77-9c9b-99a20d0e73ac")
+		)
+		(pin "2"
+			(uuid "12ad84cf-841f-5770-a60f-31dc680267f5")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "R75")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:R_H")
+		(at 300 275 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "b6673000-a024-5c1f-b83c-5d608379989c")
+		(property "Reference" "R79"
+			(at 300 269.92 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "0R"
+			(at 300 280.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "EEG-CAR-01:R_0603_1608Metric"
+			(at 300 275 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 300 275 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 300 275 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Vishay CRCW06030000Z0EA"
+			(at 300 275 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "cf009fd9-bb56-591c-b53d-134f2af01dc6")
+		)
+		(pin "2"
+			(uuid "b913c938-180c-57d0-9c69-cedca1a4ce1a")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "R79")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:R_H")
+		(at 300 60 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "c1340881-880d-5b1c-8e0e-00ef14486ec8")
+		(property "Reference" "R70"
+			(at 300 54.92 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1k 1%"
+			(at 300 65.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "EEG-CAR-01:R_0603_1608Metric"
+			(at 300 60 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 300 60 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 300 60 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Vishay CRCW06031K00FKEA"
+			(at 300 60 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "1868fb97-9eca-513f-8c35-1de7937e76d1")
+		)
+		(pin "2"
+			(uuid "dfcb28b4-7c00-5a99-a212-d185bdd1b708")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "R70")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:PWR_DGND")
+		(at 312.7 275 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "ca883bb5-bbb4-56e7-9af9-b181c06648a3")
+		(property "Reference" "#PWR002"
+			(at 312.7 269.92 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "DGND"
+			(at 312.7 280.08 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 312.7 275 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 312.7 275 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 312.7 275 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "0a68c18e-5694-5392-9496-e674aa4cfad9")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "#PWR002")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:PWR_DGND")
+		(at 470 258.89 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "ca98f056-7dae-5be2-861c-95073bddf51d")
+		(property "Reference" "#PWR007"
+			(at 470 253.81 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "DGND"
+			(at 470 263.97 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 470 258.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 470 258.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 470 258.89 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f251e568-8edc-59a4-bdf9-3cbb3d4fd50c")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "#PWR007")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:R_H")
+		(at 300 141.28 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "cf342907-a5cd-549f-b2e5-c3d38a9b61cf")
+		(property "Reference" "R74"
+			(at 300 136.2 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1k 1%"
+			(at 300 146.36 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "EEG-CAR-01:R_0603_1608Metric"
+			(at 300 141.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 300 141.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 300 141.28 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Vishay CRCW06031K00FKEA"
+			(at 300 141.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "c34daae6-e28a-591e-b0df-688579d0a0d1")
+		)
+		(pin "2"
+			(uuid "79538457-61a5-5325-9cc8-cc0237c7dda2")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "R74")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:CONN_J30_L")
+		(at 470 100 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "dee03cde-735d-5d94-a848-e1977666f4a0")
+		(property "Reference" "J30"
+			(at 470 94.92 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Helmet harness -- contact lights (10-way)"
+			(at 470 105.08 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "EEG-CAR-01:PinSocket_1x10_P2.54mm_Vertical"
+			(at 470 100 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 470 100 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 470 100 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Samtec SSW-110-01-G-S or equivalent 2.54 mm socket strip"
+			(at 470 100 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "d29033e3-a607-596b-a9e8-fa1faca8e3d4")
+		)
+		(pin "10"
+			(uuid "524a09f8-0094-56c0-bd99-7caf5b70d003")
+		)
+		(pin "2"
+			(uuid "0f11240f-deb7-5612-9f99-1d0b2ef7b8e9")
+		)
+		(pin "3"
+			(uuid "e943aabb-a810-55e3-a58b-77f64f554532")
+		)
+		(pin "4"
+			(uuid "024d1582-f6ad-55e2-bc66-da8e44e97550")
+		)
+		(pin "5"
+			(uuid "6df5f8e9-a3f8-5d0f-be46-b79f044fa7b7")
+		)
+		(pin "6"
+			(uuid "e5278c80-b9a6-5fc1-9eb2-df2017c378cb")
+		)
+		(pin "7"
+			(uuid "ed87e7c7-ea37-5afc-9931-05a9ccdccc7a")
+		)
+		(pin "8"
+			(uuid "52ccb61b-8b13-52d2-b23e-e8f0bc533200")
+		)
+		(pin "9"
+			(uuid "76ad7b92-981b-50ea-9948-9fdb464f9ba0")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "J30")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:R_H")
+		(at 300 250 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "e2e674c5-ac78-56ba-bafd-2cbc4da21faf")
+		(property "Reference" "R78"
+			(at 300 244.92 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "0R"
+			(at 300 255.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "EEG-CAR-01:R_0603_1608Metric"
+			(at 300 250 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 300 250 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 300 250 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Vishay CRCW06030000Z0EA"
+			(at 300 250 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f5f4152e-d0b6-5986-be4a-9ad0e3148212")
+		)
+		(pin "2"
+			(uuid "8bc89f6e-10f1-5702-aa3f-93d15583bcc7")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "R78")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:R_H")
+		(at 300 100.64 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "f330543b-47b2-5798-b920-dd0474200b65")
+		(property "Reference" "R72"
+			(at 300 95.56 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1k 1%"
+			(at 300 105.72 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "EEG-CAR-01:R_0603_1608Metric"
+			(at 300 100.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 300 100.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 300 100.64 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Vishay CRCW06031K00FKEA"
+			(at 300 100.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "a5b91d83-065b-5a43-bf77-1cc88dd763f7")
+		)
+		(pin "2"
+			(uuid "03e735f0-fdfc-58be-8f14-c480d53457f8")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "R72")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EEG-CAR-01:C_V")
+		(at 470 250 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "ff7cd306-9f0e-59b7-b4e1-66ff9deddbc8")
+		(property "Reference" "C84"
+			(at 470 244.92 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100n X7R 25V"
+			(at 470 255.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "EEG-CAR-01:C_0603_1608Metric"
+			(at 470 250 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 470 250 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 470 250 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Murata GCM188R71E104KA57D"
+			(at 470 250 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "47b026db-eaef-5233-a74e-756e93d8f7ae")
+		)
+		(pin "2"
+			(uuid "15c4f948-8e25-59af-83c0-645955202b9a")
+		)
+		(instances
+			(project "EEG-CAR-01_RevC"
+				(path "/34a18e2c-5405-59af-a84a-2b39f462bfd5"
+					(reference "C84")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "9")
+		)
+	)
+)

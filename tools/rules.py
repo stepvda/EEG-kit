@@ -18,10 +18,17 @@ Where the rules come from:
   * ECO-EEG-032 -- the seven findings of the external layout review (ECO-EEG-030), six
     of which are geometry rules this programme's router was never given.
 
-**Four of the rules below are new constraints and not transcriptions**: the per-class
-minimum widths, the electrode layer and via restriction, the pad-entry rule and the
-angle rule.  Each carries a `confirm` flag where the number is a proposal rather than a
-figure read out of a governing document, and LAY-EEG-034 section 5 prints that flag.
+**Three of the rules below are new constraints and not transcriptions**: the per-class
+minimum widths, the pad-entry rule and the angle rule.  `NetClass.confirm` names the
+COLUMNS of a row that are proposals rather than figures read out of a governing
+document, and LAY-EEG-034 section 5 prints them per column.
+
+The electrode layer and via restriction was carried here as a proposal until 9 September
+2026 and is not one: DSN-EEG-003 section 3.3 rule 3 puts these nets on L1 with the plane
+continuous beneath them, in those words.  It is reclassified as a requirement under
+ECO-EEG-034, with `ELECTRODE.cites` naming the source.  What remains a proposal in that
+row is the width pair alone -- no governing document fixes a width for the electrode
+class, which was checked against the whole document set before the reclassification.
 
 Licence: CC BY-SA 4.0.
 """
@@ -64,8 +71,19 @@ class NetClass:
     layers: tuple = COPPER_LAYERS      # layers a track of this class may use
     vias_allowed: bool = True
     why: str = ""
-    confirm: bool = False              # True where the number is a proposal
+    # Which COLUMNS of this row are proposals of this programme rather than figures
+    # transcribed from a governing document.  A tuple and not a flag, because a row can
+    # be part transcription and part proposal: ELECTRODE's clearance, layer and via
+    # restriction are DSN-EEG-003 section 3.3 rule 3, and only its widths are ours.
+    # Valid members: "width", "clearance", "layers", "vias".
+    confirm: tuple = ()
+    cites: str = ""                    # the governing document for the rest of the row
     nets: set = field(default_factory=set)
+
+    def __post_init__(self):
+        bad = set(self.confirm) - {"width", "clearance", "layers", "vias"}
+        if bad:
+            raise ValueError(f"{self.name}: unknown confirm column(s) {sorted(bad)}")
 
 
 def _led_nets():
@@ -83,21 +101,29 @@ DIGITAL_NETS = (set(D.DIGITAL_ONLY_NETS) - POWER_NETS - set(D.USB_NETS)
 CLASSES = [
     NetClass(
         "ELECTRODE", 0.25, 0.30, 0.35, 0.40,
-        layers=("F.Cu",), vias_allowed=False, confirm=True,
+        layers=("F.Cu",), vias_allowed=False, confirm=("width",),
+        cites="DSN-EEG-003 section 3.3 rule 3",
         nets=set(D.ELECTRODE_NETS),
-        why="Patient-connected. The 0.35 mm clearance is DSN-EEG-003 section 3.3 rule 3 "
-            "and is not a proposal. The rest of this row IS a proposal: rule 3 says these "
-            "nets are routed on L1 with the reference plane continuous beneath them, and "
-            "a via breaks the plane it is routed over, so L1-only and no vias is what "
-            "rule 3 means read literally. It is achievable -- the harness socket J14, the "
-            "R/D/C protection rows and the module sockets J2/J4/J23/J29 are all on the "
-            "top side. The 0.25 mm floor is above the board's 0.20 mm because Rev B only "
-            "reached 0.20 mm on these nets by relaxing, and a patient-connected conductor "
-            "is the last place to spend the last 0.05 mm. Current is not the constraint: "
-            "these carry microamperes."),
+        why="Patient-connected. **The clearance, the layer and the via restriction are "
+            "requirements, not proposals.** DSN-EEG-003 section 3.3 rule 3 reads: every "
+            "electrode net is routed on L1 with the reference plane continuous beneath "
+            "it, at 0.35 mm clearance to any other net rather than 0.20 mm. The 0.35 mm "
+            "is transcribed from that sentence and from the electrode-net clearance row "
+            "of section 3.2; L1-only is transcribed from it word for word; and the via "
+            "prohibition follows from both halves of it, because a net routed wholly on "
+            "L1 has no via to place and a via would break the plane it is routed over. "
+            "It is achievable -- the harness socket J14, the R/D/C protection rows and "
+            "the module sockets J2/J4/J23/J29 are all on the top side. **What IS a "
+            "proposal is the width pair**, and only that: no governing document fixes a "
+            "width for these nets. Section 3.2 gives the board a 0.20 mm floor and a "
+            "0.25 mm preferred width and says nothing about the electrode class. The "
+            "0.25 mm minimum is set above the board floor because Rev B only reached "
+            "0.20 mm on these nets by relaxing, and a patient-connected conductor is the "
+            "last place to spend the last 0.05 mm. Current is not the constraint: these "
+            "carry microamperes."),
     NetClass(
         "ANALOGUE_REF", 0.30, 0.40, 0.20, 0.30,
-        confirm=True, nets=ANALOGUE_REF_NETS,
+        confirm=("width",), nets=ANALOGUE_REF_NETS,
         why="AGND_REF, AVDD, AVSS and the module-2 pair. About 10 mA per rail "
             "(ICD-EEG-006 section 2.1), so 0.20 mm would carry it four times over: the "
             "width is for source impedance and for the mid-rail's noise, not for current. "
@@ -253,7 +279,16 @@ def _mm(v):
 
 
 def kicad_dru():
-    """The custom design rules file, KiCad 8 syntax.
+    """The custom design rules file.  One text, loaded by KiCad 8 and KiCad 10 alike.
+
+    **Comments here are `#`, and that is not a style choice.**  Until 9 September 2026
+    this function wrote `;;`, and KiCad discards the WHOLE file the moment it meets a
+    semicolon comment -- no error, no warning, DRC carrying on as though the file were
+    absent.  Measured on KiCad 10.0.6: with `;;` a probe rule that must fire produced
+    nothing, and deleting the file changed no result; with `#` the same probe fired.
+    So the released Rev C set shipped 37 rules of which KiCad applied none.  That is
+    finding 1 of the KiCad 10 re-emission, ECO-EEG-034.  `check_dru()` now refuses a
+    semicolon so the defect cannot come back.
 
     Angle and pad-entry are NOT expressible here.  KiCad has no constraint for either,
     so they are checked by tools/drc.py on the geometry that comes back, and LAY-EEG-034
@@ -263,13 +298,13 @@ def kicad_dru():
     a = L.append
     a("(version 1)")
     a("")
-    a(";; EEG-CAR-01 Rev C -- custom design rules")
-    a(";; GENERATED by tools/rules.py from tools/design.py. Do not edit.")
-    a(f";; Board {D.BOARD_W:g} x {D.BOARD_H:g} mm, four layers, through vias only.")
-    a(";; The rule sheet these implement is LAY-EEG-034. Where the two disagree,")
-    a(";; tools/rules.py governs and both are wrong until regenerated.")
+    a("# EEG-CAR-01 Rev C -- custom design rules")
+    a("# GENERATED by tools/rules.py from tools/design.py. Do not edit.")
+    a(f"# Board {D.BOARD_W:g} x {D.BOARD_H:g} mm, four layers, through vias only.")
+    a("# The rule sheet these implement is LAY-EEG-034. Where the two disagree,")
+    a("# tools/rules.py governs and both are wrong until regenerated.")
     a("")
-    a(";; ---------------------------------------------------------------- vias")
+    a("# ---------------------------------------------------------------- vias")
     a('(rule "through_vias_only"')
     a("  (constraint disallow buried_via micro_via))")
     a("")
@@ -283,19 +318,19 @@ def kicad_dru():
       f"(max {_mm(VIA['drill'])}))")
     a('  (condition "A.Type == \'Via\'"))')
     a("")
-    a(";; finding 1 -- no drill inside a pad.  physical_hole_clearance is used rather")
-    a(";; than hole_clearance because a via in its own net's pad is the case that has to")
-    a(";; be caught, and net-aware clearance rules skip it.")
+    a("# finding 1 -- no drill inside a pad.  physical_hole_clearance is used rather")
+    a("# than hole_clearance because a via in its own net's pad is the case that has to")
+    a("# be caught, and net-aware clearance rules skip it.")
     a('(rule "no_via_in_smd_pad"')
     a(f"  (constraint physical_hole_clearance (min {_mm(GEOMETRY['via_to_smd_pad_min'])}))")
     a('  (condition "A.Type == \'Via\' && B.Type == \'Pad\' && B.Pad_Type == \'SMD\'"))')
     a("")
-    a(";; ---------------------------------------------------------------- net classes")
+    a("# ---------------------------------------------------------------- net classes")
     import textwrap
     for c in CLASSES:
-        a(f";; {c.name}")
+        a(f"# {c.name}")
         for line in textwrap.wrap(" ".join(c.why.split()), 74):
-            a(f";;   {line}")
+            a(f"#   {line}")
         a(f'(rule "width_{c.name}"')
         a(f"  (constraint track_width (min {_mm(c.min_width)}) (opt {_mm(c.pref_width)}))")
         a(f'  (condition "A.NetClass == \'{c.name}\'"))')
@@ -316,16 +351,16 @@ def kicad_dru():
             a("  (constraint disallow via)")
             a(f'  (condition "A.NetClass == \'{c.name}\'"))')
             a("")
-    a(";; ---------------------------------------------------------------- areas")
-    a(";; finding: DSN-EEG-003 section 3.3 rule 4.  Nothing at all inside the strip,")
-    a(";; on any of the four copper layers.")
+    a("# ---------------------------------------------------------------- areas")
+    a("# finding: DSN-EEG-003 section 3.3 rule 4.  Nothing at all inside the strip,")
+    a("# on any of the four copper layers.")
     a('(rule "isolation_keepout"')
     a("  (constraint disallow track via zone pad graphic hole footprint)")
     a("  (condition \"A.insideArea('ISOLATION_KEEPOUT')\"))")
     a("")
-    a(";; DSN-EEG-003 section 3.3 rule 1.  The zone split is a routing rule and not a")
-    a(";; placement rule: a class may have pads on both sides where the circuit demands")
-    a(";; it, and CMP_RAW crosses by design through R83 and D23.")
+    a("# DSN-EEG-003 section 3.3 rule 1.  The zone split is a routing rule and not a")
+    a("# placement rule: a class may have pads on both sides where the circuit demands")
+    a("# it, and CMP_RAW crosses by design through R83 and D23.")
     for cls in ("DIGITAL", "POWER", "LED_DRIVE", "USB"):
         a(f'(rule "zoning_{cls}_out_of_analogue"')
         a("  (constraint disallow track via)")
@@ -336,13 +371,13 @@ def kicad_dru():
         a("  (constraint disallow track via)")
         a(f"  (condition \"A.NetClass == '{cls}' && A.insideArea('DIGITAL_ZONE')\"))")
         a("")
-    a(";; DSN-EEG-003 section 3.3 rule 7: no via under an analogue module connector.")
+    a("# DSN-EEG-003 section 3.3 rule 7: no via under an analogue module connector.")
     for ref, clr in NO_VIA_ZONES:
         a(f'(rule "no_via_under_{ref}"')
         a("  (constraint disallow via)")
         a(f"  (condition \"A.insideArea('NO_VIA_{ref}')\"))")
         a("")
-    a(";; ---------------------------------------------------------------- board floor")
+    a("# ---------------------------------------------------------------- board floor")
     a('(rule "edge_clearance"')
     a(f"  (constraint edge_clearance (min {_mm(EDGE_CLEARANCE)}))")
     a("  (condition \"A.Type != 'Zone'\"))")
@@ -350,18 +385,18 @@ def kicad_dru():
     a('(rule "annular_ring"')
     a(f"  (constraint annular_width (min {_mm(MIN_ANNULAR)})))")
     a("")
-    a(";; ---------------------------------------------------------------- NOT CHECKED HERE")
-    a(";; KiCad has no constraint for either of these and neither is expressible above.")
-    a(";; They are checked by tools/drc.py on the board that comes back, and LAY-EEG-034")
-    a(";; section 6 says so against each of them:")
-    a(f";;   finding 3  no angle below {GEOMETRY['min_segment_angle_deg']:g} degrees "
+    a("# ---------------------------------------------------------------- NOT CHECKED HERE")
+    a("# KiCad has no constraint for either of these and neither is expressible above.")
+    a("# They are checked by tools/drc.py on the board that comes back, and LAY-EEG-034")
+    a("# section 6 says so against each of them:")
+    a(f"#   finding 3  no angle below {GEOMETRY['min_segment_angle_deg']:g} degrees "
       f"between two segments of one track,")
-    a(";;              and every segment on a 0, 45, 90 or 135 degree axis;")
-    a(f";;   finding 4  a track enters a pad within "
+    a("#              and every segment on a 0, 45, 90 or 135 degree axis;")
+    a(f"#   finding 4  a track enters a pad within "
       f"{GEOMETRY['pad_entry_frac'] * 100:.0f} % of the pad's minor dimension")
-    a(";;              of the pad centre, measured on the track's centreline.")
-    a(";; Findings 2a and 2b -- dangling ends and redundant copper loops -- are KiCad")
-    a(";; BUILT-IN checks and are raised to errors in the .kicad_pro, not here.")
+    a("#              of the pad centre, measured on the track's centreline.")
+    a("# Findings 2a and 2b -- dangling ends and redundant copper loops -- are KiCad")
+    a("# BUILT-IN checks and are raised to errors in the .kicad_pro, not here.")
     text = "\n".join(L) + "\n"
     check_dru(text)
     return text
@@ -377,8 +412,14 @@ def check_dru(text):
     """
     depth, in_str, n_rules = 0, False, 0
     for line in text.splitlines():
-        if line.lstrip().startswith(";;"):
+        if line.lstrip().startswith("#"):
             continue
+        if line.lstrip().startswith(";"):
+            raise ValueError(
+                f"a semicolon comment survives in the .kicad_dru: {line!r}. KiCad "
+                f"discards the WHOLE file when it meets one, silently -- see "
+                f"ECO-EEG-034, finding 1 of the KiCad 10 re-emission. Comments in "
+                f"this file are '#'")
         if line.lstrip().startswith("(rule "):
             if depth != 0:
                 raise ValueError(f"a rule opens while {depth} brackets are still open: "
@@ -443,6 +484,7 @@ def summary_table():
             layers=("any" if c.layers == COPPER_LAYERS else "/".join(c.layers)),
             vias="yes" if c.vias_allowed else "NO",
             confirm=c.confirm,
+            cites=c.cites,
             why=c.why))
     return rows
 
@@ -459,7 +501,7 @@ if __name__ == "__main__":
         print(f"{c.name:14s} {n:5d} {c.min_width:5.2f}/{c.pref_width:<6.2f} "
               f"{c.min_clearance:6.2f}/{c.pref_clearance:<6.2f} {lay:>16s} "
               f"{'yes' if c.vias_allowed else 'NO':>5s}"
-              + ("   CONFIRM" if c.confirm else ""))
+              + (f"   CONFIRM: {','.join(c.confirm)}" if c.confirm else ""))
     print(f"{'total':14s} {total:5d}")
     if "--dru" in sys.argv:
         print()

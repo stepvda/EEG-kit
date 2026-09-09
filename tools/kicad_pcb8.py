@@ -115,7 +115,19 @@ def _pad_sexp(pd, part, netid, indent="    "):
 
 
 def _rule_area(name, layers, pts, tracks="not_allowed", vias="not_allowed",
-               pours="not_allowed", note=""):
+               pours="not_allowed", pads="not_allowed",
+               footprints="not_allowed", note=""):
+    """One KiCad rule area.
+
+    `pads` and `footprints` are parameters and not constants because two kinds of area
+    here are NOT keepouts.  The zoning areas exist only to be named by `insideArea()`
+    from the .kicad_dru, and the NO_VIA_* areas forbid a via and nothing else -- the
+    connector whose outline defines one necessarily has its own pads inside it.  Until
+    9 September 2026 both were emitted with pads and footprints forbidden, which put
+    every part on the board inside an area that forbids parts: 199 `items_not_allowed`
+    at ERROR severity, against placement the layout desk had not yet made.  That is
+    finding 2 of the KiCad 10 re-emission, ECO-EEG-034.
+    """
     lay = " ".join(f'"{ly}"' for ly in layers)
     p = " ".join(f"(xy {n(x)} {n(y)})" for x, y in pts)
     return ["  (zone (net 0) (net_name \"\") (layers " + lay + ")",
@@ -125,8 +137,8 @@ def _rule_area(name, layers, pts, tracks="not_allowed", vias="not_allowed",
             "    (connect_pads (clearance 0))",
             "    (min_thickness 0.2)",
             "    (filled_areas_thickness no)",
-            f"    (keepout (tracks {tracks}) (vias {vias}) (pads not_allowed) "
-            f"(copperpour {pours}) (footprints not_allowed))",
+            f"    (keepout (tracks {tracks}) (vias {vias}) (pads {pads}) "
+            f"(copperpour {pours}) (footprints {footprints}))",
             "    (placement (enabled no) (sheetname \"\"))",
             f"    (polygon (pts {p}))",
             "  )"]
@@ -274,11 +286,16 @@ def write_pcb(path, board, revision=None):
             # the zoning areas are conditions for the .kicad_dru rules and must not
             # themselves forbid anything: the rules say which class may be inside them.
             o += _rule_area(name, layers, pts, tracks="allowed", vias="allowed",
-                            pours="allowed")
+                            pours="allowed", pads="allowed", footprints="allowed")
     for i, (mx, my, r) in enumerate(rules.MOUNTING_KEEPOUTS, start=1):
         pts = [(mx + r * math.cos(2 * math.pi * k / 24),
                 my + r * math.sin(2 * math.pi * k / 24)) for k in range(24)]
-        o += _rule_area(f"MOUNT_KEEPOUT_MH{i}", rules.COPPER_LAYERS, pts)
+        # The area is centred ON the mounting hole, so the hole's own non-plated pad and
+        # its own footprint are inside it by construction and must be allowed -- the
+        # keepout is there to hold COPPER away from the screw head, and copper is
+        # tracks, vias and pours, all of which stay forbidden.
+        o += _rule_area(f"MOUNT_KEEPOUT_MH{i}", rules.COPPER_LAYERS, pts,
+                        pads="allowed", footprints="allowed")
     for ref, clr in rules.NO_VIA_ZONES:
         part = board.part(ref)
         if not part:
@@ -286,8 +303,12 @@ def write_pcb(path, board, revision=None):
         b = board.courtyard_box(part)
         pts = [(b[0] - clr, b[1] - clr), (b[2] + clr, b[1] - clr),
                (b[2] + clr, b[3] + clr), (b[0] - clr, b[3] + clr)]
+        # DSN-EEG-003 section 3.3 rule 7 forbids a VIA under these connectors and
+        # nothing else.  The area is the connector's own courtyard, so its own pads and
+        # its own footprint are inside it by construction and must be allowed.
         o += _rule_area(f"NO_VIA_{ref}", rules.COPPER_LAYERS, pts,
-                        tracks="allowed", vias="not_allowed", pours="allowed")
+                        tracks="allowed", vias="not_allowed", pours="allowed",
+                        pads="allowed", footprints="allowed")
 
     o.append(")")
     text = "\n".join(o) + "\n"

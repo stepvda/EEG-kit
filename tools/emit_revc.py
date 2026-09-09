@@ -231,7 +231,6 @@ def main(verbose=True):
     made += emit_board(board, verbose)
     made += emit_mech(verbose)
     made += emit_rule_sheet.main(verbose)
-    made += emit_handover.main(verbose)
     made += emit_kicad_sch.main(verbose)
     ndiff, nprob, report = sch_netlist.main(write=True)
     made.append(report)
@@ -241,6 +240,11 @@ def main(verbose=True):
                          f"See {os.path.relpath(report, PKG)}")
     if verbose:
         print("   schematic netlist matches design.py: 0 differences")
+    # The handover set is assembled LAST, because it copies everything above.  It is
+    # emitted once per format target and the targets are then diffed against each
+    # other; the diff is written into the KiCad 10 directory before either manifest is
+    # taken, so that each SHA256SUMS.txt covers its own directory completely.
+    made += emit_handover.main(verbose)
     return made
 
 

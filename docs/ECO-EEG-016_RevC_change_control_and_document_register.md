@@ -292,6 +292,20 @@ hand:
 | `kicad/EEG-CAR-01_RevC-IPC-D-356A.ipc` | `tools/gerber.py` | the netlist, from the pads alone |
 | `kicad/EEG-CAR-01_RevB_regraded_ECO-EEG-032.txt` | `tools/grade_revb.py` | the released Rev B geometry under the new rule set |
 | `docs/footprint_audit_RevC.md` | `tools/footprint_audit.py` | every designator's footprint against its part number |
+| `kicad/RevC_layout_inputs/` | `tools/emit_handover.py` | the handover set, **KiCad 8**: 51 files with a SHA-256 for each |
+| `kicad/RevC_layout_inputs_kicad10/` | `tools/emit_handover.py` and `tools/kicad_fmt.py` | the same set, **KiCad 10**, converted by `kicad-cli` from the above (ECO-EEG-034) |
+| `kicad/RevC_layout_inputs_kicad10/EQUIVALENCE_kicad8_vs_kicad10.md` | `tools/emit_equivalence.py` | the two emissions diffed on nine counts; the build fails if any differ |
+| `kicad/RevC_layout_inputs_kicad10/drc_kicad10.txt` | `kicad-cli 10.0.6`, driven by `tools/kicad_fmt.py` | the KiCad 10 DRC report, verbatim |
+| `dist/EEG-CAR-01_RevC_layout_inputs_kicad10.zip` | `tools/make_portal_zip.py` | the portal archive. **Not tracked**; `emit_all.py` does not build it |
+
+**A second exception to "`emit_all.py` regenerates it", found on 9 September 2026
+(ECO-EEG-034).** `tools/emit_rule_sheet.py` writes only
+`docs/LAY-EEG-034_RevA_carrier_layout_rule_sheet.md`. Its `.docx` and `.pdf` come from
+`tools/make_docs.py`, which `emit_all.py` does **not** call -- and the `.pdf` is the copy that
+travels in the handover set as input 6, the rule sheet the order cites. So a change to the
+rule sheet that is emitted but not rendered ships a PDF that disagrees with its own Markdown.
+Both were regenerated under ECO-EEG-034. **Re-running `emit_all.py` does not prove `docs/` is
+current**, exactly as it does not prove `kicad/wh-bus-01/` is.
 
 SCH-EEG-005 is in this class. Its revision letter follows the board revision letter in
 `design.py`, which is **Rev B**, and it is regenerated rather than edited whenever the
@@ -544,6 +558,7 @@ indexes, this section is the register, and where they differ this section govern
 | ECO-EEG-031 | major | four part numbers could not be bought or could not be fitted: the quad OPA4376 has no SOIC-14, the ferrite bead is not a Murata part, the tactile switch is a 12 x 12 mm part on a 6 x 6 mm land, and the patient-connected DIN sockets were not marked non-substitutable | implemented 8 September 2026 |
 | ECO-EEG-032 | major | the DRC reported zero violations against a rule set that did not contain six of the seven findings; the rules are now encoded once and exported to KiCad, and Rev B is regraded under them | implemented 8 September 2026 |
 | ECO-EEG-033 | scope | the Rev C reviewable design set: a native KiCad schematic, an unrouted board and project, 3D bodies and a collision check, and the layout rule sheet LAY-EEG-034 | implemented 8 September 2026 |
+| ECO-EEG-034 | format emission and documentation, with two defects found | the layout desk runs KiCad 10, so the input set is emitted for KiCad 10 alongside the KiCad 8 set from one source and the two are checked equivalent on nine counts; running a real DRC for the first time found that the 37 custom rules had been silently inert, because KiCad discards a `.kicad_dru` containing a semicolon comment, and that the zoning, no-via and mounting keep-outs forbade the parts they contain. **The circuit is unchanged.** A third finding, MH2 inside the isolation strip, is raised and not resolved | implemented 9 September 2026 |
 
 ### ECO-EEG-001 -- the contact lights had no driver
 
@@ -1674,6 +1689,143 @@ area present under the name the `.kicad_dru` uses, the project file's classes an
 assignments complete, and `track_dangling` at error. `kicad-cli pcb drc` was **NOT RUN**:
 KiCad is not installed on this machine. On an unrouted board its only finding would be
 unconnected items, one per net, and that is not a substitute for the check.
+
+### ECO-EEG-034 -- the layout input set re-emitted for KiCad 10, and two defects it found
+
+**Class:** format emission and documentation. **Found by:** the JLCPCB layout desk, which
+confirmed on 9 September 2026 that it runs **KiCad 10**, and asked for the set as a single
+archive for upload at `design.jlcpcb.com/quote`.
+
+**The circuit is unchanged.** No net, no part, no value, no footprint and no coordinate
+moves under this change. The netlist is the same 156 nets and 614 pins, the board is the same
+211 footprints and 636 pads, and the same 37 footprints are locked at the same coordinates.
+What changes is the file format the set is written in, two defects in how the rules were
+emitted, one reclassification in the rule sheet, and the documents that describe all of it.
+
+**Was:** the set in `kicad/RevC_layout_inputs/` was written for KiCad 8 --
+`(kicad_sch (version 20231120))`, `(kicad_pcb (version 20240108))` -- and the covering note
+offered to re-emit for another major version if asked. Opening a KiCad 8 project in KiCad 10
+can silently alter the net classes, the custom rules and the DRC severities, which is most of
+the layout specification, so the offer was the right one and it has now been taken up.
+
+**Now:** two sets, generated from one source in one run.
+
+| Directory | Format | Files |
+|---|---|---|
+| `kicad/RevC_layout_inputs/` | KiCad 8, `(kicad_pcb 20240108)` / `(kicad_sch 20231120)` | 51 |
+| `kicad/RevC_layout_inputs_kicad10/` | KiCad 10, `(kicad_pcb 20260206)` / `(kicad_sch 20260306)` | 53 |
+
+The KiCad 8 set is unchanged in kind and stays the published reference. The KiCad 10 set is
+that same emission passed through KiCad's own `kicad-cli pcb upgrade`, `sch upgrade` and
+`sym upgrade`, in `tools/kicad_fmt.py`. It is a target of the existing emitter and not a
+second emitter: `tools/design.py` remains the single source and there is nothing to keep in
+step by hand. **The KiCad 10 version tokens above were read out of files KiCad 10.0.6 had
+just written, not taken from documentation or from memory**, and `kicad_fmt.verify()` re-reads
+them on every emission so that a different KiCad quietly producing a third format is an error
+rather than a surprise.
+
+The two extra files in the KiCad 10 directory are `EQUIVALENCE_kicad8_vs_kicad10.md` and the
+DRC report it cites.
+
+**The two sets are checked equivalent, not assumed equivalent.** Nine checks in
+`tools/emit_equivalence.py`, written into the KiCad 10 directory on every emission and
+failing the build if any of them differ: the netlist parsed back out of both schematic trees;
+the board census; the eight net classes and the assignment of all 156 nets; the 37 custom
+rules; the 45 DRC severities; the 37 locked footprints and their coordinates; the fixed
+geometry; the rule areas and pours; and a KiCad 10 round trip. **All nine pass. None is
+marked not performed.** `.kicad_pro`, `.kicad_dru` and `.kicad_sym` are not rewritten by the
+conversion and are byte-for-byte identical between the two directories, which is why the
+three checks that matter most compare equal by construction -- recorded there as a
+measurement and not as an assumption.
+
+**KiCad 10.0.6 was installed on the build machine to do this.** Every previous statement in
+this package that `kicad-cli sch erc` and `kicad-cli pcb drc` were NOT RUN because KiCad was
+absent was true when written and is no longer true of the KiCad 10 set. It remains true of
+the KiCad 8 set: Homebrew carries no `kicad@8` and none was installed, so no DRC or ERC
+result is claimed for that directory.
+
+**Finding 1 -- the 37 custom rules were silently inert, and are now live.** `tools/rules.py`
+wrote the `.kicad_dru` with `;;` comments. KiCad discards the **whole file** the moment it
+meets a semicolon comment, with no error and no warning, and runs DRC as though the file were
+absent. Measured on KiCad 10.0.6 by appending a probe rule that must fire: with the file as
+released the probe produced nothing and deleting the file changed no result; with the
+comments written as `#` the probe fired. **The released set shipped 37 rules of which KiCad
+applied none**, while LAY-EEG-034 told the layout desk the file was not optional. Fixed by
+emitting `#`, and `check_dru()` now refuses to write a file containing a semicolon comment so
+that it cannot come back. Whether KiCad 8 also discarded the file is **not verified** -- no
+KiCad 8 was available to test -- and is not asserted either way.
+
+**Finding 2 -- the zoning and no-via areas forbade the parts they contain.**
+`tools/kicad_pcb8.py` wrote `(pads not_allowed) (footprints not_allowed)` into every rule
+area. That is correct for `ISOLATION_KEEPOUT` and wrong for `ANALOGUE_ZONE` and
+`DIGITAL_ZONE`, which between them tile the whole board, for the four `NO_VIA_J*` areas,
+which are the connectors' own courtyards, and for the four `MOUNT_KEEPOUT_MH*` areas, which
+are centred on the mounting holes. The result was **199 `items_not_allowed` violations at
+error severity**, raised against placement the layout desk has not yet made. The intent was
+already recorded and was not what the file said: `tools/rules.py` says of the zone split that
+it "is a routing rule and not a placement rule", and the six emitted zoning rules only ever
+`disallow track via`. Fixed by making `pads` and `footprints` parameters of `_rule_area()`.
+Copper -- tracks, vias and pours -- remains forbidden in all of them, and
+`ISOLATION_KEEPOUT` is untouched. `items_not_allowed` fell from **199 to 3**.
+
+**Finding 3 -- MH2 sits inside the isolation strip. Raised here, not resolved.** The three
+violations that remain are real geometry and were invisible until finding 1 was fixed,
+because the rule reporting them had never run. `ISOLATION_KEEPOUT` is the strip x 141.0 to
+150.0 mm, y 2.0 to 22.0 mm (DSN-EEG-003 section 3.3 rule 4); mounting hole **MH2 is at
+(145.0, 5.0)**, inside it, and is the only one of the four that is. This is probably not a
+physical defect: rule 4 requires the strip to be free of **copper**, MH2 is non-plated, and
+rule 8 requires non-plated holes to carry no copper and no mask opening. What flags it is
+that the emitted rule disallows `hole` and `footprint` as well as the copper items, which is
+broader than the requirement it implements. **Narrowing a rule that guards the isolation
+barrier is a decision for the programme and not for a format re-emission**, so it is recorded
+and left alone; both sets carry the rule as it stands and both report the same three
+violations. The options are to narrow the rule to `track via zone pad graphic`, to move MH2,
+which is locked and fixed by the enclosure, or to record MH2 as a standing exception.
+
+**The `ELECTRODE` row of LAY-EEG-034 section 5 is split.** Its clearance, its layer and its
+via restriction were carried as proposals awaiting confirmation. They are not proposals:
+DSN-EEG-003 section 3.3 rule 3 routes every electrode net on L1 with the reference plane
+continuous beneath it at 0.35 mm clearance, in those words, and section 3.2 carries an
+electrode-net clearance row saying the same. They are reclassified as requirements citing
+that section. **The `ELECTRODE` width pair remains a proposal**, and so does the whole
+`ANALOGUE_REF` row: the document set was searched before the reclassification and **no
+governing document fixes a width for either class** -- section 3.2's 0.20 mm floor and
+0.25 mm preferred width are board-wide and say nothing about a class. `NetClass.confirm` is
+now a tuple naming which columns of a row are proposals, rather than one flag over the whole
+row, and section 5 of the rule sheet prints them per column. Open question 4 of the Rev C
+work report therefore has two of its four items settled and two still open.
+
+**A defect in the reader, found by the same work.** `tools/kicad_parse.py` assumed a pad's
+net was `(net <code> "<name>")`. **KiCad 10 removed the board-level net table and the numeric
+net codes entirely**; a pad now carries `(net "<name>")`. The reader raised on the first
+KiCad 10 board it was given. It now reads both dialects, for pads, tracks and vias alike --
+which matters beyond this change, because the board that comes back from the layout desk will
+be routed and will be KiCad 10, and `tools/drc.py` grades it through this reader.
+
+**The portal archive.** `tools/make_portal_zip.py` writes
+`dist/EEG-CAR-01_RevC_layout_inputs_kicad10.zip`: 53 files, 3 502 275 bytes uncompressed,
+570 604 compressed, the `step/` tree preserved. It is deterministic -- fixed timestamps,
+fixed permissions, sorted order -- so the same directory packs to the same bytes and a
+checksum quoted in a covering email means something. The tool extracts the archive again and
+checks every file against the `SHA256SUMS.txt` travelling inside it before it returns. **It
+is not committed.** `dist/` is a build directory; the archive is rebuilt in a minute and a
+3 MB binary duplicating 53 tracked files earns nothing under version control. Nothing in
+`tools/` uploads it.
+
+*Verified.* Both sets emitted and parsed back: **211 footprints, 636 pads, 156 nets, 620 pads
+carrying a net, 11 nets with one pad, 145 with two or more, 0 segments, 0 vias, 37 locked**,
+identical across the two formats; 8 net classes and 156 assignments identical; 37 rules
+identical; 45 severities identical with `track_dangling` at error in both; board 150.0 x
+130.0 mm, mounting holes at (5, 5), (145, 5), (5, 125), (145, 125), fiducials at (12, 10),
+(144, 100), (12, 120), zone split at x = 62.0 mm, vias 0.60 mm on 0.30 mm through only,
+tented. **`kicad-cli 10.0.6 pcb drc` was RUN** on the KiCad 10 set: it loads with no schema
+warning and no rule-parse error. Its 354 violations and 464 unconnected items are read in
+check 9 of the equivalence report and are not a clean bill -- the unconnected items are every
+net of a deliberately unrouted board, the 199 `lib_footprint_issues` are the footprint library
+not being registered in a command-line environment, and the silkscreen warnings are against
+provisional placement. **No custom rule fires**, which is the expected result: all 37
+constrain tracks and vias and there are none. *Not verified:* KiCad 8's own handling of the
+`.kicad_dru`, and no ERC was run on either set.
 
 ### 2.2 Requirement changes and where they come from
 

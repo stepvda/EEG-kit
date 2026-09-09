@@ -1,10 +1,12 @@
 EEG-CAR-01 Rev C -- layout input set, SHA-256 manifest
-generated 2026-09-08 by tools/emit_handover.py
+KiCad 8 emission, generated 2026-09-08 by tools/emit_handover.py
 
 Every file here is GENERATED from tools/design.py.  Re-running
-tools/emit_all.py rebuilds this directory identically, so a checksum that
-does not match means the file changed and not that the build is
+tools/emit_all.py rebuilds this directory identically, so a checksum
+that does not match means the file changed and not that the build is
 nondeterministic.
+
+KiCad 8: written directly by this programme's writers.
 
 FILES
 
@@ -46,10 +48,10 @@ FILES
       afcd8f692b98ef9e94034fa154007160e91c0f3735d9c661605401131b1d44b6  221033 bytes
   EEG-CAR-01_RevC.kicad_pcb
       the board: placed, netted, LOCKED where it must be, and UNROUTED
-      4170d301bfdb72c9c26fbc541ddbcf32addddb07c10f2ee0a5a6b6d9f156ab6b  664669 bytes
+      8ee6ba41e037a15fc24bb272af323b728daced6ccd699cc43c4715b41493c2bf  664589 bytes
   EEG-CAR-01_RevC.kicad_dru
       input 6, machine-readable: 37 custom design rules. Load it
-      57d34c084056c27fbb88ec12a5855a1290d3566836c6dce1547798c8cf8d9e6c  8880 bytes
+      cea024eef0c2df9b25edc6d8546e34f2072aa64ea872c0f35c3a70e17bdd640b  9333 bytes
   EEG-CAR-01_RevC-IPC-D-356A.ipc
       input 2: the netlist, 156 nets, from the pads alone
       0c65066f5f9a9001a58841ffbb276b9226299f71f0a3a68dae8a035c93754d8c  47488 bytes
@@ -151,15 +153,15 @@ FILES
       67b7597386971c060448f50fb7b85473e17863bf5fcc7e84c1aa94fb05773b7d  5298 bytes
   LAY-EEG-034_RevA_carrier_layout_rule_sheet.pdf
       input 6: THE RULE SHEET. It is part of the order specification
-      c1e7093f3bdc56980b1e248879019dd82371cf755e8731ef6e7bef3b6ae053ac  152232 bytes
+      e664cda66681e6115a85c129f047c9c59b59a7993d73385ee6b4791cedf18587  154002 bytes
   LAY-EEG-034_RevA_carrier_layout_rule_sheet.md
       input 6, as text
-      e11d045abff3439b42f3d7da90171067ea4167d744c4b97d45d66eab202d2894  12589 bytes
+      edfe221cd3a38c0a7a0303f3a121c3be089741c3356d2603b4421038d84df3ec  13309 bytes
   README_layout_inputs.md
-      what is locked, the coordinate convention, which rules KiCad checks and which we check on return
-      48a96da13d5031388fb34053ca0ce0b8e308abcfd9206b96d0d988bf52cd9918  5679 bytes
+      what is locked, the coordinate convention, which KiCad this set is for, and which rules we check on return
+      9776fdd378efaab08de33a244c5db6b6d6416d0a3066280d68932ca111da55ca  6711 bytes
 
-50 files listed above, 2705954 bytes, plus this manifest: 51 files in the directory.
+50 files listed above, 2709849 bytes, plus this manifest: 51 files in the directory.
 
 NOT SENT FROM THIS REPOSITORY.  Nothing in tools/ transmits anything.
 

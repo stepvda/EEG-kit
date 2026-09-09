@@ -25,16 +25,28 @@ is most of the specification.
 
 Load **`EEG-CAR-01_RevC.kicad_dru`** with the project. It is 37 rules and it is not optional.
 
-## KiCad version
+## KiCad version -- and there are two sets
 
-Written for **KiCad 8**: `(kicad_sch (version 20231120))` and
-`(kicad_pcb (version 20240108))`. **Tell us if you are on a different major version**
-before you start and we will re-emit; these are generated files and re-emitting costs
-nothing. **KiCad is not installed on the machine that generated them**, so `kicad-cli
-sch erc` and `kicad-cli pcb drc` were **NOT RUN** and no ERC or DRC result is claimed for
-them. What was run is in `EEG-CAR-01_RevC_schematic_netlist_check.txt`: the schematic parsed back
-and diffed against the design source, 156 nets and 614 pins on both sides, **0
-differences**.
+This directory is the **KiCad 8** emission: `(kicad_sch (version 20231120))` and
+`(kicad_pcb (version 20240108))`, `(generator_version "8.0")`.
+
+**If you are on KiCad 10, use `kicad/RevC_layout_inputs_kicad10/` instead. This directory is the KiCad 8 reference set and stays as the published one.**
+
+Both sets are generated from one source, `tools/design.py`, in a single run. The KiCad 10
+set is the KiCad 8 set passed through KiCad's own `kicad-cli pcb upgrade`, `sch upgrade`
+and `sym upgrade`, so the two are equivalent by construction and not by assertion; the
+schema is KiCad's to define and this programme does not hand-write it. They have then
+been **diffed against each other and the result written down** -- netlist, board census,
+net classes, the 37 custom rules, the DRC severities, the locked footprints, the fixed
+geometry and the rule areas. Read **`EQUIVALENCE_kicad8_vs_kicad10.md`** in the KiCad 10 directory. Where a check
+could not be performed it says so rather than inferring the answer.
+
+Independently of KiCad, `EEG-CAR-01_RevC_schematic_netlist_check.txt` is the schematic parsed
+back out of the emitted files -- pin geometry from their own `lib_symbols`, wires,
+junctions, labels and power symbols -- and diffed against the design source: **156 nets
+and 614 pins on both sides, 0 differences.** The generator is not asked what it meant.
+
+**No DRC or ERC result is claimed for this set.** KiCad 8 is not installed on the machine that generated it and Homebrew carries no `kicad@8`, so `kicad-cli` could not be run against it. The KiCad 10 set WAS checked; see the equivalence report.
 
 ## What is locked, and what is yours
 

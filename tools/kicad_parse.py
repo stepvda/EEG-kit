@@ -205,9 +205,19 @@ def load(path: str) -> Board:
     root = parse_sexp(open(path, "r", encoding="utf-8").read())
     assert head(root) == "kicad_pcb", head(root)
 
+    # KiCad 8 and earlier declare a board-level net table, `(net <code> "<name>")`, and
+    # pads refer to a net by that code.  **KiCad 10 removed both**: there is no net
+    # table, and a pad carries `(net "<name>")` with no code at all.  Nets are addressed
+    # by name from KiCad 10 onwards.  Everything downstream of this module keys on
+    # `Pad.netname`, so the codes are synthesised below where they are absent and the
+    # netlist itself is unaffected -- but a reader that assumed `int(n[1])` would have
+    # thrown, which is how this difference was found (ECO-EEG-034).
     nets = {}
     for n in children(root, "net"):
-        nets[int(n[1])] = n[2] if len(n) > 2 else ""
+        if len(n) > 2:                      # KiCad <= 8: (net code "name")
+            nets[int(n[1])] = n[2]
+        elif len(n) == 2 and not str(n[1]).lstrip("-").isdigit():
+            nets.setdefault(len(nets), str(n[1]))   # KiCad 10: (net "name")
 
     setup = {}
     s = child(root, "setup")
@@ -259,8 +269,15 @@ def load(path: str) -> Board:
             lys = child(p, "layers")
             layers = [str(x) for x in lys[1:]] if lys else []
             nt = child(p, "net")
-            net = int(nt[1]) if nt else 0
-            nname = nt[2] if nt and len(nt) > 2 else ""
+            # `(net <code> "<name>")` up to KiCad 8; `(net "<name>")` from KiCad 10.
+            if not nt:
+                net, nname = 0, ""
+            elif len(nt) > 2:
+                net, nname = int(nt[1]), nt[2]
+            elif str(nt[1]).lstrip("-").isdigit():
+                net, nname = int(nt[1]), ""
+            else:
+                net, nname = 0, str(nt[1])
             rx, ry = _rot(px, py, frot)
             fp.pads.append(Pad(ref=ref, num=num, kind=kind, shape=shape,
                                x=fx + rx, y=fy + ry, w=pw, h=ph,
@@ -287,25 +304,43 @@ def load(path: str) -> Board:
     # Tracks and vias.  Added at ECO-EEG-032 so that the RELEASED Rev B geometry can be
     # regraded from the released artefact rather than from a source file that has since
     # moved on to Rev C -- see tools/grade_revb.py.
+    def _net_of(g):
+        """(code, name) from a conductor's `(net ...)`, either dialect.  A KiCad 10
+        board names the net and gives no code; a KiCad 8 board gives the code and the
+        name is looked up in the board's table.  This matters beyond the emission: the
+        board that comes BACK from the layout desk is routed and is KiCad 10, and
+        tools/drc.py grades it through this parser."""
+        nt = child(g, "net")
+        if not nt:
+            return 0, ""
+        if str(nt[1]).lstrip("-").isdigit():
+            code = int(nt[1])
+            return code, (nt[2] if len(nt) > 2 else nets.get(code, ""))
+        return 0, str(nt[1])
+
     segs = []
     for g in children(root, "segment"):
         st, en = child(g, "start"), child(g, "end")
-        nt = child(g, "net")
-        code = int(nt[1]) if nt else 0
+        code, nname = _net_of(g)
         segs.append(Segment(layer=(child(g, "layer") or [None, "F.Cu"])[1],
                             x1=fnum(st[1]), y1=fnum(st[2]),
                             x2=fnum(en[1]), y2=fnum(en[2]),
                             width=fnum((child(g, "width") or [None, 0.25])[1]),
-                            net=code, netname=nets.get(code, "")))
+                            net=code, netname=nname))
     vs = []
     for g in children(root, "via"):
         at = child(g, "at")
-        nt = child(g, "net")
-        code = int(nt[1]) if nt else 0
+        code, nname = _net_of(g)
         vs.append(Via(x=fnum(at[1]), y=fnum(at[2]),
                       pad=fnum((child(g, "size") or [None, 0.6])[1]),
                       drill=fnum((child(g, "drill") or [None, 0.3])[1]),
-                      net=code, netname=nets.get(code, "")))
+                      net=code, netname=nname))
+
+    # A KiCad 10 board has no net table of its own; rebuild one from what the pads say
+    # so that `Board.nets` means the same thing to a caller whichever dialect was read.
+    if not nets:
+        seen = sorted({p.netname for f in fps for p in f.pads if p.netname})
+        nets.update({i: name for i, name in enumerate(seen, start=1)})
 
     return Board(nets=nets, footprints=fps, outline=outline,
                  width=max(xs) - min(xs), height=max(ys) - min(ys), setup=setup,
