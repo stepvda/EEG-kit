@@ -1,0 +1,579 @@
+{
+  "schema": "rfq-submission-record/1",
+  "ticket": "BSY-598327",
+  "boards": {
+    "EEG-CAR-01": {
+      "board": "EEG-CAR-01",
+      "ticket": "BSY-598327",
+      "form_url": "https://www.pcbcart.com/assembly",
+      "unit_check": {
+        "form_unit": "mm",
+        "userstatus_unit": "mm",
+        "islogin": "1"
+      },
+      "diff": [
+        {
+          "control": "PCB_MATERIAL_LAYERS",
+          "want": "4 layer",
+          "got": "4 layer",
+          "match": true
+        },
+        {
+          "control": "PCB_TYPE",
+          "want": "FR4",
+          "got": "FR4",
+          "match": true
+        },
+        {
+          "control": "PCB_MAT_DETAIL",
+          "want": "FR4-Tg 150C",
+          "got": "FR4-Tg 150C",
+          "match": true
+        },
+        {
+          "control": "PCB_BOARD_TYPE",
+          "want": "single unit",
+          "got": "single unit",
+          "match": true
+        },
+        {
+          "control": "PCB_THICKNESS",
+          "want": "1.6 mm",
+          "got": "1.6 mm",
+          "match": true
+        },
+        {
+          "control": "PCB_SURFACE_FINISH",
+          "want": "ENIG -Electroless Nickle/Immersion Gold - RoHS",
+          "got": "ENIG -Electroless Nickle/Immersion Gold - RoHS",
+          "match": true
+        },
+        {
+          "control": "PCB_ENIG_THICKER_AU",
+          "want": "None",
+          "got": "None",
+          "match": true
+        },
+        {
+          "control": "PCB_COPPER_WEIGHT",
+          "want": "35 um",
+          "got": "35 um",
+          "match": true
+        },
+        {
+          "control": "PCB_COPPER_WEIGHT_INNER",
+          "want": "18 um",
+          "got": "18 um",
+          "match": true
+        },
+        {
+          "control": "PCB_SOLDERMASK",
+          "want": "Both Sides",
+          "got": "Both Sides",
+          "match": true
+        },
+        {
+          "control": "PCB_SOLDERMASK_COLOR",
+          "want": "Green",
+          "got": "Green",
+          "match": true
+        },
+        {
+          "control": "PCB_SILKSCREEN_LEGEND",
+          "want": "2 sides",
+          "got": "2 sides",
+          "match": true
+        },
+        {
+          "control": "PCB_SILKSCREEN_LEGEND_COLOR",
+          "want": "White",
+          "got": "White",
+          "match": true
+        },
+        {
+          "control": "PCB_MIN_TRACING_SPACING",
+          "want": "0.20 mm",
+          "got": "0.20 mm",
+          "match": true
+        },
+        {
+          "control": "PCB_SMALLEST_HOLES",
+          "want": "0.30 mm",
+          "got": "0.30 mm",
+          "match": true
+        },
+        {
+          "control": "PCB_INSPECTION",
+          "want": "IPC 2",
+          "got": "IPC 2",
+          "match": true
+        },
+        {
+          "control": "PCB_IMPEDANCE",
+          "want": "No",
+          "got": "No",
+          "match": true
+        },
+        {
+          "control": "PCB_BURIED_BLIND",
+          "want": "No",
+          "got": "No",
+          "match": true
+        },
+        {
+          "control": "PCB_LASER_DRILL",
+          "want": "No",
+          "got": "No",
+          "match": true
+        },
+        {
+          "control": "PCB_INNTERCONNECTED_LAYER",
+          "want": "No",
+          "got": "No",
+          "match": true
+        },
+        {
+          "control": "PCB_VIA_IN_PAD",
+          "want": "None",
+          "got": "None",
+          "match": true
+        },
+        {
+          "control": "PCB_VIA_FILLED",
+          "want": "None",
+          "got": "None",
+          "match": true
+        },
+        {
+          "control": "PCB_UL",
+          "want": "Yes - add to bottom silkscreen",
+          "got": "Yes - add to bottom silkscreen",
+          "match": true
+        },
+        {
+          "control": "PCB_DATE",
+          "want": "Yes - add to bottom silkscreen",
+          "got": "Yes - add to bottom silkscreen",
+          "match": true
+        },
+        {
+          "control": "product_options[PCB_BOARD_SIZE_W][value]",
+          "want": "150.0",
+          "got": "150.0",
+          "match": true
+        },
+        {
+          "control": "product_options[PCB_BOARD_SIZE_H][value]",
+          "want": "130.0",
+          "got": "130.0",
+          "match": true
+        },
+        {
+          "control": "bom_name",
+          "want": "EEG-CAR-01 Rev B geometry / Rev C BOM",
+          "got": "EEG-CAR-01 Rev B geometry / Rev C BOM",
+          "match": true
+        },
+        {
+          "control": "username",
+          "want": "Stephane van der Aa",
+          "got": "Stephane van der Aa",
+          "match": true
+        },
+        {
+          "control": "company",
+          "want": "TI One Voice",
+          "got": "TI One Voice",
+          "match": true
+        },
+        {
+          "control": "phone",
+          "want": "+32 493 70 16 01",
+          "got": "+32 493 70 16 01",
+          "match": true
+        },
+        {
+          "control": "email",
+          "want": "stephane@stepvda.com",
+          "got": "stephane@stepvda.com",
+          "match": true
+        },
+        {
+          "control": "delivery_method",
+          "want": "Single board without technical rail",
+          "got": "Single board without technical rail",
+          "match": true
+        },
+        {
+          "control": "country_state",
+          "want": "Brussels",
+          "got": "Brussels",
+          "match": true
+        }
+      ],
+      "deviations": [
+        {
+          "control": "PCB_COPPER_WEIGHT_INNER",
+          "selected": "18 um",
+          "canonical": "17 um (0.5 oz)",
+          "why": "THE FORM HAS NO 17 um OPTION. The specification is 17 um (0.5 oz) inner copper; 18 um is the nearest option and is the same 0.5 oz class. Stated in the Notes box and in README_for_bidder.txt so the vendor quotes the right thing."
+        }
+      ],
+      "drifted": [
+        {
+          "control": "PCB_MAT_DETAIL",
+          "wanted": "FR4-Tg 150C",
+          "was": "FR4-Standard Tg 140C",
+          "after_repair": "FR4-Tg 150C",
+          "repaired": true,
+          "final": "FR4-Tg 150C"
+        },
+        {
+          "control": "PCB_SURFACE_FINISH",
+          "wanted": "ENIG -Electroless Nickle/Immersion Gold - RoHS",
+          "was": "HASL -Hot Air Solder Leveling",
+          "after_repair": "ENIG -Electroless Nickle/Immersion Gold - RoHS",
+          "repaired": true,
+          "final": "ENIG -Electroless Nickle/Immersion Gold - RoHS"
+        }
+      ],
+      "dialogs": [
+        {
+          "type": "pageerror",
+          "message": "missing ) after argument list",
+          "baseline": true
+        },
+        {
+          "type": "pageerror",
+          "message": "Unexpected identifier 's'",
+          "baseline": true
+        },
+        {
+          "type": "pageerror",
+          "message": "e is not defined",
+          "baseline": true
+        },
+        {
+          "type": "pageerror",
+          "message": "Cannot read properties of undefined (reading 'defaultText')",
+          "baseline": false
+        },
+        {
+          "type": "pageerror",
+          "message": "Cannot read properties of undefined (reading 'defaultText')",
+          "baseline": false
+        },
+        {
+          "type": "pageerror",
+          "message": "missing ) after argument list",
+          "baseline": true
+        },
+        {
+          "type": "pageerror",
+          "message": "Unexpected identifier 's'",
+          "baseline": true
+        },
+        {
+          "type": "pageerror",
+          "message": "e is not defined",
+          "baseline": true
+        }
+      ],
+      "needs_human": [],
+      "signed_in": true,
+      "authorised_by": "Stephane van der Aa, in writing in the Claude Code session, after reviewing the filled-form screenshots for both boards: 'submit everything under my account on their online tool'",
+      "notes_chars_offered": 2251,
+      "notes_chars_accepted": 2251,
+      "notes_truncated": false,
+      "notes_line_breaks_flattened": true,
+      "uploads": [
+        {
+          "name": "EEG-CAR-01_RevB_gerber_X2.zip",
+          "sha256": "756f8b0da9bbfbb97711abca7c6c36f86ac36fde7958b002631508cf03780679"
+        },
+        {
+          "name": "EEG-CAR-01_RevC_BOM_CPL_and_notes.zip",
+          "sha256": "e36aadf3c37aad42baa6ef9175c6052cf14a40d2d5cee252eff03e87c0225136"
+        }
+      ],
+      "submitted": true,
+      "url_before": "https://www.pcbcart.com/assembly",
+      "url_after": "https://www.pcbcart.com/assembly-quote-success.html?quote_id=53125",
+      "references": [
+        "20260909185",
+        "53125"
+      ],
+      "page_text": "PCBCart Thailand Factory\u2014Fully Prepared for Production! \u00a0 Learn More\nAssembly\nPCB Layout & Fab\nCapabilities\nResources\nAbout Us\nQuote\nEnglish\ncart\nThank you for your request.(Quote#20260909185)\n\nWe'll send you an email to confirm we have received your request within 2 minutes. If you can't find the email, please reach us at sales@pcbcart.com immediately as it's very likely that your request was failed to send.\n\nContinue to inquiry\nManufacturing Site\nProduction & Shipping Origin\tAs decided by PCBCART\t\t\nPCB Specifications\nPCB Type\tFR4\tLayers\t4 layer\nBoard Size\t150.0*130.0 mm\tMaterial Details\tFR4-Tg 150C\nBoard type\tsingle unit\tThickness (Finished Board)\t1.6 mm\nSurface Finish\tENIG -Electroless Nickle/Immersion Gold - RoHS\tOuter Layer Copper Weight (Finished)\t35 um\nInner Layer Copper Weight\t18 um\tSoldermask\tBoth Sides\nSoldermask Color\tGreen\tMatt Color (only add to Green or Black)\tNone\nSilkscreen Legend\t2 sides\tSilkscreen Legend Color\tWhite\nSmallest Holes\t0.30 mm\tMin. Tracing/Spacing\t0.20 mm\nType of stacked/staggered microvias\tNo\tLaser Drill\tNo\nInspection Standard\tIPC 2\tUL Marking\tYes - add to bottom silkscreen\nDate Code Marking\tYes - add to bottom silkscreen\tENIG(thicker Au)\tNone\nPeelable Soldermask\tNone\tImpedance Control\tNo\nGold Fingers\tNo\tBuried/Blind Vias\tNo\nEdge Plating\tNone\tSkip V-scoring\tNone\nCarbon Mask\tNone\tKapton tape\tNone\nPressfit holes\tNone\tVia in pad\tNone\nVia filled with resin\tNone\tHalf-cut/Castellated Holes\tNone\nCountersinks/Counterbores\tNone\t\t\nAssembly\nCustom Testing\tNo\tIC Programming\tNo\nAssembly Side(s)\tSingle side\t\t\nRalate Documents\nItem\tOriginal File\tFinal File\nBOM File\tEEG-CAR-01_RevC_BOM_CPL_and_notes.zip\t\nPCB File\tEEG-CAR-01_RevB_gerber_X2.zip\t\nPCBCart specializes in high-complexity, precision PCB assembly for mixed-volume batches, offering full-service electronic manufacturing excellence since 2005.\nContact us\nSingapore Headquarter: SOTATRONIX PTE.LTD\n sales@pcbcart.com\u00a0\u00a0\u00a0tech@pcbcart.com\nThailand Factory: Sota Electronics Co.,LTD\nAdd: Asia Industrial"
+    },
+    "WH-BUS-01": {
+      "board": "WH-BUS-01",
+      "ticket": "BSY-598327",
+      "form_url": "https://www.pcbcart.com/assembly",
+      "unit_check": {
+        "form_unit": "mm",
+        "userstatus_unit": "mm",
+        "islogin": "1"
+      },
+      "diff": [
+        {
+          "control": "PCB_MATERIAL_LAYERS",
+          "want": "2 layer",
+          "got": "2 layer",
+          "match": true
+        },
+        {
+          "control": "PCB_TYPE",
+          "want": "FR4",
+          "got": "FR4",
+          "match": true
+        },
+        {
+          "control": "PCB_MAT_DETAIL",
+          "want": "FR4-Tg 150C",
+          "got": "FR4-Tg 150C",
+          "match": true
+        },
+        {
+          "control": "PCB_BOARD_TYPE",
+          "want": "panel",
+          "got": "panel",
+          "match": true
+        },
+        {
+          "control": "PCB_PANEL",
+          "want": "1",
+          "got": "1",
+          "match": true
+        },
+        {
+          "control": "PCB_PANEL_ROUTING",
+          "want": "Panel as V-Scoring",
+          "got": "Panel as V-Scoring",
+          "match": true
+        },
+        {
+          "control": "PCB_PANEL_X_OUT",
+          "want": "No",
+          "got": "No",
+          "match": true
+        },
+        {
+          "control": "PCB_THICKNESS",
+          "want": "0.8 mm",
+          "got": "0.8 mm",
+          "match": true
+        },
+        {
+          "control": "PCB_SURFACE_FINISH",
+          "want": "ENIG -Electroless Nickle/Immersion Gold - RoHS",
+          "got": "ENIG -Electroless Nickle/Immersion Gold - RoHS",
+          "match": true
+        },
+        {
+          "control": "PCB_ENIG_THICKER_AU",
+          "want": "None",
+          "got": "None",
+          "match": true
+        },
+        {
+          "control": "PCB_COPPER_WEIGHT",
+          "want": "35 um",
+          "got": "35 um",
+          "match": true
+        },
+        {
+          "control": "PCB_SOLDERMASK",
+          "want": "Both Sides",
+          "got": "Both Sides",
+          "match": true
+        },
+        {
+          "control": "PCB_SOLDERMASK_COLOR",
+          "want": "Green",
+          "got": "Green",
+          "match": true
+        },
+        {
+          "control": "PCB_SILKSCREEN_LEGEND",
+          "want": "2 sides",
+          "got": "2 sides",
+          "match": true
+        },
+        {
+          "control": "PCB_SILKSCREEN_LEGEND_COLOR",
+          "want": "White",
+          "got": "White",
+          "match": true
+        },
+        {
+          "control": "PCB_MIN_TRACING_SPACING",
+          "want": "0.20 mm",
+          "got": "0.20 mm",
+          "match": true
+        },
+        {
+          "control": "PCB_SMALLEST_HOLES",
+          "want": "0.40 mm",
+          "got": "0.40 mm",
+          "match": true
+        },
+        {
+          "control": "PCB_INSPECTION",
+          "want": "IPC 2",
+          "got": "IPC 2",
+          "match": true
+        },
+        {
+          "control": "PCB_IMPEDANCE",
+          "want": "No",
+          "got": "No",
+          "match": true
+        },
+        {
+          "control": "PCB_SKIP_V_SCORING",
+          "want": "None",
+          "got": "None",
+          "match": true
+        },
+        {
+          "control": "PCB_UL",
+          "want": "Yes - add to bottom silkscreen",
+          "got": "Yes - add to bottom silkscreen",
+          "match": true
+        },
+        {
+          "control": "PCB_DATE",
+          "want": "Yes - add to bottom silkscreen",
+          "got": "Yes - add to bottom silkscreen",
+          "match": true
+        },
+        {
+          "control": "product_options[PCB_BOARD_SIZE_W][value]",
+          "want": "14.0",
+          "got": "14.0",
+          "match": true
+        },
+        {
+          "control": "product_options[PCB_BOARD_SIZE_H][value]",
+          "want": "10.0",
+          "got": "10.0",
+          "match": true
+        },
+        {
+          "control": "bom_name",
+          "want": "WH-BUS-01 Rev A bare board",
+          "got": "WH-BUS-01 Rev A bare board",
+          "match": true
+        },
+        {
+          "control": "username",
+          "want": "Stephane van der Aa",
+          "got": "Stephane van der Aa",
+          "match": true
+        },
+        {
+          "control": "company",
+          "want": "TI One Voice",
+          "got": "TI One Voice",
+          "match": true
+        },
+        {
+          "control": "phone",
+          "want": "+32 493 70 16 01",
+          "got": "+32 493 70 16 01",
+          "match": true
+        },
+        {
+          "control": "email",
+          "want": "stephane@stepvda.com",
+          "got": "stephane@stepvda.com",
+          "match": true
+        },
+        {
+          "control": "delivery_method",
+          "want": "Panel with technical rail",
+          "got": "Panel with technical rail",
+          "match": true
+        },
+        {
+          "control": "country_state",
+          "want": "Brussels",
+          "got": "Brussels",
+          "match": true
+        }
+      ],
+      "deviations": [
+        {
+          "control": "PCB_MIN_TRACING_SPACING",
+          "selected": "0.20 mm",
+          "canonical": "1.20 mm (the LED_V bar)",
+          "why": "The board's minimum track is 1.20 mm, far above anything on this list; 0.20 mm is the list's coarsest entry and claims no capability we need."
+        },
+        {
+          "control": "PCB_SMALLEST_HOLES",
+          "selected": "0.40 mm",
+          "canonical": "10 per board, 0.80 mm finished, 1.60 mm pad, one tool",
+          "why": "The board's only hole is 0.80 mm finished, comfortably above the list's coarsest entry of 0.40 mm."
+        }
+      ],
+      "drifted": [],
+      "dialogs": [
+        {
+          "type": "pageerror",
+          "message": "missing ) after argument list",
+          "baseline": true
+        },
+        {
+          "type": "pageerror",
+          "message": "Unexpected identifier 's'",
+          "baseline": true
+        },
+        {
+          "type": "pageerror",
+          "message": "e is not defined",
+          "baseline": true
+        },
+        {
+          "type": "pageerror",
+          "message": "missing ) after argument list",
+          "baseline": true
+        },
+        {
+          "type": "pageerror",
+          "message": "Unexpected identifier 's'",
+          "baseline": true
+        },
+        {
+          "type": "pageerror",
+          "message": "e is not defined",
+          "baseline": true
+        }
+      ],
+      "needs_human": [],
+      "signed_in": true,
+      "authorised_by": "Stephane van der Aa, in writing in the Claude Code session, after reviewing the filled-form screenshots for both boards: 'submit everything under my account on their online tool'",
+      "notes_chars_offered": 2301,
+      "notes_chars_accepted": 2301,
+      "notes_truncated": false,
+      "notes_line_breaks_flattened": true,
+      "uploads": [
+        {
+          "name": "WH-BUS-01_RevA_gerber_X2.zip",
+          "sha256": "21404a2462192d34f4ba35cba30a030f2b2adeb47930b09ba7aa61e9cb46173f"
+        },
+        {
+          "name": "WH-BUS-01_RevA_BOM_and_notes.zip",
+          "sha256": "0545e5497fb208080ac08be3e1229210d11ac29e8b26c6f945d655448b600ab6"
+        }
+      ],
+      "submitted": true,
+      "url_before": "https://www.pcbcart.com/assembly",
+      "url_after": "https://www.pcbcart.com/assembly-quote-success.html?quote_id=53126",
+      "references": [
+        "20260909781",
+        "53126"
+      ],
+      "page_text": "PCBCart Thailand Factory\u2014Fully Prepared for Production! \u00a0 Learn More\nAssembly\nPCB Layout & Fab\nCapabilities\nResources\nAbout Us\nQuote\nEnglish\ncart\nThank you for your request.(Quote#20260909781)\n\nWe'll send you an email to confirm we have received your request within 2 minutes. If you can't find the email, please reach us at sales@pcbcart.com immediately as it's very likely that your request was failed to send.\n\nContinue to inquiry\nManufacturing Site\nProduction & Shipping Origin\tAs decided by PCBCART\t\t\nPCB Specifications\nPCB Type\tFR4\tLayers\t2 layer\nBoard Size\t14.0*10.0 mm\tMaterial Details\tFR4-Tg 150C\nBoard type\tpanel\tThickness (Finished Board)\t0.8 mm\nDifferent Design in Panel\t1\tRoute Process\tPanel as V-Scoring\nX-out Allowance in Panel\tNo\tSurface Finish\tENIG -Electroless Nickle/Immersion Gold - RoHS\nCopper Weight (Finished)\t35 um\tSoldermask\tBoth Sides\nSoldermask Color\tGreen\tMatt Color (only add to Green or Black)\tNone\nSilkscreen Legend\t2 sides\tSilkscreen Legend Color\tWhite\nSmallest Holes\t0.40 mm\tMin. Tracing/Spacing\t0.20 mm\nInspection Standard\tIPC 2\tUL Marking\tYes - add to bottom silkscreen\nDate Code Marking\tYes - add to bottom silkscreen\tENIG(thicker Au)\tNone\nPeelable Soldermask\tNone\tImpedance Control\tNo\nGold Fingers\tNo\tEdge Plating\tNone\nSkip V-scoring\tNone\tCarbon Mask\tNone\nKapton tape\tNone\tPressfit holes\tNone\nVia in pad\tNone\tVia filled with resin\tNone\nHalf-cut/Castellated Holes\tNone\tCountersinks/Counterbores\tNone\n\t\nAssembly\nCustom Testing\tNo\tIC Programming\tNo\nAssembly Side(s)\tSingle side\t\t\nRalate Documents\nItem\tOriginal File\tFinal File\nBOM File\tWH-BUS-01_RevA_BOM_and_notes.zip\t\nPCB File\tWH-BUS-01_RevA_gerber_X2.zip\t\nPCBCart specializes in high-complexity, precision PCB assembly for mixed-volume batches, offering full-service electronic manufacturing excellence since 2005.\nContact us\nSingapore Headquarter: SOTATRONIX PTE.LTD\n sales@pcbcart.com\u00a0\u00a0\u00a0tech@pcbcart.com\nThailand Factory: Sota Electronics Co.,LTD\nAdd: Asia Industrial Estate, Samut Prakan Province, Thailand\nChi"
+    }
+  }
+}

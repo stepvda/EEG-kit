@@ -307,6 +307,40 @@ rule sheet that is emitted but not rendered ships a PDF that disagrees with its 
 Both were regenerated under ECO-EEG-034. **Re-running `emit_all.py` does not prove `docs/` is
 current**, exactly as it does not prove `kicad/wh-bus-01/` is.
 
+**The vendor RFQ pack is in this class and is registered here on 9 September 2026.** Two
+tools write it, `emit_all.py` calls **neither**, and nothing under `dist/rfq/` is tracked:
+
+| File or tree | Written by | What it is |
+|---|---|---|
+| `dist/rfq/<vendor>/fields.json` | `tools/emit_rfq_pack.py` | every RFQ answer, machine-readable, each with the `design.py` symbol or the document and section it came from |
+| `dist/rfq/<vendor>/ANSWER_SHEET.md` | `tools/emit_rfq_pack.py` | the same answers for a person to read beside the filled page before submitting |
+| `dist/rfq/<vendor>/<board>/` | `tools/emit_rfq_pack.py` | the upload set: the fabrication ZIP **copied and checksum-verified, never rebuilt**, plus one bundle ZIP carrying the BOM, the CPLs and `README_for_bidder.txt` |
+| `dist/rfq/<vendor>/screenshots/<board>/` | `tools/rfq_pcbcart.py` | every section of the filled form, before submission |
+| `dist/rfq/<vendor>/submission_record.json` | `tools/rfq_pcbcart.py` | the page-against-`fields.json` diff, the deviations, the dialogs seen, and whether anything was actually sent |
+| `records/vendor_submissions/` | **by hand, once per submission** | the programme record of what went to which vendor. Not generated: re-running a tool cannot change what a manufacturer already received |
+
+`tools/emit_rfq_pack.py` is vendor-agnostic with a per-vendor profile; `tools/rfq_pcbcart.py`
+is one portal's DOM. It fills, screenshots and diffs the page against `fields.json`, and then
+**stops**: it submits only when a person confirms at the terminal, or when an explicit
+`--authorised-by` is passed and recorded verbatim in the submission record. Neither route
+relaxes the two refusals that matter -- a page that does not match `fields.json`, or a
+required field left unfilled, is not submitted whoever authorises it. Two properties are
+worth stating because they are the reason the pack exists rather than the form being filled
+by hand:
+
+**No figure is typed.** Every answer that restates a specification carries the verbatim
+sentence it came from and the substrings that must appear in it; the build **fails** if a
+figure no longer appears in its source. Changing the finished thickness in `design.py` and
+not in the pack stops the build instead of quietly sending a fabricator the old number.
+
+**What the form cannot express is recorded rather than dropped.** Each canonical answer is
+either mapped to a control on that portal or declared unsupported with a reason, and the
+build fails if it is neither. That is what caught the stack-up: **no PCBCart form carries
+one**, on the assembly route or the Standard PCB route, so DSN-EEG-003 section 3.2 travels
+in the notes with written confirmation demanded. It is also what caught the inner copper --
+the form offers 18 um and the specification is 17 um -- which is stated to the vendor
+instead of being silently accepted.
+
 SCH-EEG-005 is in this class. Its revision letter follows the board revision letter in
 `design.py`, which is **Rev B**, and it is regenerated rather than edited whenever the
 netlist changes. **It is a picture and not a netlist**, which is finding 7 of ECO-EEG-030;
