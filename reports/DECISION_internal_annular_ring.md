@@ -113,6 +113,60 @@ So the package hands the fabricator a finished dimension and never states the to
 the annular-ring figure it then quotes back is computed as though the two were the same. That
 is a gap independent of what is decided about B11, and it should be closed either way.
 
+### 3.4 Closed at source under ECO-EEG-036 — the gap, not the decision
+
+The gap in §3.3 is now closed where it belongs, in the source, without touching IQC-B11:
+
+- **`tools/design.py`** gains fabrication notes **7a** and **7b**. 7a states that every hole
+  size in the package is a **finished** diameter and requires the fabricator to **declare the
+  tool size and the plating allowance it used**, per lot, with the note-14 lot documents.
+  7b states the external ring (0.15 mm), the internal ring formula, and that the
+  misregistration budget falls as the tool grows.
+- **DSN-EEG-003 §3.2** gains two rows — *Hole dimensions and the tool*, and *Internal annular
+  ring* — and its vias row now says **0.15 mm EXTERNAL** rather than an unqualified "annular
+  ring". The plated-hole row now says "finished diameters".
+
+The fabricator is no longer given a finished dimension and asked to meet a ring figure derived
+as though no plating existed. **No drill size has been invented here**: the tool is the
+fabricator's choice and the requirement is that they declare it.
+
+### 3.5 Verification status of the IPC reading — still asserted, deliberately
+
+WP-C asked whether a copy of IPC-6012 is available. **It is not.** The standard is paywalled
+at IPC, and no copy exists anywhere in this repository.
+
+The reading in §3.2 — that the internal annular ring is measured to the **drilled** hole wall
+— therefore **stays marked asserted**. It has not been upgraded by finding a secondary source
+that agrees, because a secondary source agreeing is not the same as the clause saying so. A
+person with a copy should verify it against the edition and clause and record both.
+
+### 3.6 Which documents carry the superseded figure
+
+Classified, because most of these are **not wrong** — they describe the *external* ring, which
+really is 0.15 mm. Only the rows that use it as the *internal* ring are defective.
+
+**Defective — uses the external figure as the internal ring:**
+
+| Where | What it says | Status |
+|---|---|---|
+| `QP-EEG-010` §2.1 **IQC-B12** | "a 0.60 mm pad on a 0.30 mm hole gives a 0.15 mm nominal **internal** annular ring, so class 2's 0.025 mm minimum survives at most **0.125 mm** of misregistration" | **superseded.** NOT rewritten — that decision is open and vendor answers are still arriving |
+| `QP-EEG-010` §4.3 **FB-22** | "≤ 0.125 mm, derived in IQC-B12" | consequential on IQC-B12 |
+| `QP-EEG-010` §13 **A-23** | audit question resting on the same coupon and budget | consequential |
+
+**Ambiguous — correct as external, but the word "external" is absent:**
+
+| Where | Note |
+|---|---|
+| `QP-EEG-010` §1.1 geometry table | "0.15 mm nominal annular ring" |
+| `docs/RUL-EEG-021` §77 and its twin `tools/RULINGS.md` §79 | vias row |
+| `docs/ASM-EEG-007` line 267 | restates the via geometry |
+| `docs/ECO-EEG-016` line 1023 | ECO-EEG-012's narrative |
+| `tools/router.py` line 37 | a **comment** on `VIA_PAD`, not a computed value — the router does not use the ring figure for anything |
+
+None of the ambiguous set is a defect. They become clearer if "external" is added, and that
+is a tidying job, not a correction. **`design.py` and DSN-EEG-003 now say "external"
+explicitly**, so the two documents a fabricator is actually sent are unambiguous.
+
 ## 4. The alternatives, and what each does and does not prove
 
 The concern is *"the inner layers landed on the holes"*. Measured against that:

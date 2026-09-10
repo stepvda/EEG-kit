@@ -592,6 +592,7 @@ indexes, this section is the register, and where they differ this section govern
 | ECO-EEG-031 | major | four part numbers could not be bought or could not be fitted: the quad OPA4376 has no SOIC-14, the ferrite bead is not a Murata part, the tactile switch is a 12 x 12 mm part on a 6 x 6 mm land, and the patient-connected DIN sockets were not marked non-substitutable | implemented 8 September 2026 |
 | ECO-EEG-032 | major | the DRC reported zero violations against a rule set that did not contain six of the seven findings; the rules are now encoded once and exported to KiCad, and Rev B is regraded under them | implemented 8 September 2026 |
 | ECO-EEG-033 | scope | the Rev C reviewable design set: a native KiCad schematic, an unrouted board and project, 3D bodies and a collision check, and the layout rule sheet LAY-EEG-034 | implemented 8 September 2026 |
+| ECO-EEG-036 | correction, with a communication record | closing ECO-EEG-035 so it can be published. The drill-size and plating-allowance gap is closed at source: `design.py` gains fabrication notes **7a** and **7b** and DSN-EEG-003 §3.2 gains two rows, so a fabricator is told which diameter is finished, must declare the tool, and is given the **external** ring separately from the **internal** one. **J15–J17 traced to the root commit and never verified**; the requirement is restated without a manufacturer and **no verified candidate meets it** — every 1.5 mm DIN 42802 part any manufacturer publishes is a panel or cable part, which puts the carrier footprint itself in question **before the layout desk places**. RISK-EEG-011 gains **SR-13** on connector gender, open. **ECO-EEG-035's "a plug and a pin cannot both be right" is withdrawn as over-called.** What was stated to manufacturers in error is recorded below | implemented 10 September 2026 |
 | ECO-EEG-035 | scope, with four findings | the gaps eleven mid-quotation manufacturers exposed: the package carried **no datasheet index and no third-party licence exclusion**; provisioning could be run against a real ATECC608B with the configuration zone admittedly unreviewed; and three kit-BOM module rows read as vaguer than the requirements behind them. Findings: **the Stäubli part number at J15-J17 does not appear in either Stäubli catalogue**; the ATECC608B template's byte map does not name the 608-specific control bytes; **ELECTRODE's proposed widths cost nothing** while ANALOGUE_REF's are 58 % of every under-width finding on the board; and the internal annular ring is derived from the finished hole where it is measured to the drilled one. **No requirement, limit or governing figure was changed** | implemented 10 September 2026 |
 | ECO-EEG-034 | format emission and documentation, with two defects found | the layout desk runs KiCad 10, so the input set is emitted for KiCad 10 alongside the KiCad 8 set from one source and the two are checked equivalent on nine counts; running a real DRC for the first time found that the 37 custom rules had been silently inert, because KiCad discards a `.kicad_dru` containing a semicolon comment, and that the zoning, no-via and mounting keep-outs forbade the parts they contain. **The circuit is unchanged.** A third finding, MH2 inside the isolation strip, is raised and not resolved | implemented 9 September 2026 |
 
@@ -2412,6 +2413,110 @@ not in any pinned requirement file in this repository. Raised, not solved.
 section in FW-EEG-001, one new checklist item, a refusal in one host tool, three restated BOM
 rows and the licence exclusion in two top-level files. **Nothing here changes the instrument,
 and nothing here closes a decision that belongs to a person.**
+
+---
+
+### ECO-EEG-036 — closing ECO-EEG-035 so it can be published
+
+**Raised 10 September 2026.** ECO-EEG-035 did what it was asked and stopped where it was told
+to. Two of its findings **contradict statements already made to manufacturers**, and nothing
+could be published to them until those were resolved. This change resolves them.
+
+#### What changed
+
+| Change | Where |
+|---|---|
+| Hole sizes declared as **finished** diameters; the fabricator must **declare the tool size and plating allowance** per lot | `tools/design.py` fabrication notes **7a** and **7b**; DSN-EEG-003 §3.2, two new rows |
+| The via row now says **0.15 mm EXTERNAL** annular ring, with the internal ring stated separately as `(0.60 − drilled) / 2` | DSN-EEG-003 §3.2 |
+| J15–J17 provenance, requirement and candidate search | `reports/INVESTIGATION_din42802_sockets_J15_J17.md` (new) |
+| Connector gender opened as a finding, with the analysis attached | RISK-EEG-011 **SR-13** and new §10.1 |
+| Three blocked lookups, one page | `docs/datasheets/OPEN_LOOKUPS.md` (new) |
+| ECO-EEG-035's plug/pin claim withdrawn | `docs/datasheets/README_datasheets.md` §1 |
+| Recompute, verification status and the superseded-figure list | `reports/DECISION_internal_annular_ring.md` §3.4–3.6 |
+
+**No requirement or limit was changed. QP-EEG-010 is untouched** — that decision is open and
+vendor answers are still arriving. **`design.py`'s part number for J15–J17 is untouched.**
+
+#### The J15–J17 part number: traced, and it was never verified
+
+`SLB1,5-F / LB-I1,5` entered at **`b18782a`, the root commit of the repository**, byte-identical
+to today, and eight subsequent commits touched the string without changing it.
+
+**The package never claimed it was verified.** AVL-EEG-017 §1.4.1 has said throughout that it
+is "a class of part, not a confirmed PCB part", that "no catalogue part has been confirmed to
+fit it", and that the line has **no qualified vendor** and a **12-week first-article lead
+time**; `footprint_audit.py` reports J15–J17 as **OPEN**, never as a pass. **ECO-EEG-031 is
+the near miss**: it audited four unbuyable part numbers, corrected three outright, and for
+this one added a `NOT_SUBSTITUTABLE` flag instead — nobody checked that the designation
+exists.
+
+One refinement to AVL-EEG-017 §1.4.1, which is **not amended here**: it describes the two
+strings as "cable and panel parts". On the fetched catalogues they are **not Stäubli
+designations of any kind**. Its conclusion — no qualified vendor, sample required — stands.
+
+#### The finding that is urgent because of timing, not severity
+
+**No verified candidate meets the requirement, and the reason is structural.** Stäubli's
+medical catalogue, searched in full as fetched text, contains **no occurrence of "PCB",
+"printed circuit", "solder pin", "through-hole" or "board mount" anywhere**. Every 1.5 mm
+DIN 42802 part any manufacturer was found to publish is a **panel** part or a **cable** part.
+The carrier footprint `DIN42802_1p5mm_Socket` is a **PCB** part, and `fplib.py`'s own docstring
+calls it a "panel socket, **PCB-mount version**".
+
+AVL-EEG-017 §3 already names the fallback: "a panel-mount socket on a flying lead into a 1×3
+header, **which moves the part off the carrier footprint entirely**".
+
+**That is a placement change, and the Rev C layout desk has not started.** Three 9.8 × 7.8 mm
+bodies and nine holes sit in the analogue zone under the tightest clearance rule on the board.
+Taken now it is an edit to `design.py` and a re-emission. Taken after placement, the 15-day
+layout leg is paid twice. **The recommendation — stated as a recommendation — is to settle
+whether these are board- or panel-mounted before the layout desk is released to place, even
+if the part itself is not chosen by then.**
+
+#### A claim withdrawn
+
+ECO-EEG-035 recorded that "a plug and a pin cannot both be right". **That was over-called and
+is withdrawn.** In DIN 42802 trade usage the lead-end part is a *touch-proof plug* and is
+**electrically female**; the instrument end is an *input socket* carrying a **recessed male
+pin**. Two independent manufacturers state it, and Stäubli's product shapes agree. The
+package's naming is therefore consistent, not contradictory.
+
+What is genuinely open is **SR-13**: the convention is read from vendor documentation, not
+from DIN 42802 or IEC 60601-1, neither of which this programme holds; and `WH-EEG-008`
+§3.1.2.1 calls the lead-end parts "**male** plugs" where those manufacturers call the same part
+female. Under one reading that is a wording correction; under the other it is a patient-safety
+concern. **It is not corrected here, because correcting it presumes the answer.**
+
+#### The IPC reading stays asserted, deliberately
+
+A copy of IPC-6012 is **not available** — paywalled, and held nowhere in this repository. The
+reading that the internal annular ring is measured to the **drilled** hole therefore **stays
+marked asserted** and has **not** been upgraded by finding a secondary source that agrees.
+
+#### WP-F — what was stated to manufacturers, and what supersedes it
+
+Recorded here so that a vendor receiving a correction can see it logged in the same register
+that governs everything else they have been given.
+
+| Stated | To whom | When | Evidence | Superseded by |
+|---|---|---|---|---|
+| *"J15, J16 and J17 **are** Staubli SLB1,5-F / LB-I1,5 DIN 42802 1.5 mm touchproof sockets"*, with an offer to **supply them on consignment** if they could not be sourced | **PCBCart**, ticket BSY-598327, quotations **20260909185** (EEG-CAR-01) and **20260909781** (WH-BUS-01) | **9 September 2026** | `dist/rfq/pcbcart/EEG-CAR-01/README_for_bidder.txt` note 5; `records/vendor_submissions/PCBCART_BSY-598327.md` | This entry. The part cannot be identified, so **the consignment offer cannot be honoured as written**. "Non-substitutable" stands and is correct |
+| The Stäubli part described as genuine and non-substitutable | **three manufacturers**, per the brief that raised this change | **not evidenced in this repository** | — | This entry. The identity of the three and the dates are **not recorded here because they are not held here**; they are in the correspondence and should be added by whoever holds it |
+| Internal annular ring budget **0.125 mm** | **three manufacturers**, per the brief | **not evidenced in this repository** | — | `reports/DECISION_internal_annular_ring.md` §3.2 and §3.6: the figure is derived from the finished hole and is **optimistic**; at a 0.10 mm allowance the budget is **0.100 mm** |
+
+**What was NOT sent, checked rather than assumed.** The PCBCart pack did **not** contain the
+0.125 mm budget. It stated the **0.025 mm accept limit**, which is IPC-6012 class 2's own
+minimum and is unaffected by this change. So of the two errors, only the Stäubli one reached
+PCBCart.
+
+**Two entries above are deliberately incomplete.** This register records what can be evidenced
+from the repository. Naming three manufacturers and three dates from memory would put
+unverified statements into the one document that is supposed to be checkable — which is the
+failure mode this whole change exists to correct.
+
+**Impact:** two fabrication notes, two rows in DSN-EEG-003 §3.2, one new RISK-EEG-011 finding
+with its analysis, two new reports, one new lookup sheet, and one withdrawn claim. **Nothing
+here changes the instrument**, and **no decision that belongs to a person has been taken.**
 
 ---
 

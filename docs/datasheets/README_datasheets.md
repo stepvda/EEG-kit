@@ -62,11 +62,19 @@ In the `SLB` series the numeral is the **contact diameter in millimetres** — `
 | `MS1,5-S` / `S-MS1,5-S` | in-line gold-plated Ø 1.5 mm rigid **plug**, for self-assembly onto a lead |
 | `MLK1,5-B` | in-line coupler |
 
-**A question this raises, which is not settled here.** The two panel-mount parts Stäubli
-publishes present a **pin**; the carrier footprint is named `..._Socket` and the kit BOM row
-36 buys "EMG snap leads to DIN 42802 **plug**". A plug and a pin cannot both be right. Which
-end of a patient-connected DIN 42802 pair carries the male contact is a safety question that
-belongs to RISK-EEG-011 and the safety reviewer, not to an index of datasheets.
+**A correction to an earlier reading in this file.** ECO-EEG-035 first recorded here that
+"a plug and a pin cannot both be right", because Stäubli's panel-mount parts present a **pin**
+while the carrier footprint is named `..._Socket` and kit BOM row 36 buys leads with a
+**plug**. **That was over-called.** In DIN 42802 trade usage the lead-end part is called a
+*touch-proof plug* and is **electrically female**, and the instrument-end part is called an
+*input socket* and carries the **recessed male pin**. Two independent manufacturers describe
+it that way — see `RISK-EEG-011` open item **SR-13**, where the evidence is set out. So
+Stäubli's panel terminals presenting a pin, a carrier footprint called a socket, and leads
+called plugs are **mutually consistent**, not contradictory.
+
+What remains genuinely open is in SR-13: the convention is read from vendor documentation
+rather than from DIN 42802 or IEC 60601-1 themselves, and `WH-EEG-008` calls the lead-end
+parts "**male** plugs" where those manufacturers call the same part female.
 
 **Nothing in `design.py` has been changed.** The part number is recorded here as not found;
 correcting a non-substitutable patient-connected part is a person's decision.
@@ -186,6 +194,11 @@ stage-one finding as much as this index's.
 ---
 
 ## What is still missing
+
+**Three of these need a person, and `OPEN_LOOKUPS.md` is the sheet to work through** — one
+page, three figures, each with the URL, the number needed, where to record it and what it
+unblocks. Start there rather than here.
+
 
 - The Stäubli part, which does not resolve at all (section 1).
 - The two Omron land patterns, which need a person to open the pages an automated request
