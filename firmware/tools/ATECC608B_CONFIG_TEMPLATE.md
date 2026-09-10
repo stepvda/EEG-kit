@@ -195,6 +195,16 @@ it.
    the public key and verify one signature end to end with `verify_stream.py`. Until that has
    happened on one part, nothing here is more than reasoning.
 
+9. **The 608-specific bytes this document's own byte map does not name.** The map in
+   `atecc608b_config.py` names offsets 0–15, 16, 19, 20–51, 52–67, 84–87, 88–89 and 96–127.
+   The published ATECC608 configuration map places **`UseLock`, `VolatileKeyPermission`,
+   `SecureBoot`, the KDF IV controls and `ChipOptions` at offsets 68–74 and 90–91**, and none
+   of them is named here. They are inherited from the factory default and then locked
+   permanently with the rest of the zone. Confirm the offsets, confirm the factory defaults,
+   and decide whether inheriting them is an acceptable posture — particularly `SecureBoot`
+   and `ChipOptions`, which are not inert. *Added by the review in FW-EEG-001 section 7.6;
+   the offsets there are asserted from the published map and not read out of the datasheet.*
+
 ## 7. What this template does not claim
 
 * No part has been written with it, and none has been locked. Every statement about how the

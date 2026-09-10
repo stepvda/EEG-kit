@@ -2,6 +2,10 @@ EEG FIELD KIT -- DESIGN AND PRODUCTION PACKAGE v2.2
 TI One Voice research programme, one.witysk.org, Brussels, Belgium
 1 September 2026.  Board revision B.
 Licence: hardware and documents CC BY-SA 4.0; firmware MIT.
+         THIRD-PARTY DATASHEETS ARE EXCLUDED FROM BOTH.  Manufacturer datasheets remain the
+         property of their respective manufacturers and are referenced or redistributed for
+         reference only.  See docs/datasheets/README_datasheets.md and
+         docs/datasheets/third_party/LICENCE_NOTE.md.
 Contact: Stephane van der Aa -- stephane@stepvda.com -- +32 493 70 16 01
 
 --------------------------------------------------------------------------------------

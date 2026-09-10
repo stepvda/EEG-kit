@@ -281,8 +281,10 @@ ASM-EEG-007 cite it and do not restate it.
 | Mask / legend | green LPI both sides; white legend both sides |
 | Minimum track / clearance | 0.20 mm / 0.20 mm; most conductors are 0.25 mm or wider |
 | Electrode-net clearance | 0.35 mm to anything else |
-| Vias | **through vias only**: 0.60 mm pad, 0.30 mm finished hole, 0.15 mm annular ring, tented both sides. No blind, buried, back-drilled, filled or plugged vias anywhere |
-| Plated hole sizes | 0.30 mm (vias), 0.90 mm (JST PH), 1.00 mm (socket strips), 1.20 mm (tactile switches), 1.70 mm (DIN 42802 signal pin) |
+| Vias | **through vias only**: 0.60 mm pad, 0.30 mm **finished** hole, **0.15 mm EXTERNAL annular ring**, tented both sides. No blind, buried, back-drilled, filled or plugged vias anywhere. **The INTERNAL ring is smaller — see the two rows below** |
+| Hole dimensions and the tool | **Every hole size in this package is a FINISHED diameter, after plating.** The fabricator selects the drill and **must declare the tool size and the plating allowance it used**, per lot, with the lot documents. Added under ECO-EEG-035: the package previously stated finished diameters only and never named the tool, while quoting an annular-ring figure derived as though the two were the same |
+| Internal annular ring | **(0.60 − drilled) / 2, not (0.60 − 0.30) / 2.** The internal ring is measured to the **drilled** hole wall, so it is smaller than the 0.15 mm external figure: about **0.125 mm** at a 0.05 mm total plating allowance and **0.100 mm** at 0.10 mm. QP-EEG-010 IQC-B11 accepts 0.025 mm minimum, so the misregistration budget is (internal ring − 0.025) mm and **falls as the tool grows**. *The reading that the internal ring is measured to the drilled hole is **asserted from standard practice and has not been verified against a copy of IPC-6012**, which this programme does not hold.* IQC-B12's stated 0.125 mm budget is derived from the finished hole and is **superseded** pending that verification |
+| Plated hole sizes | **finished diameters**: 0.30 mm (vias), 0.90 mm (JST PH), 1.00 mm (socket strips), 1.20 mm (tactile switches), 1.70 mm (DIN 42802 signal pin) |
 | Plated-hole census | 236 plated holes in those five sizes, across 33 through-hole parts |
 | Non-plated holes | 4 × 3.2 mm (M3, 6 mm copper keep-out on every layer), 6 × 1.50 mm (DIN retention posts) |
 | Mounting | M3 at (5, 5), (145, 5), (5, 125), (145, 125) |
