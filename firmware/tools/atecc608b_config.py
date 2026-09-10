@@ -164,6 +164,64 @@ KEYCONFIG_0 = (
     | (1 << 0)           # Private
 )
 
+# ------------------------------------------------------------------- the review gate
+#
+# THIS BLOCK IS EDITED BY A HUMAN AND BY NOTHING ELSE.
+#
+# Writing the configuration zone of an ATECC608B is recoverable until the zone is locked and
+# irreversible afterwards, and a wrong WriteConfig nibble scraps the part either by letting a
+# key be written in from outside (E-21 defeated) or by refusing GenKey after the lock (part
+# dead).  `provision.py` refuses to touch a real part while REVIEWED is False.
+#
+# There is deliberately NO command-line flag, NO environment variable and NO file that can
+# turn this on, and `provision.py` offers no --force.  The only way to set it is for a named
+# person to edit this source, which is the point: a reviewed flag that a script can set is a
+# reviewed flag that a tired operator can set at 2 a.m. with a tray of parts in front of them.
+#
+# Before setting REVIEWED = True, every item in section 6 of ATECC608B_CONFIG_TEMPLATE.md
+# must be closed, and item 8 -- one part written, read back, locked, keyed and verified end
+# to end -- must actually have happened on a sacrificial part.  Record who closed them.
+REVIEWED = False
+REVIEWED_BY = ""            # name of the person who closed the checklist
+REVIEWED_AGAINST = ""       # datasheet document number and revision they read
+CHECKLIST_CLOSED = ()       # e.g. (1, ..., 9) -- all nine, or it is not reviewed
+# Section 6 of ATECC608B_CONFIG_TEMPLATE.md.  Item 9 was added by the review written up in
+# FW-EEG-001 section 7.6: the byte map below names offsets 0-15, 16, 19, 20-51, 52-67, 84-87,
+# 88-89 and 96-127, and on the 608 -- unlike the 508A this map reads as though it were
+# written against -- offsets 68-74 and 90-91 carry UseLock, VolatileKeyPermission, SecureBoot,
+# the KDF IV controls and ChipOptions.  Those are not named anywhere here, and they are locked
+# permanently along with everything else.
+CHECKLIST_ITEMS = (1, 2, 3, 4, 5, 6, 7, 8, 9)
+
+
+def review_status() -> dict:
+    """What `provision.py` asks before it will touch a real part.
+
+    `ok` is True only when a person has set REVIEWED, named themselves, named the document
+    they read, and closed every checklist item.  A partially filled block is not a review and
+    is reported as one that is not.
+    """
+    missing = [n for n in CHECKLIST_ITEMS if n not in CHECKLIST_CLOSED]
+    reasons = []
+    if not REVIEWED:
+        reasons.append("REVIEWED is False in atecc608b_config.py")
+    if not REVIEWED_BY:
+        reasons.append("REVIEWED_BY names nobody")
+    if not REVIEWED_AGAINST:
+        reasons.append("REVIEWED_AGAINST names no datasheet")
+    if missing:
+        reasons.append("checklist items still open: "
+                       + ", ".join(str(n) for n in missing))
+    return {
+        "ok": not reasons,
+        "reviewed_by": REVIEWED_BY,
+        "reviewed_against": REVIEWED_AGAINST,
+        "checklist_closed": list(CHECKLIST_CLOSED),
+        "checklist_open": missing,
+        "reasons": reasons,
+    }
+
+
 # Every byte this template specifies, as (offset, value, field, why).  Nothing else is written.
 FIELDS = [
     (OFF_SLOTCONFIG + 2 * SLOT_KEY, SLOTCONFIG_0 & 0xFF,

@@ -158,5 +158,12 @@ instrument you built being used in a pre-registered study.
 
 Hardware and documents: **CC BY-SA 4.0** · Firmware: **MIT**
 
+**Third-party datasheets are excluded from both grants.** Manufacturer datasheets and other
+third-party documents referenced by this package remain the property of their respective
+manufacturers, are referenced or redistributed for reference only, and are **not** covered by
+the CC BY-SA 4.0 licence above. See [`docs/datasheets/README_datasheets.md`](docs/datasheets/README_datasheets.md)
+for the index and [`docs/datasheets/third_party/LICENCE_NOTE.md`](docs/datasheets/third_party/LICENCE_NOTE.md)
+for the terms.
+
 **Stephane van der Aa** — Founder, TI One Voice
 [one.witysk.org](https://one.witysk.org) · stephane@stepvda.com · +32 493 70 16 01

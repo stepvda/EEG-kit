@@ -70,8 +70,12 @@ KIT = [
      "ES8388 breakout", "WM8960 module (firmware change)", 1, "Yes", ""),
     ("Modules", "USB 2.0 full-speed isolator module, >= 2.5 kV RMS",
      "ADuM4160 isolator module", "none", 1, "No",
-     "OPEN: the candidate module presents USB-B and E-24 asks for USB-C. Interim answer "
-     "is the WH-09 panel pigtail"),
+     "OPEN, and NOT closed by the interim answer. The candidate module presents USB-B and "
+     "E-24 asks for USB-C; the WH-09 panel pigtail is the interim answer and E-24 says of "
+     "it, in terms, 'it is not a settled design'. WHAT IS MISSING is an ADuM4160-class "
+     "isolator module with a USB-C host connector, qualified against E-24 and the "
+     "DSN-EEG-003 section 3.3 isolation keep-out. Until one exists the non-conformance is "
+     "live and is carried, not resolved. Bidders who know of such a module should say so"),
     ("Modules", "Secure element breakout, I2C", "Adafruit ATECC608 breakout (4314)",
      "any ATECC608B breakout", 1, "No", ""),
     ("Modules", "Li-ion charger with power path and CE pin", "Adafruit bq24074 (4755)",
@@ -85,11 +89,22 @@ KIT = [
      "Yes", "One-bit SDMMC. 70 kB/s needed, about 2 MB/s available"),
     ("Modules", "Electret microphone preamplifier module, fixed gain",
      "MAX4466 class (Adafruit 1063)", "none -- specified by interface, ICD-EEG-006 section 2.9", 1, "Yes",
-     "OPEN: the MAX9814 named in v1 is an AGC part and E-14 requires AGC off. Mounts on "
-     "MP-01 at J21; the boom carries the bare capsule"),
+     "OPEN, but narrower than it was. The AGC CONFLICT IS RESOLVED: the MAX9814 of "
+     "package v1 is an AGC part, is NOT APPROVED, and is superseded here -- E-14 requires "
+     "AGC off, and the fixed-gain MAX4466 class named here is E-14's own preferred route. "
+     "What is still open is the SELECTION, not the conflict -- "
+     "E-14 reads 'which preamplifier is not settled' and specifies the module BY INTERFACE "
+     "in ICD-EEG-006 section 2.9 until one is bought and measured. Quote against the "
+     "interface. Mounts on MP-01 at J21; the boom carries the bare capsule"),
     ("Modules", "Room microphone module with hardware mute", "to be selected", "none", 1,
-     "Yes", "OPEN: no module is known to meet E-15's hardware mute. Fallback is a capsule "
-     "with a TS5A3159 analogue switch on an adapter"),
+     "Yes", "OPEN, and the only row in this BOM with NO PART AT ALL. E-15 requires the "
+     "audio path to be hardware-gatable on MIC_MUTE (GPIO21); a catalogue search found no "
+     "breakout with a mute pin -- the common electret and MEMS boards (SparkFun, Pololu, "
+     "Adafruit 1063, INMP441) bring out audio and power only. The fallback is a capsule "
+     "plus a TS5A3159 analogue switch on a programme-designed adapter, which is a NEW "
+     "DRAWING and has not been drawn. Thirteen module assemblies per unit and this is the "
+     "unspecified one. Bidders: quote the other twelve and say whether you would build the "
+     "adapter to a drawing when one exists"),
     ("Modules", "8-bit shift register module", "74HC595 breakout", "none", 1, "Yes",
      "Q0..Q7 must be brought out. In v1 they were not, and the contact lights had no "
      "driver at all (ECO-EEG-001)"),

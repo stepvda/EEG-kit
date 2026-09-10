@@ -1644,6 +1644,199 @@ is burned, the module remains swappable.
 
 ---
 
+### 7.6 The ATECC608B configuration zone, byte by byte
+
+**Status: reviewed here, NOT approved.** This section is the review a person signs off; it
+does not sign itself off. `firmware/tools/atecc608b_config.py` carries `REVIEWED = False`,
+and `provision.py` **refuses to run against a real part** while it is False — see 7.6.5.
+
+#### 7.6.1 The framing, which is not "4 of 128 bytes are done"
+
+It is commonly stated that four of the 128 configuration bytes have been reviewed and 124
+have not. That is the wrong shape and it makes the remaining work look like a filling-in
+exercise.
+
+The template **specifies four bytes and deliberately does not write the other 124.** It emits
+an image *and a mask*; the mask is `0xFF` on four offsets and `0x00` everywhere else, and a
+writer consults the mask, not the image. The 124 unspecified bytes are not blanks awaiting a
+value — they are bytes this programme has decided **not to have an opinion about**, so that
+the part keeps whatever it shipped with.
+
+So there are two different questions, and only the first is "what value?":
+
+1. **The four specified bytes** — are these the right values? (7.6.2)
+2. **The 124 unspecified bytes** — is *inheriting the factory default* an acceptable posture
+   on a part that will be permanently locked? (7.6.3)
+
+Question 2 is not answered by choosing 124 values. Choosing them would be the *worse*
+outcome: every one would be a number invented here and locked into silicon, and the reviewer
+would have 128 things to check instead of four.
+
+#### 7.6.2 The four specified bytes
+
+`SLOT_KEY = 0`. The instrument uses exactly one slot.
+
+| Offset | Field | Value | Verified? |
+|---|---|---|---|
+| 20 | SlotConfig[0] low | `0x81` | reasoned; bit meanings **asserted**, see below |
+| 21 | SlotConfig[0] high | `0x20` | **UNVERIFIED — checklist item 1** |
+| 96 | KeyConfig[0] low | `0x33` | reasoned |
+| 97 | KeyConfig[0] high | `0x00` | reasoned |
+
+**Offset 20 — SlotConfig[0] low.** `0x81` = `IsSecret` (bit 7) set, `EncryptRead` (bit 6)
+clear, `LimitedUse` (bit 5) clear, `NoMac` (bit 4) clear, `ReadKey` (bits 3–0) = `0x1`.
+
+- `IsSecret = 1` with `EncryptRead = 0` is the whole reason the part is fitted: the private
+  key is not readable by any means. This is E-21 and it is the least ambiguous bit here.
+- `LimitedUse = 0` is **load-bearing and correctly clear.** A limited-use slot burns a
+  monotonic counter per use. F-08 signs every 2048 samples — about one signature every two
+  seconds at 1000 Hz — so any counter would exhaust and the unit would stop signing
+  mid-study. Setting this bit would be a slow, silent field failure.
+- `ReadKey = 0x1`. For an ECC private-key slot these four bits are permissions rather than a
+  key id: bit 0 external signatures, bit 1 internal signatures, bit 2 ECDH, bit 3 ECDH master
+  secret out in the clear. Only bit 0 is set, which is the minimum F-08 and T16 need, and
+  bits 2 and 3 are the ones that would matter if wrong — this design does no key agreement
+  at all, so granting ECDH would only create a way to use the identity key for something the
+  instrument does not do. **The bit-position assignment above is asserted from the published
+  semantics of the family, not read out of the 608B datasheet in front of a reviewer. It is
+  checklist item 2 and it stays open.**
+
+**Offset 21 — SlotConfig[0] high. This is the one that can scrap parts, and it is not
+resolved here.** `0x20` = `WriteKey` (bits 11–8) = `0x0`, `WriteConfig` (bits 15–12) = `0x2`.
+
+The *intent* is exact and is not in doubt: **GenKey may create the key inside the part; no
+command may write a private key in from outside.** What is in doubt is whether `0x2` encodes
+that intent on the 608B.
+
+What a reviewer has to establish, and why each half matters:
+
+- **Too permissive** — if the encoding leaves an external write path open, a key can be
+  loaded from outside and E-21 is defeated. The failure is silent: the part works, the
+  signatures verify, and the guarantee that the key never existed outside the device is gone.
+- **Too restrictive** — if the encoding forbids GenKey, then after the configuration zone is
+  locked GenKey is refused for ever, provisioning step 3 fails, and the part is scrap. The
+  failure is loud but terminal, and it happens **after** the irreversible step.
+
+The two bits usually described as `GenKeyEn` and `PrivWrite` within this nibble are the ones
+that decide it, and the upper two bits additionally select the plain `Write` command's
+behaviour. `IsSecret = 1` on an ECC private slot already bars the ordinary `Write` path, so
+the nibble's `Write` half is expected to be moot here — **expected, not established.**
+
+> **This must be read off the SlotConfig `WriteConfig` bit table in the ATECC608B datasheet
+> specifically, not the ATECC508A's, and not from recollection — including the recollection
+> in this paragraph.** Nothing in this package has opened that table. The part number is
+> ATECC608B-SSHDA (checklist item 7).
+
+**Offsets 96 and 97 — KeyConfig[0].** `0x0033` = `Private` (bit 0) set, `PubInfo` (bit 1)
+set, `KeyType` (bits 4–2) = `0x4` (P-256), `Lockable` (bit 5) set, `ReqRandom`, `ReqAuth`,
+`AuthKey`, `PersistentDisable`, `X509id` all clear.
+
+- `Private = 1`, `KeyType = P-256` is the F-18 device key, and matches `drivers.c` calling
+  GenKey mode `0x04` to create and mode `0x00` to read the public half.
+- **`PubInfo = 1` is load-bearing.** With it clear, GenKey mode `0x00` — provisioning step 4,
+  "read back the public key" — is refused, and the unit ends up with a key nobody can name.
+  The M-03 label fingerprint, the Data Matrix and T16 all derive from that read-back. This is
+  the bit whose absence would be discovered only after the zone was locked.
+- `ReqAuth = 0`, `AuthKey = 0` is correct **because of a fact about this programme, not a
+  preference**: F-19 puts no host secret anywhere in the building, so there is no second key
+  to authorise against. An authorisation requirement here would make the key unusable rather
+  than safer.
+- `Lockable = 1` costs nothing and leaves open the option of sealing the slot individually
+  once the key exists. No opcode in this package uses it.
+
+#### 7.6.3 The 124 bytes that are not written
+
+Grouped by what inheriting the factory default actually commits the programme to.
+
+| Offset | Region | Posture | Assessment |
+|---|---|---|---|
+| 0–15 | Serial number, revision, AES/I²C enable | **read-only** | Not a decision. The part refuses writes here. Safe by construction |
+| 16 | I²C address | inherited | **Safe, and checked**: factory default `0xC0` is 7-bit `0x60`, which is the address `drivers.c` already uses. Verified against the firmware, not merely assumed |
+| 17 | Reserved | inherited | Not a decision |
+| 18 | CountMatch | inherited | No slot here is LimitedUse and no counter is consumed, so the count-match feature is inert. **Low risk, unexamined** |
+| 19 | ChipMode (watchdog, TTL enable) | inherited | **OPEN — checklist item 6.** The longest command the firmware issues is GenKey, for which `drivers.c` allows 115 ms. A watchdog that expires mid-GenKey on a locked part is not recoverable by retrying. The default must be confirmed to exceed worst-case GenKey time |
+| 20–51 | SlotConfig[1..15] | inherited | **OPEN — checklist item 5.** Fifteen slots this instrument never uses, left at whatever posture the factory chose, and then locked permanently. The question is not "what should they be" but "is the default an acceptable posture on a locked part, or must unused slots be made explicitly unusable" |
+| 52–67 | Counter[0..1] | inherited | Not a decision. No LimitedUse slot, so no counter is consumed |
+| 84–85 | UserExtra, UserExtraAdd | inherited | Writable after lock by design; not part of the key posture |
+| 86–87 | LockValue, LockConfig | **never written by a template** | Correct and important: these are set by the `Lock` command (`0x17`), which is provisioning step 2c. A template that wrote them would be attempting the lock as a side effect of a configuration write |
+| 88–89 | SlotLocked | inherited | Individual slot locking is not used by any opcode in this package |
+| 96–127 | KeyConfig[1..15] | inherited | Same question as SlotConfig[1..15] — checklist item 5 |
+
+**A gap in the template's own byte map, found in this review.** The map in
+`atecc608b_config.py` names offsets 0–15, 16, 19, 20–51, 52–67, 84–87, 88–89 and 96–127. On
+the **608**, the region between the counters and UserExtra, and the pair just before
+KeyConfig, carry device features the 508A did not have — the published 608 map places
+`UseLock`, `VolatileKeyPermission`, `SecureBoot`, the KDF IV controls and `ChipOptions` in
+offsets **68–74 and 90–91**. **The template's map does not name any of them.**
+
+That matters because `SecureBoot` and `ChipOptions` are not inert: they configure device
+behaviour that is then locked permanently along with everything else. This does not
+necessarily mean the defaults are wrong — it means **nobody has looked**, and a byte nobody
+has looked at is exactly what this review exists to surface.
+
+> **This offset attribution is asserted from the published 608 configuration map and has not
+> been read out of the datasheet.** Confirm the offsets, the factory defaults and whether
+> inheriting them is acceptable. **This is a new checklist item — item 9 — and it is open.**
+
+#### 7.6.4 What is unresolved, named as unresolved
+
+Nothing in 7.6.2 or 7.6.3 closes any checklist item. The full open list is section 6 of
+`firmware/tools/ATECC608B_CONFIG_TEMPLATE.md`, items 1–8, plus:
+
+| Item | What is unresolved | Consequence if wrong |
+|---|---|---|
+| 1 | `WriteConfig` nibble encoding (offset 21) | E-21 defeated, or the part scrapped after the lock |
+| 2 | `ReadKey` bit meanings for an ECC private slot | an unintended permission locked in |
+| 3 | The `0x4A` opcode framing | host and firmware must then change together |
+| 4 | Whether `Sign` needs the **data zone** locked as well | **if it does and it is missing, T16 cannot pass on any unit** — a firmware gap, not a template gap. `drivers.c` exposes only `drv_atecc_lock_config()` |
+| 5 | Posture of the fifteen unused slots | fifteen slots locked at an unexamined default |
+| 6 | ChipMode watchdog vs worst-case GenKey | unrecoverable timeout on a locked part |
+| 7 | Part number is **-SSHDA**, never **-TNGTLS** | TNGTLS arrives pre-locked with Microchip's keys: F-18 and E-21 are impossible on it |
+| 8 | One part written, read back, locked, keyed, verified end to end | until this has happened, none of the above is more than reasoning |
+| **9** | **608-specific bytes 68–74 and 90–91, unnamed in the template's map** | device features locked at an unexamined default |
+
+**Item 4 is the one that is not a template question at all.** If `Sign` requires the data
+zone locked, provisioning needs a further irreversible step and a further opcode that does
+not exist anywhere in the firmware. It should be settled before the others, because it
+changes what provisioning *is*, not merely what it writes.
+
+#### 7.6.5 The guard, and why it cannot be turned on by accident
+
+`firmware/tools/atecc608b_config.py` carries a review block: `REVIEWED`, `REVIEWED_BY`,
+`REVIEWED_AGAINST` and `CHECKLIST_CLOSED`. `review_status()` reports `ok` **only** when a
+person has set the flag, named themselves, named the document they read, and closed every
+checklist item. A partially filled block is not a review and is reported as one that is not.
+
+`provision.py` calls it before anything else and, on any run that is not `--dry-run`,
+**refuses and exits 2**:
+
+```
+REFUSING TO RUN AGAINST A REAL PART.
+
+  The ATECC608B configuration zone is not marked reviewed:
+    - REVIEWED is False in atecc608b_config.py
+    - REVIEWED_BY names nobody
+    - REVIEWED_AGAINST names no datasheet
+    - checklist items still open: 1, 2, 3, 4, 5, 6, 7, 8
+```
+
+Three properties of the guard are deliberate:
+
+1. **There is no `--force`, no environment variable and no file that enables it.** The only
+   mechanism is a person editing the source. A reviewed flag a script can set is a reviewed
+   flag a tired operator can set at 2 a.m. with a tray of parts in front of them.
+2. **It is not inferred from anything** — not from the presence of the `.bin`, not from its
+   checksum, not from a record of a previous run.
+3. **`--dry-run` is unaffected**, because it opens no port and writes to no silicon. The
+   station, the record format and `provision_selftest.py` can all be exercised while the
+   review is outstanding. `provision_selftest.py` passes unchanged.
+
+**Consequence to state plainly to assemblers:** provisioning cannot be quoted as a production
+operation today. It is blocked at the tool, by design, until a named person closes the
+checklist.
+
+---
+
 ## 8. The host verification tool
 
 `firmware/tools/verify_stream.py` is the decoder the production test uses, and the same

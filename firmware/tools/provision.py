@@ -165,6 +165,14 @@ DEFAULT_CONFIG_BIN = os.path.join(HERE, "atecc608b_config.bin")
 DEFAULT_CONFIG_MASK = os.path.join(HERE, "atecc608b_config.mask.bin")
 CONFIG_ZONE_BYTES = 128
 
+# The template module is imported for its REVIEW GATE, not for the byte values -- those come
+# off disk from the .bin and .mask.bin so that a station can be handed a template it did not
+# generate.  Imported by path so that the gate works whatever the working directory is: an
+# operator running this from the station's home directory must get the same refusal as one
+# running it from firmware/tools.
+sys.path.insert(0, HERE)
+import atecc608b_config  # noqa: E402
+
 # PKG-EEG-015 section 5 is the single home of the serial format and this script cites it rather
 # than restating it.  TIOV-B-0000 is excluded because drivers.c unit_serial_into() uses it as
 # the "until provisioned" default, so it can never name a real unit.
@@ -790,6 +798,40 @@ def main():
                     help="write a calibration file that does not conform to the schema, and "
                          "record that it was overridden")
     a = ap.parse_args()
+
+    # ------------------------------------------------------------------ the review gate
+    # The ATECC608B configuration zone has not been reviewed.  Until it has been, this tool
+    # does not touch a real part: the zone write is recoverable only until the zone is
+    # locked, the WriteConfig nibble is unverified (template checklist item 1), and getting
+    # it wrong either defeats E-21 or scraps the part.
+    #
+    # --dry-run is allowed, because it opens no port and writes to no silicon; it is how the
+    # station and the record format are exercised while the review is outstanding.
+    #
+    # There is NO --force.  The flag lives in atecc608b_config.py and is set by a person
+    # editing that source, which is the whole mechanism: see the review gate block there.
+    if not a.dry_run:
+        status = atecc608b_config.review_status()
+        if not status["ok"]:
+            print("REFUSING TO RUN AGAINST A REAL PART.\n", file=sys.stderr)
+            print("  The ATECC608B configuration zone is not marked reviewed:",
+                  file=sys.stderr)
+            for r in status["reasons"]:
+                print(f"    - {r}", file=sys.stderr)
+            print("\n  Writing an unreviewed configuration is recoverable only until the "
+                  "zone is\n  locked, and the WriteConfig nibble of SlotConfig[0] is "
+                  "UNVERIFIED (template\n  checklist item 1). Too permissive defeats E-21; "
+                  "too restrictive refuses GenKey\n  after the lock and scraps the part.",
+                  file=sys.stderr)
+            print("\n  Close section 6 of firmware/tools/ATECC608B_CONFIG_TEMPLATE.md, then "
+                  "set\n  REVIEWED, REVIEWED_BY, REVIEWED_AGAINST and CHECKLIST_CLOSED in\n"
+                  "  firmware/tools/atecc608b_config.py. There is no command-line override.",
+                  file=sys.stderr)
+            print("\n  --dry-run still works and is unaffected.", file=sys.stderr)
+            return 2
+        print(f"  ATECC608B configuration reviewed by {status['reviewed_by']} "
+              f"against {status['reviewed_against']}")
+
     out = a.out or f"records/{a.serial}.json"
     provision(a.port, a.serial, a.calibration, out, a.vid, a.pid, a.dry_run,
               lock=a.lock, confirm=a.confirm_serial, write_config=a.write_config,
@@ -799,4 +841,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # The review gate returns 2. Propagate it: a station script that ignores the exit code
+    # of a provisioning run is a station script that will not notice the refusal.
+    raise SystemExit(main())
